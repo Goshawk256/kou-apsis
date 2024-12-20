@@ -1,0 +1,55 @@
+.sidebar-container {
+    width: 16%;
+    background-color: #f7f9fc;
+    position: fixed;
+    top: 10%;
+    /* Below the header */
+    left: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.sidebar-button {
+    display: flex;
+    /* İkon ve metni hizalamak için flex kullanıyoruz */
+    align-items: center;
+
+    /* İkon ve metni dikey ortalıyoruz */
+    padding: 10px;
+    margin: 5px 0;
+    background-color: #f7f9fc;
+    border: none;
+    cursor: pointer;
+    color: grey;
+    text-align: left;
+    font-size: 14px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    border-radius: 5px;
+    border: 1px solid #e5e5fa;
+    transition: all 0.3s ease;
+}
+
+.sidebar-button:hover {
+    background-color: #eff9ef;
+    color: rgb(150, 211, 143);
+}
+
+.sidebar-button:hover .icon {
+    color: rgb(150, 211, 143);
+}
+
+.icon {
+    margin-right: 8px;
+    /* İkon ile metin arasındaki mesafe */
+    font-size: 20px;
+    /* İkonun boyutunu ayarlıyoruz */
+    color: rgb(138, 232, 128);
+    /* İkon rengini metinle aynı yapıyoruz */
+}
+
+.text {
+    flex: 1;
+    /* Metnin kalan alanı kullanmasını sağlıyoruz */
+}

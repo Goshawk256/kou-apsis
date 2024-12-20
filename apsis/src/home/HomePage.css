@@ -1,0 +1,18 @@
+.main-homepage {
+
+    width: 100em;
+    height: 100vh;
+    overflow: auto;
+    /* Leave space for header */
+}
+
+.flexible-component {
+    margin-left: 17%;
+    margin-top: 3%;
+    width: 75%;
+    /* Leave space for sidebar */
+    padding: 20px;
+    flex: 1;
+    background-color: #f7f9fc;
+    color: black;
+}

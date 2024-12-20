@@ -1,0 +1,186 @@
+/* Genel stil ayarları */
+.yayinlar-main {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 20px;
+
+}
+
+/* Row 1 - Butonlar */
+.yayinlar-main-row-1 {
+    width: 40%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.yayinlar-main-row-1 .yayinlar-btn {
+    padding: 10px;
+    font-size: 14px;
+    background-color: #ffffff;
+    border: 1px solid #eaeafa;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    color: #639768;
+}
+
+.yayinlar-main-row-1 .yayinlar-btn:hover {
+    background-color: #eaeafa;
+}
+
+/* Row 2 - Arama, Filtreleme, Yenileme */
+.yayinlar-main-row-2 {
+    display: flex;
+    flex-direction: row;
+
+
+    margin-bottom: 20px;
+}
+
+.yayinlar-main-row-2 .yayinlar-search-input {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #eaeafa;
+    background-color: white;
+    border-radius: 5px;
+    width: 40%;
+}
+
+
+
+.yayinlar-main-row-2 .yayinlar-filter-btn {
+    position: relative;
+    width: 10%;
+    margin-left: 2%;
+    background-color: #ffffff;
+    border: 1px solid #eaeafa;
+    color: black;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.yayinlar-main-row-2 .yayinlar-filter-btn:hover {
+    background-color: #eaeafa;
+}
+
+.yayinlar-main-row-2 .yayinlar-filter-btn:hover .yayinlar-dropdown {
+    display: block;
+
+}
+
+.yayinlar-main-row-2 .yayinlar-refresh-btn {
+    background-color: white;
+    border: 1px solid #eaeafa;
+    width: 3%;
+    margin-left: 4%;
+    border-radius: 5px;
+    color: grey;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    transition: all 0.3s ease;
+
+}
+
+.yayinlar-main-row-2 .yayinlar-refresh-btn:hover {
+    background-color: #eaeafa;
+    color: #4b8159;
+}
+
+.yayinlar-main-row-2 .yayinlar-refresh-btn:active {
+    background-color: #6e8678;
+
+}
+
+.yayinlar-main-row-2 .yayinlar-pagination {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: 33%;
+}
+
+.yayinlar-main-row-2 .yayinlar-pagination button {
+
+    font-size: 35px;
+    background-color: #f7f9fc;
+    border: none;
+    color: #4be22d;
+    cursor: pointer;
+}
+
+.yayinlar-main-row-2 .yayinlar-pagination button:disabled {
+    color: #d0d0d0;
+    cursor: not-allowed;
+}
+
+/* Row 3 - Tablo */
+.yayinlar-main-row-3 {
+    width: 100%;
+    max-height: 500px;
+
+}
+
+.yayinlar-main-row-3 table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #eaeafa;
+    border-radius: 5px;
+    /* Dış kenar çizgisi */
+}
+
+.yayinlar-main-row-3 table th,
+.yayinlar-main-row-3 table td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ddd;
+    border: none;
+}
+
+.yayinlar-main-row-3 table th {
+    background-color: #e7f0e9;
+    border-bottom: 1px solid #ddd;
+}
+
+.yayinlar-main-row-3 tbody tr td {
+    font-size: 12px;
+    font-weight: 500;
+    color: gray
+}
+
+.yayinlar-main-row-3 button {
+    padding: 10px 10px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: #2de24b;
+    font-size: 16px;
+    margin-left: 20%;
+    border-radius: 5px;
+    background-color: #eafaea;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.yayinlar-main-row-3 button:hover {
+    color: #148c2e;
+    background-color: #abc0b0;
+}
+
+/* Dropdown placeholder */
+.yayinlar-main-row-2 .yayinlar-dropdown {
+    display: none;
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 5px;
+    top: 100%;
+    left: 0;
+}
