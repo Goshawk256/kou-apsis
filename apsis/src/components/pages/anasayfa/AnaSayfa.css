@@ -1,7 +1,11 @@
 .main-anasayfa {
     width: 100%;
     box-sizing: border-box;
+    margin-left: 5%;
+    margin-top: 2%;
 }
+
+
 
 .anasayfa-row-1,
 .anasayfa-row-2,
@@ -12,6 +16,7 @@
     margin-bottom: 20px;
 }
 
+
 /* Birinci satırda 4 eşit genişlikte kart */
 .anasayfa-row-1 {
     grid-template-columns: repeat(4, 1fr);
@@ -21,6 +26,7 @@
 /* İkinci satırda 2 eşit genişlikte kart */
 .anasayfa-row-2 {
     grid-template-columns: repeat(2, 1fr);
+    height: 408px;
     /* 2 eşit genişlikte sütun */
 }
 
@@ -37,7 +43,7 @@
     /* Kartların arka plan rengi */
     padding: 20px;
     border-radius: 10px;
-    border: 1px solid #e5e5fa;
+    border: 1px solid #ffff;
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -46,12 +52,25 @@
 }
 
 .anasayfa-row-1-card {
-    background-color: #f7f9fc;
+    background-color: #ffffff;
+    transition: all 0.3s ease;
+    padding: 12px;
+}
+
+.dark .anasayfa-row-1-card {
+    background-color: #212121;
+    border: none
 }
 
 .anasayfa-row-2-card {
-    background-color: #f7f9fc;
+    background-color: #ffffff;
+    transition: all 0.3s ease;
 
+}
+
+.dark .anasayfa-row-2-card {
+    background-color: #212121;
+    border: none;
 }
 
 .anasayfa-row-3-card {
@@ -60,9 +79,9 @@
 
 .anasayfa-row-2-card canvas {
     max-width: 100%;
-    /* Grafiklerin sığmasını sağlamak */
+
     max-height: 100%;
-    /* Grafiklerin sığmasını sağlamak */
+
 }
 
 
@@ -72,11 +91,16 @@
     flex-direction: row;
     align-items: center;
     justify-content: start;
+    margin-bottom: 8%;
 
 }
 
 .card-row-1 {
     color: rgb(138, 232, 128);
+}
+
+.dark .card-row-1 {
+    color: #4dbc2e;
 }
 
 .card-row-1 label {
@@ -85,11 +109,19 @@
     font-size: 12px;
 }
 
+.dark .card-row-1 label {
+    color: #999999;
+}
+
 .card-inner-count {
     font-size: 30px;
     font-weight: bold;
     margin-top: 5%;
     color: rgb(102, 102, 102);
+}
+
+.dark .card-inner-count {
+    color: #999999;
 }
 
 /* From Uiverse.io by SouravBandyopadhyay */
@@ -562,5 +594,13 @@
         height: 0;
         width: 10px;
         left: 20px;
+    }
+}
+
+@media (max-width: 1400px) {
+    .main-anasayfa {
+        width: 85%;
+        box-sizing: border-box;
+        margin-left: 5%;
     }
 }

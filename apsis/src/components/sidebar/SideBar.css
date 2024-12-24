@@ -2,13 +2,19 @@
     width: 16%;
     background-color: #f7f9fc;
     position: fixed;
-    top: 10%;
+    top: 11.5%;
     /* Below the header */
     left: 0;
     bottom: 0;
     display: flex;
     flex-direction: column;
     padding: 10px;
+}
+
+
+
+.dark .sidebar-container {
+    background-color: #1c1c1c;
 }
 
 .sidebar-button {
@@ -19,35 +25,54 @@
     /* İkon ve metni dikey ortalıyoruz */
     padding: 10px;
     margin: 5px 0;
-    background-color: #f7f9fc;
+    background-color: #ffff;
     border: none;
     cursor: pointer;
-    color: grey;
+
     text-align: left;
     font-size: 14px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     border-radius: 5px;
-    border: 1px solid #e5e5fa;
+    border: 1px solid #ffff;
     transition: all 0.3s ease;
+    padding: 12px;
+    margin: 4px;
+    color: #7a7a7a;
+    font-size: 14px;
+    border-radius: 10px;
+
 }
 
-.sidebar-button:hover {
+.dark .sidebar-button {
+    background-color: #212121;
+    border: 1px solid #212121;
+}
+
+.dark .sidebar-button:hover {
+    background-color: #252525;
+}
+
+.light .sidebar-button:hover {
     background-color: #eff9ef;
     color: rgb(150, 211, 143);
 }
 
-.sidebar-button:hover .icon {
+.light .sidebar-button:hover .icon {
+
     color: rgb(150, 211, 143);
 }
 
-.icon {
+.icon img {
     margin-right: 8px;
     /* İkon ile metin arasındaki mesafe */
-    font-size: 20px;
-    /* İkonun boyutunu ayarlıyoruz */
-    color: rgb(138, 232, 128);
-    /* İkon rengini metinle aynı yapıyoruz */
+    width: 24px;
 }
+
+.dark .icon {
+    color: #55d935;
+}
+
+
 
 .text {
     flex: 1;

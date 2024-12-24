@@ -2,7 +2,7 @@ import axios from 'axios';
 import All_Url from '../url';
 // Axios yapılandırması
 const apiClient = axios.create({
-    baseURL: All_Url.api_dis_url,
+    baseURL: All_Url.api_base_url,
     headers: {
         'Content-Type': 'application/json',
     },
@@ -19,7 +19,7 @@ apiClient.interceptors.response.use(
 );
 
 const apiLogin = axios.create({
-    baseURL: All_Url.login_dis_url,
+    baseURL: All_Url.api_base_url,
     headers: {
         'Content-Type': 'application/json',
     },

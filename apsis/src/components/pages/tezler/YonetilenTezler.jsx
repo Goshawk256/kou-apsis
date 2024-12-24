@@ -1,92 +1,112 @@
-import React, { useEffect, useState } from 'react';
-import './YonetilenTezler.css';
-import { FaSync, FaPencilAlt } from 'react-icons/fa';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import './YonetilenTezler.css';
+import { FaSync, FaCheckSquare, FaRegSquare } from 'react-icons/fa';
+import All_Url from '../../../url';
+import RightBar from '../../rightbar/RightBar';
+import NotFound from '../../errorstacks/NotFound';
 
 function YonetilenTezler() {
     const [searchQuery, setSearchQuery] = useState('');
     const [page, setPage] = useState(1);
     const [tableData, setTableData] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [rightBarOpen, setRightBarOpen] = useState(false);
+    const [popupMessage, setPopupMessage] = useState(null); // Pop-up mesajı
+    const username = localStorage.getItem('username');
 
-    const formatSemester = (semester) => {
-        const yearMapping = {
-            '2122': '2021-2022',
-            '2223': '2022-2023', // Gerekirse diğer yıl eşlemelerini ekleyebilirsiniz
-        };
-        const termMapping = {
-            'G': 'Güz',
-            'B': 'Bahar',
-        };
-
-        const yearCode = semester.slice(0, 4); // İlk 4 karakter yıl kodu
-        const termCode = semester.slice(4);   // Son karakter dönem kodu
-
-        const year = yearMapping[yearCode] || 'Bilinmeyen Yıl'; // Eşleme yoksa "Bilinmeyen Yıl"
-        const term = termMapping[termCode] || 'Bilinmeyen Dönem'; // Eşleme yoksa "Bilinmeyen Dönem"
-
-        return `${year} ${term}`;
+    const fetchData = async () => {
+        setLoading(true);
+        try {
+            const response = await axios.post(
+                `${All_Url.api_base_url}/advising-thesis/get-advising-thesis-by-username`,
+                {
+                    username: username,
+                }
+            );
+            setTableData(response.data.data);
+            setFilteredData(response.data.data);
+        } catch (error) {
+            console.error('Veri çekme hatası:', error);
+        } finally {
+            setLoading(false);
+        }
     };
 
     useEffect(() => {
-        const fetchData = async () => {
-            const username = localStorage.getItem('username');
-            try {
-                const response = await axios.post('http://185.92.2.229:3000/post/lessons/get-lesson-by-username-from-db', {
-                    username: username,
-                });
-
-                const courses = response.data.flatMap(item =>
-                    item.courses.map(course => ({
-                        ...course,
-                        semester: item.semester
-                    }))
-                );
-                setTableData(courses);
-                setFilteredData(courses);
-            } catch (error) {
-                console.error('Veriler alınırken bir hata oluştu:', error);
-            }
-        };
-
         fetchData();
     }, []);
 
-
-    useEffect(() => {
-        // Arama ve filtreleme işlemi
+    const handleSearch = (query) => {
+        setSearchQuery(query);
         const filtered = tableData.filter(item =>
-            item.course_name.toLowerCase().includes(searchQuery.toLowerCase())
+            item.title.toLowerCase().includes(query.toLowerCase()) ||
+            item.corporateName.toLowerCase().includes(query.toLowerCase()) ||
+            item.group.toLowerCase().includes(query.toLowerCase())
         );
         setFilteredData(filtered);
-    }, [searchQuery, tableData]);
+    };
+    const saveToLocalStorage = (thesis) => {
+        const savedThesis = JSON.parse(localStorage.getItem('savedThesis')) || [];
 
-    const itemsPerPage = 7; // Sayfa başına gösterilecek öğe sayısı
+        // Tez daha önce kaydedilmiş mi kontrol edelim
+        const existingThesis = savedThesis.find((th) => th.id === thesis.id);
+
+        if (!existingThesis) {
+            savedThesis.push(thesis);
+            localStorage.setItem('savedThesis', JSON.stringify(savedThesis));
+            showPopup('Tez başarıyla kaydedildi!', 'success');
+        } else {
+            // Kullanıcıdan silmek isteyip istemediğini soralım
+            const userConfirmed = confirm('Bu tez zaten kaydedilmiş. Silmek ister misiniz?');
+            if (userConfirmed) {
+                const updatedThesis = savedThesis.filter((th) => th.id !== thesis.id);
+                localStorage.setItem('savedThesis', JSON.stringify(updatedThesis));
+                showPopup('Tez başarıyla silindi!', 'success');
+            } else {
+                showPopup('Tez silinmedi.', 'info');
+            }
+        }
+    };
+
+    const showPopup = (message, type) => {
+        setPopupMessage({ message, type });
+        setTimeout(() => setPopupMessage(null), 1500);
+    };
+
+    const itemsPerPage = 4;
     const paginatedData = filteredData.slice((page - 1) * itemsPerPage, page * itemsPerPage);
+    const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+    const openRightBar = () => setRightBarOpen(true);
+    const closeRightBar = () => setRightBarOpen(false);
 
     return (
         <div className="yayinlar-main">
+            <RightBar isOpen={rightBarOpen} onClose={closeRightBar} />
+            {popupMessage && (
+                <div className={`already-popup ${popupMessage.type}`}>
+                    {popupMessage.message}
+                </div>
+            )}
             {/* Row 2 - Arama, Filtreleme, Yenileme */}
             <div className="yayinlar-main-row-2">
-                <input style={{ color: 'grey' }}
+                <input
                     type="text"
                     value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
+                    onChange={(e) => handleSearch(e.target.value)}
                     placeholder="Dinamik arama yapın..."
                     className="yayinlar-search-input"
                 />
-                <button className="yayinlar-refresh-btn" onClick={() => window.location.reload()}>
+                <button className="yayinlar-refresh-btn" onClick={fetchData} disabled={loading}>
                     <FaSync />
                 </button>
                 <div className="yayinlar-pagination">
                     <button onClick={() => setPage(page - 1)} disabled={page <= 1}>
                         ‹
                     </button>
-                    <span>{page}</span>
-                    <button
-                        onClick={() => setPage(page + 1)}
-                        disabled={page * itemsPerPage >= filteredData.length}
-                    >
+                    <span>{page}/{totalPages}</span>
+                    <button onClick={() => setPage(page + 1)} disabled={page * itemsPerPage >= filteredData.length}>
                         ›
                     </button>
                 </div>
@@ -94,38 +114,49 @@ function YonetilenTezler() {
 
             {/* Row 3 - Tablo */}
             <div className="yayinlar-main-row-3">
-                <table>
-                    <thead>
-                        <tr>
+                {loading ? (
+                    <p>Yükleniyor...</p>
+                ) : (
+                    totalPages <= 0 ? (
+                        <NotFound />
+                    ) : (
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Ad</th>
+                                    <th>Kurum</th>
+                                    <th>Grup</th>
+                                    <th>Puan</th>
+                                    <th>İşlem</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {paginatedData.map((item) => {
+                                    const savedTheses = JSON.parse(localStorage.getItem('savedThesis')) || [];
+                                    const isSaved = savedTheses.some((th) => th.id === item.id); // Kaydedildi mi kontrolü
 
-                            <th>Adı</th>
+                                    return (
+                                        <tr key={item.id}>
+                                            <td>{item.title}</td>
+                                            <td>{item.corporateName}</td>
+                                            <td>{item.group}</td>
+                                            <td>{item.score}</td>
+                                            <td>
 
-                            <th>Dil</th>
-                            <th>Türü</th>
-                            <th>Grup</th>
-                            <th>Puan</th>
-                            <th>İşlem</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {paginatedData.map((item, index) => (
-                            <tr key={index}>
-
-                                <td>{item.course_name}</td>
-
-                                <td>{item.ders_dil_adi}</td>
-                                <td>{item.dip_tur}</td>
-                                <td>{item.grup_adi}</td>
-                                <td>{item.ders_puani}</td>
-                                <td>
-                                    <button className="yayinlar-btn">
-                                        <FaPencilAlt />
-                                    </button>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+                                                <button
+                                                    className="yayinlar-btn"
+                                                    onClick={() => saveToLocalStorage(item)}
+                                                >
+                                                    {isSaved ? <FaCheckSquare /> : <FaRegSquare />}
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    );
+                                })}
+                            </tbody>
+                        </table>
+                    )
+                )}
             </div>
         </div>
     );

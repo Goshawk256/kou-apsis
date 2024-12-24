@@ -4,6 +4,7 @@
     flex-direction: column;
     width: 100%;
     padding: 20px;
+    margin-left: 4%;
 
 }
 
@@ -20,15 +21,33 @@
     padding: 10px;
     font-size: 14px;
     background-color: #ffffff;
-    border: 1px solid #eaeafa;
+    border: 1px solid #ffffff;
     border-radius: 20px;
     cursor: pointer;
     transition: background-color 0.3s ease;
     color: #639768;
 }
 
-.yayinlar-main-row-1 .yayinlar-btn:hover {
-    background-color: #eaeafa;
+
+
+.dark .yayinlar-main-row-1 .yayinlar-btn {
+    background-color: #55d935;
+    color: #333;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.yayinlar-btn.active {
+    background-color: #55d935;
+    /* Seçili durum rengi */
+    color: white;
+
+}
+
+.dark .yayinlar-btn.active {
+    background-color: #353535;
+    /* Seçili durum rengi */
+    color: grey;
 }
 
 /* Row 2 - Arama, Filtreleme, Yenileme */
@@ -43,10 +62,18 @@
 .yayinlar-main-row-2 .yayinlar-search-input {
     padding: 10px;
     font-size: 14px;
-    border: 1px solid #eaeafa;
+    border: 1px solid #ccc;
     background-color: white;
-    border-radius: 5px;
+    border-radius: 10px;
     width: 40%;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.dark .yayinlar-search-input {
+    background-color: #1c1c1c;
+    color: #ccc;
+    border: 1px solid #2a2a2a;
 }
 
 
@@ -63,6 +90,8 @@
     transition: all 0.3s ease;
 }
 
+
+
 .yayinlar-main-row-2 .yayinlar-filter-btn:hover {
     background-color: #eaeafa;
 }
@@ -75,23 +104,28 @@
 .yayinlar-main-row-2 .yayinlar-refresh-btn {
     background-color: white;
     border: 1px solid #eaeafa;
-    width: 3%;
-    margin-left: 4%;
-    border-radius: 5px;
-    color: grey;
+    width: 5%;
+    margin-left: 12px;
+    border-radius: 10px;
+    color: rgb(255, 255, 255);
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 24px;
     transition: all 0.3s ease;
+    background-color: #4cc425;
+    transition: all 0.3s ease;
 
 }
 
-.yayinlar-main-row-2 .yayinlar-refresh-btn:hover {
-    background-color: #eaeafa;
-    color: #4b8159;
+.dark .yayinlar-refresh-btn {
+    background-color: #2a2a2a;
+    border: 1px solid #212121;
+    color: rgb(103, 103, 103);
 }
+
+
 
 .yayinlar-main-row-2 .yayinlar-refresh-btn:active {
     background-color: #6e8678;
@@ -102,7 +136,9 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    margin-left: 33%;
+    margin-left: 40%;
+    margin-bottom: 12px;
+
 }
 
 .yayinlar-main-row-2 .yayinlar-pagination button {
@@ -110,8 +146,18 @@
     font-size: 35px;
     background-color: #f7f9fc;
     border: none;
-    color: #4be22d;
+    color: #55d935;
     cursor: pointer;
+}
+
+
+
+.dark .yayinlar-pagination button {
+    background-color: #1c1c1c;
+}
+
+.dark .yayinlar-pagination span {
+    color: rgb(103, 103, 103);
 }
 
 .yayinlar-main-row-2 .yayinlar-pagination button:disabled {
@@ -121,8 +167,10 @@
 
 /* Row 3 - Tablo */
 .yayinlar-main-row-3 {
-    width: 100%;
+    width: 98%;
     max-height: 500px;
+    margin-right: 3%;
+    min-height: 290px;
 
 }
 
@@ -130,8 +178,17 @@
     width: 100%;
     border-collapse: collapse;
     border: 1px solid #eaeafa;
-    border-radius: 5px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
     /* Dış kenar çizgisi */
+}
+
+.yayinlar-main-row-3 thead tr {
+    color: #ffffff;
+}
+
+.dark table {
+    border: 1px solid #212121;
 }
 
 .yayinlar-main-row-3 table th,
@@ -142,15 +199,29 @@
     border: none;
 }
 
+
+
 .yayinlar-main-row-3 table th {
-    background-color: #e7f0e9;
+    background-color: #55d935;
     border-bottom: 1px solid #ddd;
+}
+
+.dark table th {
+    background-color: #2a2a2a;
+    color: rgb(103, 103, 103);
+    border-bottom: 1px solid #212121;
 }
 
 .yayinlar-main-row-3 tbody tr td {
     font-size: 12px;
     font-weight: 500;
-    color: gray
+    color: gray;
+
+
+}
+
+.dark .yayinlar-main-row-3 tbody tr td {
+    background-color: #212121;
 }
 
 .yayinlar-main-row-3 button {
@@ -160,18 +231,24 @@
     cursor: pointer;
     color: #2de24b;
     font-size: 16px;
-    margin-left: 20%;
+    margin-left: 5%;
     border-radius: 5px;
-    background-color: #eafaea;
+
     transition: all 0.3s ease;
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: all 0.3s ease;
 }
 
 .yayinlar-main-row-3 button:hover {
     color: #148c2e;
-    background-color: #abc0b0;
+
+}
+
+.dark .yayinlar-main-row-3 button {
+    background-color: #212121;
+    border: 1px solid #212121;
 }
 
 /* Dropdown placeholder */
@@ -183,4 +260,56 @@
     padding: 5px;
     top: 100%;
     left: 0;
+}
+
+/* Yayinlar.css */
+.already-popup {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #4caf50;
+    /* Başarı mesajları için */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    transform: translateY(20px);
+    animation: slideIn 0.5s forwards, fadeOut 0.5s 2s forwards;
+    z-index: 1000;
+}
+
+.already-popup.error {
+    background-color: #f44336;
+    /* Hata mesajları için */
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+}
+
+@media (max-width: 1400px) {
+    .yayinlar-main {
+        display: flex;
+        flex-direction: column;
+        width: 88%;
+        padding: 20px;
+        margin-left: 4%;
+
+    }
 }

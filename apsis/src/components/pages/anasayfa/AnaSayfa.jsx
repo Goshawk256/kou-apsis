@@ -1,34 +1,80 @@
 import React, { useRef, useEffect, useState } from 'react';
 import './AnaSayfa.css';
-import { FaGraduationCap, FaBook } from 'react-icons/fa';
 import { Bar } from 'react-chartjs-2'; // Bar ve Doughnut grafiklerini import edelim
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, ArcElement, Title, Tooltip, Legend } from 'chart.js';
-import { getUserInfoByUsername } from '../../../service/user';
+import { getUserInfoByUsername, getLessonByUsername } from '../../../service/user';
+import { useTheme } from '../../../theme/themeContext';
+import openbookIcon from '../../../assets/open-book.svg'
+import kepIcon from '../../../assets/kep2.svg'
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, ArcElement, Title, Tooltip, Legend);
 
 function AnaSayfa() {
-
+    const { theme } = useTheme();
     const [userInfo, setUserInfo] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const chartRef = useRef(null);
-    const username = localStorage.getItem('username')
+    const username = localStorage.getItem('username');
+    const getCurrentSemester = () => {
+        const currentYear = new Date().getFullYear();
+        const currentMonth = new Date().getMonth() + 1;
+
+        // Eğer Temmuz'dan sonrasıysa, yılın ikinci yarısındayız (B)
+        if (currentMonth > 6) {
+            const crrntYr = currentYear - 1
+            const nextYear = currentYear; // Şu anki yıldan sonraki yıl
+            return `${crrntYr.toString().slice(-2)}${nextYear.toString().slice(-2)}B`;
+        } else {
+            // Ocak-Haziran dönemi, yılın ilk yarısı (G)
+            const previousYear = currentYear - 1; // Geçen yıl
+            return `${previousYear.toString().slice(-2)}${currentYear.toString().slice(-2)}G`;
+        }
+    };
+
+
     useEffect(() => {
-        const fetchUserInfo = async () => {
+        const fetchData = async () => {
             try {
-                const data = await getUserInfoByUsername(username);//biten tek bir tez var AYapıcı
-                console.log('User Info:', data);
-                setUserInfo(data[0]);
-                setLoading(false);  // Veriler geldikten sonra loading'i false yap
+                const userInfoData = await getUserInfoByUsername(username);
+                const lessonData = await getLessonByUsername(username);
+
+                console.log('Lesson Data:', lessonData);
+
+                const currentSemester = getCurrentSemester();
+                console.log('Current Semester:', currentSemester);
+
+                const semesterData = lessonData.find(lesson => lesson.semester === currentSemester);
+
+                if (!semesterData) {
+                    console.error(`Semester data for ${currentSemester} not found.`);
+                }
+
+                const doctoralStudents = semesterData?.student_stats?.doctoral_students || 0;
+                const mastersStudents = semesterData?.student_stats?.masters_students || 0;
+
+                console.log('Doctoral Students:', doctoralStudents);
+                console.log('Masters Students:', mastersStudents);
+
+                setUserInfo({
+                    ...userInfoData[0],
+                    studentdata: {
+                        phdStudentCount: doctoralStudents,
+                        masterStudentCount: mastersStudents,
+                    }
+                });
+
+                setLoading(false);
             } catch (err) {
-                setError('Error fetching user information');
+                console.error('Error fetching data:', err);
+                setError('Error fetching data');
                 setLoading(false);
             }
         };
 
-        fetchUserInfo();
+        fetchData();
     }, []);
+
 
     if (loading) {
         return <div>
@@ -99,33 +145,33 @@ function AnaSayfa() {
     } : {};
 
     return (
-        <div className='main-anasayfa'>
+        <div className={`main-anasayfa ${theme}`}>
             {/* 1. Satır Kartları */}
             <div className='anasayfa-row-1'>
                 <div className='anasayfa-row-1-card'>
                     <div className='card-row-1'>
-                        <FaGraduationCap size={30} />
+                        <img style={{ width: '30px' }} src={kepIcon} alt="" />
                         <label>H-İndex (WoS)</label>
                     </div>
                     <div className='card-inner-count'>{userInfo.hindex.sciHindex}</div>
                 </div>
                 <div className='anasayfa-row-1-card'>
                     <div className='card-row-1'>
-                        <FaGraduationCap size={30} />
+                        <img style={{ width: '30px' }} src={kepIcon} alt="" />
                         <label>Dil Puanı</label>
                     </div>
                     <div className='card-inner-count'>{userInfo.languagedata || '-'}</div>
                 </div>
                 <div className='anasayfa-row-1-card'>
                     <div className='card-row-1'>
-                        <FaGraduationCap size={30} />
+                        <img style={{ width: '30px' }} src={kepIcon} alt="" />
                         <label>Yüksek Lis. Öğr. Say.</label>
                     </div>
                     <div className='card-inner-count'>{userInfo.studentdata.masterStudentCount || '-'}</div>
                 </div>
                 <div className='anasayfa-row-1-card'>
                     <div className='card-row-1'>
-                        <FaGraduationCap size={30} />
+                        <img style={{ width: '30px' }} src={kepIcon} alt="" />
                         <label>Doktora Öğr. Say.</label>
                     </div>
                     <div className='card-inner-count'>{userInfo.studentdata.phdStudentCount || '-'}</div>
@@ -136,7 +182,7 @@ function AnaSayfa() {
             <div className='anasayfa-row-2'>
                 <div className='anasayfa-row-2-card'>
                     <div className='card-row-1'>
-                        <FaBook size={30} />
+                        <img style={{ width: '30px' }} src={openbookIcon} alt="" />
                         <label>Toplam Yayın Sayısı<strong>({userInfo.userdata.publicationCount})</strong></label>
                     </div>
                     {/* Yayın Sayısı Grafiği */}
@@ -158,7 +204,7 @@ function AnaSayfa() {
                 </div>
                 <div className='anasayfa-row-2-card'>
                     <div className='card-row-1'>
-                        <FaBook size={30} />
+                        <img style={{ width: '30px' }} src={openbookIcon} alt="" />
                         <label>Toplam Atıf Sayısı <strong>({userInfo.userdata.citationCount})</strong></label>
                     </div>
                     {/* Atıf Sayısı Grafiği */}

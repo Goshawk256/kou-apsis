@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import './HomePage.css';
 import SideBar from '../components/sidebar/SideBar';
 import Header from '../components/header/Header';
@@ -10,49 +10,52 @@ import SanatsalFaaliyetler from '../components/pages/sanat/SanatsalFaaliyetler';
 import YonetilenTezler from '../components/pages/tezler/YonetilenTezler';
 import Yayinlar from '../components/pages/yayinlar/Yayinlar';
 import Projeler from '../components/pages/projeler/Projeler';
-
+import Basvurular from '../components/pages/basvurular/Basvuru';
+import { useTheme } from '../theme/themeContext';
 
 function HomePage() {
+    const { theme } = useTheme();
     const [selectedPage, setSelectedPage] = useState('Ana Sayfa');
-    const username = localStorage.getItem('username')
-    const navigate = useNavigate();
-    const handleLogout = () => {
-        localStorage.removeItem('username')
-        navigate('/')
-    }
 
     const renderContent = () => {
         switch (selectedPage) {
             case 'Ana Sayfa':
-                return <div><AnaSayfa /></div>;
+                return <AnaSayfa />;
             case 'Yayınlarım':
-                return <div><Yayinlar /></div>;
+                return <Yayinlar />;
             case 'Derslerim':
-                return <div><Dersler /></div>;
+                return <Dersler />;
             case 'Yönetilen Tezler':
-                return <div><YonetilenTezler /></div>;
+                return <YonetilenTezler />;
             case 'Proje Görevlerim':
-                return <div><Projeler /></div>;
+                return <Projeler />;
             case 'Ödüller':
-                return <div><Oduller /></div>;
+                return <Oduller />;
             case 'Sanatsal Faaliyet':
-                return <div><SanatsalFaaliyetler /></div>;
-            case 'Başvurularım':
-                return <div>Başvurular yer alacak.</div>;
-            case 'Çıkış Yap':
-                return handleLogout();
+                return <SanatsalFaaliyetler />;
+            case 'Başvuru Yap':
+                return <Basvurular />;
             default:
-                return <div><AnaSayfa /></div>;
+                return <AnaSayfa />;
         }
     };
 
-
     return (
-        <div className="main-homepage">
-            <Header username={username} />
+        <div className={`main-homepage ${theme}`}>
+            <Header />
             <SideBar onSelect={setSelectedPage} />
             <div className="flexible-component">
-                {renderContent()}
+                <AnimatePresence mode="wait">
+                    <motion.div
+                        key={selectedPage}
+                        initial={{ opacity: 0, x: -50 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: 50 }}
+                        transition={{ duration: 0.3 }}
+                    >
+                        {renderContent()}
+                    </motion.div>
+                </AnimatePresence>
             </div>
         </div>
     );

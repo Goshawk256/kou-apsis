@@ -4,6 +4,13 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   plugins: [react()],
   server: {
-    port: 5000, // Çalıştırmak istediğiniz port
+    proxy: {
+      '/api': {
+        target: 'http://192.168.2.16:8181',
+        changeOrigin: true,
+        secure: false,
+      },
+    },
+    port: 5000
   },
 });
