@@ -38,7 +38,7 @@ function Finish() {
             x: 5,
             y: 10,
             html2canvas: {
-                scale: 0.165,
+                scale: 0.168,
                 width: element.scrollWidth,
                 height: element.scrollHeight,
             },
