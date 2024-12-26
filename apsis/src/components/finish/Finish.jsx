@@ -35,7 +35,7 @@ function Finish() {
 
                 doc.save('basvuru-content.pdf');
             },
-            x: 5,
+            x: 3,
             y: 10,
             html2canvas: {
                 scale: 0.168,
@@ -108,7 +108,7 @@ function Finish() {
                 <table className='finish-table'>
                     <thead>
                         <tr>
-                            <td colSpan="4" className="table-header"> <strong>A. Makaleler</strong> Basvurulan bilim alani ile ilgili tam arastirma ve derleme makaleleri (editore mektup, ozet, vaka takdimi, teknik
+                            <td colSpan="4" className="table-header"> <strong>A. Makaleler  </strong> Basvurulan bilim alani ile ilgili tam arastirma ve derleme makaleleri (editore mektup, ozet, vaka takdimi, teknik
                                 not ve kitap kritigi hariç)</td>
                         </tr>
                     </thead>
@@ -229,7 +229,7 @@ function Finish() {
                 <table className='finish-table'>
                     <thead>
                         <tr>
-                            <td colSpan="4" className="table-header"> <strong>B. Bilimsel Toplanti Faaliyetleri</strong>
+                            <td colSpan="4" className="table-header"> <strong>B. Bilimsel Toplanti Faaliyetleri  </strong>
                             </td>
                         </tr>
                     </thead>
@@ -392,7 +392,7 @@ function Finish() {
                 <table className='finish-table'>
                     <thead>
                         <tr>
-                            <td colSpan="4" className="table-header"> <strong>C. KITAPLAR</strong> (Yabanci dildeki kitaplarin puanlari 1.5 ile çarpildiktan sonra hesaplama kullanilir)
+                            <td colSpan="4" className="table-header"> <strong>C. KITAPLAR  </strong> (Yabanci dildeki kitaplarin puanlari 1.5 ile çarpildiktan sonra hesaplama kullanilir)
                             </td>
                         </tr>
                     </thead>
@@ -503,7 +503,7 @@ function Finish() {
                 <table className='finish-table'>
                     <thead>
                         <tr>
-                            <td colSpan="4" className="table-header"> <strong>D. Atiflar</strong> (Atif yapan eserlerin belgelenmesi kaydiyla, bu yonetmeligin Temel Ilkeler bolumundeki atiflara iliskin
+                            <td colSpan="4" className="table-header"> <strong>D. Atiflar  </strong> (Atif yapan eserlerin belgelenmesi kaydiyla, bu yonetmeligin Temel Ilkeler bolumundeki atiflara iliskin
                                 açiklamalar dikkate alinir)</td>
                         </tr>
                     </thead>
@@ -586,7 +586,7 @@ function Finish() {
                 <table className='finish-table'>
                     <thead>
                         <tr>
-                            <td colSpan="4" className="table-header"> <strong>E. EGITIM OGRETIM FAALIYETLERI</strong> (Son uç yilda verdigi dersler, Azami 50 puan, doktora unvanindan sonra)</td>
+                            <td colSpan="4" className="table-header"> <strong>E. EGITIM OGRETIM FAALIYETLERI  </strong> (Son uç yilda verdigi dersler, Azami 50 puan, doktora unvanindan sonra)</td>
                         </tr>
                     </thead>
                     <tbody>
@@ -648,7 +648,7 @@ function Finish() {
                 <table className='finish-table'>
                     <thead>
                         <tr>
-                            <td colSpan="4" className="table-header"> <strong>F. TEZ YONETICILIGI</strong> (Tamamlanmis olmasi kaydiyla)</td>
+                            <td colSpan="4" className="table-header"> <strong>F. TEZ YONETICILIGI  </strong> (Tamamlanmis olmasi kaydiyla)</td>
                         </tr>
                     </thead>
                     <tbody>
@@ -715,7 +715,7 @@ function Finish() {
                 <table className='finish-table'>
                     <thead>
                         <tr>
-                            <td colSpan="4" className="table-header"> <strong>G. PATENTLER</strong></td>
+                            <td colSpan="4" className="table-header"> <strong>G. PATENTLER  </strong></td>
                         </tr>
                     </thead>
                     <tbody>
@@ -817,7 +817,7 @@ function Finish() {
                 <table className='finish-table'>
                     <thead>
                         <tr>
-                            <td colSpan="4" className="table-header"> <strong>H. ARASTIRMA PROJELERI</strong> (Tamamlanmis veya devam ediyor olmak kosuluyla, projenin en az bir yil sureli oldugu
+                            <td colSpan="4" className="table-header"> <strong>H. ARASTIRMA PROJELERI  </strong> (Tamamlanmis veya devam ediyor olmak kosuluyla, projenin en az bir yil sureli oldugu
                                 ve hakem degerlendirilmesinden geçtigi belgelenir ve projenin butçesi, kabul edildigi yildaki en son açiklanan memur
                                 taban aylik katsayisinin en az 5000 kati olmalidir.)</td>
                         </tr>
@@ -1161,7 +1161,7 @@ function Finish() {
                 <table className='finish-table'>
                     <thead>
                         <tr>
-                            <td colSpan="4" className="table-header"> <strong>I. EDITORLUK, YAYIN KURULU UYELIGI VE HAKEMLIK FAALIYETLERI</strong></td>
+                            <td colSpan="4" className="table-header"> <strong>I. EDITORLUK, YAYIN KURULU UYELIGI VE HAKEMLIK FAALIYETLERI  </strong></td>
                         </tr>
                     </thead>
                     <tbody>
@@ -1341,7 +1341,7 @@ function Finish() {
                 <table className='finish-table'>
                     <thead>
                         <tr>
-                            <td colSpan="4" className="table-header"> <strong>J. ODULLER</strong></td>
+                            <td colSpan="4" className="table-header"> <strong>J. ODULLER  </strong></td>
                         </tr>
                     </thead>
                     <tbody>
@@ -1575,7 +1575,7 @@ function Finish() {
                 <table className='finish-table'>
                     <thead>
                         <tr>
-                            <td colSpan="4" className="table-header"> <strong>K. IDARI GOREVLER VE UNIVERSITEYE KATKI FAALIYETLERI </strong>
+                            <td colSpan="4" className="table-header"> <strong>K. IDARI GOREVLER VE UNIVERSITEYE KATKI FAALIYETLERI   </strong>
                                 (Idari gorevlerde vekaleten de olsa en az 6 ay gorev yapmis olmak, ayni anda birden fazla idari gorevi olanlar için en
                                 yuksek puan dikkate alinir ve normal suresi dolup yeniden atamalar ayrica puanlanir. Bu kisimda en fazla 50 puan
                                 dikkate alinir)
@@ -1740,7 +1740,7 @@ function Finish() {
                 <table className='finish-table'>
                     <thead>
                         <tr>
-                            <td colSpan="4" className="table-header"> <strong>L. SANAT VE TASARIM ALANLARI </strong>
+                            <td colSpan="4" className="table-header"> <strong>L. SANAT VE TASARIM ALANLARI   </strong>
                                 (Kurumsal ve Uygulama Alanlari)
                             </td>
 
@@ -1974,7 +1974,7 @@ function Finish() {
                 <table className='finish-table'>
                     <thead>
                         <tr>
-                            <td colSpan="4" className="table-header"> <strong>M. KONSERVATUVAR </strong>
+                            <td colSpan="4" className="table-header"> <strong>M. KONSERVATUVAR   </strong>
                                 (Kurumsal ve Uygulama Alanlari, Devlet Konservatuvari Muzikoloji Bolumu / Muzik Bolumu /
                                 Turk Muzigi Bolumu)
                             </td>
@@ -2782,39 +2782,39 @@ function Finish() {
                                 açiklanir)</td>
                         </tr>
                         <tr>
-                            <td colSpan={1}><strong>Bolum A - A.1-A.2</strong></td>
+                            <td colSpan={1}><strong>Bolum A - A.1-A.2  </strong></td>
                             <td colSpan={3}></td>
                         </tr>
                         <tr>
-                            <td colSpan={1}><strong>Bolum A - A.1-A.4</strong></td>
+                            <td colSpan={1}><strong>Bolum A - A.1-A.4  </strong></td>
                             <td colSpan={3}></td>
                         </tr>
                         <tr>
-                            <td colSpan={1}><strong>Bolum A - A.1-A.5</strong></td>
+                            <td colSpan={1}><strong>Bolum A - A.1-A.5  </strong></td>
                             <td colSpan={3}></td>
                         </tr>
                         <tr>
-                            <td colSpan={1}><strong>Bolum A - A.1-A.6</strong></td>
+                            <td colSpan={1}><strong>Bolum A - A.1-A.6  </strong></td>
                             <td colSpan={3}></td>
                         </tr>
                         <tr>
-                            <td colSpan={1}><strong>Bolum A - A.1-A.8</strong></td>
+                            <td colSpan={1}><strong>Bolum A - A.1-A.8  </strong></td>
                             <td colSpan={3}></td>
                         </tr>
                         <tr>
-                            <td colSpan={1}><strong>Bolum A - A.1-A.8</strong></td>
+                            <td colSpan={1}><strong>Bolum A - A.1-A.8  </strong></td>
                             <td colSpan={3}></td>
                         </tr>
                         <tr>
-                            <td colSpan={1}><strong>Baslica Yazar</strong></td>
+                            <td colSpan={1}><strong>Baslica Yazar  </strong></td>
                             <td colSpan={3}></td>
                         </tr>
                         <tr>
-                            <td colSpan={1}><strong>Toplam Makale</strong></td>
+                            <td colSpan={1}><strong>Toplam Makale  </strong></td>
                             <td colSpan={3}></td>
                         </tr>
                         <tr>
-                            <td colSpan={1}><strong>Kisisel ve Karma Etkinlik</strong></td>
+                            <td colSpan={1}><strong>Kisisel ve Karma Etkinlik  </strong></td>
                             <td colSpan={3}></td>
                         </tr>
                         <tr>

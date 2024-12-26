@@ -19,20 +19,7 @@ function Basvuru({ onSelect }) {
         const endIndex = startIndex + itemsPerPage;
         return data.slice(startIndex, endIndex);
     };
-    const downloadPDF = () => {
-        const doc = new jsPDF();
-        const element = document.querySelector('.basvuru-main');
 
-        doc.html(element, {
-            callback: function (doc) {
-                doc.save('basvuru-content.pdf');
-            },
-
-            x: 0,
-            y: 0,
-            html2canvas: { scale: 0.163 } // Adjust the scale for better quality
-        });
-    };
 
     const isValidDate = (date) => {
         const minDate = new Date('1900-01-01');

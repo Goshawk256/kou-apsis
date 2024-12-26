@@ -3,6 +3,7 @@
     flex-direction: column;
     width: 100%;
     padding: 20px;
+    margin-left: 3%;
 
 }
 
@@ -30,6 +31,7 @@
     border: 1px solid #d0d0d0;
     padding: 10px;
     text-align: left;
+    font-size: 12px;
 }
 
 .finish-table .table-header {
