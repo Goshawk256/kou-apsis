@@ -1,0 +1,68 @@
+.finish-main {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 20px;
+
+}
+
+.table-container {
+    max-height: 550px;
+    /* Taşma noktasında kaydırmayı tetiklemek için */
+    overflow-y: auto;
+    scrollbar-width: none;
+    /* Y ekseninde kaydırma */
+    overflow-x: hidden;
+    /* X eksenindeki kaydırmayı engellemek için */
+    border: 1px solid #d0d0d0;
+    /* Görselleştirme için çerçeve */
+}
+
+.finish-table {
+    width: 100%;
+    /* Tablo genişliği kapsayıcıya sığmalı */
+    border-collapse: collapse;
+    /* Sınırların birleşmesi */
+}
+
+.finish-table th,
+.finish-table td {
+    border: 1px solid #d0d0d0;
+    padding: 10px;
+    text-align: left;
+}
+
+.finish-table .table-header {
+    background-color: #bcbcbc;
+}
+
+/* Tablolar için genel stil */
+.finish-table {
+    width: 100%;
+    border-collapse: collapse;
+    /* Hücre kenarlarını birleştir */
+}
+
+/* Tüm satırlar için grid yapısı */
+.finish-table tr {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+    /* Dinamik sütun genişliği */
+    width: 100%;
+}
+
+/* Hücreler */
+.finish-table td,
+.finish-table th {
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: center;
+    word-wrap: break-word;
+    /* Uzun metinleri sar */
+}
+
+/* Başlık */
+.finish-table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}

@@ -1,5 +1,4 @@
-import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
-import { AnimatePresence, motion } from 'framer-motion';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import HomePage from './home/HomePage';
 import Login from './components/login/Login';
 import Header from './components/header/Header';
@@ -9,58 +8,26 @@ import { useEffect } from 'react';
 function App() {
   return (
     <ThemeProvider>
-
-      <Router>
-        <ThemedApp />
-      </Router>
+      <ThemedApp />
     </ThemeProvider>
   );
 }
 
 function ThemedApp() {
-  const { theme } = useTheme();
-  const location = useLocation();
+  const { theme } = useTheme();  // Tema bilgisi burada alınacak
   useEffect(() => {
-    document.body.className = theme;
+    document.body.className = theme; // body'ye tema sınıfını ekle
   }, [theme]);
-
   return (
-    <div className={theme}>
-      <Header />
-      <AnimatePresence mode="wait">
-        <Routes location={location} key={location.pathname}>
-          <Route
-            path="/"
-            element={
-              <AnimatedPage>
-                <Login />
-              </AnimatedPage>
-            }
-          />
-          <Route
-            path="/home"
-            element={
-              <AnimatedPage>
-                <HomePage />
-              </AnimatedPage>
-            }
-          />
+    <div className={theme}> {/* Burada temayı kullanıyoruz */}
+      <Router>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/home" element={<HomePage />} />
         </Routes>
-      </AnimatePresence>
+      </Router>
     </div>
-  );
-}
-
-function AnimatedPage({ children }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, x: -50 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: 50 }}
-      transition={{ duration: 0.3 }}
-    >
-      {children}
-    </motion.div>
   );
 }
 

@@ -5,6 +5,7 @@
     padding: 20px;
     margin-left: 3%;
     min-height: 500px;
+
 }
 
 .basvuru-container {
@@ -23,6 +24,7 @@
     flex-direction: column;
     width: 100%;
     margin-right: 10%;
+    margin-bottom: 1%;
 
 
 }
@@ -61,7 +63,7 @@
 }
 
 .get-publications-button {
-    background-color: #54c61b;
+    background-color: #1FA54E;
     color: #ffffff;
     border: none;
     padding: 9px;
@@ -77,7 +79,7 @@
     font-size: 14px;
     border: none;
     border-radius: 4px;
-    background-color: #54c61b;
+    background-color: #1FA54E;
     color: #fff;
     transition: all 0.3s ease;
     margin-top: 0 !important;
@@ -112,9 +114,7 @@
 
 
 
-.get-publications-button:hover {
-    background-color: #7fdb50;
-}
+
 
 .publications-list {
     list-style-type: disc;
@@ -182,12 +182,12 @@
 
 
 .pagination {
-    margin-left: 89%;
+    margin-left: 0%;
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-around;
-    width: 10%;
+    justify-content: space-between;
+    width: 100%;
     height: 3;
     background-color: transparent;
 }
@@ -197,7 +197,7 @@
     font-size: 25px;
     background-color: transparent;
     border: none;
-    color: #55d935;
+    color: #1FA54E;
     cursor: pointer;
 
 }
@@ -257,7 +257,7 @@
     flex-direction: row;
     align-items: start;
     justify-content: start;
-    background: #55d935;
+    background: #1FA54E;
     border-radius: 8px;
     box-shadow: 0px 0px 5px -3px #111;
 }
@@ -344,7 +344,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #55d935 !important;
+    background-color: #1FA54E !important;
     color: #fff !important;
     width: 100px;
     border-radius: 5px;
@@ -356,20 +356,15 @@
 
 }
 
-.apply-button:hover {
-    background-color: #7fdb50 !important;
-}
+
 
 .dark .apply-button {
     background-color: #2a2a2a !important;
-    color: #50aa24 !important;
+    color: #1FA54E !important;
     transition: all 0.3s ease;
 }
 
-.dark .apply-button:hover {
-    background-color: #333 !important;
-    color: #99df76 !important;
-}
+
 
 .yayinlar-main-row-3 p {
     color: #7a7a7a;
@@ -377,14 +372,11 @@
 
 .dark .get-publications-button {
     background-color: #2a2a2a !important;
-    color: #50aa24 !important;
+    color: #1FA54E !important;
     transition: all 0.3s ease;
 }
 
-.dark .get-publications-button:hover {
-    background-color: #333 !important;
-    color: #99df76 !important;
-}
+
 
 .dark .date-picker input[type='date'] {
     border: none;

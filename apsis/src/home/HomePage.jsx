@@ -11,6 +11,7 @@ import YonetilenTezler from '../components/pages/tezler/YonetilenTezler';
 import Yayinlar from '../components/pages/yayinlar/Yayinlar';
 import Projeler from '../components/pages/projeler/Projeler';
 import Basvurular from '../components/pages/basvurular/Basvuru';
+import Finish from '../components/finish/Finish';
 import { useTheme } from '../theme/themeContext';
 
 function HomePage() {
@@ -34,7 +35,9 @@ function HomePage() {
             case 'Sanatsal Faaliyet':
                 return <SanatsalFaaliyetler />;
             case 'Başvuru Yap':
-                return <Basvurular />;
+                return <Basvurular onSelect={setSelectedPage} />;
+            case 'Finish':
+                return <Finish />;
             default:
                 return <AnaSayfa />;
         }
