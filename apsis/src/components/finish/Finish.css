@@ -34,6 +34,10 @@
     font-size: 12px;
 }
 
+.finish-table strong {
+    margin-right: 5px;
+}
+
 .finish-table .table-header {
     background-color: #bcbcbc;
 }
