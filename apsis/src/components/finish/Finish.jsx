@@ -9,12 +9,14 @@ function Finish() {
     const downloadPDF = () => {
         const doc = new jsPDF();
 
-        // Font dosyasini public/fonts klasorunden yukleyin
+        // Font dosyasını public/fonts klasöründen yükleyin
         doc.addFileToVFS('FreeSerif.ttf', '/fonts/FreeSerif.ttf');
-        doc.addFont('/fonts/FreeSerif.ttf', 'FreeSerif', 'normal');
-        doc.setFont('FreeSerif'); // Turkçe karakterler için fontu kullanmaya basla
+        doc.addFont('FreeSerif.ttf', 'FreeSerif', 'normal');
+        doc.setFont('FreeSerif');
 
         const element = document.querySelector('.table-container');
+        const elementWidth = element.scrollWidth; // Tam genişlik
+        const elementHeight = element.scrollHeight; // Tam yükseklik
 
         doc.html(element, {
             callback: function (doc) {
@@ -23,12 +25,15 @@ function Finish() {
             x: 5,
             y: 10,
             html2canvas: {
-                scale: 0.165,
-                width: element.scrollWidth,
-                height: element.scrollHeight,
+                scale: 0.165, // Daha yüksek çözünürlükte çalışır
+                width: elementWidth, // Tam genişlikte
+                height: elementHeight, // Tam yükseklikte
+                windowWidth: elementWidth, // Tarayıcı boyutunda işleme
+                windowHeight: elementHeight, // Tarayıcı boyutunda işleme
             },
         });
     };
+
 
     return (
         <div className='finish-main'>
