@@ -15,24 +15,36 @@ function Finish() {
         doc.setFont('FreeSerif');
 
         const element = document.querySelector('.table-container');
-        const elementWidth = element.scrollWidth; // Tam genişlik
-        const elementHeight = element.scrollHeight; // Tam yükseklik
 
+        // Orijinal stilleri sakla
+        const originalStyles = {
+            height: element.style.height,
+            overflow: element.style.overflow,
+        };
+
+        // Scroll kaldır ve tüm içeriği görünür yap
+        element.style.height = `${element.scrollHeight}px`;
+        element.style.overflow = 'visible';
+
+        // HTML'i PDF'ye çevir
         doc.html(element, {
             callback: function (doc) {
+                // Orijinal stilleri geri yükle
+                element.style.height = originalStyles.height;
+                element.style.overflow = originalStyles.overflow;
+
                 doc.save('basvuru-content.pdf');
             },
             x: 5,
             y: 10,
             html2canvas: {
-                scale: 0.165, // Daha yüksek çözünürlükte çalışır
-                width: elementWidth, // Tam genişlikte
-                height: elementHeight, // Tam yükseklikte
-                windowWidth: elementWidth, // Tarayıcı boyutunda işleme
-                windowHeight: elementHeight, // Tarayıcı boyutunda işleme
+                scale: 0.165,
+                width: element.scrollWidth,
+                height: element.scrollHeight,
             },
         });
     };
+
 
 
     return (
