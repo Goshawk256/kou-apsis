@@ -20,10 +20,10 @@ function Finish() {
             callback: function (doc) {
                 doc.save('basvuru-content.pdf');
             },
-            x: 0,
-            y: 0,
+            x: 5,
+            y: 10,
             html2canvas: {
-                scale: 0.163,
+                scale: 0.165,
                 width: element.scrollWidth,
                 height: element.scrollHeight,
             },
