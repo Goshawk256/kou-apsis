@@ -15,6 +15,7 @@ function Header() {
     const [userInfo, setUserInfo] = useState(null);
     const username = localStorage.getItem('username');
 
+
     useEffect(() => {
         setIsLoggedIn(!!username);
     }, [username]);
@@ -54,6 +55,10 @@ function Header() {
     }, []);
 
 
+    const capitalizeName = (name) => {
+        return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+    };
+
     return (
         isLoggedIn ? (
             isLoading ? (
@@ -79,7 +84,7 @@ function Header() {
                         <span className="msg-count">0</span>
                     </button>
                     <div className="username">
-                        {userInfo?.cvTitle?.primary || ''} {username}
+                        {userInfo?.cvTitle?.primary || ''} {capitalizeName(userInfo.name)} {capitalizeName(userInfo.surname)}
                     </div>
                     <div className="checkbox-wrapper-35">
                         <input

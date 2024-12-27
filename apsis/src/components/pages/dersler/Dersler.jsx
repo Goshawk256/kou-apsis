@@ -145,6 +145,7 @@ function Dersler() {
 
             {/* Row 3 - Tablo */}
             <div className="yayinlar-main-row-3">
+                Bu sayfa şuanda Bakım Aşamasındadır,seçimleriniz doğru çalışmayabilir.
                 {totalPages <= 0 ? (
                     <NotFound />
                 ) : (

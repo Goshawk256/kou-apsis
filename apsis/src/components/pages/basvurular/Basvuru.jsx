@@ -2,10 +2,9 @@ import React, { useState } from 'react';
 import { useTheme } from '../../../theme/themeContext';
 import './Basvuru.css';
 import { motion, AnimatePresence } from 'framer-motion';
-import { jsPDF } from 'jspdf';
 function Basvuru({ onSelect }) {
     const theme = useTheme();
-    const [selectedOption, setSelectedOption] = useState('Doktora Öğr. Ü.');
+    const [selectedOption, setSelectedOption] = useState('Dr. Öğr. Ü.');
     const [previousPromotionDate, setPreviousPromotionDate] = useState('');
     const [tableData, setTableData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -29,6 +28,7 @@ function Basvuru({ onSelect }) {
 
     const handleOptionChange = (e) => {
         setSelectedOption(e.target.value);
+        localStorage.setItem('selectedOption', e.target.value);
     };
 
     const handleDateChange = (e) => {
@@ -163,8 +163,8 @@ function Basvuru({ onSelect }) {
                                     type='radio'
                                     id='radio-doktora'
                                     name='basvuru'
-                                    value='Doktora Öğr. Ü.'
-                                    checked={selectedOption === 'Doktora Öğr. Ü.'}
+                                    value='Dr. Öğr. Ü.'
+                                    checked={selectedOption === 'Dr. Öğr. Ü.'}
                                     onChange={handleOptionChange} />
                                 <span className="name">Dr.Öğr.Ü.</span>
                             </label>
@@ -173,8 +173,8 @@ function Basvuru({ onSelect }) {
                                     type='radio'
                                     id='radio-docentlik'
                                     name='basvuru'
-                                    value='Doçentlik'
-                                    checked={selectedOption === 'Doçentlik'}
+                                    value='Doç. Dr.'
+                                    checked={selectedOption === 'Doç. Dr.'}
                                     onChange={handleOptionChange} />
                                 <span className="name">Doç.</span>
                             </label>
@@ -184,8 +184,8 @@ function Basvuru({ onSelect }) {
                                     type='radio'
                                     id='radio-profluk'
                                     name='basvuru'
-                                    value='Profluk'
-                                    checked={selectedOption === 'Profluk'}
+                                    value='Prof. Dr.'
+                                    checked={selectedOption === 'Prof. Dr.'}
                                     onChange={handleOptionChange} />
                                 <span className="name">Prof.</span>
                             </label>

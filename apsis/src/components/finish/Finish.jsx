@@ -1,10 +1,12 @@
 import React from 'react';
 import { jsPDF } from 'jspdf';
 import './Finish.css';
+import { useState, useEffect } from 'react';
 
 
 function Finish() {
 
+    const [userInfo, setUserInfo] = useState(null);
 
     const downloadPDF = () => {
         const doc = new jsPDF();
@@ -44,7 +46,43 @@ function Finish() {
             },
         });
     };
+    const getSelectedStaff = () => {
+        const staff = localStorage.getItem('selectedOption');
+        return staff;
+    }
 
+    useEffect(() => {
+        const fetchData = () => {
+            try {
+                const response = localStorage.getItem('userInfo');
+                if (response) {
+                    const parsedData = JSON.parse(response); // JSON string'i parse ediyoruz.
+                    const userInfoData = parsedData?.[0]; // Dizinin ilk elemanını alıyoruz.
+                    if (userInfoData) {
+                        setUserInfo(userInfoData);
+                    } else {
+                        setError('User data not found in array.');
+                    }
+                } else {
+                    setError('User data not found in localStorage.');
+                }
+            } catch (err) {
+                console.error('Error fetching data:', err);
+                setError('Error fetching data.');
+            }
+        };
+
+        fetchData();
+    }, []);
+    const capitalizeName = (name) => {
+        const turkishChars = {
+            'ç': 'c', 'ğ': 'g', 'ı': 'i', 'ö': 'o', 'ş': 's', 'ü': 'u',
+            'Ç': 'C', 'Ğ': 'G', 'İ': 'I', 'Ö': 'O', 'Ş': 'S', 'Ü': 'U'
+        };
+        const replaceTurkishChars = (char) => turkishChars[char] || char;
+        const normalized = name.split('').map(replaceTurkishChars).join('');
+        return normalized.charAt(0).toUpperCase() + normalized.slice(1).toLowerCase();
+    };
 
 
     return (
@@ -54,25 +92,27 @@ function Finish() {
 
                     <thead>
                         <tr>
-                            <th colSpan="4" className="table-header">GENEL PUANLAMA BILGILERI</th>
+                            <th colSpan="4" className="table-header">GENEL  PUANLAMA BILGILERI</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td colSpan={1}>Adi Soyadi  (Unvani):</td>
-                            <td colSpan={3}></td>
+                            <td colSpan={3}>
+                                {userInfo ? `${capitalizeName(userInfo.name)} ${capitalizeName(userInfo.surname)}` : 'Veri Bulunamadı'}
+                            </td>
                         </tr>
                         <tr>
                             <td colSpan={1}>Tarih:</td>
-                            <td colSpan={3}></td>
+                            <td colSpan={3}>{new Date().toLocaleDateString()}</td>
                         </tr>
                         <tr>
                             <td colSpan={1}>Basvurulan Birim:</td>
-                            <td colSpan={3}></td>
+                            <td colSpan={3}>  </td>
                         </tr>
                         <tr>
                             <td colSpan={1}>Basvurdugu Akademik Kadro:</td>
-                            <td colSpan={3}></td>
+                            <td colSpan={3}> {getSelectedStaff()} </td>
                         </tr>
                         <tr>
                             <td colSpan={4} style={{ textAlign: 'center' }}>Puanlanan Faaliyet Donemi</td>

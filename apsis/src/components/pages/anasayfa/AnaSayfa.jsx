@@ -39,6 +39,7 @@ function AnaSayfa() {
                 const userInfoData = await getUserInfoByUsername(username);
                 const lessonData = await getLessonByUsername(username);
 
+                localStorage.setItem('userInfo', JSON.stringify(userInfoData));
                 console.log('Lesson Data:', lessonData);
 
                 const currentSemester = getCurrentSemester();
