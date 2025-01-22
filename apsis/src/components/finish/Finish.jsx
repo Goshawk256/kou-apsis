@@ -37,10 +37,10 @@ function Finish() {
 
                 doc.save('basvuru-content.pdf');
             },
-            x: 3,
+            x: 0,
             y: 10,
             html2canvas: {
-                scale: 0.168,
+                scale: 0.174,
                 width: element.scrollWidth,
                 height: element.scrollHeight,
             },

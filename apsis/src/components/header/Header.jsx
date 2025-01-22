@@ -11,10 +11,9 @@ function Header() {
     const { theme, toggleTheme } = useTheme();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const navigate = useNavigate();
-    const [error, setError] = useState(null)
+    // const [error, setError] = useState(null)
     const [userInfo, setUserInfo] = useState(null);
     const username = localStorage.getItem('username');
-
 
     useEffect(() => {
         setIsLoggedIn(!!username);
@@ -31,7 +30,7 @@ function Header() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                setIsLoading(true); // Yükleme başladığında true yap
+                setIsLoading(true);
 
 
                 const response = await getUserInfoByUsername(username);
@@ -41,30 +40,30 @@ function Header() {
                 if (userInfoData) {
                     setUserInfo(userInfoData);
                 } else {
-                    setError('User data not found.');
+                    console.error('User data not found.');
                 }
             } catch (err) {
                 console.error('Error fetching data:', err);
-                setError('Error fetching data');
+                console.error('Error fetching data');
             } finally {
-                setIsLoading(false); // Yükleme tamamlandıktan sonra false yap
+                setIsLoading(false);
             }
         };
 
         fetchData();
-    }, []);
+        return () => {
+            setUserInfo(null);
 
+        };
+    }, [username]);
 
-    const capitalizeName = (name) => {
-        return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
-    };
 
     return (
         isLoggedIn ? (
             isLoading ? (
                 <div className="loading">
 
-                </div> // Yüklenme sırasında gösterilecek
+                </div>
             ) : (
                 <div className={`header-container ${theme}`}>
                     <div className="site-name">
@@ -84,13 +83,13 @@ function Header() {
                         <span className="msg-count">0</span>
                     </button>
                     <div className="username">
-                        {userInfo?.cvTitle?.primary || ''} {capitalizeName(userInfo.name)} {capitalizeName(userInfo.surname)}
+                        {userInfo?.cvTitle?.primary || ''} {username}
                     </div>
                     <div className="checkbox-wrapper-35">
                         <input
                             value="private"
                             name="themeSwitch"
-                            id="themeSwitch"
+                            id={`themeSwitch`}
                             type="checkbox"
                             className="switch"
                             checked={theme === 'dark'}

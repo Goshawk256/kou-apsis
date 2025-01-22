@@ -72,3 +72,14 @@
     background-color: #f4f4f4;
     font-weight: bold;
 }
+
+@media (max-width: 1400px) {
+    .finish-main {
+        display: flex;
+        flex-direction: column;
+        width: 88%;
+        padding: 20px;
+        margin-left: 4%;
+
+    }
+}
