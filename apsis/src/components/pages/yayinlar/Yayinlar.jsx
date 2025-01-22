@@ -94,6 +94,7 @@ function Yayinlar() {
     };
 
 
+
     const showPopup = (message, type) => {
         setPopupMessage({ message, type });
         setTimeout(() => setPopupMessage(null), 1500);
