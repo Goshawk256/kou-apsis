@@ -154,6 +154,7 @@ function Basvuru({ onSelect }) {
     return (
         <div className='basvuru-main'>
             <div>
+
             </div>
 
         </div>
