@@ -58,10 +58,10 @@ function Basvuru() {
                                 <th>İşlem</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody className='basvuru-table-body'>
                             {selectedData.map((item) => (
                                 <tr key={item.id}>
-                                    <td>{item.ad}</td>
+                                    <td >{item.ad}</td>
                                     <td>{item.grup}</td>
                                     <td>{item.tur}</td>
                                     <td>{item.puan}</td>

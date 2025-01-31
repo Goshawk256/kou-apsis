@@ -53,4 +53,15 @@
 .basvuru-table .basvuru-table-head {
     background-color: #1FA54E;
     color: white;
+
+}
+
+.basvuru-table-header th {
+    padding: 10px;
+}
+
+.basvuru-table-body tr td {
+    border: 1px solid #e0e0e0;
+    text-align: start;
+    padding: 5px;
 }
