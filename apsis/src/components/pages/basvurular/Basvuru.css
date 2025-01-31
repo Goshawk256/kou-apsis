@@ -64,4 +64,29 @@
     border: 1px solid #e0e0e0;
     text-align: start;
     padding: 5px;
+    font-size: 12px;
+    font-weight: 500;
+    color: gray;
+}
+
+.action-button-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.action-button-area button {
+    width: 40%;
+    padding: 5px;
+    margin: 0 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.5s ease;
+}
+
+.action-button-area button:hover {
+    background-color: #1FA54E;
+    color: white;
 }

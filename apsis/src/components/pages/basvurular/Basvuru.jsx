@@ -1,47 +1,58 @@
-import React, { useState } from 'react';
-import { useTheme } from '../../../theme/themeContext';
+import React, { useState, useEffect } from 'react';
 import './Basvuru.css';
-import { motion, AnimatePresence } from 'framer-motion';
 
 function Basvuru() {
-    const [data, setData] = useState([
-        { id: 1, ad: 'Ahmet', grup: 'A1', tur: 'Tez', puan: 30 },
-        { id: 2, ad: 'Mehmet', grup: 'A2', tur: 'Tez', puan: 40 },
-        { id: 3, ad: 'Ayşe', grup: 'A1', tur: 'Tez', puan: 35 },
-        { id: 4, ad: 'Fatma', grup: 'A3', tur: 'Tez', puan: 28 },
-        { id: 5, ad: 'Ali', grup: 'A2', tur: 'Tez', puan: 33 },
-        { id: 6, ad: 'Veli', grup: 'A1', tur: 'Tez', puan: 37 },
-        { id: 7, ad: 'Zeynep', grup: 'A3', tur: 'Tez', puan: 45 },
-        { id: 8, ad: 'Hakan', grup: 'A2', tur: 'Tez', puan: 31 },
-        { id: 9, ad: 'Can', grup: 'A1', tur: 'Tez', puan: 29 },
-        { id: 10, ad: 'Emre', grup: 'A3', tur: 'Tez', puan: 42 },
-        { id: 11, ad: 'Burak', grup: 'A2', tur: 'Tez', puan: 39 },
-        { id: 12, ad: 'Deniz', grup: 'A1', tur: 'Tez', puan: 36 }
-    ]);
-
+    const [data, setData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 4;
+
+    useEffect(() => {
+        const savedProjects = JSON.parse(localStorage.getItem('savedProjects')) || [];
+        const savedThesis = JSON.parse(localStorage.getItem('savedThesis')) || [];
+        const savedPublications = JSON.parse(localStorage.getItem('savedPublications')) || [];
+
+        const formattedProjects = savedProjects.map(item => ({
+            id: item.id,
+            title: item.projectName,
+            group: item.group,
+            type: 'Proje',
+            score: item.score
+        }));
+
+        const formattedThesis = savedThesis.map(item => ({
+            id: item.id,
+            title: item.title,
+            group: item.group,
+            type: 'Tez',
+            score: item.score
+        }));
+
+        const formattedPublications = savedPublications.map(item => ({
+            id: item.id,
+            title: item.title,
+            group: item.groupAuto,
+            type: 'Yayın',
+            score: item.scoreAuto
+        }));
+
+        setData([...formattedProjects, ...formattedThesis, ...formattedPublications]);
+    }, []);
+
     const totalPages = Math.ceil(data.length / itemsPerPage);
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const selectedData = data.slice(startIndex, startIndex + itemsPerPage);
 
     const handleNext = () => {
-        if (currentPage < totalPages) {
-            setCurrentPage(currentPage + 1);
-        }
+        if (currentPage < totalPages) setCurrentPage(currentPage + 1);
     };
 
     const handlePrev = () => {
-        if (currentPage > 1) {
-            setCurrentPage(currentPage - 1);
-        }
+        if (currentPage > 1) setCurrentPage(currentPage - 1);
     };
-
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const selectedData = data.slice(startIndex, startIndex + itemsPerPage);
 
     return (
         <div className='basvuru-main'>
             <div className='basvuru-content'>
-                <div className='basvuru-choosing-content'></div>
                 <div className='table-toggle'>
                     <button className='pagination-button' onClick={handlePrev} disabled={currentPage === 1}>‹</button>
                     {currentPage}/{totalPages}
@@ -61,12 +72,14 @@ function Basvuru() {
                         <tbody className='basvuru-table-body'>
                             {selectedData.map((item) => (
                                 <tr key={item.id}>
-                                    <td >{item.ad}</td>
-                                    <td>{item.grup}</td>
-                                    <td>{item.tur}</td>
-                                    <td>{item.puan}</td>
-                                    <td>
-                                        <button className='action-button'>İşlem</button>
+                                    <td className='basvuru-item-title'>{item.title}
+
+                                    </td>
+                                    <td className='basvuru-item-group'>{item.group}</td>
+                                    <td className='basvuru-item-type'>{item.type}</td>
+                                    <td className='basvuru-item-score'>{item.score}</td>
+                                    <td className='action-button-area'>
+                                        <button className='action-button'>Sil</button>
                                     </td>
                                 </tr>
                             ))}
@@ -74,7 +87,6 @@ function Basvuru() {
                     </table>
                 </div>
             </div>
-            <div className='basvuru-button-area'></div>
         </div>
     );
 }
