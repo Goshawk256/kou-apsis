@@ -17,7 +17,7 @@ function Finish() {
         doc.setFont('FreeSerif');
 
         const element = document.querySelector('.table-container');
-        w
+
         // Orijinal stilleri sakla
         const originalStyles = {
             height: element.style.height,
