@@ -5,6 +5,7 @@ function Basvuru() {
     const [data, setData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 7;
+    const [totalScore, setTotalScore] = useState(0);
 
     useEffect(() => {
         const savedProjects = JSON.parse(localStorage.getItem('savedProjects')) || [];
@@ -38,7 +39,11 @@ function Basvuru() {
             authors: item.authors || []
         }));
 
-        setData([...formattedProjects, ...formattedThesis, ...formattedPublications]);
+        const allData = [...formattedProjects, ...formattedThesis, ...formattedPublications];
+        setData(allData);
+
+        const total = allData.reduce((sum, item) => sum + (item.score || 0), 0);
+        setTotalScore(total);
     }, []);
 
     const totalPages = Math.ceil(data.length / itemsPerPage);
@@ -54,7 +59,6 @@ function Basvuru() {
     };
 
     const splitTitle = (title) => {
-
         if (title.length > 50) {
             return title.substring(0, 100) + '...';
         }
@@ -65,9 +69,13 @@ function Basvuru() {
         <div className='basvuru-main'>
             <div className='basvuru-content'>
                 <div className='table-toggle'>
-                    <button className='pagination-button' onClick={handlePrev} disabled={currentPage === 1}>‹</button>
-                    {currentPage}/{totalPages}
-                    <button className='pagination-button' onClick={handleNext} disabled={currentPage === totalPages}>›</button>
+                    <span className='total-score'>Toplam Puan: {totalScore.toFixed(2)}</span>
+                    <div className='table-tggle-buttons'>
+                        <button className='pagination-button' onClick={handlePrev} disabled={currentPage === 1}>‹</button>
+                        {currentPage}/{totalPages}
+                        <button className='pagination-button' onClick={handleNext} disabled={currentPage === totalPages}>›</button>
+                    </div>
+
                 </div>
                 <div className='basvuru-table-content'>
                     <table className='basvuru-table'>

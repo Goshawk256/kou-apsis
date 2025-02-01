@@ -5,7 +5,7 @@
     height: 100%;
     margin-left: 4%;
 
-    margin-top: 2.1%;
+    margin-top: 1%;
 }
 
 .basvuru-content {
@@ -21,8 +21,25 @@
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: end;
+    justify-content: space-between;
     flex-direction: row;
+}
+
+.table-tggle-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 5px;
+
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.total-score {
+    color: grey;
+    font-weight: 600;
+    font-size: 14px;
 }
 
 .pagination-button {
@@ -61,7 +78,7 @@
 }
 
 .basvuru-table-body tr td {
-    border: 1px solid #e0e0e0;
+    border-bottom: 1px solid #e0e0e0;
     text-align: start;
     padding: 5px;
     font-size: 12px;
