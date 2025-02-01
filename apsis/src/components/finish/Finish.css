@@ -64,7 +64,12 @@
     border: 1px solid #ccc;
     text-align: center;
     word-wrap: break-word;
+
     /* Uzun metinleri sar */
+}
+
+.finish-table td {
+    text-align: start;
 }
 
 /* Başlık */

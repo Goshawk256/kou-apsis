@@ -44,7 +44,7 @@ function Basvuru({ onSelect }) {
 
         const allData = [...formattedProjects, ...formattedThesis, ...formattedPublications];
         setData(allData);
-
+        console.log(allData);
         const total = allData.reduce((sum, item) => sum + (item.score || 0), 0);
         setTotalScore(total);
     }, []);
