@@ -68,7 +68,6 @@ function Basvuru() {
     };
 
     return (
-
         showTable ? (
             <div className='basvuru-main'>
                 <div className='basvuru-content'>
@@ -79,7 +78,6 @@ function Basvuru() {
                             {currentPage}/{totalPages}
                             <button className='pagination-button' onClick={handleNext} disabled={currentPage === totalPages}>›</button>
                         </div>
-
                     </div>
                     <div className='basvuru-table-content'>
                         <table className='basvuru-table'>
@@ -123,10 +121,10 @@ function Basvuru() {
             </div>
         ) : (
             <div className="basvuru_empty">
-                <ConfirmBasvuru />
+
+                <ConfirmBasvuru setShowTable={setShowTable} />
             </div>
         )
-
     );
 }
 

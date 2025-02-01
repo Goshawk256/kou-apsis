@@ -6,8 +6,17 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { StaticDatePicker } from '@mui/x-date-pickers/StaticDatePicker';
 
-function ConfirmBasvuru() {
+function ConfirmBasvuru({ setShowTable }) {  // setShowTable fonksiyonu props olarak alınıyor
     const [selected, setSelected] = useState("");
+
+    const handleSaveToLocalStorage = () => {
+        if (selected) {
+            localStorage.setItem("selectedOption", selected);
+            setShowTable(true);  // showTable'yi true yapıyoruz
+        } else {
+            alert("Lütfen bir birim seçin!");
+        }
+    };
 
     return (
         <div className='confirm-basvuru'>
@@ -15,15 +24,14 @@ function ConfirmBasvuru() {
             <h5 className='birim-title'>Başvurulacak Birim:</h5>
             <div className="radio-input">
                 {["Dr.Öğr.Ü", "Doç. Dr.", "Prof. Dr."].map((role, index) => {
-                    const value = `value-${index + 1}`;
                     return (
-                        <label key={value} className={`label ${selected === value ? "selected" : ""}`}>
+                        <label key={role} className={`label ${selected === role ? "selected" : ""}`}>
                             <input
                                 type="radio"
                                 name="value-radio"
-                                value={value}
-                                checked={selected === value}
-                                onChange={() => setSelected(value)}
+                                value={role}
+                                checked={selected === role}
+                                onChange={() => setSelected(role)}
                             />
                             <p className="text">{role}</p>
                         </label>
@@ -31,27 +39,35 @@ function ConfirmBasvuru() {
                 })}
             </div>
             <h5 className='atama-title'>Son Atama Tarihi:</h5>
-            <div className='date-picker'>
-                <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="tr">
-                    <StaticDatePicker
-                        orientation="landscape"
-
-                        sx={{
-                            "& .Mui-selected": {
-                                backgroundColor: "#1FA54E !important", // Seçili tarihin arkaplan rengi
-                                color: "#fff !important", // Seçili tarihin metin rengi
-                            },
-                            "& .MuiPickersDay-root": {
-                                borderRadius: "10px", // Günleri daha yuvarlak yapar
-                                transition: "background-color 0.3s", // Geçiş efekti
-                            },
-                            "& .MuiPickersDay-root:hover": {
-                                backgroundColor: "#40be4b", // Gün üzerine gelince rengi değiştir
-                                color: "#fff", // Gün üzerine gelince metin rengi değiştir
-                            }
-                        }}
-                    />
-                </LocalizationProvider>
+            <div className='confirm-bottom-content'>
+                <div className='date-picker'>
+                    <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="tr">
+                        <StaticDatePicker
+                            orientation="landscape"
+                            sx={{
+                                "& .Mui-selected": {
+                                    backgroundColor: "#1FA54E !important",
+                                    color: "#fff !important",
+                                },
+                                "& .MuiPickersDay-root": {
+                                    borderRadius: "10px",
+                                    transition: "background-color 0.5s ease",
+                                },
+                                "& .MuiPickersDay-root:hover": {
+                                    backgroundColor: "#40be4b",
+                                    color: "#fff",
+                                },
+                                "& .MuiDatePickerToolbar-title": {
+                                    color: "#1FA54E !important",
+                                    fontWeight: "bold",
+                                }
+                            }}
+                        />
+                    </LocalizationProvider>
+                </div>
+                <button className='confirm-ileri-button' onClick={handleSaveToLocalStorage}>
+                    İleri
+                </button>
             </div>
         </div>
     );
