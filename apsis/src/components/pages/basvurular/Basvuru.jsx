@@ -3,7 +3,7 @@ import ConfirmBasvuru from './confirmbavuru/ConfirmBasvuru';
 import { useNavigate } from 'react-router-dom';
 import './Basvuru.css';
 
-function Basvuru() {
+function Basvuru({ onSelect }) {
     const [data, setData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 7;
@@ -67,10 +67,10 @@ function Basvuru() {
         }
         return title;
     };
-    const navigate = useNavigate();
+
 
     const handleFinish = () => {
-        navigate('/finish');
+        onSelect('Finish');
     }
 
     return (
