@@ -139,3 +139,13 @@
 .basvuru-geri-button {
     margin-right: 10px;
 }
+
+.basvuru_empty {
+    display: flex;
+    flex-direction: column;
+    width: 95%;
+    height: 100%;
+    margin-left: 4%;
+
+    margin-top: 1%;
+}

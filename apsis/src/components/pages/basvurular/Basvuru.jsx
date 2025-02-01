@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import ConfirmBasvuru from './confirmbavuru/ConfirmBasvuru';
 import './Basvuru.css';
 
 function Basvuru() {
@@ -6,7 +7,7 @@ function Basvuru() {
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 7;
     const [totalScore, setTotalScore] = useState(0);
-    const [showTable, setShowTable] = useState(true);
+    const [showTable, setShowTable] = useState(false);
 
     useEffect(() => {
         const savedProjects = JSON.parse(localStorage.getItem('savedProjects')) || [];
@@ -122,7 +123,7 @@ function Basvuru() {
             </div>
         ) : (
             <div className="basvuru_empty">
-                <p>Henüz başvurunuzda eklenmiş bir kayıt bulunmamaktadır.</p>
+                <ConfirmBasvuru />
             </div>
         )
 
