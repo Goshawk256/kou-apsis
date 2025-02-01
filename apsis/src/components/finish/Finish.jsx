@@ -723,7 +723,7 @@ function Finish() {
                             </td>
                             <td>
                                 {savedPublications
-                                    .filter(item => item.groupAuto === 'A4')
+                                    .filter(item => item.groupAuto === 'C1')
                                     .map((item, index) => (
                                         <div key={index}>{item.title}</div>
                                     ))
@@ -731,7 +731,7 @@ function Finish() {
                             </td>
                             <td>
                                 {savedPublications
-                                    .filter(item => item.groupAuto === 'A4')
+                                    .filter(item => item.groupAuto === 'C1')
                                     .reduce((acc, item) => acc + item.scoreAuto, 0)
                                 }
                             </td>
@@ -746,7 +746,7 @@ function Finish() {
                             </td>
                             <td>
                                 {savedPublications
-                                    .filter(item => item.groupAuto === 'A4')
+                                    .filter(item => item.groupAuto === 'C2')
                                     .map((item, index) => (
                                         <div key={index}>{item.title}</div>
                                     ))
@@ -754,7 +754,7 @@ function Finish() {
                             </td>
                             <td>
                                 {savedPublications
-                                    .filter(item => item.groupAuto === 'A4')
+                                    .filter(item => item.groupAuto === 'C2')
                                     .reduce((acc, item) => acc + item.scoreAuto, 0)
                                 }
                             </td>
@@ -767,7 +767,7 @@ function Finish() {
                             </td>
                             <td>
                                 {savedPublications
-                                    .filter(item => item.groupAuto === 'A4')
+                                    .filter(item => item.groupAuto === 'C3')
                                     .map((item, index) => (
                                         <div key={index}>{item.title}</div>
                                     ))
@@ -775,7 +775,7 @@ function Finish() {
                             </td>
                             <td>
                                 {savedPublications
-                                    .filter(item => item.groupAuto === 'A4')
+                                    .filter(item => item.groupAuto === 'C3')
                                     .reduce((acc, item) => acc + item.scoreAuto, 0)
                                 }
                             </td>
@@ -789,7 +789,7 @@ function Finish() {
                             </td>
                             <td>
                                 {savedPublications
-                                    .filter(item => item.groupAuto === 'A4')
+                                    .filter(item => item.groupAuto === 'C4')
                                     .map((item, index) => (
                                         <div key={index}>{item.title}</div>
                                     ))
@@ -797,7 +797,7 @@ function Finish() {
                             </td>
                             <td>
                                 {savedPublications
-                                    .filter(item => item.groupAuto === 'A4')
+                                    .filter(item => item.groupAuto === 'C4')
                                     .reduce((acc, item) => acc + item.scoreAuto, 0)
                                 }
                             </td>
@@ -812,7 +812,7 @@ function Finish() {
                             </td>
                             <td>
                                 {savedPublications
-                                    .filter(item => item.groupAuto === 'A4')
+                                    .filter(item => item.groupAuto === 'C5')
                                     .map((item, index) => (
                                         <div key={index}>{item.title}</div>
                                     ))
@@ -820,7 +820,7 @@ function Finish() {
                             </td>
                             <td>
                                 {savedPublications
-                                    .filter(item => item.groupAuto === 'A4')
+                                    .filter(item => item.groupAuto === 'C5')
                                     .reduce((acc, item) => acc + item.scoreAuto, 0)
                                 }
                             </td>
@@ -834,7 +834,7 @@ function Finish() {
                             </td>
                             <td>
                                 {savedPublications
-                                    .filter(item => item.groupAuto === 'A4')
+                                    .filter(item => item.groupAuto === 'C6')
                                     .map((item, index) => (
                                         <div key={index}>{item.title}</div>
                                     ))
@@ -842,7 +842,7 @@ function Finish() {
                             </td>
                             <td>
                                 {savedPublications
-                                    .filter(item => item.groupAuto === 'A4')
+                                    .filter(item => item.groupAuto === 'C6')
                                     .reduce((acc, item) => acc + item.scoreAuto, 0)
                                 }
                             </td>
@@ -856,7 +856,7 @@ function Finish() {
                             </td>
                             <td>
                                 {savedPublications
-                                    .filter(item => item.groupAuto === 'A4')
+                                    .filter(item => item.groupAuto === 'C7')
                                     .map((item, index) => (
                                         <div key={index}>{item.title}</div>
                                     ))
@@ -864,7 +864,7 @@ function Finish() {
                             </td>
                             <td>
                                 {savedPublications
-                                    .filter(item => item.groupAuto === 'A4')
+                                    .filter(item => item.groupAuto === 'C7')
                                     .reduce((acc, item) => acc + item.scoreAuto, 0)
                                 }
                             </td>
@@ -878,7 +878,7 @@ function Finish() {
                             </td>
                             <td>
                                 {savedPublications
-                                    .filter(item => item.groupAuto === 'A4')
+                                    .filter(item => item.groupAuto === 'C8')
                                     .map((item, index) => (
                                         <div key={index}>{item.title}</div>
                                     ))
@@ -886,7 +886,7 @@ function Finish() {
                             </td>
                             <td>
                                 {savedPublications
-                                    .filter(item => item.groupAuto === 'A4')
+                                    .filter(item => item.groupAuto === 'C8')
                                     .reduce((acc, item) => acc + item.scoreAuto, 0)
                                 }
                             </td>
@@ -901,7 +901,12 @@ function Finish() {
 
                                 <tr>Toplam Puani</tr>
                             </td>
-                            <td></td>
+                            <td>
+                                {savedPublications
+                                    .filter(item => item.groupAuto.includes('C'))
+                                    .reduce((acc, item) => acc + item.scoreAuto, 0)
+                                }
+                            </td>
                         </tr>
 
 
@@ -933,7 +938,7 @@ function Finish() {
                             </td>
                             <td>
                                 {savedPublications
-                                    .filter(item => item.groupAuto === 'A4')
+                                    .filter(item => item.groupAuto === 'D1')
                                     .map((item, index) => (
                                         <div key={index}>{item.title}</div>
                                     ))
@@ -941,7 +946,7 @@ function Finish() {
                             </td>
                             <td>
                                 {savedPublications
-                                    .filter(item => item.groupAuto === 'A4')
+                                    .filter(item => item.groupAuto === 'D1')
                                     .reduce((acc, item) => acc + item.scoreAuto, 0)
                                 }
                             </td>
@@ -956,7 +961,7 @@ function Finish() {
                             </td>
                             <td>
                                 {savedPublications
-                                    .filter(item => item.groupAuto === 'A4')
+                                    .filter(item => item.groupAuto === 'D2')
                                     .map((item, index) => (
                                         <div key={index}>{item.title}</div>
                                     ))
@@ -964,7 +969,7 @@ function Finish() {
                             </td>
                             <td>
                                 {savedPublications
-                                    .filter(item => item.groupAuto === 'A4')
+                                    .filter(item => item.groupAuto === 'D2')
                                     .reduce((acc, item) => acc + item.scoreAuto, 0)
                                 }
                             </td>
@@ -983,7 +988,7 @@ function Finish() {
                             </td>
                             <td>
                                 {savedPublications
-                                    .filter(item => item.groupAuto === 'A4')
+                                    .filter(item => item.groupAuto === 'D3')
                                     .map((item, index) => (
                                         <div key={index}>{item.title}</div>
                                     ))
@@ -991,7 +996,7 @@ function Finish() {
                             </td>
                             <td>
                                 {savedPublications
-                                    .filter(item => item.groupAuto === 'A4')
+                                    .filter(item => item.groupAuto === 'D3')
                                     .reduce((acc, item) => acc + item.scoreAuto, 0)
                                 }
                             </td>
@@ -1009,7 +1014,7 @@ function Finish() {
                             </td>
                             <td>
                                 {savedPublications
-                                    .filter(item => item.groupAuto === 'A4')
+                                    .filter(item => item.groupAuto === 'D4')
                                     .map((item, index) => (
                                         <div key={index}>{item.title}</div>
                                     ))
@@ -1017,7 +1022,7 @@ function Finish() {
                             </td>
                             <td>
                                 {savedPublications
-                                    .filter(item => item.groupAuto === 'A4')
+                                    .filter(item => item.groupAuto === 'D4')
                                     .reduce((acc, item) => acc + item.scoreAuto, 0)
                                 }
                             </td>
@@ -1032,7 +1037,12 @@ function Finish() {
 
                                 <tr>Toplam Puani</tr>
                             </td>
-                            <td></td>
+                            <td>
+                                {savedPublications
+                                    .filter(item => item.groupAuto.includes('D'))
+                                    .reduce((acc, item) => acc + item.scoreAuto, 0)
+                                }
+                            </td>
                         </tr>
 
 
@@ -1058,7 +1068,7 @@ function Finish() {
                             </td>
                             <td>
                                 {savedPublications
-                                    .filter(item => item.groupAuto === 'A4')
+                                    .filter(item => item.groupAuto === 'E1')
                                     .map((item, index) => (
                                         <div key={index}>{item.title}</div>
                                     ))
@@ -1066,7 +1076,7 @@ function Finish() {
                             </td>
                             <td>
                                 {savedPublications
-                                    .filter(item => item.groupAuto === 'A4')
+                                    .filter(item => item.groupAuto === 'E1')
                                     .reduce((acc, item) => acc + item.scoreAuto, 0)
                                 }
                             </td>
@@ -1078,7 +1088,7 @@ function Finish() {
                             </td>
                             <td>
                                 {savedPublications
-                                    .filter(item => item.groupAuto === 'A4')
+                                    .filter(item => item.groupAuto === 'E2')
                                     .map((item, index) => (
                                         <div key={index}>{item.title}</div>
                                     ))
@@ -1086,7 +1096,7 @@ function Finish() {
                             </td>
                             <td>
                                 {savedPublications
-                                    .filter(item => item.groupAuto === 'A4')
+                                    .filter(item => item.groupAuto === 'E2')
                                     .reduce((acc, item) => acc + item.scoreAuto, 0)
                                 }
                             </td>
@@ -1098,7 +1108,7 @@ function Finish() {
                             </td>
                             <td>
                                 {savedPublications
-                                    .filter(item => item.groupAuto === 'A4')
+                                    .filter(item => item.groupAuto === 'E3')
                                     .map((item, index) => (
                                         <div key={index}>{item.title}</div>
                                     ))
@@ -1106,7 +1116,7 @@ function Finish() {
                             </td>
                             <td>
                                 {savedPublications
-                                    .filter(item => item.groupAuto === 'A4')
+                                    .filter(item => item.groupAuto === 'E3')
                                     .reduce((acc, item) => acc + item.scoreAuto, 0)
                                 }
                             </td>
@@ -1119,7 +1129,7 @@ function Finish() {
                             </td>
                             <td>
                                 {savedPublications
-                                    .filter(item => item.groupAuto === 'A4')
+                                    .filter(item => item.groupAuto === 'E4')
                                     .map((item, index) => (
                                         <div key={index}>{item.title}</div>
                                     ))
@@ -1127,7 +1137,7 @@ function Finish() {
                             </td>
                             <td>
                                 {savedPublications
-                                    .filter(item => item.groupAuto === 'A4')
+                                    .filter(item => item.groupAuto === 'E4')
                                     .reduce((acc, item) => acc + item.scoreAuto, 0)
                                 }
                             </td>
@@ -1142,7 +1152,12 @@ function Finish() {
 
                                 <tr>Toplam Puani</tr>
                             </td>
-                            <td></td>
+                            <td>
+                                {savedPublications
+                                    .filter(item => item.groupAuto.includes('E'))
+                                    .reduce((acc, item) => acc + item.scoreAuto, 0)
+                                }
+                            </td>
                         </tr>
 
 
@@ -1169,16 +1184,16 @@ function Finish() {
 
                             </td>
                             <td>
-                                {savedPublications
-                                    .filter(item => item.groupAuto === 'A4')
+                                {savedThesis
+                                    .filter(item => item.groupAuto === 'F1')
                                     .map((item, index) => (
                                         <div key={index}>{item.title}</div>
                                     ))
                                 }
                             </td>
                             <td>
-                                {savedPublications
-                                    .filter(item => item.groupAuto === 'A4')
+                                {savedThesis
+                                    .filter(item => item.groupAuto === 'F1')
                                     .reduce((acc, item) => acc + item.scoreAuto, 0)
                                 }
                             </td>
@@ -1189,16 +1204,16 @@ function Finish() {
 
                             </td>
                             <td>
-                                {savedPublications
-                                    .filter(item => item.groupAuto === 'A4')
+                                {savedThesis
+                                    .filter(item => item.groupAuto === 'F2')
                                     .map((item, index) => (
                                         <div key={index}>{item.title}</div>
                                     ))
                                 }
                             </td>
                             <td>
-                                {savedPublications
-                                    .filter(item => item.groupAuto === 'A4')
+                                {savedThesis
+                                    .filter(item => item.groupAuto === 'F2')
                                     .reduce((acc, item) => acc + item.scoreAuto, 0)
                                 }
                             </td>
@@ -1210,16 +1225,16 @@ function Finish() {
 
                             </td>
                             <td>
-                                {savedPublications
-                                    .filter(item => item.groupAuto === 'A4')
+                                {savedThesis
+                                    .filter(item => item.groupAuto === 'F3')
                                     .map((item, index) => (
                                         <div key={index}>{item.title}</div>
                                     ))
                                 }
                             </td>
                             <td>
-                                {savedPublications
-                                    .filter(item => item.groupAuto === 'A4')
+                                {savedThesis
+                                    .filter(item => item.groupAuto === 'F3')
                                     .reduce((acc, item) => acc + item.scoreAuto, 0)
                                 }
                             </td>
@@ -1233,8 +1248,8 @@ function Finish() {
 
                             </td>
                             <td>
-                                {savedPublications
-                                    .filter(item => item.groupAuto === 'A4')
+                                {savedThesis
+                                    .filter(item => item.groupAuto === 'F4')
                                     .map((item, index) => (
                                         <div key={index}>{item.title}</div>
                                     ))
@@ -1242,7 +1257,7 @@ function Finish() {
                             </td>
                             <td>
                                 {savedPublications
-                                    .filter(item => item.groupAuto === 'A4')
+                                    .filter(item => item.groupAuto === 'F4')
                                     .reduce((acc, item) => acc + item.scoreAuto, 0)
                                 }
                             </td>
@@ -1257,7 +1272,12 @@ function Finish() {
                                 <tr>Asgari Kosula Dahil Toplam Puani</tr>
                                 <tr>Toplam Puani</tr>
                             </td>
-                            <td></td>
+                            <td>
+                                {savedThesis
+                                    .filter(item => item.groupAuto.includes('F'))
+                                    .reduce((acc, item) => acc + item.scoreAuto, 0)
+                                }
+                            </td>
                         </tr>
 
 
