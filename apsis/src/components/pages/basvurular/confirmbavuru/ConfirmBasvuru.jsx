@@ -35,9 +35,10 @@ function ConfirmBasvuru() {
                 <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="tr">
                     <StaticDatePicker
                         orientation="landscape"
+
                         sx={{
                             "& .Mui-selected": {
-                                backgroundColor: "#435dd8 !important", // Seçili tarihin arkaplan rengi
+                                backgroundColor: "#1FA54E !important", // Seçili tarihin arkaplan rengi
                                 color: "#fff !important", // Seçili tarihin metin rengi
                             },
                             "& .MuiPickersDay-root": {
@@ -45,7 +46,8 @@ function ConfirmBasvuru() {
                                 transition: "background-color 0.3s", // Geçiş efekti
                             },
                             "& .MuiPickersDay-root:hover": {
-                                backgroundColor: "#2d3750", // Gün üzerine gelince rengi değiştir
+                                backgroundColor: "#40be4b", // Gün üzerine gelince rengi değiştir
+                                color: "#fff", // Gün üzerine gelince metin rengi değiştir
                             }
                         }}
                     />

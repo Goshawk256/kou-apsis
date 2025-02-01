@@ -41,8 +41,8 @@
 
 /* Seçili label için özel stil */
 .radio-input .label.selected {
-    background-color: #44bd4f;
-    border: 2px solid #44bd4f;
+    background-color: #1FA54E;
+    border: 2px solid #1FA54E;
 
 }
 
@@ -78,8 +78,8 @@
 
 /* Seçili durumda değişecek arka plan */
 .radio-input .label.selected::before {
-    background-color: #50bd3a;
-    border-color: #43d84a;
+    background-color: #1FA54E;
+    border-color: #1FA54E;
     height: 50px;
 }
 
