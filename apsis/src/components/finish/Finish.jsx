@@ -594,7 +594,7 @@ function Finish() {
                             <td>
                                 {savedPublications
                                     .filter(item => item.groupAuto.includes('B'))
-                                    .reduce((acc, item) => acc + item.scoreAuto, 0)
+                                    .reduce((acc, item) => acc + item.scoreAuto, 0).toFixed(2)
                                 }
                             </td>
                         </tr>
