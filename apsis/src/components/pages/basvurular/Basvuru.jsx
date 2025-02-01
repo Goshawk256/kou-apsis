@@ -1,163 +1,136 @@
-import React, { useState } from 'react';
-import { useTheme } from '../../../theme/themeContext';
+import React, { useState, useEffect } from 'react';
+import ConfirmBasvuru from './confirmbavuru/ConfirmBasvuru';
+import { useNavigate } from 'react-router-dom';
 import './Basvuru.css';
-import { motion, AnimatePresence } from 'framer-motion';
+
 function Basvuru({ onSelect }) {
-    const theme = useTheme();
-    const [selectedOption, setSelectedOption] = useState('Dr. Öğr. Ü.');
-    const [previousPromotionDate, setPreviousPromotionDate] = useState('');
-    const [tableData, setTableData] = useState([]);
+    const [data, setData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPage] = useState(4);
-    const [currentTypeIndex, setCurrentTypeIndex] = useState(0);
-    const types = ['Publication', 'Course', 'Project', 'Award', 'Thesis'];
-    const [filteredData, setFilteredData] = useState([]);
+    const itemsPerPage = 7;
+    const [totalScore, setTotalScore] = useState(0);
+    const [showTable, setShowTable] = useState(false);
 
-    const paginate = (data, currentPage, itemsPerPage) => {
-        const startIndex = (currentPage - 1) * itemsPerPage;
-        const endIndex = startIndex + itemsPerPage;
-        return data.slice(startIndex, endIndex);
+    useEffect(() => {
+        const savedProjects = JSON.parse(localStorage.getItem('savedProjects')) || [];
+        const savedThesis = JSON.parse(localStorage.getItem('savedThesis')) || [];
+        const savedPublications = JSON.parse(localStorage.getItem('savedPublications')) || [];
+
+        const formattedProjects = savedProjects.map(item => ({
+            id: item.id,
+            title: item.projectName,
+            group: item.group,
+            type: 'Proje',
+            score: item.score,
+            authors: item.authors || []
+        }));
+
+        const formattedThesis = savedThesis.map(item => ({
+            id: item.id,
+            title: item.title,
+            group: item.group,
+            type: 'Tez',
+            score: item.score,
+            authors: item.authors || []
+        }));
+
+        const formattedPublications = savedPublications.map(item => ({
+            id: item.id,
+            title: item.title,
+            group: item.groupAuto,
+            type: 'Yayın',
+            score: item.scoreAuto,
+            authors: item.authors || []
+        }));
+
+        const allData = [...formattedProjects, ...formattedThesis, ...formattedPublications];
+        setData(allData);
+
+        const total = allData.reduce((sum, item) => sum + (item.score || 0), 0);
+        setTotalScore(total);
+    }, []);
+
+    const totalPages = Math.ceil(data.length / itemsPerPage);
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const selectedData = data.slice(startIndex, startIndex + itemsPerPage);
+
+    const handleNext = () => {
+        if (currentPage < totalPages) setCurrentPage(currentPage + 1);
     };
 
-
-    const isValidDate = (date) => {
-        const minDate = new Date('1900-01-01');
-        const inputDate = new Date(date);
-        return inputDate >= minDate;
+    const handlePrev = () => {
+        if (currentPage > 1) setCurrentPage(currentPage - 1);
     };
 
-    const handleOptionChange = (e) => {
-        setSelectedOption(e.target.value);
-        localStorage.setItem('selectedOption', e.target.value);
-    };
-
-    const handleDateChange = (e) => {
-        setPreviousPromotionDate(e.target.value);
-
-    };
-
-    const handleGetData = () => {
-        if (!isValidDate(previousPromotionDate)) {
-
-            return;
+    const splitTitle = (title) => {
+        if (title.length > 50) {
+            return title.substring(0, 100) + '...';
         }
-
-        const storedAwards = JSON.parse(localStorage.getItem('savedAwards') || '[]');
-        const storedCourses = JSON.parse(localStorage.getItem('savedCourses') || '[]');
-        const storedProjects = JSON.parse(localStorage.getItem('savedProjects') || '[]');
-        const storedPublications = JSON.parse(localStorage.getItem('savedPublications') || '[]');
-        const storedThesis = JSON.parse(localStorage.getItem('savedThesis') || '[]');
-
-        const combinedData = [
-            ...storedAwards.map((award) => ({
-                type: 'Award',
-                name: award.title,
-                group: award.group,
-                score: award.score,
-                publishDate: award.publishDate,
-            })),
-            ...storedCourses.map((course) => ({
-                type: 'Course',
-                name: course.course_name,
-                group: course.grup_adi,
-                score: course.ders_puani,
-                publishDate: course.publishDate,
-            })),
-            ...storedProjects.map((project) => ({
-                type: 'Project',
-                name: project.projectName,
-                group: project.group,
-                score: project.score,
-                publishDate: project.publishDate,
-            })),
-            ...storedPublications.map((publication) => ({
-                type: 'Publication',
-                name: publication.title,
-                group: publication.groupAuto,
-                score: publication.scoreAuto,
-                publishDate: publication.publishDate,
-            })),
-            ...storedThesis.map((thesis) => ({
-                type: 'Thesis',
-                name: thesis.title,
-                group: thesis.group,
-                score: thesis.score,
-                publishDate: thesis.publishDate,
-            })),
-        ];
-
-        const filtered = combinedData.filter((data) => data.type === types[currentTypeIndex]);
-        setFilteredData(filtered);
-
-        const invalidDateEntries = combinedData.filter((data) => {
-            if (data.publishDate) {
-                return new Date(data.publishDate) < new Date(previousPromotionDate);
-            }
-            return false;
-        });
-
-        if (invalidDateEntries.length > 0) {
-            console.log('tarih uygun değil');
-            return;
-        }
-
-        setTableData(combinedData);
+        return title;
     };
 
-    const handleNextType = () => {
-        setCurrentTypeIndex((prevIndex) => {
-            const newIndex = (prevIndex + 1) % types.length;
-            setFilteredData(tableData.filter((data) => data.type === types[newIndex]));
-            setCurrentPage(1);
-            return newIndex;
-        });
-    };
-    const handlePrevType = () => {
-        setCurrentTypeIndex((prevIndex) => {
-            const newIndex = (prevIndex - 1) % types.length;
-            setFilteredData(tableData.filter((data) => data.type === types[newIndex]));
-            setCurrentPage(1);
-            console.log(filteredData)
-            return newIndex;
-        });
-    };
 
-    const handlePageChange = (newPage) => {
-        setCurrentPage(newPage);
-    };
-
-    const currentData = paginate(filteredData, currentPage, itemsPerPage);
-    const totalPages = Math.ceil(filteredData.length / itemsPerPage);
-
-    const handleRemoveItem = (item, itemType) => {
-        const storageKey = {
-            Award: 'savedAwards',
-            Course: 'savedCourses',
-            Project: 'savedProjects',
-            Publication: 'savedPublications',
-            Thesis: 'savedThesis',
-        }[itemType];
-
-        if (!storageKey) return;
-
-        const currentData = JSON.parse(localStorage.getItem(storageKey) || '[]');
-        const updatedData = currentData.filter(
-            (storedItem) => storedItem.title !== item.name && storedItem.course_name !== item.name && storedItem.projectName !== item.name && storedItem.title !== item.name
-        );
-
-        localStorage.setItem(storageKey, JSON.stringify(updatedData));
-
-        setTableData((prevData) => prevData.filter((data) => data.name !== item.name));
-        setFilteredData((prevData) => prevData.filter((data) => data.name !== item.name));
-    };
+    const handleFinish = () => {
+        onSelect('Finish');
+    }
 
     return (
-        <div className='basvuru-main'>
-            <div>
-
+        showTable ? (
+            <div className='basvuru-main'>
+                <div className='basvuru-content'>
+                    <div className='table-toggle'>
+                        <span className='total-score'>Toplam Puan: {totalScore.toFixed(2)}</span>
+                        <div className='table-tggle-buttons'>
+                            <button className='pagination-button' onClick={handlePrev} disabled={currentPage === 1}>‹</button>
+                            {currentPage}/{totalPages}
+                            <button className='pagination-button' onClick={handleNext} disabled={currentPage === totalPages}>›</button>
+                        </div>
+                    </div>
+                    <div className='basvuru-table-content'>
+                        <table className='basvuru-table'>
+                            <thead className='basvuru-table-head'>
+                                <tr className='basvuru-table-header'>
+                                    <th>Seçim</th>
+                                    <th>Grup</th>
+                                    <th>Tür</th>
+                                    <th>Puan</th>
+                                    <th>İşlem</th>
+                                </tr>
+                            </thead>
+                            <tbody className='basvuru-table-body'>
+                                {selectedData.map((item) => (
+                                    <tr key={item.id}>
+                                        <td className='basvuru-item-title'>{splitTitle(item.title)}
+                                            <br />
+                                            <span className='basvuru-item-authors'> {item.authors.length > 0 ? (
+                                                <span className='authors'> {item.authors.join(', ')}</span>
+                                            ) : (
+                                                <span className='authors'>Yazar bilgisi yok</span>
+                                            )}
+                                            </span>
+                                        </td>
+                                        <td className='basvuru-item-group'>{item.group}</td>
+                                        <td className='basvuru-item-type'>{item.type}</td>
+                                        <td className='basvuru-item-score'>{(item.score).toFixed(2)}</td>
+                                        <td className='action-button-area'>
+                                            <button className='action-button'>Sil</button>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div className='basvuru-navigation'>
+                        <button className='basvuru-geri-button' onClick={() => setShowTable(false)}>Geri</button>
+                        <button className='basvuru-ileri-button' onClick={handleFinish} >İleri</button>
+                    </div>
+                </div>
             </div>
+        ) : (
+            <div className="basvuru_empty">
 
-        </div>
+                <ConfirmBasvuru setShowTable={setShowTable} />
+            </div>
+        )
     );
 }
 

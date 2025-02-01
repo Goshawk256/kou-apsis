@@ -1,0 +1,204 @@
+.confirm-basvuru {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #ffffff;
+    width: 100%;
+    height: 100%;
+    margin-top: 1%;
+}
+
+.radio-input {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+}
+
+.radio-input * {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+.radio-input label {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 0px 20px;
+    width: 220px;
+    cursor: pointer;
+    height: 50px;
+    position: relative;
+    border-radius: 10px;
+    transition: all 0.3s ease-in-out;
+    border: 1px solid #b1b1b1;
+
+}
+
+/* Seçili label için özel stil */
+.radio-input .label.selected {
+    background-color: #1FA54E;
+    border: 2px solid #1FA54E;
+
+}
+
+.radio-input .label.selected .text {
+    color: #fff;
+}
+
+.radio-input label::before {
+    position: absolute;
+    content: "";
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 220px;
+    height: 45px;
+    z-index: -1;
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    border-radius: 10px;
+    border: 2px solid transparent;
+
+}
+
+/* Hover efekti */
+.radio-input label:hover {
+    background-color: #40be4b;
+
+}
+
+.radio-input label:hover .text {
+    color: #fff;
+
+}
+
+/* Seçili durumda değişecek arka plan */
+.radio-input .label.selected::before {
+    background-color: #1FA54E;
+    border-color: #1FA54E;
+    height: 50px;
+}
+
+/* Yazı rengi */
+.radio-input .label .text {
+    color: grey;
+
+}
+
+/* Radio butonların görünümü */
+.radio-input .label input[type="radio"] {
+    background-color: #6eb15d;
+    appearance: none;
+    width: 17px;
+    height: 17px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #ccc;
+    transition: all 0.2s ease;
+}
+
+/* Seçili radio buton efekti */
+.radio-input .label input[type="radio"]:checked {
+    background-color: #48d843;
+    border-color: #4fd843;
+    -webkit-animation: pulse 0.7s forwards;
+    animation: pulse 0.7s forwards;
+}
+
+/* Radio içindeki nokta */
+.radio-input .label input[type="radio"]::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    transition: all 0.1s cubic-bezier(0.165, 0.84, 0.44, 1);
+    background-color: #fff;
+    transform: scale(0);
+}
+
+/* Seçili radio butonun iç noktasını göster */
+.radio-input .label input[type="radio"]:checked::before {
+    transform: scale(1);
+}
+
+/* Seçildiğinde animasyonlu bir parlama efekti */
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
+    }
+
+    70% {
+        box-shadow: 0 0 0 8px rgba(255, 255, 255, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+    }
+}
+
+.confirm-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: grey;
+    margin: 0;
+}
+
+.birim-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: grey;
+    padding: 0;
+    margin: 0;
+
+    margin-right: 46%;
+}
+
+.atama-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: grey;
+    padding: 0;
+    margin: 0;
+    margin-right: 47%;
+}
+
+.date-picker {
+    display: flex;
+    flex-direction: column;
+    align-items: space-between;
+    width: 55.1%;
+    margin-left: 20.8%;
+    height: 290px;
+    border: 1px solid #b1b1b1;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.confirm-bottom-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: end;
+    width: 100%;
+
+}
+
+.confirm-ileri-button {
+    width: 80px;
+    height: 50px;
+    background-color: #1FA54E;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    margin-right: 10%;
+    cursor: pointer;
+}
