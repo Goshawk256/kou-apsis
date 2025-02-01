@@ -78,6 +78,7 @@ function Yayinlar() {
         const existingPublication = savedPublications.find((pub) => pub.id === publication.id);
 
         if (!existingPublication) {
+
             savedPublications.push(publication);
             localStorage.setItem('savedPublications', JSON.stringify(savedPublications));
             showPopup('Yayın başarıyla kaydedildi!', 'success');
