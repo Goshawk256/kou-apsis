@@ -8,6 +8,10 @@ function Finish() {
     const [savedProjects, setSavedProjects] = useState([]);
     const [savedThesis, setSavedThesis] = useState([]);
     const [savedPublications, setSavedPublications] = useState([]);
+    const [savedCourses, setSavedCourses] = useState([]);
+    const [savedArtworks, setSavedArtworks] = useState([]);
+    const [savedAwards, setSavedAwards] = useState([]);
+
     const [userInfo, setUserInfo] = useState(null);
 
 
@@ -57,6 +61,9 @@ function Finish() {
         setSavedProjects(JSON.parse(localStorage.getItem('savedProjects')) || []);
         setSavedThesis(JSON.parse(localStorage.getItem('savedThesis')) || []);
         setSavedPublications(JSON.parse(localStorage.getItem('savedPublications')) || []);
+        setSavedArtworks(JSON.parse(localStorage.getItem('savedArtworks')) || []);
+        setSavedAwards(JSON.parse(localStorage.getItem('savedAwards')) || []);
+        setSavedCourses(JSON.parse(localStorage.getItem('savedCourses')) || []);
 
     }, []);
     useEffect(() => {
@@ -93,9 +100,10 @@ function Finish() {
     };
 
 
-    const renderDataByGroup = (group, storedName) => {
-        if (storedName == 'savedThesis') {
-            const filteredData = storedName.filter(item => item.group === group);
+    const renderDataByGroup = (group, name, storedItem) => {
+
+        if (name == 'savedThesis') {
+            const filteredData = storedItem.filter(item => item.group === group);
 
             return (
                 <>
@@ -112,8 +120,8 @@ function Finish() {
                 </>
             );
         }
-        else if (storedName == 'savedPublications') {
-            const filteredData = storedName.filter(item => item.groupAuto === group);
+        else if (name == 'savedPublications') {
+            const filteredData = storedItem.filter(item => item.groupAuto === group);
 
             return (
                 <>
@@ -131,8 +139,8 @@ function Finish() {
             );
         }
 
-        else if (storedName == 'savedProjects') {
-            const filteredData = storedName.filter(item => item.group === group);
+        else if (name == 'savedProjects') {
+            const filteredData = storedItem.filter(item => item.group === group);
 
             return (
                 <>
@@ -150,8 +158,8 @@ function Finish() {
             );
         }
 
-        else if (storedName == 'savedAwards') {
-            const filteredData = storedName.filter(item => item.group === group);
+        else if (name == 'savedAwards') {
+            const filteredData = storedItem.filter(item => item.group === group);
 
             return (
                 <>
@@ -169,8 +177,8 @@ function Finish() {
             );
         }
 
-        else if (storedName == 'savedCourses') {
-            const filteredData = storedName.filter(item => item.grup_adi === group);
+        else if (name == 'savedCourses') {
+            const filteredData = storedItem.filter(item => item.grup_adi === group);
 
             return (
                 <>
@@ -188,7 +196,8 @@ function Finish() {
             );
         }
 
-        else if (storedName == 'savedArtworks') {
+        else if (name == 'savedArtworks') {
+            const filteredData = storedItem.filter(item => item.grup_adi === group);
             return (
                 <>
                     <td>
@@ -200,6 +209,18 @@ function Finish() {
                         {filteredData
                             .reduce((acc, item) => acc + item.score, 0)
                             .toFixed(2)}
+                    </td>
+                </>
+            );
+        }
+        else {
+            return (
+                <>
+                    <td>
+                        yok
+                    </td>
+                    <td>
+                        -
                     </td>
                 </>
             );
@@ -287,14 +308,9 @@ function Finish() {
                                 taranan dergide)
 
                             </td>
-                            <td>
-                                {savedPublications.map((item) => (
-                                    <div key={item.id}>
-                                        <span>{item.title}</span>
-                                    </div>
-                                ))}
-                            </td>
-                            <td></td>
+                            {
+                                renderDataByGroup('A1', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -303,8 +319,9 @@ function Finish() {
                                 taranan dergide)
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('A2', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -313,8 +330,9 @@ function Finish() {
                                 taranan dergide)
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('A3', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -324,8 +342,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('A4', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -334,8 +353,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('A5', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -344,8 +364,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('A6', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -354,8 +375,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('A7', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -364,8 +386,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('A8', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -374,8 +397,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('A9', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -387,7 +411,12 @@ function Finish() {
                                 <tr>Asgari Kosula Dahil Toplam Puani</tr>
                                 <tr>Toplam Puani</tr>
                             </td>
-                            <td></td>
+                            <td>
+                                {savedPublications
+                                    .filter(item => item.groupAuto.includes('A'))
+                                    .reduce((acc, item) => acc + item.scoreAuto, 0)
+                                }
+                            </td>
                         </tr>
 
 
@@ -415,8 +444,9 @@ function Finish() {
                                 yayimlanmis çalismalar
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('B1', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -426,8 +456,9 @@ function Finish() {
                                 yayimlanmis çalismalar
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('B2', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -435,8 +466,9 @@ function Finish() {
                                 olarak sunulan çalismalar
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('B3', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -446,8 +478,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('B4', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -458,8 +491,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('B5', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -468,8 +502,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('B6', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -480,8 +515,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('B7', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -492,8 +528,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('B8', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -503,8 +540,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('B9', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -514,8 +552,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('B10', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -525,8 +564,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('B11', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -537,8 +577,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('B12', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -550,7 +591,12 @@ function Finish() {
 
                                 <tr>Toplam Puani</tr>
                             </td>
-                            <td></td>
+                            <td>
+                                {savedPublications
+                                    .filter(item => item.groupAuto.includes('B'))
+                                    .reduce((acc, item) => acc + item.scoreAuto, 0)
+                                }
+                            </td>
                         </tr>
 
 
@@ -577,8 +623,9 @@ function Finish() {
                                 yayimlanmis ozgun kitap
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('C1', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -588,8 +635,9 @@ function Finish() {
                                 yazarligi)
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('C2', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -597,8 +645,9 @@ function Finish() {
                                 konusu/maddesi (en fazla 3 madde)
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('C3', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -607,8 +656,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('C4', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -618,8 +668,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('C5', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -628,8 +679,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('C6', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -638,8 +690,9 @@ function Finish() {
                                 (Her bir kitap için maksimum 2 bolum çevirisi)
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('C7', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -648,8 +701,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('C8', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -661,7 +715,12 @@ function Finish() {
 
                                 <tr>Toplam Puani</tr>
                             </td>
-                            <td></td>
+                            <td>
+                                {savedPublications
+                                    .filter(item => item.groupAuto.includes('C'))
+                                    .reduce((acc, item) => acc + item.scoreAuto, 0)
+                                }
+                            </td>
                         </tr>
 
 
@@ -691,8 +750,9 @@ function Finish() {
                                 bakilmaksizin adayin atif yapilan her eseri için
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('D1', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -702,8 +762,9 @@ function Finish() {
                                 bakilmaksizin adayin atif yapilan her eseri için
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('D2', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -717,8 +778,9 @@ function Finish() {
                                 eseri için
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('D3', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -731,8 +793,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('D4', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -744,7 +807,12 @@ function Finish() {
 
                                 <tr>Toplam Puani</tr>
                             </td>
-                            <td></td>
+                            <td>
+                                {savedPublications
+                                    .filter(item => item.groupAuto.includes('D'))
+                                    .reduce((acc, item) => acc + item.scoreAuto, 0)
+                                }
+                            </td>
                         </tr>
 
 
@@ -768,24 +836,27 @@ function Finish() {
                                 1) Onlisans /lisans dersler
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('E1', 'savedCourses', savedCourses)
+                            }
                         </tr>
                         <tr>
                             <td>
                                 2) Onlisans/lisans dersleri (Yabanci dilde)
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('E2', 'savedCourses', savedCourses)
+                            }
                         </tr>
                         <tr>
                             <td>
                                 3) Lisansustu dersleri
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('E3', 'savedCourses', savedCourses)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -793,8 +864,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('E4', 'savedCourses', savedCourses)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -806,7 +878,12 @@ function Finish() {
 
                                 <tr>Toplam Puani</tr>
                             </td>
-                            <td></td>
+                            <td>
+                                {savedCourses
+                                    .filter(item => item.grup_adi.includes('E'))
+                                    .reduce((acc, item) => acc + item.ders_puani, 0)
+                                }
+                            </td>
                         </tr>
 
 
@@ -832,16 +909,18 @@ function Finish() {
                                 yonetimi
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('F1', 'savedThesis', savedThesis)
+                            }
                         </tr>
                         <tr>
                             <td>
                                 2) Yuksek Lisans Tez Yonetimi
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('F2', 'savedThesis', savedThesis)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -849,8 +928,9 @@ function Finish() {
                                 Danisman)
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('F3', 'savedThesis', savedThesis)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -860,8 +940,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('F4', 'savedThesis', savedThesis)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -873,7 +954,12 @@ function Finish() {
                                 <tr>Asgari Kosula Dahil Toplam Puani</tr>
                                 <tr>Toplam Puani</tr>
                             </td>
-                            <td></td>
+                            <td>
+                                {savedThesis
+                                    .filter(item => item.group.includes('F'))
+                                    .reduce((acc, item) => acc + item.score, 0)
+                                }
+                            </td>
                         </tr>
 
 
@@ -897,32 +983,36 @@ function Finish() {
                                 1) Lisanslanan Uluslararasi Patent
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('A1', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
                                 2) Tescillenmis Uluslararasi Patent
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('A1', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
                                 3) Uluslararasi Patent Basvurusu
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('A1', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
                                 4) Lisanslanan Ulusal Patent
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('A1', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -931,8 +1021,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('A1', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -941,8 +1032,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('A1', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -952,8 +1044,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('A1', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -962,8 +1055,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('A1', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1004,8 +1098,9 @@ function Finish() {
                                 olmak
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('H1', 'savedProjects', savedProjects)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1013,8 +1108,9 @@ function Finish() {
                                 arastirma projesinde yurutucu olmak
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('H2', 'savedProjects', savedProjects)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1022,8 +1118,9 @@ function Finish() {
                                 arastirma projesinde arastirmaci olmak
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('H3', 'savedProjects', savedProjects)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1036,8 +1133,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('H4', 'savedProjects', savedProjects)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1049,8 +1147,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('H5', 'savedProjects', savedProjects)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1062,8 +1161,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('H6', 'savedProjects', savedProjects)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1076,8 +1176,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('H7', 'savedProjects', savedProjects)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1087,8 +1188,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('H8', 'savedProjects', savedProjects)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1097,8 +1199,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('H9', 'savedProjects', savedProjects)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1109,8 +1212,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('H10', 'savedProjects', savedProjects)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1120,8 +1224,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('H11', 'savedProjects', savedProjects)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1131,8 +1236,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('H12', 'savedProjects', savedProjects)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1142,8 +1248,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('H13', 'savedProjects', savedProjects)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1153,8 +1260,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('H14', 'savedProjects', savedProjects)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1165,8 +1273,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('H15', 'savedProjects', savedProjects)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1176,8 +1285,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('H16', 'savedProjects', savedProjects)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1187,8 +1297,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('H17', 'savedProjects', savedProjects)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1198,8 +1309,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('H18', 'savedProjects', savedProjects)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1209,8 +1321,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('H19', 'savedProjects', savedProjects)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1221,8 +1334,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('H20', 'savedProjects', savedProjects)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1232,8 +1346,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('H21', 'savedProjects', savedProjects)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1243,8 +1358,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('H22', 'savedProjects', savedProjects)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1257,8 +1373,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('H23', 'savedProjects', savedProjects)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1270,8 +1387,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('H24', 'savedProjects', savedProjects)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1283,8 +1401,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('H25', 'savedProjects', savedProjects)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1294,8 +1413,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('H26', 'savedProjects', savedProjects)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1305,8 +1425,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('H27', 'savedProjects', savedProjects)
+                            }
                         </tr>
                         <tr>
 
@@ -1319,7 +1440,12 @@ function Finish() {
                                 <tr>Asgari Kosula Dahil Toplam Puani</tr>
                                 <tr>Toplam Puani</tr>
                             </td>
-                            <td></td>
+                            <td>
+                                {savedProjects
+                                    .filter(item => item.group.includes('H'))
+                                    .reduce((acc, item) => acc + item.score, 0)
+                                }
+                            </td>
                         </tr>
 
 
@@ -1345,8 +1471,9 @@ function Finish() {
                                 gorevinde bulunmak
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('A1', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1355,8 +1482,9 @@ function Finish() {
                                 editorluk gorevinde bulunmak
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('A1', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1365,8 +1493,9 @@ function Finish() {
                                 gorevinde bulunmak
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('A1', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1376,8 +1505,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('A1', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1389,8 +1519,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('A1', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1402,8 +1533,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('A1', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1415,8 +1547,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('A1', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1427,8 +1560,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('A1', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1438,8 +1572,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('A1', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1449,8 +1584,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('A1', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1461,8 +1597,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('A1', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1473,8 +1610,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('A1', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1485,8 +1623,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('A1', 'savedPublications', savedPublications)
+                            }
                         </tr>
 
                         <tr>
@@ -1524,8 +1663,9 @@ function Finish() {
                                 bilim ve sanat odulleri
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('J1', 'savedAwards', savedAwards)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1533,8 +1673,9 @@ function Finish() {
                                 Hizmet Odulleri
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('J2', 'savedAwards', savedAwards)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1542,8 +1683,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('J3', 'savedAwards', savedAwards)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1553,8 +1695,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('J4', 'savedAwards', savedAwards)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1564,8 +1707,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('J5', 'savedAwards', savedAwards)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1575,8 +1719,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('J6', 'savedAwards', savedAwards)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1587,8 +1732,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('J7', 'savedAwards', savedAwards)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1598,8 +1744,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('J8', 'savedAwards', savedAwards)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1609,8 +1756,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('J9', 'savedAwards', savedAwards)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1620,8 +1768,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('J10', 'savedAwards', savedAwards)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1631,8 +1780,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('J11', 'savedAwards', savedAwards)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1642,8 +1792,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('J12', 'savedAwards', savedAwards)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1653,8 +1804,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('J13', 'savedAwards', savedAwards)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1664,8 +1816,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('J14', 'savedAwards', savedAwards)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1674,8 +1827,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('J15', 'savedAwards', savedAwards)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1686,8 +1840,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('J16', 'savedAwards', savedAwards)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1697,8 +1852,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('J17', 'savedAwards', savedAwards)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1709,8 +1865,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('J18', 'savedAwards', savedAwards)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1719,8 +1876,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('J19', 'savedAwards', savedAwards)
+                            }
                         </tr>
 
                         <tr>
@@ -1733,7 +1891,12 @@ function Finish() {
 
                                 <tr>Toplam Puani</tr>
                             </td>
-                            <td></td>
+                            <td>
+                                {savedAwards
+                                    .filter(item => item.group.includes('J'))
+                                    .reduce((acc, item) => acc + item.score, 0)
+                                }
+                            </td>
                         </tr>
 
 
@@ -1763,8 +1926,9 @@ function Finish() {
                                 Muduru
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('A1', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1772,8 +1936,9 @@ function Finish() {
                                 Muduru Yrd./Bolum Baskani
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('A1', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1781,8 +1946,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('A1', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1791,8 +1957,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('A1', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1802,8 +1969,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('A1', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1813,8 +1981,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('A1', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1825,8 +1994,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('A1', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1836,8 +2006,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('A1', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1849,8 +2020,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('A1', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1861,8 +2033,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('A1', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1873,8 +2046,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('A1', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1885,8 +2059,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('A1', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1928,8 +2103,9 @@ function Finish() {
                                 puanlama yapilir)
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('A1', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1938,8 +2114,9 @@ function Finish() {
                                 kurumlarinca satin alinmasi, (Eser basina
                                 puanlama yapilir)
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('A1', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1950,8 +2127,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('A1', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1962,8 +2140,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('A1', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1979,8 +2158,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('A1', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -1995,8 +2175,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('A1', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -2012,8 +2193,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('A1', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -2029,8 +2211,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('A1', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -2040,8 +2223,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('A1', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -2050,8 +2234,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('A1', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -2061,8 +2246,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('A1', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -2072,8 +2258,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('A1', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -2082,8 +2269,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('A1', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -2092,8 +2280,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('A1', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -2105,8 +2294,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('A1', 'savedPublications', savedPublications)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -2118,8 +2308,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('A1', 'savedPublications', savedPublications)
+                            }
                         </tr>
 
                         <tr>
@@ -2163,8 +2354,9 @@ function Finish() {
                                 1) Uluslararasi resital icra etmek
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('M1', 'savedArtworks', savedArtworks)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -2172,8 +2364,9 @@ function Finish() {
                                 Geleneksel Topluluklar konserinde solist icraci
                                 olarak yer almak
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('M2', 'savedArtworks', savedArtworks)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -2183,8 +2376,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('M3', 'savedArtworks', savedArtworks)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -2194,8 +2388,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('M4', 'savedArtworks', savedArtworks)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -2205,8 +2400,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('M5', 'savedArtworks', savedArtworks)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -2216,8 +2412,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('M6', 'savedArtworks', savedArtworks)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -2227,8 +2424,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('M7', 'savedArtworks', savedArtworks)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -2238,8 +2436,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('M8', 'savedArtworks', savedArtworks)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -2249,8 +2448,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('M9', 'savedArtworks', savedArtworks)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -2258,8 +2458,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('M10', 'savedArtworks', savedArtworks)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -2270,8 +2471,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('M11', 'savedArtworks', savedArtworks)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -2282,8 +2484,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('M12', 'savedArtworks', savedArtworks)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -2293,8 +2496,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('M13', 'savedArtworks', savedArtworks)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -2304,8 +2508,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('M14', 'savedArtworks', savedArtworks)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -2315,8 +2520,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('M15', 'savedArtworks', savedArtworks)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -2326,8 +2532,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('M16', 'savedArtworks', savedArtworks)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -2337,8 +2544,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('M17', 'savedArtworks', savedArtworks)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -2348,8 +2556,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('M18', 'savedArtworks', savedArtworks)
+                            }
                         </tr>
                         <tr>
                             <td colSpan="4">
@@ -2372,8 +2581,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('M19', 'savedArtworks', savedArtworks)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -2385,8 +2595,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('M20', 'savedArtworks', savedArtworks)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -2396,8 +2607,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('M21', 'savedArtworks', savedArtworks)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -2408,8 +2620,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('M22', 'savedArtworks', savedArtworks)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -2420,8 +2633,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('M23', 'savedArtworks', savedArtworks)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -2432,8 +2646,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('M24', 'savedArtworks', savedArtworks)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -2445,8 +2660,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('M25', 'savedArtworks', savedArtworks)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -2458,8 +2674,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('M26', 'savedArtworks', savedArtworks)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -2469,8 +2686,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('M27', 'savedArtworks', savedArtworks)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -2481,8 +2699,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('M28', 'savedArtworks', savedArtworks)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -2493,8 +2712,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('M29', 'savedArtworks', savedArtworks)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -2505,8 +2725,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('M30', 'savedArtworks', savedArtworks)
+                            }
                         </tr>
                         <tr>
                             <td colSpan="4">
@@ -2528,8 +2749,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('M31', 'savedArtworks', savedArtworks)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -2540,8 +2762,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('M32', 'savedArtworks', savedArtworks)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -2552,8 +2775,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('M33', 'savedArtworks', savedArtworks)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -2564,8 +2788,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('M34', 'savedArtworks', savedArtworks)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -2576,8 +2801,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('M35', 'savedArtworks', savedArtworks)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -2588,8 +2814,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('M36', 'savedArtworks', savedArtworks)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -2601,8 +2828,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('M37', 'savedArtworks', savedArtworks)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -2613,8 +2841,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('M38', 'savedArtworks', savedArtworks)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -2628,8 +2857,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('M39', 'savedArtworks', savedArtworks)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -2642,8 +2872,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('M40', 'savedArtworks', savedArtworks)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -2657,8 +2888,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('M41', 'savedArtworks', savedArtworks)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -2671,8 +2903,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('M42', 'savedArtworks', savedArtworks)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -2684,8 +2917,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('M43', 'savedArtworks', savedArtworks)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -2697,8 +2931,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('M44', 'savedArtworks', savedArtworks)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -2710,8 +2945,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('M45', 'savedArtworks', savedArtworks)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -2722,8 +2958,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('M46', 'savedArtworks', savedArtworks)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -2735,8 +2972,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('M47', 'savedArtworks', savedArtworks)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -2748,8 +2986,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('M48', 'savedArtworks', savedArtworks)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -2761,8 +3000,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('M49', 'savedArtworks', savedArtworks)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -2773,8 +3013,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('M50', 'savedArtworks', savedArtworks)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -2786,8 +3027,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('M51', 'savedArtworks', savedArtworks)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -2799,8 +3041,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('M52', 'savedArtworks', savedArtworks)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -2812,8 +3055,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('M52', 'savedArtworks', savedArtworks)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -2825,8 +3069,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('M54', 'savedArtworks', savedArtworks)
+                            }
                         </tr>
                         <tr>
                             <td colSpan="4">
@@ -2851,8 +3096,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('M55', 'savedArtworks', savedArtworks)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -2866,8 +3112,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('M56', 'savedArtworks', savedArtworks)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -2882,8 +3129,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('M57', 'savedArtworks', savedArtworks)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -2894,8 +3142,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('M58', 'savedArtworks', savedArtworks)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -2905,8 +3154,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('M59', 'savedArtworks', savedArtworks)
+                            }
                         </tr>
                         <tr>
                             <td>
@@ -2917,8 +3167,9 @@ function Finish() {
 
 
                             </td>
-                            <td></td>
-                            <td></td>
+                            {
+                                renderDataByGroup('M60', 'savedArtworks', savedArtworks)
+                            }
                         </tr>
 
                         <tr>
