@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ConfirmBasvuru from './confirmbavuru/ConfirmBasvuru';
+import { useNavigate } from 'react-router-dom';
 import './Basvuru.css';
 
 function Basvuru() {
@@ -66,6 +67,11 @@ function Basvuru() {
         }
         return title;
     };
+    const navigate = useNavigate();
+
+    const handleFinish = () => {
+        navigate('/finish');
+    }
 
     return (
         showTable ? (
@@ -115,7 +121,7 @@ function Basvuru() {
                     </div>
                     <div className='basvuru-navigation'>
                         <button className='basvuru-geri-button' onClick={() => setShowTable(false)}>Geri</button>
-                        <button className='basvuru-ileri-button'>İleri</button>
+                        <button className='basvuru-ileri-button' onClick={handleFinish} >İleri</button>
                     </div>
                 </div>
             </div>

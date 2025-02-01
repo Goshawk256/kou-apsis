@@ -4,6 +4,7 @@ import Login from './components/login/Login';
 import Header from './components/header/Header';
 import { ThemeProvider, useTheme } from './theme/themeContext';
 import { useEffect } from 'react';
+import Finish from './components/finish/Finish';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function ThemedApp() {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/home" element={<HomePage />} />
+          <Route path="/finish" element={<Finish />} />
         </Routes>
       </Router>
     </div>
