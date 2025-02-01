@@ -4,7 +4,7 @@ import './Basvuru.css';
 function Basvuru() {
     const [data, setData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 4;
+    const itemsPerPage = 7;
 
     useEffect(() => {
         const savedProjects = JSON.parse(localStorage.getItem('savedProjects')) || [];
@@ -16,7 +16,8 @@ function Basvuru() {
             title: item.projectName,
             group: item.group,
             type: 'Proje',
-            score: item.score
+            score: item.score,
+            authors: item.authors || []
         }));
 
         const formattedThesis = savedThesis.map(item => ({
@@ -24,7 +25,8 @@ function Basvuru() {
             title: item.title,
             group: item.group,
             type: 'Tez',
-            score: item.score
+            score: item.score,
+            authors: item.authors || []
         }));
 
         const formattedPublications = savedPublications.map(item => ({
@@ -32,7 +34,8 @@ function Basvuru() {
             title: item.title,
             group: item.groupAuto,
             type: 'Yayın',
-            score: item.scoreAuto
+            score: item.scoreAuto,
+            authors: item.authors || []
         }));
 
         setData([...formattedProjects, ...formattedThesis, ...formattedPublications]);
@@ -48,6 +51,14 @@ function Basvuru() {
 
     const handlePrev = () => {
         if (currentPage > 1) setCurrentPage(currentPage - 1);
+    };
+
+    const splitTitle = (title) => {
+
+        if (title.length > 50) {
+            return title.substring(0, 100) + '...';
+        }
+        return title;
     };
 
     return (
@@ -72,12 +83,18 @@ function Basvuru() {
                         <tbody className='basvuru-table-body'>
                             {selectedData.map((item) => (
                                 <tr key={item.id}>
-                                    <td className='basvuru-item-title'>{item.title}
-
+                                    <td className='basvuru-item-title'>{splitTitle(item.title)}
+                                        <br />
+                                        <span className='basvuru-item-authors'> {item.authors.length > 0 ? (
+                                            <span className='authors'> {item.authors.join(', ')}</span>
+                                        ) : (
+                                            <span className='authors'>Yazar bilgisi yok</span>
+                                        )}
+                                        </span>
                                     </td>
                                     <td className='basvuru-item-group'>{item.group}</td>
                                     <td className='basvuru-item-type'>{item.type}</td>
-                                    <td className='basvuru-item-score'>{item.score}</td>
+                                    <td className='basvuru-item-score'>{(item.score).toFixed(2)}</td>
                                     <td className='action-button-area'>
                                         <button className='action-button'>Sil</button>
                                     </td>
