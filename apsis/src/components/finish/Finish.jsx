@@ -5,9 +5,9 @@ import { useState, useEffect } from 'react';
 
 
 function Finish() {
-    const [data, setData] = useState([]);
+
     const [userInfo, setUserInfo] = useState(null);
-    const [totalScore, setTotalScore] = useState(0);
+
     const downloadPDF = () => {
         const doc = new jsPDF();
 
@@ -17,7 +17,7 @@ function Finish() {
         doc.setFont('FreeSerif');
 
         const element = document.querySelector('.table-container');
-
+        w
         // Orijinal stilleri sakla
         const originalStyles = {
             height: element.style.height,
@@ -50,8 +50,6 @@ function Finish() {
         const staff = localStorage.getItem('selectedOption');
         return staff;
     }
-
-
 
     useEffect(() => {
         const fetchData = () => {
@@ -86,45 +84,6 @@ function Finish() {
         return normalized.charAt(0).toUpperCase() + normalized.slice(1).toLowerCase();
     };
 
-
-    useEffect(() => {
-        const savedProjects = JSON.parse(localStorage.getItem('savedProjects')) || [];
-        const savedThesis = JSON.parse(localStorage.getItem('savedThesis')) || [];
-        const savedPublications = JSON.parse(localStorage.getItem('savedPublications')) || [];
-
-        const formattedProjects = savedProjects.map(item => ({
-            id: item.id,
-            title: item.projectName,
-            group: item.group,
-            type: 'Proje',
-            score: item.score,
-            authors: item.authors || []
-        }));
-
-        const formattedThesis = savedThesis.map(item => ({
-            id: item.id,
-            title: item.title,
-            group: item.group,
-            type: 'Tez',
-            score: item.score,
-            authors: item.authors || []
-        }));
-
-        const formattedPublications = savedPublications.map(item => ({
-            id: item.id,
-            title: item.title,
-            group: item.groupAuto,
-            type: 'Yayın',
-            score: item.scoreAuto,
-            authors: item.authors || []
-        }));
-
-        const allData = [...formattedProjects, ...formattedThesis, ...formattedPublications];
-        setData(allData);
-
-        const total = allData.reduce((sum, item) => sum + (item.score || 0), 0);
-        setTotalScore(total);
-    }, []);
 
     return (
         <div className='finish-main'>
