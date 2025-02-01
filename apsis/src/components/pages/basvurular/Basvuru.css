@@ -112,3 +112,30 @@
     font-size: 10px;
     color: #1FA54E;
 }
+
+.basvuru-navigation {
+    width: 100%;
+
+    flex-direction: row;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.basvuru-navigation button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.5s ease;
+}
+
+.basvuru-navigation button:hover {
+    background-color: #1FA54E;
+    color: white;
+}
+
+.basvuru-geri-button {
+    margin-right: 10px;
+}

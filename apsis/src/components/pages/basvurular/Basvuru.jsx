@@ -6,6 +6,7 @@ function Basvuru() {
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 7;
     const [totalScore, setTotalScore] = useState(0);
+    const [showTable, setShowTable] = useState(true);
 
     useEffect(() => {
         const savedProjects = JSON.parse(localStorage.getItem('savedProjects')) || [];
@@ -66,53 +67,65 @@ function Basvuru() {
     };
 
     return (
-        <div className='basvuru-main'>
-            <div className='basvuru-content'>
-                <div className='table-toggle'>
-                    <span className='total-score'>Toplam Puan: {totalScore.toFixed(2)}</span>
-                    <div className='table-tggle-buttons'>
-                        <button className='pagination-button' onClick={handlePrev} disabled={currentPage === 1}>‹</button>
-                        {currentPage}/{totalPages}
-                        <button className='pagination-button' onClick={handleNext} disabled={currentPage === totalPages}>›</button>
-                    </div>
 
-                </div>
-                <div className='basvuru-table-content'>
-                    <table className='basvuru-table'>
-                        <thead className='basvuru-table-head'>
-                            <tr className='basvuru-table-header'>
-                                <th>Seçim</th>
-                                <th>Grup</th>
-                                <th>Tür</th>
-                                <th>Puan</th>
-                                <th>İşlem</th>
-                            </tr>
-                        </thead>
-                        <tbody className='basvuru-table-body'>
-                            {selectedData.map((item) => (
-                                <tr key={item.id}>
-                                    <td className='basvuru-item-title'>{splitTitle(item.title)}
-                                        <br />
-                                        <span className='basvuru-item-authors'> {item.authors.length > 0 ? (
-                                            <span className='authors'> {item.authors.join(', ')}</span>
-                                        ) : (
-                                            <span className='authors'>Yazar bilgisi yok</span>
-                                        )}
-                                        </span>
-                                    </td>
-                                    <td className='basvuru-item-group'>{item.group}</td>
-                                    <td className='basvuru-item-type'>{item.type}</td>
-                                    <td className='basvuru-item-score'>{(item.score).toFixed(2)}</td>
-                                    <td className='action-button-area'>
-                                        <button className='action-button'>Sil</button>
-                                    </td>
+        showTable ? (
+            <div className='basvuru-main'>
+                <div className='basvuru-content'>
+                    <div className='table-toggle'>
+                        <span className='total-score'>Toplam Puan: {totalScore.toFixed(2)}</span>
+                        <div className='table-tggle-buttons'>
+                            <button className='pagination-button' onClick={handlePrev} disabled={currentPage === 1}>‹</button>
+                            {currentPage}/{totalPages}
+                            <button className='pagination-button' onClick={handleNext} disabled={currentPage === totalPages}>›</button>
+                        </div>
+
+                    </div>
+                    <div className='basvuru-table-content'>
+                        <table className='basvuru-table'>
+                            <thead className='basvuru-table-head'>
+                                <tr className='basvuru-table-header'>
+                                    <th>Seçim</th>
+                                    <th>Grup</th>
+                                    <th>Tür</th>
+                                    <th>Puan</th>
+                                    <th>İşlem</th>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody className='basvuru-table-body'>
+                                {selectedData.map((item) => (
+                                    <tr key={item.id}>
+                                        <td className='basvuru-item-title'>{splitTitle(item.title)}
+                                            <br />
+                                            <span className='basvuru-item-authors'> {item.authors.length > 0 ? (
+                                                <span className='authors'> {item.authors.join(', ')}</span>
+                                            ) : (
+                                                <span className='authors'>Yazar bilgisi yok</span>
+                                            )}
+                                            </span>
+                                        </td>
+                                        <td className='basvuru-item-group'>{item.group}</td>
+                                        <td className='basvuru-item-type'>{item.type}</td>
+                                        <td className='basvuru-item-score'>{(item.score).toFixed(2)}</td>
+                                        <td className='action-button-area'>
+                                            <button className='action-button'>Sil</button>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div className='basvuru-navigation'>
+                        <button className='basvuru-geri-button' onClick={() => setShowTable(false)}>Geri</button>
+                        <button className='basvuru-ileri-button'>İleri</button>
+                    </div>
                 </div>
             </div>
-        </div>
+        ) : (
+            <div className="basvuru_empty">
+                <p>Henüz başvurunuzda eklenmiş bir kayıt bulunmamaktadır.</p>
+            </div>
+        )
+
     );
 }
 
