@@ -26,8 +26,9 @@ function Oduller() {
                     username: username,
                 }
             );
-            setTableData(response.data);
-            setFilteredData(response.data);
+            setTableData(response.data.data);
+
+            setFilteredData(response.data.data);
         } catch (error) {
             console.error('Veri çekme hatası:', error);
         } finally {
