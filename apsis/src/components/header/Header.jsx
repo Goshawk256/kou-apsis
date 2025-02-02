@@ -95,19 +95,23 @@ function Header() {
                             checked={theme === 'dark'}
                             onChange={toggleTheme}
                         />
-                        <label htmlFor="themeSwitch">
-                            <span className="switch-x-toggletext">
-                                <span className="switch-x-unchecked">
-                                    <span className="switch-x-hiddenlabel">Unchecked: </span>
-                                    Aydınlık
+                        {
+                            /*
+                            <label htmlFor="themeSwitch">
+                                <span className="switch-x-toggletext">
+                                    <span className="switch-x-unchecked">
+                                        <span className="switch-x-hiddenlabel">Unchecked: </span>
+                                        Aydınlık
+                                    </span>
+                                    <span className="switch-x-checked">
+                                        <span className="switch-x-hiddenlabel">Checked: </span>
+                                        Karanlık
+                                    </span>
                                 </span>
-                                <span className="switch-x-checked">
-                                    <span className="switch-x-hiddenlabel">Checked: </span>
-                                    Karanlık
-                                </span>
-                            </span>
-                            <span className="switch-x-text">Tema </span>
-                        </label>
+                                <span className="switch-x-text">Tema </span>
+                            </label>
+                            */
+                        }
                     </div>
                     <button onClick={handleLogout} className="logout-button">
                         <img src={logoutIcon} alt="Logout" />
