@@ -290,8 +290,8 @@ function Finish() {
                 <table className='finish-table'>
                     <thead>
                         <tr>
-                            <td colSpan="4" className="table-header"> <strong>A. Makaleler</strong> Basvurulan bilim alani ile ilgili tam arastirma ve derleme makaleleri (editore mektup, ozet, vaka takdimi, teknik
-                                not ve kitap kritigi hariç)</td>
+                            <th colSpan="4" className="table-header"> <strong>A. Makaleler</strong> Basvurulan bilim alani ile ilgili tam arastirma ve derleme makaleleri (editore mektup, ozet, vaka takdimi, teknik
+                                not ve kitap kritigi hariç)</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -425,8 +425,8 @@ function Finish() {
                 <table className='finish-table'>
                     <thead>
                         <tr>
-                            <td colSpan="4" className="table-header"> <strong>B. Bilimsel Toplanti Faaliyetleri</strong>
-                            </td>
+                            <th colSpan="4" className="table-header"> <strong>B. Bilimsel Toplanti Faaliyetleri</strong>
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -605,8 +605,8 @@ function Finish() {
                 <table className='finish-table'>
                     <thead>
                         <tr>
-                            <td colSpan="4" className="table-header"> <strong>C. KITAPLAR</strong> (Yabanci dildeki kitaplarin puanlari 1.5 ile çarpildiktan sonra hesaplama kullanilir)
-                            </td>
+                            <th colSpan="4" className="table-header"> <strong>C. KITAPLAR</strong> (Yabanci dildeki kitaplarin puanlari 1.5 ile çarpildiktan sonra hesaplama kullanilir)
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -729,8 +729,8 @@ function Finish() {
                 <table className='finish-table'>
                     <thead>
                         <tr>
-                            <td colSpan="4" className="table-header"> <strong>D. Atiflar</strong> (Atif yapan eserlerin belgelenmesi kaydiyla, bu yonetmeligin Temel Ilkeler bolumundeki atiflara iliskin
-                                açiklamalar dikkate alinir)</td>
+                            <th colSpan="4" className="table-header"> <strong>D. Atiflar</strong> (Atif yapan eserlerin belgelenmesi kaydiyla, bu yonetmeligin Temel Ilkeler bolumundeki atiflara iliskin
+                                açiklamalar dikkate alinir)</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -821,7 +821,7 @@ function Finish() {
                 <table className='finish-table'>
                     <thead>
                         <tr>
-                            <td colSpan="4" className="table-header"> <strong>E. EGITIM OGRETIM FAALIYETLERI</strong> (Son uç yilda verdigi dersler, Azami 50 puan, doktora unvanindan sonra)</td>
+                            <th colSpan="4" className="table-header"> <strong>E. EGITIM OGRETIM FAALIYETLERI</strong> (Son uç yilda verdigi dersler, Azami 50 puan, doktora unvanindan sonra)</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -892,7 +892,7 @@ function Finish() {
                 <table className='finish-table'>
                     <thead>
                         <tr>
-                            <td colSpan="4" className="table-header"> <strong>F. TEZ YONETICILIGI</strong> (Tamamlanmis olmasi kaydiyla)</td>
+                            <th colSpan="4" className="table-header"> <strong>F. TEZ YONETICILIGI</strong> (Tamamlanmis olmasi kaydiyla)</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -968,7 +968,7 @@ function Finish() {
                 <table className='finish-table'>
                     <thead>
                         <tr>
-                            <td colSpan="4" className="table-header"> <strong>G. PATENTLER</strong></td>
+                            <th colSpan="4" className="table-header"> <strong>G. PATENTLER</strong></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -1078,9 +1078,9 @@ function Finish() {
                 <table className='finish-table'>
                     <thead>
                         <tr>
-                            <td colSpan="4" className="table-header"> <strong>H. ARASTIRMA PROJELERI</strong> (Tamamlanmis veya devam ediyor olmak kosuluyla, projenin en az bir yil sureli oldugu
+                            <th colSpan="4" className="table-header"> <strong>H. ARASTIRMA PROJELERI</strong> (Tamamlanmis veya devam ediyor olmak kosuluyla, projenin en az bir yil sureli oldugu
                                 ve hakem degerlendirilmesinden geçtigi belgelenir ve projenin butçesi, kabul edildigi yildaki en son açiklanan memur
-                                taban aylik katsayisinin en az 5000 kati olmalidir.)</td>
+                                taban aylik katsayisinin en az 5000 kati olmalidir.)</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -1454,7 +1454,7 @@ function Finish() {
                 <table className='finish-table'>
                     <thead>
                         <tr>
-                            <td colSpan="4" className="table-header"> <strong>I. EDITORLUK, YAYIN KURULU UYELIGI VE HAKEMLIK FAALIYETLERI</strong></td>
+                            <th colSpan="4" className="table-header"> <strong>I. EDITORLUK, YAYIN KURULU UYELIGI VE HAKEMLIK FAALIYETLERI</strong></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -1647,7 +1647,7 @@ function Finish() {
                 <table className='finish-table'>
                     <thead>
                         <tr>
-                            <td colSpan="4" className="table-header"> <strong>J. ODULLER</strong></td>
+                            <th colSpan="4" className="table-header"> <strong>J. ODULLER</strong></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -1905,11 +1905,11 @@ function Finish() {
                 <table className='finish-table'>
                     <thead>
                         <tr>
-                            <td colSpan="4" className="table-header"> <strong>K. IDARI GOREVLER VE UNIVERSITEYE KATKI FAALIYETLERI </strong>
+                            <th colSpan="4" className="table-header"> <strong>K. IDARI GOREVLER VE UNIVERSITEYE KATKI FAALIYETLERI </strong>
                                 (Idari gorevlerde vekaleten de olsa en az 6 ay gorev yapmis olmak, ayni anda birden fazla idari gorevi olanlar için en
                                 yuksek puan dikkate alinir ve normal suresi dolup yeniden atamalar ayrica puanlanir. Bu kisimda en fazla 50 puan
                                 dikkate alinir)
-                            </td>
+                            </th>
 
                         </tr>
                     </thead>
@@ -2082,9 +2082,9 @@ function Finish() {
                 <table className='finish-table'>
                     <thead>
                         <tr>
-                            <td colSpan="4" className="table-header"> <strong>L. SANAT VE TASARIM ALANLARI </strong>
+                            <th colSpan="4" className="table-header"> <strong>L. SANAT VE TASARIM ALANLARI </strong>
                                 (Kurumsal ve Uygulama Alanlari)
-                            </td>
+                            </th>
 
                         </tr>
                     </thead>
@@ -2332,14 +2332,14 @@ function Finish() {
                 <table className='finish-table'>
                     <thead>
                         <tr>
-                            <td colSpan="4" className="table-header"> <strong>M. KONSERVATUVAR </strong>
+                            <th colSpan="4" className="table-header"> <strong>M. KONSERVATUVAR </strong>
                                 (Kurumsal ve Uygulama Alanlari, Devlet Konservatuvari Muzikoloji Bolumu / Muzik Bolumu /
                                 Turk Muzigi Bolumu)
-                            </td>
+                            </th>
 
                         </tr>
                         <tr>
-                            <td colSpan="4">M-1. KONSERLER (Konser salonu huviyetinde, onceden ilan edilmis, programi basilmis, kurum onayli)</td>
+                            <th colSpan="4">M-1. KONSERLER (Konser salonu huviyetinde, onceden ilan edilmis, programi basilmis, kurum onayli)</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -2561,14 +2561,14 @@ function Finish() {
                             }
                         </tr>
                         <tr>
-                            <td colSpan="4">
+                            <th colSpan="4">
                                 M-2. SESLI VE GORSEL ETKINLIKLER VE SESLI YAYINLAR Kultur Bakanligi bandrolu, muadili basili veya elektronik
                                 olarak (spotify, itunes, amazon music, deezer…vb platformlarda) ulusal veya uluslararasi statude basilmis ve erisime
                                 sunulmus.
 
 
 
-                            </td>
+                            </th>
 
                         </tr>
                         <tr>
@@ -2730,14 +2730,14 @@ function Finish() {
                             }
                         </tr>
                         <tr>
-                            <td colSpan="4">
+                            <th colSpan="4">
                                 M-3. ALANA ILISKIN MUZIKAL URETIM / MUZIKAL YAYIN
                                 Bunyesinde Muzik Teorisi elemanlarini (armoni, kontrpuan, form, orkestrasyon vb...) teknik, suresel ve estetik
                                 yeterliklerle bulunduran yazilmis muzikal kompozisyonlar, derlemeler ve ses yayinlari
 
 
 
-                            </td>
+                            </th>
 
                         </tr>
                         <tr>
@@ -3074,14 +3074,14 @@ function Finish() {
                             }
                         </tr>
                         <tr>
-                            <td colSpan="4">
+                            <th colSpan="4">
                                 M-4. TURK MUZIGI ESERLERINE ILISKIN URETIM / MUZIKAL YAYIN
                                 Bunyesinde Turk Muzigi Teorisi ve Yoresel elemanlari (makam, yore, form, donem, usul, vb...) teknik ve estetik yeterliklerle
                                 bulunduran, yazilmis muzikal kompozisyonlar, derlemeler ve ses yayinlari
 
 
 
-                            </td>
+                            </th>
 
                         </tr>
                         <tr>
