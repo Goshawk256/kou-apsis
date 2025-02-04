@@ -1,6 +1,6 @@
 import React from 'react';
 import './SideBar.css';
-import { useTheme } from '../../theme/themeContext';
+
 import sanatIcon from '../../assets/artistikFaaliyetler.svg'
 import basvuruIcon from '../../assets/basvuru.svg'
 import dersIcon from '../../assets/dersler.svg'
@@ -25,10 +25,10 @@ function SideBar({ onSelect }) {
 
     ];
 
-    const theme = useTheme();
+
 
     return (
-        <div className={`sidebar-container ${theme}`}>
+        <div className={`sidebar-container`}>
             <div className='sidebar-inner' style={{
                 color: '#4cc425', marginLeft: '12px', marginTop: '24px', fontWeight: 'bold', fontSize: '18px'
 

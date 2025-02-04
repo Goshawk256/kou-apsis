@@ -3,14 +3,14 @@ import './AnaSayfa.css';
 import { Bar } from 'react-chartjs-2'; // Bar ve Doughnut grafiklerini import edelim
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, ArcElement, Title, Tooltip, Legend } from 'chart.js';
 import { getUserInfoByUsername, getLessonByUsername } from '../../../service/user';
-import { useTheme } from '../../../theme/themeContext';
+
 import openbookIcon from '../../../assets/open-book.svg'
 import kepIcon from '../../../assets/kep2.svg'
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, ArcElement, Title, Tooltip, Legend);
 
 function AnaSayfa() {
-    const { theme } = useTheme();
+
     const [userInfo, setUserInfo] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -148,7 +148,7 @@ function AnaSayfa() {
     } : {};
 
     return (
-        <div className={`main-anasayfa ${theme}`}>
+        <div className={`main-anasayfa`}>
             {/* 1. Satır Kartları */}
             <div className='anasayfa-row-1'>
                 <div className='anasayfa-row-1-card'>

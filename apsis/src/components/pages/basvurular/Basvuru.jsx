@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ConfirmBasvuru from './confirmbavuru/ConfirmBasvuru';
-import { useNavigate } from 'react-router-dom';
+
 import './Basvuru.css';
 
 function Basvuru({ onSelect }) {
@@ -17,12 +17,6 @@ function Basvuru({ onSelect }) {
         const savedAwards = JSON.parse(localStorage.getItem('savedAwards')) || [];
         const savedArtworks = JSON.parse(localStorage.getItem('savedArtworks')) || [];
         const savedLessons = JSON.parse(localStorage.getItem('savedCourses')) || [];
-        console.log(savedProjects);
-        console.log(savedThesis);
-        console.log(savedPublications);
-        console.log(savedAwards);
-        console.log(savedArtworks);
-        console.log(savedLessons);
 
 
         const formattedProjects = savedProjects.map(item => ({
@@ -79,11 +73,32 @@ function Basvuru({ onSelect }) {
             authors: item.authors || []
         }));
 
+        const allData = [
+            ...formattedPublications,
+            ...formattedProjects,
+            ...formattedThesis,
+            ...formattedLessons,
+            ...formattedAwards,
+            ...formattedArtworks
+        ];
 
-        const allData = [...formattedProjects, ...formattedThesis, ...formattedPublications, ...formattedAwards, ...formattedArtworks, ...formattedLessons];
-        setData(allData);
+        // Verileri türlerine göre sıralıyoruz (öncelik sırasına göre)
+        const sortedData = allData.sort((a, b) => {
+            const priority = {
+                'Yayın': 1,
+                'Proje': 2,
+                'Tez': 3,
+                'Ders': 4,
+                'Ödül': 5,
+                'Sanat Eseri': 6
+            };
 
-        const total = allData.reduce((sum, item) => sum + (item.score || 0), 0);
+            return priority[a.type] - priority[b.type];
+        });
+
+        setData(sortedData);
+
+        const total = sortedData.reduce((sum, item) => sum + (item.score || 0), 0);
         setTotalScore(total);
     }, []);
 
@@ -106,7 +121,6 @@ function Basvuru({ onSelect }) {
         return title;
     };
 
-
     const handleFinish = () => {
         onSelect('Finish');
     }
@@ -118,9 +132,6 @@ function Basvuru({ onSelect }) {
                     <div className='table-toggle'>
                         <span className='total-score'>Toplam Puan: {totalScore.toFixed(2)}</span>
                         <div className='table-tggle-buttons'>
-                            <button className='pagination-button' onClick={handlePrev} disabled={currentPage === 1}>‹</button>
-                            {currentPage}/{totalPages}
-                            <button className='pagination-button' onClick={handleNext} disabled={currentPage === totalPages}>›</button>
                         </div>
                     </div>
                     <div className='basvuru-table-content'>
@@ -158,14 +169,23 @@ function Basvuru({ onSelect }) {
                         </table>
                     </div>
                     <div className='basvuru-navigation'>
-                        <button className='basvuru-geri-button' onClick={() => setShowTable(false)}>Geri</button>
-                        <button className='basvuru-ileri-button' onClick={handleFinish} >İleri</button>
+                        <button
+                            className='basvuru-geri-button'
+                            onClick={() => (currentPage === 1 ? setShowTable(false) : handlePrev())}
+                        >
+                            Geri
+                        </button>
+                        <button
+                            className='basvuru-ileri-button'
+                            onClick={() => (currentPage === totalPages ? handleFinish() : handleNext())}
+                        >
+                            İleri
+                        </button>
                     </div>
                 </div>
             </div>
         ) : (
             <div className="basvuru_empty">
-
                 <ConfirmBasvuru setShowTable={setShowTable} />
             </div>
         )
