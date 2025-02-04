@@ -20,9 +20,15 @@ function YonetilenTezler() {
         setLoading(true);
         try {
             const response = await axios.post(
-                `${All_Url.api_base_url}/advising-thesis/get-advising-thesis-by-username`,
+                `${All_Url.api_base_url}/academic/get-advising-thesis`,
                 {
                     username: username,
+                },
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+                    }
                 }
             );
             setTableData(response.data.data);
@@ -75,7 +81,7 @@ function YonetilenTezler() {
         setTimeout(() => setPopupMessage(null), 1500);
     };
 
-    const itemsPerPage = 4;
+    const itemsPerPage = 6;
     const paginatedData = filteredData.slice((page - 1) * itemsPerPage, page * itemsPerPage);
     const totalPages = Math.ceil(filteredData.length / itemsPerPage);
     const openRightBar = () => setRightBarOpen(true);

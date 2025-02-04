@@ -9,12 +9,15 @@
 }
 
 .basvuru-content {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
+    justify-content: start;
     width: 98%;
     padding: 10px;
+
+    height: 450px;
 }
 
 .table-toggle {
@@ -115,7 +118,9 @@
 
 .basvuru-navigation {
     width: 100%;
-
+    position: absolute;
+    bottom: 0px;
+    right: 10px;
     flex-direction: row;
     display: flex;
     justify-content: end;

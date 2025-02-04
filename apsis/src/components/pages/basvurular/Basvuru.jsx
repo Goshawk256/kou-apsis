@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ConfirmBasvuru from './confirmbavuru/ConfirmBasvuru';
-import { useNavigate } from 'react-router-dom';
+
 import './Basvuru.css';
 
 function Basvuru({ onSelect }) {
@@ -14,6 +14,10 @@ function Basvuru({ onSelect }) {
         const savedProjects = JSON.parse(localStorage.getItem('savedProjects')) || [];
         const savedThesis = JSON.parse(localStorage.getItem('savedThesis')) || [];
         const savedPublications = JSON.parse(localStorage.getItem('savedPublications')) || [];
+        const savedAwards = JSON.parse(localStorage.getItem('savedAwards')) || [];
+        const savedArtworks = JSON.parse(localStorage.getItem('savedArtworks')) || [];
+        const savedLessons = JSON.parse(localStorage.getItem('savedCourses')) || [];
+
 
         const formattedProjects = savedProjects.map(item => ({
             id: item.id,
@@ -27,9 +31,9 @@ function Basvuru({ onSelect }) {
         const formattedThesis = savedThesis.map(item => ({
             id: item.id,
             title: item.title,
-            group: item.group,
+            group: item.groupAuto,
             type: 'Tez',
-            score: item.score,
+            score: item.scoreAuto,
             authors: item.authors || []
         }));
 
@@ -42,10 +46,59 @@ function Basvuru({ onSelect }) {
             authors: item.authors || []
         }));
 
-        const allData = [...formattedProjects, ...formattedThesis, ...formattedPublications];
-        setData(allData);
-        console.log(allData);
-        const total = allData.reduce((sum, item) => sum + (item.score || 0), 0);
+        const formattedLessons = savedLessons.map(item => ({
+            id: item.id,
+            title: item.course_name,
+            group: item.groupAuto,
+            type: 'Ders',
+            score: item.scoreAuto,
+            authors: item.authors || []
+        }));
+
+        const formattedAwards = savedAwards.map(item => ({
+            id: item.id,
+            title: item.title,
+            group: item.group,
+            type: 'Ödül',
+            score: item.score,
+            authors: item.authors || []
+        }));
+
+        const formattedArtworks = savedArtworks.map(item => ({
+            id: item.id,
+            title: item.title,
+            group: item.group,
+            type: 'Sanat Eseri',
+            score: item.score,
+            authors: item.authors || []
+        }));
+
+        const allData = [
+            ...formattedPublications,
+            ...formattedProjects,
+            ...formattedThesis,
+            ...formattedLessons,
+            ...formattedAwards,
+            ...formattedArtworks
+        ];
+
+        // Verileri türlerine göre sıralıyoruz (öncelik sırasına göre)
+        const sortedData = allData.sort((a, b) => {
+            const priority = {
+                'Yayın': 1,
+                'Proje': 2,
+                'Tez': 3,
+                'Ders': 4,
+                'Ödül': 5,
+                'Sanat Eseri': 6
+            };
+
+            return priority[a.type] - priority[b.type];
+        });
+
+        setData(sortedData);
+
+        const total = sortedData.reduce((sum, item) => sum + (item.score || 0), 0);
         setTotalScore(total);
     }, []);
 
@@ -68,7 +121,6 @@ function Basvuru({ onSelect }) {
         return title;
     };
 
-
     const handleFinish = () => {
         onSelect('Finish');
     }
@@ -80,9 +132,6 @@ function Basvuru({ onSelect }) {
                     <div className='table-toggle'>
                         <span className='total-score'>Toplam Puan: {totalScore.toFixed(2)}</span>
                         <div className='table-tggle-buttons'>
-                            <button className='pagination-button' onClick={handlePrev} disabled={currentPage === 1}>‹</button>
-                            {currentPage}/{totalPages}
-                            <button className='pagination-button' onClick={handleNext} disabled={currentPage === totalPages}>›</button>
                         </div>
                     </div>
                     <div className='basvuru-table-content'>
@@ -120,14 +169,23 @@ function Basvuru({ onSelect }) {
                         </table>
                     </div>
                     <div className='basvuru-navigation'>
-                        <button className='basvuru-geri-button' onClick={() => setShowTable(false)}>Geri</button>
-                        <button className='basvuru-ileri-button' onClick={handleFinish} >İleri</button>
+                        <button
+                            className='basvuru-geri-button'
+                            onClick={() => (currentPage === 1 ? setShowTable(false) : handlePrev())}
+                        >
+                            Geri
+                        </button>
+                        <button
+                            className='basvuru-ileri-button'
+                            onClick={() => (currentPage === totalPages ? handleFinish() : handleNext())}
+                        >
+                            İleri
+                        </button>
                     </div>
                 </div>
             </div>
         ) : (
             <div className="basvuru_empty">
-
                 <ConfirmBasvuru setShowTable={setShowTable} />
             </div>
         )

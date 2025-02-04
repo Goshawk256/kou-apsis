@@ -12,10 +12,10 @@ import Yayinlar from '../components/pages/yayinlar/Yayinlar';
 import Projeler from '../components/pages/projeler/Projeler';
 import Basvurular from '../components/pages/basvurular/Basvuru';
 import Finish from '../components/finish/Finish';
-import { useTheme } from '../theme/themeContext';
+
 
 function HomePage() {
-    const { theme } = useTheme();
+
     const [selectedPage, setSelectedPage] = useState('Ana Sayfa');
 
     const renderContent = () => {
@@ -44,7 +44,7 @@ function HomePage() {
     };
 
     return (
-        <div className={`main-homepage ${theme}`}>
+        <div className={`main-homepage `}>
             <Header />
             <SideBar onSelect={setSelectedPage} />
             <div className="flexible-component">

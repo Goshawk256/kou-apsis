@@ -11,6 +11,7 @@ function Finish() {
     const [savedCourses, setSavedCourses] = useState([]);
     const [savedArtworks, setSavedArtworks] = useState([]);
     const [savedAwards, setSavedAwards] = useState([]);
+    const [error, setError] = useState(null);
 
     const [userInfo, setUserInfo] = useState(null);
 
@@ -103,7 +104,7 @@ function Finish() {
     const renderDataByGroup = (group, name, storedItem) => {
 
         if (name == 'savedThesis') {
-            const filteredData = storedItem.filter(item => item.group === group);
+            const filteredData = storedItem.filter(item => item.groupAuto === group);
 
             return (
                 <>
@@ -114,7 +115,7 @@ function Finish() {
                     </td>
                     <td>
                         {filteredData
-                            .reduce((acc, item) => acc + item.score, 0)
+                            .reduce((acc, item) => acc + item.scoreAuto, 0)
                             .toFixed(2)}
                     </td>
                 </>
@@ -178,7 +179,7 @@ function Finish() {
         }
 
         else if (name == 'savedCourses') {
-            const filteredData = storedItem.filter(item => item.grup_adi === group);
+            const filteredData = storedItem.filter(item => item.groupAuto === group);
 
             return (
                 <>
@@ -189,7 +190,7 @@ function Finish() {
                     </td>
                     <td>
                         {filteredData
-                            .reduce((acc, item) => acc + item.ders_puani, 0)
+                            .reduce((acc, item) => acc + item.scoreAuto, 0)
                             .toFixed(2)}
                     </td>
                 </>
@@ -880,8 +881,8 @@ function Finish() {
                             </td>
                             <td>
                                 {savedCourses
-                                    .filter(item => item.grup_adi.includes('E'))
-                                    .reduce((acc, item) => acc + item.ders_puani, 0)
+                                    .filter(item => item.groupAuto.includes('E'))
+                                    .reduce((acc, item) => acc + item.scoreAuto, 0)
                                 }
                             </td>
                         </tr>
@@ -956,8 +957,8 @@ function Finish() {
                             </td>
                             <td>
                                 {savedThesis
-                                    .filter(item => item.group.includes('F'))
-                                    .reduce((acc, item) => acc + item.score, 0)
+                                    .filter(item => item.groupAuto.includes('F'))
+                                    .reduce((acc, item) => acc + item.scoreAuto, 0)
                                 }
                             </td>
                         </tr>

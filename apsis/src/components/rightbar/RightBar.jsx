@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import './RightBar.css';
-import { useTheme } from '../../theme/themeContext';
+
 
 function RightBar({ isOpen, onClose, id }) {
-    const theme = useTheme();
+
     const [selectedConditions, setSelectedConditions] = useState([]);
     const [uploadedFile, setUploadedFile] = useState(null);
 
@@ -35,7 +35,7 @@ function RightBar({ isOpen, onClose, id }) {
     return (
         <>
             <div className={`overlay ${isOpen ? 'open' : ''}`} onClick={onClose}></div>
-            <div className={`right-bar ${isOpen ? 'open' : ''} ${theme}`}>
+            <div className={`right-bar ${isOpen ? 'open' : ''} `}>
                 <div className="right-bar-header">
                     <button className="close-btn" onClick={onClose}>X</button>
                 </div>
