@@ -14,6 +14,16 @@ function Basvuru({ onSelect }) {
         const savedProjects = JSON.parse(localStorage.getItem('savedProjects')) || [];
         const savedThesis = JSON.parse(localStorage.getItem('savedThesis')) || [];
         const savedPublications = JSON.parse(localStorage.getItem('savedPublications')) || [];
+        const savedAwards = JSON.parse(localStorage.getItem('savedAwards')) || [];
+        const savedArtworks = JSON.parse(localStorage.getItem('savedArtworks')) || [];
+        const savedLessons = JSON.parse(localStorage.getItem('savedCourses')) || [];
+        console.log(savedProjects);
+        console.log(savedThesis);
+        console.log(savedPublications);
+        console.log(savedAwards);
+        console.log(savedArtworks);
+        console.log(savedLessons);
+
 
         const formattedProjects = savedProjects.map(item => ({
             id: item.id,
@@ -27,9 +37,9 @@ function Basvuru({ onSelect }) {
         const formattedThesis = savedThesis.map(item => ({
             id: item.id,
             title: item.title,
-            group: item.group,
+            group: item.groupAuto,
             type: 'Tez',
-            score: item.score,
+            score: item.scoreAuto,
             authors: item.authors || []
         }));
 
@@ -42,9 +52,37 @@ function Basvuru({ onSelect }) {
             authors: item.authors || []
         }));
 
-        const allData = [...formattedProjects, ...formattedThesis, ...formattedPublications];
+        const formattedLessons = savedLessons.map(item => ({
+            id: item.id,
+            title: item.course_name,
+            group: item.groupAuto,
+            type: 'Ders',
+            score: item.scoreAuto,
+            authors: item.authors || []
+        }));
+
+        const formattedAwards = savedAwards.map(item => ({
+            id: item.id,
+            title: item.title,
+            group: item.group,
+            type: 'Ödül',
+            score: item.score,
+            authors: item.authors || []
+        }));
+
+        const formattedArtworks = savedArtworks.map(item => ({
+            id: item.id,
+            title: item.title,
+            group: item.group,
+            type: 'Sanat Eseri',
+            score: item.score,
+            authors: item.authors || []
+        }));
+
+
+        const allData = [...formattedProjects, ...formattedThesis, ...formattedPublications, ...formattedAwards, ...formattedArtworks, ...formattedLessons];
         setData(allData);
-        console.log(allData);
+
         const total = allData.reduce((sum, item) => sum + (item.score || 0), 0);
         setTotalScore(total);
     }, []);
