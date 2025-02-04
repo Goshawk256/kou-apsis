@@ -86,7 +86,11 @@ function Header() {
                         <span className="msg-count">0</span>
                     </button>
                     <div className="username">
-                        {userInfo?.cvTitle?.primary || ''} {username}
+                        {username === 'suhapsahin' ? (
+                            <span>Doç. Dr. {username} </span>
+                        ) : (
+                            (userInfo?.cvTitle?.primary || '') + username
+                        )}
                     </div>
                     <div className="checkbox-wrapper-35">
                         <input

@@ -37,10 +37,25 @@ function Yayinlar() {
 
     const fetchPublications = async () => {
         try {
-            const response = await axios.post(`${All_Url.api_base_url}/publication/get-publications-by-username`, {
-                username,
-                publicationTypeId,
-            });
+            const accessToken = localStorage.getItem('accessToken'); // Token'ı localStorage'dan al
+
+            if (!accessToken) {
+                showPopup('Yetkilendirme hatası: Token bulunamadı.', 'error');
+                return;
+            }
+
+            const response = await axios.post(
+                `${All_Url.api_base_url}/academic/get-publications`,
+                {
+                    username,
+                    publicationTypeId,
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`, // Token'ı header'a ekle
+                    },
+                }
+            );
 
             if (response.data.success) {
                 setTableData(response.data.data);
@@ -51,6 +66,7 @@ function Yayinlar() {
             showPopup('Veri çekerken bir hata oluştu.', 'error');
         }
     };
+
 
     const fetchCitations = async () => {
         try {
