@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useTheme } from '../../theme/themeContext';
 import './Header.css';
-import logo from '../../assets/unnamed.png';
 import logoLight from '../../assets/unnamed.png';
 import logoutIcon from '../../assets/log-out.svg'
 import { getUserInfoByUsername } from '../../service/user.js';
 
 function Header() {
-    const { theme, toggleTheme } = useTheme();
+
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const navigate = useNavigate();
     // const [error, setError] = useState(null)
@@ -36,9 +34,6 @@ function Header() {
                 const response = await getUserInfoByUsername(username);
 
                 const userInfoData = response?.data?.[0];
-
-
-
 
                 if (userInfoData) {
                     setUserInfo(userInfoData);
@@ -68,13 +63,9 @@ function Header() {
 
                 </div>
             ) : (
-                <div className={`header-container ${theme}`}>
+                <div className={`header-container`}>
                     <div className="site-name">
-                        {theme === 'dark' ? (
-                            <img src={logo} alt="Logo" />
-                        ) : (
-                            <img src={logoLight} alt="Logo" />
-                        )}
+                        <img src={logoLight} alt="Logo" />
                         <span className="shining-text">Kocaeli Üniversitesi Akademik Puan Sistemi</span>
                     </div>
                     <button className="inbox-btn">
@@ -93,15 +84,7 @@ function Header() {
                         )}
                     </div>
                     <div className="checkbox-wrapper-35">
-                        <input
-                            value="private"
-                            name="themeSwitch"
-                            id={`themeSwitch`}
-                            type="checkbox"
-                            className="switch"
-                            checked={theme === 'dark'}
-                            onChange={toggleTheme}
-                        />
+
                         {
                             /*
                             <label htmlFor="themeSwitch">

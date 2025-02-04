@@ -5,7 +5,7 @@ import axios from 'axios';
 import All_Url from '../../../url';
 import RightBar from '../../rightbar/RightBar';
 import NotFound from '../../errorstacks/NotFound';
-import { useTheme } from '../../../theme/themeContext';
+
 import { motion, AnimatePresence } from 'framer-motion';
 
 function Yayinlar() {
@@ -15,7 +15,7 @@ function Yayinlar() {
     const [publicationTypeId, setPublicationTypeId] = useState(1);
     const [rightBarOpen, setRightBarOpen] = useState(false);
     const [popupMessage, setPopupMessage] = useState(null); // Pop-up mesajı
-    const theme = useTheme();
+
 
     const username = localStorage.getItem('username');
 
@@ -125,7 +125,7 @@ function Yayinlar() {
     const closeRightBar = () => setRightBarOpen(false);
 
     return (
-        <div className={`yayinlar-main ${theme}`}>
+        <div className={`yayinlar-main`}>
             <RightBar isOpen={rightBarOpen} onClose={closeRightBar} />
 
             {popupMessage && (

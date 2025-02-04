@@ -21,10 +21,11 @@ async function getUserInfoByUsername(username) {
 
 async function getLessonByUsername(username) {
     try {
-        const response = await fetch('https://apsis.kocaeli.edu.tr/api/lesson/get-lesson-by-username', {
+        const response = await fetch('https://apsis.kocaeli.edu.tr/api/academic/get-lessons', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${localStorage.getItem('accessToken')}`
             },
             body: JSON.stringify({ username })
         });
