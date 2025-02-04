@@ -139,8 +139,8 @@ function YonetilenTezler() {
                                         <tr key={item.id}>
                                             <td>{item.title}</td>
                                             <td>{item.corporateName}</td>
-                                            <td>{item.group}</td>
-                                            <td>{item.score}</td>
+                                            <td>{item.groupAuto}</td>
+                                            <td>{item.scoreAuto}</td>
                                             <td>
 
                                                 <button
