@@ -11,6 +11,7 @@ function Finish() {
     const [savedCourses, setSavedCourses] = useState([]);
     const [savedArtworks, setSavedArtworks] = useState([]);
     const [savedAwards, setSavedAwards] = useState([]);
+    const [error, setError] = useState(null);
 
     const [userInfo, setUserInfo] = useState(null);
 
