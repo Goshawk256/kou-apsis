@@ -3383,7 +3383,7 @@ function Finish() {
                 </table>
 
             </div>
-            <button onClick={downloadPDF}>indir</button>
+            <button className='finish-button' onClick={downloadPDF}>indir</button>
         </div >
     );
 }

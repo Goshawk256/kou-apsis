@@ -88,3 +88,12 @@
 
     }
 }
+
+.finish-button {
+    display: flex;
+    justify-content: center;
+    border: 1px solid grey;
+    background-color: #1FA54E;
+    color: white;
+    padding: 10px;
+}
