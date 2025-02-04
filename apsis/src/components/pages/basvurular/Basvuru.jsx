@@ -86,9 +86,9 @@ function Basvuru({ onSelect }) {
         const sortedData = allData.sort((a, b) => {
             const priority = {
                 'Yayın': 1,
-                'Proje': 2,
+                'Proje': 4,
                 'Tez': 3,
-                'Ders': 4,
+                'Ders': 2,
                 'Ödül': 5,
                 'Sanat Eseri': 6
             };
