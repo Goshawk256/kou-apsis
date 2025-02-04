@@ -39,13 +39,16 @@ function AnaSayfa() {
                 const userInfoData = await getUserInfoByUsername(username);
                 const lessonData = await getLessonByUsername(username);
 
+
                 localStorage.setItem('userInfo', JSON.stringify(userInfoData));
                 console.log('Lesson Data:', lessonData);
+                console.log('User Info Data:', userInfoData);
 
                 const currentSemester = getCurrentSemester();
                 console.log('Current Semester:', currentSemester);
 
-                const semesterData = lessonData.find(lesson => lesson.semester === currentSemester);
+                const semesterData = lessonData?.data?.find(lesson => lesson.semester === currentSemester);
+
 
                 if (!semesterData) {
                     console.error(`Semester data for ${currentSemester} not found.`);
@@ -58,7 +61,7 @@ function AnaSayfa() {
                 console.log('Masters Students:', mastersStudents);
 
                 setUserInfo({
-                    ...userInfoData[0],
+                    ...userInfoData.data[0],
                     studentdata: {
                         phdStudentCount: doctoralStudents,
                         masterStudentCount: mastersStudents,

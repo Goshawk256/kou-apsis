@@ -1,47 +1,43 @@
-import { apiClient, apiLogin } from './index.js';
-
-
-export const getUserInfoByUsername = async (username) => {
+async function getUserInfoByUsername(username) {
     try {
-        const response = await apiClient.post('/user/get-user-by-username', { username });
-
-        if (response.data.success && Array.isArray(response.data.data)) {
-            return response.data.data;
-        } else {
-            throw new Error(response.data.message || 'Invalid response format');
-        }
-    } catch (error) {
-        console.error('Error fetching user info:', error);
-        throw error;
-    }
-};
-
-export const getLessonByUsername = async (username) => {
-    const response = await apiClient.post('/lesson/get-lesson-by-username', { username });
-    return response.data;
-};
-
-export const login = async (username, password) => {
-    try {
-        const payload = {
-            username,
-            password,
-        };
-
-        const response = await apiLogin.post('/user/authenticate', payload, {
+        const response = await fetch('https://apsis.kocaeli.edu.tr/api/user/get-user-by-username', {
+            method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
+                'Content-Type': 'application/json'
             },
+            body: JSON.stringify({ username })
         });
 
-        if (response.status !== 200) {
-            throw new Error('Login failed');
+        if (!response.ok) {
+            throw new Error('Kullanıcı bilgileri alınamadı');
         }
 
-        return response.data;
+        return await response.json();
     } catch (error) {
-        console.error('Error during login:', error);
-        throw error;
+        console.error('getUserInfoByUsername Hata:', error);
+        return null;
     }
-};
+}
 
+async function getLessonByUsername(username) {
+    try {
+        const response = await fetch('https://apsis.kocaeli.edu.tr/api/lesson/get-lesson-by-username', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username })
+        });
+
+        if (!response.ok) {
+            throw new Error('Ders bilgileri alınamadı');
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('getLessonByUsername Hata:', error);
+        return null;
+    }
+}
+
+export { getUserInfoByUsername, getLessonByUsername };
