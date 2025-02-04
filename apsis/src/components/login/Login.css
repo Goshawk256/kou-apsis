@@ -27,7 +27,8 @@
 
 }
 
-.login-form input {
+.login-form input,
+select {
     background-color: #fff;
     border-radius: 10px;
     border: 2px solid rgb(41, 172, 41);

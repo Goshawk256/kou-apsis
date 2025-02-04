@@ -1,57 +1,45 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import './Login.css';
 import Logo from '../../assets/unnamed.png';
-import All_Url from '../../url';
+
 
 function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [roles, setRoles] = useState([]);
+    const [selectedRole, setSelectedRole] = useState('');
     const navigate = useNavigate();
 
-    useEffect(() => {
-        // Sayfa yüklendiğinde localStorage'de username varsa /home'a yönlendir
-        const storedUsername = localStorage.getItem('username');
-        if (storedUsername) {
-            navigate('/home');
+    const fetchRoles = async (username) => {
+        try {
+            const response = await axios.post('https://apsis.kocaeli.edu.tr/api/auth/get-roles', { username });
+            if (response.data.success) {
+                setRoles(response.data.data);
+                setSelectedRole(response.data.data[0] || '');
+            }
+        } catch (error) {
+            console.error('Error fetching roles:', error);
         }
-    }, [navigate]);
+    };
 
     const handleLogin = async (e) => {
         e.preventDefault();
-
         try {
-            const payload = {
+            const response = await axios.post('https://apsis.kocaeli.edu.tr/api/auth/login', {
                 username,
                 password,
-            };
-
-            const response = await fetch(`${All_Url.api_base_url}/user/authenticate`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(payload),
+                role: selectedRole
             });
-
-            if (!response.ok) {
-                const errorData = await response.json();
-                console.log('API Hatası:', errorData);
-                console.log('Login failed: ' + (errorData.message || 'Invalid credentials'));
-                return;
-            }
-
-            const result = await response.json();
-
-            if (result.success) {
+            if (response.data.success) {
+                localStorage.setItem('accessToken', response.data.data.accessToken);
+                localStorage.setItem('refreshToken', response.data.data.refreshToken);
                 localStorage.setItem('username', username);
                 navigate('/home');
-            } else {
-                alert('Invalid credentials');
             }
         } catch (error) {
-            console.error('Error during login:', error);
-            alert('An error occurred. Please try again later.');
+            console.error('Login error:', error);
         }
     };
 
@@ -67,10 +55,23 @@ function Login() {
                             type='text'
                             id='username'
                             value={username}
-                            onChange={(e) => setUsername(e.target.value)}
+                            onChange={(e) => {
+                                setUsername(e.target.value);
+                                fetchRoles(e.target.value);
+                            }}
                             required
                         />
                     </div>
+                    {roles.length > 0 && (
+                        <div className='form-group'>
+                            <label htmlFor='role'>Rol Seçin</label>
+                            <select className='' id='role' value={selectedRole} onChange={(e) => setSelectedRole(e.target.value)}>
+                                {roles.map((role, index) => (
+                                    <option key={index} value={role}>{role}</option>
+                                ))}
+                            </select>
+                        </div>
+                    )}
                     <div className='form-group'>
                         <label htmlFor='password'>Şifre</label>
                         <input
