@@ -20,8 +20,14 @@ function Projeler() {
             const username = localStorage.getItem('username');
             try {
                 const response = await axios.post(
-                    `${All_Url.api_base_url}/project/get-projects-by-username`,
-                    { username: username }
+                    `${All_Url.api_base_url}/academic/get-projects`,
+                    { username: username },
+                    {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+                        }
+                    }
                 );
                 setTableData(response.data.data || []);
                 setFilteredData(response.data.data || []);
@@ -68,7 +74,7 @@ function Projeler() {
         setTimeout(() => setPopupMessage(null), 1500);
     };
 
-    const itemsPerPage = 4; // Sayfa başına gösterilecek proje sayısı
+    const itemsPerPage = 6; // Sayfa başına gösterilecek proje sayısı
     const paginatedData = filteredData.slice((page - 1) * itemsPerPage, page * itemsPerPage);
     const totalPages = Math.ceil(filteredData.length / itemsPerPage);
     const openRightBar = () => setRightBarOpen(true);

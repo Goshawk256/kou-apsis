@@ -34,10 +34,10 @@ function Header() {
 
 
                 const response = await getUserInfoByUsername(username);
-                console.log(response)
+
                 const userInfoData = response?.data?.[0];
 
-                console.log('header:', JSON.stringify(userInfoData, null, 2));
+
 
 
                 if (userInfoData) {

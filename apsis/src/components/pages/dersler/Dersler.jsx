@@ -43,18 +43,31 @@ function Dersler() {
         const fetchData = async () => {
             const username = localStorage.getItem('username');
             try {
-                const response = await axios.post(`${All_Url.api_base_url}/lesson/get-lesson-by-username`, {
-                    username: username,
-                });
-
-                const courses = response.data.flatMap(item =>
-                    item.courses.map(course => ({
-                        ...course,
-                        semester: item.semester
-                    }))
+                const response = await axios.post(
+                    `${All_Url.api_base_url}/academic/get-lessons`,
+                    { username },
+                    {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+                        }
+                    }
                 );
-                setTableData(courses);
-                setFilteredData(courses);
+
+                // Gelen verinin doğru olup olmadığını kontrol et
+                if (response.data && response.data.success && Array.isArray(response.data.data)) {
+                    const courses = response.data.data.map(item => ({
+                        // Her bir öğe üzerinde işlem yap
+                        ...item, // item'daki tüm alanları al
+                        // Ekstra bir işlem yapacaksanız, örneğin 'semester' kullanmak
+                        semester: item.semester
+                    }));
+
+                    setTableData(courses);
+                    setFilteredData(courses);
+                } else {
+                    console.error("Beklenen veri formatı alınamadı:", response.data);
+                }
             } catch (error) {
                 console.error('Veriler alınırken bir hata oluştu:', error);
             }
@@ -62,6 +75,10 @@ function Dersler() {
 
         fetchData();
     }, []);
+
+
+
+
 
     useEffect(() => {
         // Arama ve filtreleme işlemi
@@ -98,7 +115,7 @@ function Dersler() {
         setTimeout(() => setPopupMessage(null), 1500); // Pop-up mesajını birkaç saniye sonra kapatıyoruz
     };
 
-    const itemsPerPage = 4; // Sayfa başına gösterilecek öğe sayısı
+    const itemsPerPage = 6; // Sayfa başına gösterilecek öğe sayısı
     const paginatedData = filteredData.slice((page - 1) * itemsPerPage, page * itemsPerPage);
     const totalPages = Math.ceil(filteredData.length / itemsPerPage);
     const openRightBar = () => setRightBarOpen(true);
@@ -145,7 +162,7 @@ function Dersler() {
 
             {/* Row 3 - Tablo */}
             <div className="yayinlar-main-row-3">
-                Bu sayfa şuanda Bakım Aşamasındadır,seçimleriniz doğru çalışmayabilir.
+
                 {totalPages <= 0 ? (
                     <NotFound />
                 ) : (

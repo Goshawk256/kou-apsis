@@ -21,9 +21,15 @@ function Oduller() {
         setLoading(true);
         try {
             const response = await axios.post(
-                `${All_Url.api_base_url}/award/get-awards-by-username`,
+                `${All_Url.api_base_url}/academic/get-awards`,
                 {
                     username: username,
+                },
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+                    }
                 }
             );
             setTableData(response.data.data);

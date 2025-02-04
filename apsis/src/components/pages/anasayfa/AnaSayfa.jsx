@@ -41,11 +41,10 @@ function AnaSayfa() {
 
 
                 localStorage.setItem('userInfo', JSON.stringify(userInfoData));
-                console.log('Lesson Data:', lessonData);
-                console.log('User Info Data:', userInfoData);
+
 
                 const currentSemester = getCurrentSemester();
-                console.log('Current Semester:', currentSemester);
+
 
                 const semesterData = lessonData?.data?.find(lesson => lesson.semester === currentSemester);
 

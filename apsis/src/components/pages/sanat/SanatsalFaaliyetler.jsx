@@ -21,9 +21,15 @@ function SanatsalFaaliyetler() {
         setLoading(true);
         try {
             const response = await axios.post(
-                `${All_Url.api_base_url}/artwork/get-artworks-by-username`,
+                `${All_Url.api_base_url}/academic/get-artworks`,
                 {
                     username: username,
+                },
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+                    }
                 }
             );
             setTableData(response.data.data); // API'den gelen veriyi alıyoruz
