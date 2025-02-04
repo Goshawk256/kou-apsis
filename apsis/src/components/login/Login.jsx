@@ -65,7 +65,7 @@ function Login() {
                     {roles.length > 0 && (
                         <div className='form-group'>
                             <label htmlFor='role'>Rol Seçin</label>
-                            <select id='role' value={selectedRole} onChange={(e) => setSelectedRole(e.target.value)}>
+                            <select className='' id='role' value={selectedRole} onChange={(e) => setSelectedRole(e.target.value)}>
                                 {roles.map((role, index) => (
                                     <option key={index} value={role}>{role}</option>
                                 ))}
