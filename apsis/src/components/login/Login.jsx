@@ -67,7 +67,16 @@ function Login() {
                             <label htmlFor='role'>Rol Seçin</label>
                             <select className='' id='role' value={selectedRole} onChange={(e) => setSelectedRole(e.target.value)}>
                                 {roles.map((role, index) => (
-                                    <option key={index} value={role}>{role}</option>
+                                    <option key={index} value={role}>
+                                        {role == 'Academic' ?
+                                            (
+                                                'Akademik Giriş'
+                                            ) :
+                                            (
+                                                'Akademik Jüri'
+                                            )
+                                        }
+                                    </option>
                                 ))}
                             </select>
                         </div>
