@@ -15,7 +15,24 @@ function Yayinlar() {
     const [publicationTypeId, setPublicationTypeId] = useState(1);
     const [rightBarOpen, setRightBarOpen] = useState(false);
     const [popupMessage, setPopupMessage] = useState(null); // Pop-up mesajı
+    const [loading, setLoading] = useState(false);
+    const [editingIndex, setEditingIndex] = useState(null);
+    const [tempGroups, setTempGroups] = useState({}); // Sadece eklenen kısmı tutan nesne
 
+    const handleEditClick = (index, currentGroup) => {
+        setEditingIndex(index);
+        setTempGroups(prev => ({ ...prev, [index]: tempGroups[index] || "" })); // Önceden girilmiş değer varsa onu kullan
+    };
+
+    const handleInputChange = (e, index) => {
+        setTempGroups(prev => ({ ...prev, [index]: e.target.value })); // Sadece ilgili satırın groupEdited kısmını güncelle
+    };
+
+    const handleKeyPress = (e) => {
+        if (e.key === "Enter") {
+            setEditingIndex(null); // Düzenleme modunu kapat
+        }
+    };
 
     const username = localStorage.getItem('username');
 
@@ -36,6 +53,7 @@ function Yayinlar() {
     }, [searchQuery, publicationTypeId]);
 
     const fetchPublications = async () => {
+        setLoading(true);
         try {
             const accessToken = localStorage.getItem('accessToken'); // Token'ı localStorage'dan al
 
@@ -64,6 +82,9 @@ function Yayinlar() {
             }
         } catch (error) {
             showPopup('Veri çekerken bir hata oluştu.', 'error');
+        }
+        finally {
+            setLoading(false);
         }
     };
 
@@ -190,91 +211,134 @@ function Yayinlar() {
             </div>
 
             <div className="yayinlar-main-row-3">
-                <AnimatePresence mode="wait">
-                    {totalPages <= 0 ? (
-                        <motion.div
-                            key="not-found"
-                            initial={{ opacity: 0, x: -50 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            exit={{ opacity: 0, x: 50 }}
-                            transition={{ duration: 0.3 }}
-                        >
-                            <NotFound />
-                        </motion.div>
-                    ) : (
-                        <motion.table
-                            key={publicationTypeId}
-                            initial={{ opacity: 0, x: -50 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            exit={{ opacity: 0, x: 50 }}
-                            transition={{ duration: 0.3 }}
-                        >
-                            <thead>
-                                <tr>
-                                    <th>Yayın Adı</th>
-                                    <th>Endeks Türü</th>
-                                    <th>Grup</th>
-                                    <th>Puan</th>
-                                    <th>İşlem</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {paginatedData.map((item) => {
-                                    const savedPublications = JSON.parse(localStorage.getItem('savedPublications')) || [];
-                                    const isSaved = savedPublications.some((pub) => pub.id === item.id); // Kontrol
+                {loading ? (
+                    <div className="hourglassBackground">
+                        <div className="hourglassContainer">
+                            <div className="hourglassCurves"></div>
+                            <div className="hourglassCapTop"></div>
+                            <div className="hourglassGlassTop"></div>
+                            <div className="hourglassSand"></div>
+                            <div className="hourglassSandStream"></div>
+                            <div className="hourglassCapBottom"></div>
+                            <div className="hourglassGlass"></div>
+                        </div>
+                    </div>
+                ) : (
+                    <AnimatePresence mode="wait">
+                        {totalPages <= 0 ? (
+                            <motion.div
+                                key="not-found"
+                                initial={{ opacity: 0, x: -50 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                exit={{ opacity: 0, x: 50 }}
+                                transition={{ duration: 0.3 }}
+                            >
+                                <NotFound />
+                            </motion.div>
+                        ) : (
+                            <motion.table
+                                key={publicationTypeId}
+                                initial={{ opacity: 0, x: -50 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                exit={{ opacity: 0, x: 50 }}
+                                transition={{ duration: 0.3 }}
+                            >
+                                <thead>
+                                    <tr>
+                                        <th>Yayın Adı</th>
+                                        <th>Endeks Türü</th>
+                                        <th>Grup</th>
+                                        <th>Puan</th>
+                                        <th>İşlem</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {paginatedData.map((item, index) => {
+                                        const savedPublications = JSON.parse(localStorage.getItem('savedPublications')) || [];
+                                        const isSaved = savedPublications.some((pub) => pub.id === item.id); // Kontrol
 
-                                    return publicationTypeId === 2 ? (
-                                        <tr key={item.id}>
-                                            <td>
-                                                {item.title.length > 50 ? `${item.title.slice(0, 60)}...` : item.title}
-                                                <br />
-                                                <p style={{ color: '#5d8c6a', fontSize: '10px' }}>{item.authors ? item.authors.join(", ") : "-"}</p>
-                                            </td>
-                                            <td>{item.journalIndex || '-'}</td>
-                                            <td>{item.citationGroup}</td>
-                                            <td>{item.citationScore}</td>
-                                            <td >
-                                                <button className="yayinlar-btn"><FaPencilAlt /></button>
-                                                <button className="yayinlar-btn" onClick={openRightBar}>
-                                                    {isSaved ? <FaInfo /> : <FaCheck />}
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    ) : (
-                                        <tr key={item.id}>
-                                            <td>
-                                                {item.title.length > 50 ? `${item.title.slice(0, 60)}...` : item.title}
-                                                <br />
-                                                <p style={{ color: '#5d8c6a', fontSize: '10px' }}> {item.authors ? item.authors.join(", ") : "-"}</p>
-                                                <p style={{ color: '#5d8c6a', fontSize: '10px' }}>
-                                                    {new Date(item.publishDate).toLocaleDateString('tr-TR', {
-                                                        day: 'numeric',
-                                                        month: 'long',
-                                                        year: 'numeric',
-                                                    })}
-                                                </p>
-                                            </td>
-                                            <td>{item.journalIndex || '-'}</td>
-                                            <td>{item.groupAuto}</td>
-                                            <td>{(item.scoreAuto || 0).toFixed(2)}</td>
-                                            <td >
-                                                <button className="yayinlar-btn" onClick={openRightBar}><FaPencilAlt /></button>
-
-                                                <button
-                                                    className="yayinlar-btn"
-                                                    onClick={() => saveToLocalStorage(item)}
+                                        return publicationTypeId === 2 ? (
+                                            <tr key={index}>
+                                                <td>
+                                                    {item.title.length > 50 ? `${item.title.slice(0, 60)}...` : item.title}
+                                                    <br />
+                                                    <p style={{ color: '#5d8c6a', fontSize: '10px' }}>{item.authors ? item.authors.join(", ") : "-"}</p>
+                                                </td>
+                                                <td>{item.journalIndex || '-'}</td>
+                                                <td className="item-group">{item.citationGroup}</td>
+                                                <td>{item.citationScore}</td>
+                                                <td >
+                                                    <button className="yayinlar-btn"><FaPencilAlt /></button>
+                                                    <button className="yayinlar-btn" onClick={openRightBar}>
+                                                        {isSaved ? <FaInfo /> : <FaCheck />}
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        ) : (
+                                            <tr key={index}>
+                                                <td>
+                                                    {item.title.length > 50 ? `${item.title.slice(0, 60)}...` : item.title}
+                                                    <br />
+                                                    <p style={{ color: '#5d8c6a', fontSize: '10px' }}> {item.authors ? item.authors.join(", ") : "-"}</p>
+                                                    <p style={{ color: '#5d8c6a', fontSize: '10px' }}>
+                                                        {new Date(item.publishDate).toLocaleDateString('tr-TR', {
+                                                            day: 'numeric',
+                                                            month: 'long',
+                                                            year: 'numeric',
+                                                        })}
+                                                    </p>
+                                                </td>
+                                                <td>{item.journalIndex || '-'}</td>
+                                                <td
+                                                    className="item-group"
+                                                    onClick={() => handleEditClick(index, item.groupAuto)}
                                                 >
-                                                    {isSaved ? <FaCheckSquare /> : <FaRegSquare />}
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    );
-                                })}
-                            </tbody>
+                                                    {editingIndex === index ? (
+                                                        <input
+                                                            type="text"
+                                                            value={tempGroups[index] || ""}
+                                                            onChange={(e) => handleInputChange(e, index)}
+                                                            onKeyDown={handleKeyPress}
+                                                            autoFocus
+                                                            onBlur={() => setEditingIndex(null)}
+                                                        />
+                                                    ) : (
+                                                        <div className='group-show'>
+                                                            {tempGroups[index] ? (
+                                                                <div className='preffered-group'>
+                                                                    <s>{item.groupAuto}</s>/{tempGroups[index]}
+                                                                </div>
+                                                            ) : (
+                                                                <div className='preffered-group'>
+                                                                    {item.groupAuto}
+                                                                </div>
+                                                            )
+                                                            }
+                                                        </div>
+                                                    )}
+                                                </td>
+                                                <td >{(item.scoreAuto || 0).toFixed(2)}</td>
+                                                <td >
+                                                    <button className="yayinlar-btn" onClick={openRightBar}><FaPencilAlt /></button>
 
-                        </motion.table>
-                    )}
-                </AnimatePresence>
+                                                    <button
+                                                        className="yayinlar-btn"
+                                                        onClick={() => saveToLocalStorage(item)}
+                                                    >
+                                                        {isSaved ? <FaCheckSquare /> : <FaRegSquare />}
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        );
+                                    })}
+                                </tbody>
+
+                            </motion.table>
+                        )}
+                    </AnimatePresence>
+                )
+
+                }
             </div>
         </div>
     );

@@ -14,9 +14,27 @@ function Projeler() {
     const [rightBarOpen, setRightBarOpen] = useState(false); // Sağ panelin açık/kapalı durumu
     const [loading, setLoading] = useState(false);
     const [popupMessage, setPopupMessage] = useState(null); // Pop-up mesajı
+    const [editingIndex, setEditingIndex] = useState(null);
+    const [tempGroups, setTempGroups] = useState({}); // Sadece eklenen kısmı tutan nesne
+
+    const handleEditClick = (index, currentGroup) => {
+        setEditingIndex(index);
+        setTempGroups(prev => ({ ...prev, [index]: tempGroups[index] || "" })); // Önceden girilmiş değer varsa onu kullan
+    };
+
+    const handleInputChange = (e, index) => {
+        setTempGroups(prev => ({ ...prev, [index]: e.target.value })); // Sadece ilgili satırın groupEdited kısmını güncelle
+    };
+
+    const handleKeyPress = (e) => {
+        if (e.key === "Enter") {
+            setEditingIndex(null); // Düzenleme modunu kapat
+        }
+    };
 
     useEffect(() => {
         const fetchProjects = async () => {
+            setLoading(true);
             const username = localStorage.getItem('username');
             try {
                 const response = await axios.post(
@@ -33,6 +51,9 @@ function Projeler() {
                 setFilteredData(response.data.data || []);
             } catch (error) {
                 console.error('Projeler alınırken bir hata oluştu:', error);
+            }
+            finally {
+                setLoading(false);
             }
         };
 
@@ -120,50 +141,92 @@ function Projeler() {
 
             {/* Row 3 - Tablo */}
             <div className="yayinlar-main-row-3">
-                {totalPages <= 0 ? (
-                    <NotFound />
+                {loading ? (
+                    <div className="hourglassBackground">
+                        <div className="hourglassContainer">
+                            <div className="hourglassCurves"></div>
+                            <div className="hourglassCapTop"></div>
+                            <div className="hourglassGlassTop"></div>
+                            <div className="hourglassSand"></div>
+                            <div className="hourglassSandStream"></div>
+                            <div className="hourglassCapBottom"></div>
+                            <div className="hourglassGlass"></div>
+                        </div>
+                    </div>
                 ) : (
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Proje Adı</th>
-                                <th>Proje Türü</th>
-                                <th>Grup</th>
-                                <th>Puan</th>
-                                <th>Durum</th>
-                                <th>İşlem</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {paginatedData.map((item, index) => {
-                                const savedProjects = JSON.parse(localStorage.getItem('savedProjects')) || [];
-                                const isSaved = savedProjects.some((proj) => proj.id === item.id); // Kaydedildi mi kontrolü
+                    totalPages <= 0 ? (
+                        <NotFound />
+                    ) : (
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Proje Adı</th>
+                                    <th>Proje Türü</th>
+                                    <th>Grup</th>
+                                    <th>Puan</th>
+                                    <th>Durum</th>
+                                    <th>İşlem</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {paginatedData.map((item, index) => {
+                                    const savedProjects = JSON.parse(localStorage.getItem('savedProjects')) || [];
+                                    const isSaved = savedProjects.some((proj) => proj.id === item.id); // Kaydedildi mi kontrolü
 
-                                return (
-                                    <tr key={index}>
-                                        <td>{item.projectName.length > 50 ? `${item.projectName.slice(0, 60)}...` : item.projectName}</td>
-                                        <td>{item.projectTypeName}</td>
-                                        <td>{item.group || '-'}</td>
-                                        {item.status === 'Devam Ediyor' ? (
-                                            <td>{0}</td>
-                                        ) : (
-                                            <td>{item.score}</td>
-                                        )}
-                                        <td>{item.status}</td>
-                                        <td>
-
-                                            <button
-                                                className="yayinlar-btn"
-                                                onClick={() => saveToLocalStorage(item)}
+                                    return (
+                                        <tr key={index}>
+                                            <td>{item.projectName.length > 50 ? `${item.projectName.slice(0, 60)}...` : item.projectName}</td>
+                                            <td>{item.projectTypeName}</td>
+                                            <td
+                                                className="item-group"
+                                                onClick={() => handleEditClick(index, item.group)}
                                             >
-                                                {isSaved ? <FaCheckSquare /> : <FaRegSquare />}
-                                            </button>
-                                        </td>
-                                    </tr>
-                                );
-                            })}
-                        </tbody>
-                    </table>
+                                                {editingIndex === index ? (
+                                                    <input
+                                                        type="text"
+                                                        value={tempGroups[index] || ""}
+                                                        onChange={(e) => handleInputChange(e, index)}
+                                                        onKeyDown={handleKeyPress}
+                                                        autoFocus
+                                                        onBlur={() => setEditingIndex(null)}
+                                                    />
+                                                ) : (
+                                                    <div className='group-show'>
+                                                        {tempGroups[index] ? (
+                                                            <div className='preffered-group'>
+                                                                <s>{item.group}</s>/{tempGroups[index]}
+                                                            </div>
+                                                        ) : (
+                                                            <div className='preffered-group'>
+                                                                {item.group}
+                                                            </div>
+                                                        )
+                                                        }
+                                                    </div>
+                                                )}
+                                            </td>
+
+                                            {item.status === 'Devam Ediyor' ? (
+                                                <td>{0}</td>
+                                            ) : (
+                                                <td>{item.score}</td>
+                                            )}
+                                            <td>{item.status}</td>
+                                            <td>
+
+                                                <button
+                                                    className="yayinlar-btn"
+                                                    onClick={() => saveToLocalStorage(item)}
+                                                >
+                                                    {isSaved ? <FaCheckSquare /> : <FaRegSquare />}
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    );
+                                })}
+                            </tbody>
+                        </table>
+                    )
                 )}
             </div>
         </div>

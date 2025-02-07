@@ -14,6 +14,24 @@ function Dersler() {
     const [filteredData, setFilteredData] = useState([]);
     const [rightBarOpen, setRightBarOpen] = useState(false);
     const [popupMessage, setPopupMessage] = useState(null); // Pop-up mesajı
+    const [loading, setLoading] = useState(false);
+    const [editingIndex, setEditingIndex] = useState(null);
+    const [tempGroups, setTempGroups] = useState({}); // Sadece eklenen kısmı tutan nesne
+
+    const handleEditClick = (index, currentGroup) => {
+        setEditingIndex(index);
+        setTempGroups(prev => ({ ...prev, [index]: tempGroups[index] || "" })); // Önceden girilmiş değer varsa onu kullan
+    };
+
+    const handleInputChange = (e, index) => {
+        setTempGroups(prev => ({ ...prev, [index]: e.target.value })); // Sadece ilgili satırın groupEdited kısmını güncelle
+    };
+
+    const handleKeyPress = (e) => {
+        if (e.key === "Enter") {
+            setEditingIndex(null); // Düzenleme modunu kapat
+        }
+    };
 
     const formatSemester = (semester) => {
         const yearMapping = {
@@ -41,6 +59,7 @@ function Dersler() {
 
     useEffect(() => {
         const fetchData = async () => {
+            setLoading(true);
             const username = localStorage.getItem('username');
             try {
                 const response = await axios.post(
@@ -70,6 +89,9 @@ function Dersler() {
                 }
             } catch (error) {
                 console.error('Veriler alınırken bir hata oluştu:', error);
+            }
+            finally {
+                setLoading(false);
             }
         };
 
@@ -160,54 +182,97 @@ function Dersler() {
                 </div>
             </div>
 
-            {/* Row 3 - Tablo */}
+
             <div className="yayinlar-main-row-3">
 
-                {totalPages <= 0 ? (
-                    <NotFound />
+
+                {loading ? (
+                    <div className="hourglassBackground">
+                        <div className="hourglassContainer">
+                            <div className="hourglassCurves"></div>
+                            <div className="hourglassCapTop"></div>
+                            <div className="hourglassGlassTop"></div>
+                            <div className="hourglassSand"></div>
+                            <div className="hourglassSandStream"></div>
+                            <div className="hourglassCapBottom"></div>
+                            <div className="hourglassGlass"></div>
+                        </div>
+                    </div>
                 ) : (
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Dönem</th>
-                                <th>Kurs Adı</th>
-                                <th>Kontenjan</th>
-                                <th>Dil</th>
-                                <th>Diploma Türü</th>
-                                <th>Grup</th>
-                                <th>Puan</th>
-                                <th>İşlem</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {paginatedData.map((item, index) => {
-                                const savedCourses = JSON.parse(localStorage.getItem('savedCourses')) || [];
-                                const isSaved = savedCourses.some((savedCourse) => savedCourse.id === item.id); // Kaydedildi mi kontrolü
+                    totalPages <= 0 ? (
+                        <NotFound />
+                    ) : (
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Dönem</th>
+                                    <th>Kurs Adı</th>
+                                    <th>Kontenjan</th>
+                                    <th>Dil</th>
+                                    <th>Diploma Türü</th>
+                                    <th>Grup</th>
+                                    <th>Puan</th>
+                                    <th>İşlem</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {paginatedData.map((item, index) => {
+                                    const savedCourses = JSON.parse(localStorage.getItem('savedCourses')) || [];
+                                    const isSaved = savedCourses.some((savedCourse) => savedCourse.id === item.id);
 
-                                return (
-                                    <tr key={index}>
-                                        <td>{formatSemester(item.semester)}</td>
-                                        <td>{item.course_name}</td>
-                                        <td>{item.course_count}</td>
-                                        <td>{item.ders_dil_adi}</td>
-                                        <td>{item.dip_tur}</td>
-                                        <td>{item.groupAuto}</td>
-                                        <td>{item.scoreAuto}</td>
-                                        <td>
-
-                                            <button
-                                                className="yayinlar-btn"
-                                                onClick={() => saveToLocalStorage(item)}
+                                    return (
+                                        <tr key={index}>
+                                            <td>{formatSemester(item.semester)}</td>
+                                            <td>{item.course_name}</td>
+                                            <td>{item.course_count}</td>
+                                            <td>{item.ders_dil_adi}</td>
+                                            <td>{item.dip_tur}</td>
+                                            <td
+                                                className="item-group"
+                                                onClick={() => handleEditClick(index, item.groupAuto)}
                                             >
-                                                {isSaved ? <FaCheckSquare /> : <FaRegSquare />}
-                                            </button>
-                                        </td>
-                                    </tr>
-                                );
-                            })}
-                        </tbody>
-                    </table>
+                                                {editingIndex === index ? (
+                                                    <input
+                                                        type="text"
+                                                        value={tempGroups[index] || ""}
+                                                        onChange={(e) => handleInputChange(e, index)}
+                                                        onKeyDown={handleKeyPress}
+                                                        autoFocus
+                                                        onBlur={() => setEditingIndex(null)}
+                                                    />
+                                                ) : (
+                                                    <div className='group-show'>
+                                                        {tempGroups[index] ? (
+                                                            <div className='preffered-group'>
+                                                                <s>{item.groupAuto}</s>/{tempGroups[index]}
+                                                            </div>
+                                                        ) : (
+                                                            <div className='preffered-group'>
+                                                                {item.groupAuto}
+                                                            </div>
+                                                        )
+                                                        }
+                                                    </div>
+                                                )}
+                                            </td>
+                                            <td>{item.scoreAuto}</td>
+                                            <td>
+
+                                                <button
+                                                    className="yayinlar-btn"
+                                                    onClick={() => saveToLocalStorage(item)}
+                                                >
+                                                    {isSaved ? <FaCheckSquare /> : <FaRegSquare />}
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    );
+                                })}
+                            </tbody>
+                        </table>
+                    )
                 )}
+
             </div>
         </div>
     );
