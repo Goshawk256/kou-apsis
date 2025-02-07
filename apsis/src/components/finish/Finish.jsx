@@ -18,10 +18,8 @@ function Finish() {
     const downloadPDF = () => {
         const doc = new jsPDF();
 
-        // Font dosyasını public/fonts klasöründen yükleyin
-        doc.addFileToVFS('FreeSerif.ttf', '/fonts/FreeSerif.ttf');
-        doc.addFont('FreeSerif.ttf', 'FreeSerif', 'normal');
-        doc.setFont('FreeSerif');
+        // Varsayılan fontu kullan
+        doc.setFont('helvetica');
 
         const element = document.querySelector('.table-container');
 
@@ -90,13 +88,10 @@ function Finish() {
         fetchData();
     }, []);
     const capitalizeName = (name) => {
-        const turkishChars = {
-            'ç': 'c', 'ğ': 'g', 'ı': 'i', 'ö': 'o', 'ş': 's', 'ü': 'u',
-            'Ç': 'C', 'Ğ': 'G', 'İ': 'I', 'Ö': 'O', 'Ş': 'S', 'Ü': 'U'
-        };
-        const replaceTurkishChars = (char) => turkishChars[char] || char;
-        const normalized = name.split('').map(replaceTurkishChars).join('');
-        return normalized.charAt(0).toUpperCase() + normalized.slice(1).toLowerCase();
+        if (!name) return '';
+        const turkishLocale = 'tr-TR';
+        return name.charAt(0).toLocaleUpperCase(turkishLocale) +
+               name.slice(1).toLocaleLowerCase(turkishLocale);
     };
 
 
