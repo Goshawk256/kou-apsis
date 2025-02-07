@@ -1,7 +1,18 @@
 import { useState, useEffect } from 'react';
 import { jsPDF } from 'jspdf';
 import './Finish.css';
-import { tableHeaders, calculateSectionTotal, groupALabels } from './tableData';
+import { 
+  tableHeaders, 
+  calculateSectionTotal, 
+  groupALabels, 
+  groupBLabels,
+  groupCLabels,
+  groupDLabels,
+  groupELabels,
+  groupFLabels,
+  groupGLabels,
+  groupHLabels 
+} from './tableData';
 import TableSection from './TableSection';
 
 function Finish() {
@@ -12,6 +23,7 @@ function Finish() {
     courses: [],
     artworks: [],
     awards: [],
+    patents: [],
     userInfo: null
   });
 
@@ -50,6 +62,7 @@ function Finish() {
         artworks: JSON.parse(localStorage.getItem('savedArtworks')) || [],
         awards: JSON.parse(localStorage.getItem('savedAwards')) || [],
         courses: JSON.parse(localStorage.getItem('savedCourses')) || [],
+        patents: JSON.parse(localStorage.getItem('savedPatents')) || [],
         userInfo: JSON.parse(localStorage.getItem('userInfo'))?.[0] || null
       });
     };
@@ -97,17 +110,43 @@ function Finish() {
       sectionCode: 'A'
     },
     {
-      key: 'thesis',
-      title: tableHeaders.F.title,
-      subtitle: tableHeaders.F.subtitle,
-      headers: tableHeaders.F.columnHeaders,
-      data: data.thesis,
-      groups: ['F1','F2','F3','F4'],
+      key: 'conferences',
+      title: tableHeaders.B.title,
+      subtitle: tableHeaders.B.subtitle,
+      headers: tableHeaders.B.columnHeaders,
+      data: data.publications,
+      groups: Array.from({ length: 12 }, (_, i) => `B${i + 1}`),
       groupProperty: 'groupAuto',
-      labelCallback: group => `${group}) Tez Yöneticiliği`,
+      labelCallback: group => `${group}) ${groupBLabels[parseInt(group.slice(1)) - 1]}`,
       textField: 'title',
       scoreField: 'scoreAuto',
-      sectionCode: 'F'
+      sectionCode: 'B'
+    },
+    {
+      key: 'books',
+      title: tableHeaders.C.title,
+      subtitle: tableHeaders.C.subtitle,
+      headers: tableHeaders.C.columnHeaders,
+      data: data.publications,
+      groups: Array.from({ length: 8 }, (_, i) => `C${i + 1}`),
+      groupProperty: 'groupAuto',
+      labelCallback: group => `${group}) ${groupCLabels[parseInt(group.slice(1)) - 1]}`,
+      textField: 'title',
+      scoreField: 'scoreAuto',
+      sectionCode: 'C'
+    },
+    {
+      key: 'citations',
+      title: tableHeaders.D.title,
+      subtitle: tableHeaders.D.subtitle,
+      headers: tableHeaders.D.columnHeaders,
+      data: data.publications,
+      groups: Array.from({ length: 4 }, (_, i) => `D${i + 1}`),
+      groupProperty: 'groupAuto',
+      labelCallback: group => `${group}) ${groupDLabels[parseInt(group.slice(1)) - 1]}`,
+      textField: 'title',
+      scoreField: 'scoreAuto',
+      sectionCode: 'D'
     },
     {
       key: 'courses',
@@ -117,23 +156,52 @@ function Finish() {
       data: data.courses,
       groups: ['E1','E2','E3','E4'],
       groupProperty: 'group',
-      labelCallback: group => `${group}) Ders`,
+      labelCallback: group => `${group}) ${groupELabels[parseInt(group.slice(1)) - 1]}`,
       textField: 'course_name',
       scoreField: 'score',
       sectionCode: 'E'
     },
     {
+      key: 'thesis',
+      title: tableHeaders.F.title,
+      subtitle: tableHeaders.F.subtitle,
+      headers: tableHeaders.F.columnHeaders,
+      data: data.thesis,
+      groups: ['F1','F2','F3','F4'],
+      groupProperty: 'groupAuto',
+      labelCallback: group => `${group}) ${groupFLabels[parseInt(group.slice(1)) - 1]}`,
+      textField: 'title',
+      scoreField: 'scoreAuto',
+      sectionCode: 'F'
+    },
+    {
+      key: 'patents',
+      title: tableHeaders.G.title,
+      subtitle: tableHeaders.G.subtitle,
+      headers: tableHeaders.G.columnHeaders,
+      data: data.patents,
+      groups: Array.from({ length: 8 }, (_, i) => `G${i + 1}`),
+      groupProperty: 'group',
+      labelCallback: group => `${group}) ${groupGLabels[parseInt(group.slice(1)) - 1]}`,
+      textField: 'patentName',
+      scoreField: 'score',
+      sectionCode: 'G'
+    },
+    {
       key: 'projects',
-      title: 'H. ARAŞTIRMA PROJELERİ',
-      headers: ['', 'Projenin Adı, Proje Numarası, Projenin Yürütüldüğü Kurumun Adı, Yılı', 'Puan'],
+      title: tableHeaders.H.title,
+      subtitle: tableHeaders.H.subtitle,
+      headers: tableHeaders.H.columnHeaders,
       data: data.projects,
       groups: Array.from({ length: 27 }, (_, i) => `H${i + 1}`),
       groupProperty: 'group',
-      labelCallback: group => `${group}) Proje`,
+      labelCallback: group => `${group}) ${groupHLabels[parseInt(group.slice(1)) - 1]}`,
       textField: 'projectName',
       scoreField: 'score',
       sectionCode: 'H'
-    },
+    }
+    // TODO: L ve J bölümleri için tableData.js'de groupLabels tanımlamaları yapılacak
+    /*
     {
       key: 'artworks',
       title: 'L. SANAT VE TASARIM ALANLARI',
@@ -159,6 +227,7 @@ function Finish() {
       scoreField: 'scoreAuto',
       sectionCode: 'J'
     }
+    */
   ];
 
   return (
