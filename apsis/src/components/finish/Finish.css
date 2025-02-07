@@ -49,14 +49,6 @@
     /* Hücre kenarlarını birleştir */
 }
 
-/* Tüm satırlar için grid yapısı */
-.finish-table tr {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
-    /* Dinamik sütun genişliği */
-    width: 100%;
-}
-
 /* Hücreler */
 .finish-table td,
 .finish-table th {
@@ -64,12 +56,33 @@
     border: 1px solid #ccc;
     text-align: center;
     word-wrap: break-word;
-
     /* Uzun metinleri sar */
+}
+
+/* Sütun genişlikleri */
+.finish-table td:first-child {
+    width: 30%;
+}
+
+.finish-table td:nth-child(2) {
+    width: 50%;
+}
+
+.finish-table td:last-child {
+    width: 20%;
 }
 
 .finish-table td {
     text-align: start;
+    vertical-align: top;
+    min-height: 40px;
+    height: 100%;
+}
+
+/* rowSpan'li hücreler için özel stil */
+.finish-table td[rowspan] {
+    vertical-align: middle;
+    background-color: #f9f9f9;
 }
 
 /* Başlık */

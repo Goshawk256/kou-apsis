@@ -3,7 +3,6 @@ import './Finish.css';
 import { useState, useEffect } from 'react';
 import { tableHeaders, calculateSectionTotal } from './tableData';
 import TableSection from './TableSection';
-import DataRow from './DataRow';
 
 function Finish() {
   const [savedProjects, setSavedProjects] = useState([]);
@@ -118,12 +117,25 @@ function Finish() {
       headers={tableHeaders.A.columnHeaders}
       sectionTotal={calculateSectionTotal(savedPublications, 'A')}
     >
-      {['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A7', 'A8', 'A9'].map((group) => (
-        <tr key={group}>
-          <td>{`${group}) SCI-E, SSCI veya AHCI kapsamındaki dergilerde yayımlanmış makale`}</td>
-          <DataRow data={savedPublications} group={group} type="auto" />
-        </tr>
-      ))}
+      {['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A7', 'A8', 'A9'].map((group) => {
+        const groupData = savedPublications.filter(item => item.groupAuto === group);
+        if (groupData.length === 0) {
+          return (
+            <tr key={group}>
+              <td>{`${group}) SCI-E, SSCI veya AHCI kapsamındaki dergilerde yayımlanmış makale`}</td>
+              <td>yok</td>
+              <td>-</td>
+            </tr>
+          );
+        }
+        return groupData.map((item, index) => (
+          <tr key={`${group}-${index}`}>
+            {index === 0 && <td rowSpan={groupData.length}>{`${group}) SCI-E, SSCI veya AHCI kapsamındaki dergilerde yayımlanmış makale`}</td>}
+            <td>{item.title}</td>
+            <td>{item.scoreAuto.toFixed(2)}</td>
+          </tr>
+        ));
+      })}
     </TableSection>
   );
 
@@ -134,12 +146,25 @@ function Finish() {
       headers={tableHeaders.F.columnHeaders}
       sectionTotal={calculateSectionTotal(savedThesis, 'F')}
     >
-      {['F1', 'F2', 'F3', 'F4'].map((group) => (
-        <tr key={group}>
-          <td>{`${group}) Tez Yöneticiliği`}</td>
-          <DataRow data={savedThesis} group={group} type="auto" />
-        </tr>
-      ))}
+      {['F1', 'F2', 'F3', 'F4'].map((group) => {
+        const groupData = savedThesis.filter(item => item.groupAuto === group);
+        if (groupData.length === 0) {
+          return (
+            <tr key={group}>
+              <td>{`${group}) Tez Yöneticiliği`}</td>
+              <td>yok</td>
+              <td>-</td>
+            </tr>
+          );
+        }
+        return groupData.map((item, index) => (
+          <tr key={`${group}-${index}`}>
+            {index === 0 && <td rowSpan={groupData.length}>{`${group}) Tez Yöneticiliği`}</td>}
+            <td>{item.title}</td>
+            <td>{item.scoreAuto.toFixed(2)}</td>
+          </tr>
+        ));
+      })}
     </TableSection>
   );
 
@@ -150,12 +175,25 @@ function Finish() {
       headers={tableHeaders.E.columnHeaders}
       sectionTotal={calculateSectionTotal(savedCourses, 'E')}
     >
-      {['E1', 'E2', 'E3', 'E4'].map((group) => (
-        <tr key={group}>
-          <td>{`${group}) Ders`}</td>
-          <DataRow data={savedCourses} group={group} type="courses" />
-        </tr>
-      ))}
+      {['E1', 'E2', 'E3', 'E4'].map((group) => {
+        const groupData = savedCourses.filter(item => item.group === group);
+        if (groupData.length === 0) {
+          return (
+            <tr key={group}>
+              <td>{`${group}) Ders`}</td>
+              <td>yok</td>
+              <td>-</td>
+            </tr>
+          );
+        }
+        return groupData.map((item, index) => (
+          <tr key={`${group}-${index}`}>
+            {index === 0 && <td rowSpan={groupData.length}>{`${group}) Ders`}</td>}
+            <td>{item.course_name}</td>
+            <td>{item.score.toFixed(2)}</td>
+          </tr>
+        ));
+      })}
     </TableSection>
   );
 
@@ -165,12 +203,25 @@ function Finish() {
       headers={["", "Projenin Adı, Proje Numarası, Projenin Yürütüldüğü Kurumun Adı, Yılı", "Puan"]}
       sectionTotal={calculateSectionTotal(savedProjects, 'H')}
     >
-      {Array.from({ length: 27 }, (_, i) => `H${i + 1}`).map((group) => (
-        <tr key={group}>
-          <td>{`${group}) Proje`}</td>
-          <DataRow data={savedProjects} group={group} type="projects" />
-        </tr>
-      ))}
+      {Array.from({ length: 27 }, (_, i) => `H${i + 1}`).map((group) => {
+        const groupData = savedProjects.filter(item => item.group === group);
+        if (groupData.length === 0) {
+          return (
+            <tr key={group}>
+              <td>{`${group}) Proje`}</td>
+              <td>yok</td>
+              <td>-</td>
+            </tr>
+          );
+        }
+        return groupData.map((item, index) => (
+          <tr key={`${group}-${index}`}>
+            {index === 0 && <td rowSpan={groupData.length}>{`${group}) Proje`}</td>}
+            <td>{item.projectName}</td>
+            <td>{item.score.toFixed(2)}</td>
+          </tr>
+        ));
+      })}
     </TableSection>
   );
 
@@ -181,12 +232,25 @@ function Finish() {
       headers={["", "Faaliyet Adı, Yılı", "Puan"]}
       sectionTotal={calculateSectionTotal(savedArtworks, 'L')}
     >
-      {Array.from({ length: 16 }, (_, i) => `L${i + 1}`).map((group) => (
-        <tr key={group}>
-          <td>{`${group}) Sanatsal Faaliyet`}</td>
-          <DataRow data={savedArtworks} group={group} type="artworks" />
-        </tr>
-      ))}
+      {Array.from({ length: 16 }, (_, i) => `L${i + 1}`).map((group) => {
+        const groupData = savedArtworks.filter(item => item.grup_adi === group);
+        if (groupData.length === 0) {
+          return (
+            <tr key={group}>
+              <td>{`${group}) Sanatsal Faaliyet`}</td>
+              <td>yok</td>
+              <td>-</td>
+            </tr>
+          );
+        }
+        return groupData.map((item, index) => (
+          <tr key={`${group}-${index}`}>
+            {index === 0 && <td rowSpan={groupData.length}>{`${group}) Sanatsal Faaliyet`}</td>}
+            <td>{item.title}</td>
+            <td>{item.score.toFixed(2)}</td>
+          </tr>
+        ));
+      })}
     </TableSection>
   );
 
@@ -196,12 +260,25 @@ function Finish() {
       headers={["", "Ödülün Veren Kurul/Kurumun Adı, Yılı", "Puan"]}
       sectionTotal={calculateSectionTotal(savedAwards, 'J')}
     >
-      {Array.from({ length: 19 }, (_, i) => `J${i + 1}`).map((group) => (
-        <tr key={group}>
-          <td>{`${group}) Ödül`}</td>
-          <DataRow data={savedAwards} group={group} type="auto" />
-        </tr>
-      ))}
+      {Array.from({ length: 19 }, (_, i) => `J${i + 1}`).map((group) => {
+        const groupData = savedAwards.filter(item => item.groupAuto === group);
+        if (groupData.length === 0) {
+          return (
+            <tr key={group}>
+              <td>{`${group}) Ödül`}</td>
+              <td>yok</td>
+              <td>-</td>
+            </tr>
+          );
+        }
+        return groupData.map((item, index) => (
+          <tr key={`${group}-${index}`}>
+            {index === 0 && <td rowSpan={groupData.length}>{`${group}) Ödül`}</td>}
+            <td>{item.title}</td>
+            <td>{item.scoreAuto.toFixed(2)}</td>
+          </tr>
+        ));
+      })}
     </TableSection>
   );
 

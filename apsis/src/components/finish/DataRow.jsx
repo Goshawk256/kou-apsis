@@ -33,18 +33,30 @@ const DataRow = ({ data, group, type }) => {
     return score || 0;
   };
 
+  if (filteredData.length === 0) {
+    return (
+      <>
+        <td>yok</td>
+        <td>-</td>
+      </>
+    );
+  }
+
   return (
     <>
-      <td>
-        {filteredData.map((item, index) => (
-          <div key={index}>{getTitleField(item)}</div>
-        ))}
-      </td>
-      <td>
-        {filteredData
-          .reduce((acc, item) => acc + getScore(item), 0)
-          .toFixed(2)}
-      </td>
+      {filteredData.map((item, index) => (
+        index === 0 ? (
+          <>
+            <td rowSpan={filteredData.length}>{getTitleField(item)}</td>
+            <td>{getScore(item).toFixed(2)}</td>
+          </>
+        ) : (
+          <>
+            <td>{getTitleField(item)}</td>
+            <td>{getScore(item).toFixed(2)}</td>
+          </>
+        )
+      ))}
     </>
   );
 };

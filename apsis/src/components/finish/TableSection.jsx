@@ -23,9 +23,7 @@ const TableSection = ({ title, subtitle, headers, children, sectionTotal }) => {
         {sectionTotal && (
           <tr>
             <td>Bölüm {title.charAt(0)}</td>
-            <td>
-              <tr>Toplam Puanı</tr>
-            </td>
+            <td>Toplam Puanı</td>
             <td>{sectionTotal}</td>
           </tr>
         )}
