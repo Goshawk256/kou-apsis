@@ -44,3 +44,15 @@ export const calculateSectionTotal = (data, section) => {
     .reduce((acc, item) => acc + (item.scoreAuto || item.score || 0), 0)
     .toFixed(2);
 };
+
+export const groupALabels = [
+  "SCI-E, SSCI veya AHCI kapsamındaki dergilerde yayımlanmış makale (Q1 olarak taranan dergide)",
+  "SCI-E, SSCI veya AHCI kapsamındaki dergilerde yayımlanmış makale (Q2 olarak taranan dergide)",
+  "SCI-E, SSCI veya AHCI kapsamındaki dergilerde yayımlanmış makale (Q3 olarak taranan dergide)",
+  "SCI-E, SSCI veya AHCI kapsamındaki dergilerde yayımlanmış makale (Q4 olarak taranan dergide)",
+  "ESCI tarafından taranan dergilerde yayımlanmış makale",
+  "Scopus tarafından taranan dergilerde yayımlanmış makale",
+  "Uluslararası diğer indekslerde taranan dergilerde yayımlanmış makale",
+  "ULAKBİM TR Dizin tarafından taranan ulusal hakemli dergilerde yayımlanmış makale",
+  "8. madde dışındaki ulusal hakemli dergilerde yayımlanmış makale"
+];
