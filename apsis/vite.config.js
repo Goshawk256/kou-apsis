@@ -6,7 +6,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://192.168.2.16:8181',
+        target: 'https://apsis.kocaeli.edu.tr',
         changeOrigin: true,
         secure: false,
       },
