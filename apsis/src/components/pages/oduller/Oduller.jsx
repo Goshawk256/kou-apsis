@@ -184,7 +184,7 @@ function Oduller() {
                                             <td>{item.corporateName}</td>
                                             <td
                                                 className="item-group"
-                                                onClick={() => handleEditClick(index, item.group)}
+
                                             >
                                                 {editingIndex === index ? (
                                                     <input
@@ -199,11 +199,11 @@ function Oduller() {
                                                     <div className='group-show'>
                                                         {tempGroups[index] ? (
                                                             <div className='preffered-group'>
-                                                                <s>{item.groupAuto}</s>/{tempGroups[index]}
+                                                                <s>{item.group}</s>/{tempGroups[index]}
                                                             </div>
                                                         ) : (
                                                             <div className='preffered-group'>
-                                                                {item.groupAuto}
+                                                                {item.group}
                                                             </div>
                                                         )
                                                         }
@@ -212,7 +212,7 @@ function Oduller() {
                                             </td>
                                             <td>{item.score}</td>
                                             <td>
-
+                                                <button className="yayinlar-btn" onClick={() => handleEditClick(index, item.group)} ><FaPencilAlt /></button>
                                                 <button
                                                     className="yayinlar-btn"
                                                     onClick={() => saveToLocalStorage(item)}

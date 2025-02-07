@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './Dersler.css';
-import { FaSync, FaCheck, FaInfo, FaCheckSquare, FaRegSquare } from 'react-icons/fa';
+import { FaSync, FaCheck, FaInfo, FaCheckSquare, FaRegSquare, FaPencilAlt } from 'react-icons/fa';
 import axios from 'axios';
 import RightBar from '../../rightbar/RightBar';
 import NotFound from '../../errorstacks/NotFound';
@@ -139,7 +139,7 @@ function Dersler() {
         setTimeout(() => setPopupMessage(null), 1500); // Pop-up mesajını birkaç saniye sonra kapatıyoruz
     };
 
-    const itemsPerPage = 6; // Sayfa başına gösterilecek öğe sayısı
+    const itemsPerPage = 4; // Sayfa başına gösterilecek öğe sayısı
     const paginatedData = filteredData.slice((page - 1) * itemsPerPage, page * itemsPerPage);
     const totalPages = Math.ceil(filteredData.length / itemsPerPage);
     const openRightBar = () => setRightBarOpen(true);
@@ -231,7 +231,7 @@ function Dersler() {
                                             <td>{item.dip_tur}</td>
                                             <td
                                                 className="item-group"
-                                                onClick={() => handleEditClick(index, item.groupAuto)}
+
                                             >
                                                 {editingIndex === index ? (
                                                     <input
@@ -259,7 +259,7 @@ function Dersler() {
                                             </td>
                                             <td>{item.scoreAuto}</td>
                                             <td>
-
+                                                <button className="yayinlar-btn" onClick={() => handleEditClick(index, item.groupAuto)} ><FaPencilAlt /></button>
                                                 <button
                                                     className="yayinlar-btn"
                                                     onClick={() => saveToLocalStorage(item)}
