@@ -123,7 +123,7 @@ function Finish() {
           return (
             <tr key={group}>
               <td>{`${group}) SCI-E, SSCI veya AHCI kapsamındaki dergilerde yayımlanmış makale`}</td>
-              <td>yok</td>
+              <td>-</td>
               <td>-</td>
             </tr>
           );
@@ -152,7 +152,7 @@ function Finish() {
           return (
             <tr key={group}>
               <td>{`${group}) Tez Yöneticiliği`}</td>
-              <td>yok</td>
+              <td>-</td>
               <td>-</td>
             </tr>
           );
@@ -181,7 +181,7 @@ function Finish() {
           return (
             <tr key={group}>
               <td>{`${group}) Ders`}</td>
-              <td>yok</td>
+              <td>-</td>
               <td>-</td>
             </tr>
           );
@@ -209,7 +209,7 @@ function Finish() {
           return (
             <tr key={group}>
               <td>{`${group}) Proje`}</td>
-              <td>yok</td>
+              <td>-</td>
               <td>-</td>
             </tr>
           );
@@ -238,7 +238,7 @@ function Finish() {
           return (
             <tr key={group}>
               <td>{`${group}) Sanatsal Faaliyet`}</td>
-              <td>yok</td>
+              <td>-</td>
               <td>-</td>
             </tr>
           );
@@ -266,7 +266,7 @@ function Finish() {
           return (
             <tr key={group}>
               <td>{`${group}) Ödül`}</td>
-              <td>yok</td>
+              <td>-</td>
               <td>-</td>
             </tr>
           );

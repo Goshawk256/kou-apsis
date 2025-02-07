@@ -4,7 +4,7 @@ const DataRow = ({ data, group, type }) => {
   if (!data || !Array.isArray(data)) {
     return (
       <>
-        <td>yok</td>
+        <td>-</td>
         <td>-</td>
       </>
     );
@@ -36,7 +36,7 @@ const DataRow = ({ data, group, type }) => {
   if (filteredData.length === 0) {
     return (
       <>
-        <td>yok</td>
+        <td>-</td>
         <td>-</td>
       </>
     );
