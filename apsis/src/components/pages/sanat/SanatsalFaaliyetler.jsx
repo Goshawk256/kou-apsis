@@ -5,7 +5,7 @@ import { FaSync, FaPencilAlt, FaCheckSquare, FaRegSquare } from 'react-icons/fa'
 import All_Url from '../../../url';
 import RightBar from '../../rightbar/RightBar';
 import NotFound from '../../errorstacks/NotFound';
-import { refreshTheToken } from '../../../authMiddleware';
+import { refreshTheToken } from '../../../middlewares/authMiddleware';
 
 
 function SanatsalFaaliyetler() {

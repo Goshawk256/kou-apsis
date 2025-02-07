@@ -1,4 +1,4 @@
-import All_Url from "./url";
+import All_Url from "../url";
 import axios from "axios";
 
 export const refreshTheToken = async () => {

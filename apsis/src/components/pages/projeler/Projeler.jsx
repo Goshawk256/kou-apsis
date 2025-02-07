@@ -5,7 +5,7 @@ import axios from 'axios';
 import RightBar from '../../rightbar/RightBar';
 import All_Url from '../../../url';
 import NotFound from '../../errorstacks/NotFound';
-import { refreshTheToken } from '../../../authMiddleware';
+import { refreshTheToken } from '../../../middlewares/authMiddleware';
 
 function Projeler() {
     const [searchQuery, setSearchQuery] = useState('');
