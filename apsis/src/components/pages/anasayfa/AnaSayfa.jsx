@@ -56,8 +56,6 @@ function AnaSayfa() {
                 const doctoralStudents = semesterData?.student_stats?.doctoral_students || 0;
                 const mastersStudents = semesterData?.student_stats?.masters_students || 0;
 
-
-
                 setUserInfo({
                     ...userInfoData.data[0],
                     studentdata: {
