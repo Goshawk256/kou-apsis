@@ -4,7 +4,7 @@ import { FaSync, FaCheck, FaInfo, FaCheckSquare, FaRegSquare, FaPencilAlt } from
 import axios from 'axios';
 import RightBar from '../../rightbar/RightBar';
 import NotFound from '../../errorstacks/NotFound';
-import { refreshTheToken } from '../../../authMiddleware';
+import { refreshTheToken } from '../../../middlewares/authMiddleware';
 
 import All_Url from '../../../url';
 
