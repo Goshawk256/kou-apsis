@@ -56,7 +56,7 @@ const TableSection = ({ title, subtitle, headers, data, groups, groupProperty, l
       return groupData.map((item, index) => (
         <tr key={`${group}-${index}`}>
           {index === 0 && <td rowSpan={groupData.length}>{labelCallback(group)}</td>}
-          <td>{item[textField]}</td>
+          <td>{typeof textField === 'function' ? textField(item) : item[textField]}</td>
           <td>{Number(item[scoreField] || 0).toFixed(2)}</td>
         </tr>
       ));

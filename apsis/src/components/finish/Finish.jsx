@@ -105,7 +105,10 @@ function Finish() {
       groups: ['A1','A2','A3','A4','A5','A6','A7','A8','A9'],
       groupProperty: 'groupAuto',
       labelCallback: group => `${group}) ${groupALabels[parseInt(group.slice(1)) - 1]}`,
-      textField: 'title',
+      textField: (item) => {
+        if (!item.title) return '-';
+        return `${item.authors || ''}, ${item.title}, ${item.journalName || ''}, ${item.volume || ''}, ${item.pages || ''}, ${item.year || ''}`;
+      },
       scoreField: 'scoreAuto',
       sectionCode: 'A'
     },
@@ -118,7 +121,10 @@ function Finish() {
       groups: Array.from({ length: 12 }, (_, i) => `B${i + 1}`),
       groupProperty: 'groupAuto',
       labelCallback: group => `${group}) ${groupBLabels[parseInt(group.slice(1)) - 1]}`,
-      textField: 'title',
+      textField: (item) => {
+        if (!item.title) return '-';
+        return `${item.authors || ''}, ${item.title}, ${item.conferenceName || ''}, ${item.location || ''}, ${item.pages || ''}, ${item.date || ''}`;
+      },
       scoreField: 'scoreAuto',
       sectionCode: 'B'
     },
@@ -131,7 +137,10 @@ function Finish() {
       groups: Array.from({ length: 8 }, (_, i) => `C${i + 1}`),
       groupProperty: 'groupAuto',
       labelCallback: group => `${group}) ${groupCLabels[parseInt(group.slice(1)) - 1]}`,
-      textField: 'title',
+      textField: (item) => {
+        if (!item.title) return '-';
+        return `${item.authors || ''}, ${item.title}, ${item.publisher || ''}, ${item.edition || ''} ${item.location || ''}, ${item.year || ''}`;
+      },
       scoreField: 'scoreAuto',
       sectionCode: 'C'
     },
@@ -144,7 +153,10 @@ function Finish() {
       groups: Array.from({ length: 4 }, (_, i) => `D${i + 1}`),
       groupProperty: 'groupAuto',
       labelCallback: group => `${group}) ${groupDLabels[parseInt(group.slice(1)) - 1]}`,
-      textField: 'title',
+      textField: (item) => {
+        if (!item.title) return '-';
+        return `${item.citedWork || ''}, ${item.citationCount || ''}`;
+      },
       scoreField: 'scoreAuto',
       sectionCode: 'D'
     },
@@ -157,7 +169,10 @@ function Finish() {
       groups: ['E1','E2','E3','E4'],
       groupProperty: 'group',
       labelCallback: group => `${group}) ${groupELabels[parseInt(group.slice(1)) - 1]}`,
-      textField: 'course_name',
+      textField: (item) => {
+        if (!item.course_name) return '-';
+        return `${item.course_name}, ${item.program || ''}, ${item.semester || ''}, ${item.year || ''}`;
+      },
       scoreField: 'score',
       sectionCode: 'E'
     },
@@ -170,7 +185,10 @@ function Finish() {
       groups: ['F1','F2','F3','F4'],
       groupProperty: 'groupAuto',
       labelCallback: group => `${group}) ${groupFLabels[parseInt(group.slice(1)) - 1]}`,
-      textField: 'title',
+      textField: (item) => {
+        if (!item.title) return '-';
+        return `${item.studentName || ''}, ${item.title}, ${item.institute || ''}, ${item.year || ''}`;
+      },
       scoreField: 'scoreAuto',
       sectionCode: 'F'
     },
@@ -183,7 +201,10 @@ function Finish() {
       groups: Array.from({ length: 8 }, (_, i) => `G${i + 1}`),
       groupProperty: 'group',
       labelCallback: group => `${group}) ${groupGLabels[parseInt(group.slice(1)) - 1]}`,
-      textField: 'patentName',
+      textField: (item) => {
+        if (!item.patentName) return '-';
+        return `${item.patentName}, ${item.year || ''}`;
+      },
       scoreField: 'score',
       sectionCode: 'G'
     },
@@ -196,7 +217,10 @@ function Finish() {
       groups: Array.from({ length: 27 }, (_, i) => `H${i + 1}`),
       groupProperty: 'group',
       labelCallback: group => `${group}) ${groupHLabels[parseInt(group.slice(1)) - 1]}`,
-      textField: 'projectName',
+      textField: (item) => {
+        if (!item.projectName) return '-';
+        return `${item.projectName}, ${item.projectNumber || ''}, ${item.institution || ''}, ${item.year || ''}`;
+      },
       scoreField: 'score',
       sectionCode: 'H'
     }
