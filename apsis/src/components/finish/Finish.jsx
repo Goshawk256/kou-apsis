@@ -50,28 +50,37 @@ function Finish() {
       style: 'columnHeader'
     })));
 
-    // Veri satırları
-    let currentGroup = '';
-    section.data
-      .filter(item => item.groupAuto?.startsWith(section.sectionCode) || item.group?.startsWith(section.sectionCode))
-      .forEach(item => {
-        const group = item.groupAuto || item.group;
-        if (group !== currentGroup) {
-          currentGroup = group;
-          const label = section.labelCallback(group);
-          rows.push([
-            { text: label, style: 'groupHeader' },
-            { text: section.textField(item) },
-            { text: item[section.scoreField]?.toString() || '0', alignment: 'center' }
-          ]);
-        } else {
-          rows.push([
-            { text: '', style: 'groupHeader' },
-            { text: section.textField(item) },
-            { text: item[section.scoreField]?.toString() || '0', alignment: 'center' }
-          ]);
-        }
-      });
+    // Her grup için veri satırları
+    section.groups.forEach(expectedGroup => {
+      const matchingItems = section.data.filter(item => 
+        (item.groupAuto || item.group) === expectedGroup
+      );
+
+      if (matchingItems.length === 0) {
+        // Eğer bu grup için veri yoksa boş satır ekle
+        rows.push([
+          { text: `${expectedGroup}) ${section.labelCallback(expectedGroup)}`, style: 'groupHeader' },
+          { text: '', style: 'emptyData' },
+          { text: '0', alignment: 'center' }
+        ]);
+      } else {
+        matchingItems.forEach((item, index) => {
+          if (index === 0) {
+            rows.push([
+              { text: `${expectedGroup}) ${section.labelCallback(expectedGroup)}`, style: 'groupHeader' },
+              { text: section.textField(item) },
+              { text: item[section.scoreField]?.toString() || '0', alignment: 'center' }
+            ]);
+          } else {
+            rows.push([
+              { text: '', style: 'groupHeader' },
+              { text: section.textField(item) },
+              { text: item[section.scoreField]?.toString() || '0', alignment: 'center' }
+            ]);
+          }
+        });
+      }
+    });
 
     // Toplam satırı
     rows.push([
@@ -181,6 +190,11 @@ function Finish() {
           fontSize: 8,
           bold: true
         },
+        emptyData: {
+          fontSize: 8,
+          italics: true,
+          color: '#666'
+        },
         totalRow: {
           fontSize: 9,
           bold: true,
@@ -253,8 +267,8 @@ function Finish() {
       groupProperty: 'groupAuto',
       labelCallback: group => `${group}) ${groupALabels[parseInt(group.slice(1)) - 1]}`,
       textField: (item) => {
-        if (!item.title) return 'Veri girilmemiş';
-        return `${item.authors || 'Yazar girilmemiş'}, ${item.title}, ${item.journalName || 'Dergi adı girilmemiş'}, ${item.volume || 'Cilt no girilmemiş'}, ${item.pages || 'Sayfa no girilmemiş'}, ${item.year || 'Yıl girilmemiş'}`;
+        if (!item.title) return '';
+        return `${item.authors || ''}, ${item.title}, ${item.journalName || ''}, ${item.volume || ''}, ${item.pages || ''}, ${item.year || ''}`;
       },
       scoreField: 'scoreAuto',
       sectionCode: 'A'
@@ -269,8 +283,8 @@ function Finish() {
       groupProperty: 'groupAuto',
       labelCallback: group => `${group}) ${groupBLabels[parseInt(group.slice(1)) - 1]}`,
       textField: (item) => {
-        if (!item.title) return 'Veri girilmemiş';
-        return `${item.authors || 'Yazar girilmemiş'}, ${item.title}, ${item.conferenceName || 'Konferans adı girilmemiş'}, ${item.location || 'Konum girilmemiş'}, ${item.pages || 'Sayfa no girilmemiş'}, ${item.date || 'Tarih girilmemiş'}`;
+        if (!item.title) return '';
+        return `${item.authors || ''}, ${item.title}, ${item.conferenceName || ''}, ${item.location || ''}, ${item.pages || ''}, ${item.date || ''}`;
       },
       scoreField: 'scoreAuto',
       sectionCode: 'B'
@@ -285,8 +299,8 @@ function Finish() {
       groupProperty: 'groupAuto',
       labelCallback: group => `${group}) ${groupCLabels[parseInt(group.slice(1)) - 1]}`,
       textField: (item) => {
-        if (!item.title) return 'Veri girilmemiş';
-        return `${item.authors || 'Yazar girilmemiş'}, ${item.title}, ${item.publisher || 'Yayınevi girilmemiş'}, ${item.edition || 'Baskı girilmemiş'} ${item.location || 'Konum girilmemiş'}, ${item.year || 'Yıl girilmemiş'}`;
+        if (!item.title) return '';
+        return `${item.authors || ''}, ${item.title}, ${item.publisher || ' '}, ${item.edition || ''} ${item.location || ''}, ${item.year || ''}`;
       },
       scoreField: 'scoreAuto',
       sectionCode: 'C'
@@ -301,8 +315,8 @@ function Finish() {
       groupProperty: 'groupAuto',
       labelCallback: group => `${group}) ${groupDLabels[parseInt(group.slice(1)) - 1]}`,
       textField: (item) => {
-        if (!item.title) return 'Veri girilmemiş';
-        return `${item.citedWork || 'Atıf yapılan çalışma girilmemiş'}, Atıf sayısı: ${item.citationCount || '0'}`;
+        if (!item.title) return '';
+        return `${item.citedWork || ''}, Atıf sayısı: ${item.citationCount || '0'}`;
       },
       scoreField: 'scoreAuto',
       sectionCode: 'D'
@@ -317,8 +331,8 @@ function Finish() {
       groupProperty: 'group',
       labelCallback: group => `${group}) ${groupELabels[parseInt(group.slice(1)) - 1]}`,
       textField: (item) => {
-        if (!item.course_name) return 'Veri girilmemiş';
-        return `${item.course_name}, ${item.program || 'Program girilmemiş'}, ${item.semester || 'Dönem girilmemiş'}, ${item.year || 'Yıl girilmemiş'}`;
+        if (!item.course_name) return '';
+        return `${item.course_name}, ${item.program || ''}, ${item.semester || ''}, ${item.year || ''}`;
       },
       scoreField: 'score',
       sectionCode: 'E'
@@ -333,8 +347,8 @@ function Finish() {
       groupProperty: 'groupAuto',
       labelCallback: group => `${group}) ${groupFLabels[parseInt(group.slice(1)) - 1]}`,
       textField: (item) => {
-        if (!item.title) return 'Veri girilmemiş';
-        return `${item.studentName || 'Öğrenci adı girilmemiş'}, ${item.title}, ${item.institute || 'Enstitü girilmemiş'}, ${item.year || 'Yıl girilmemiş'}`;
+        if (!item.title) return '';
+        return `${item.studentName || ''}, ${item.title}, ${item.institute || ''}, ${item.year || ''}`;
       },
       scoreField: 'scoreAuto',
       sectionCode: 'F'
@@ -349,8 +363,8 @@ function Finish() {
       groupProperty: 'group',
       labelCallback: group => `${group}) ${groupGLabels[parseInt(group.slice(1)) - 1]}`,
       textField: (item) => {
-        if (!item.patentName) return 'Veri girilmemiş';
-        return `${item.patentName}, ${item.year || 'Yıl girilmemiş'}`;
+        if (!item.patentName) return '';
+        return `${item.patentName}, ${item.year || ''}`;
       },
       scoreField: 'score',
       sectionCode: 'G'
@@ -365,40 +379,12 @@ function Finish() {
       groupProperty: 'group',
       labelCallback: group => `${group}) ${groupHLabels[parseInt(group.slice(1)) - 1]}`,
       textField: (item) => {
-        if (!item.projectName) return '-';
+        if (!item.projectName) return '';
         return `${item.projectName}, ${item.projectNumber || ''}, ${item.institution || ''}, ${item.year || ''}`;
       },
       scoreField: 'score',
       sectionCode: 'H'
     }
-    // TODO: L ve J bölümleri için tableData.js'de groupLabels tanımlamaları yapılacak
-    /*
-    {
-      key: 'artworks',
-      title: 'L. SANAT VE TASARIM ALANLARI',
-      subtitle: '(Kurumsal ve Uygulama Alanları)',
-      headers: ['', 'Faaliyet Adı, Yılı', 'Puan'],
-      data: data.artworks,
-      groups: Array.from({ length: 16 }, (_, i) => `L${i + 1}`),
-      groupProperty: 'grup_adi',
-      labelCallback: group => `${group}) Sanatsal Faaliyet`,
-      textField: 'title',
-      scoreField: 'score',
-      sectionCode: 'L'
-    },
-    {
-      key: 'awards',
-      title: 'J. ÖDÜLLER',
-      headers: ['', 'Ödülün Veren Kurul/Kurumun Adı, Yılı', 'Puan'],
-      data: data.awards,
-      groups: Array.from({ length: 19 }, (_, i) => `J${i + 1}`),
-      groupProperty: 'groupAuto',
-      labelCallback: group => `${group}) Ödül`,
-      textField: 'title',
-      scoreField: 'scoreAuto',
-      sectionCode: 'J'
-    }
-    */
   ];
 
   return (
