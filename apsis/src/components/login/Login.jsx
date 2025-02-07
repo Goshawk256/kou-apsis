@@ -38,7 +38,7 @@ function Login() {
             if (response.data.success) {
                 localStorage.setItem('accessToken', response.data.data.accessToken);
                 localStorage.setItem('refreshToken', response.data.data.refreshToken);
-
+                localStorage.setItem('role', selectedRole);
                 localStorage.setItem('username', username);
                 navigate('/home');
             }

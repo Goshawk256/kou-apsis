@@ -52,8 +52,7 @@ function Projeler() {
                 try {
                     const response = await axios.post(
                         `${All_Url.api_base_url}/auth/refresh`,
-                        { username },
-                        { refreshToken: localStorage.getItem('refreshToken') },
+                        { username, role: localStorage.getItem('role'), refreshToken: localStorage.getItem('refreshToken') },
 
                     );
                     if (response.data.success) {
