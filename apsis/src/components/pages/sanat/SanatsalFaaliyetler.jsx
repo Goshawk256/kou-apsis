@@ -35,6 +35,20 @@ function SanatsalFaaliyetler() {
             );
             setTableData(response.data.data); // API'den gelen veriyi alıyoruz
             setFilteredData(response.data.data); // Aynı veriyi filtrelenebilir şekilde saklıyoruz
+            try {
+                const response = await axios.post(
+                    `${All_Url.api_base_url}/auth/refresh`,
+                    { username },
+                    { refreshToken: localStorage.getItem('refreshToken') },
+
+                );
+                if (response.data.success) {
+                    localStorage.setItem('accessToken', response.data.data.accessToken);
+                    console.log('Token yenilendi:', response.data.data.accessToken);
+                }
+            } catch (error) {
+                console.error('Token yenileme hatası:', error);
+            }
         } catch (error) {
             console.error('Veri çekme hatası:', error);
         } finally {
