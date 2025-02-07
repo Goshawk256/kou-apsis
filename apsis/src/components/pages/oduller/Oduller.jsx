@@ -14,7 +14,23 @@ function Oduller() {
     const [loading, setLoading] = useState(false);
     const [rightBarOpen, setRightBarOpen] = useState(false); // Sağ panelin açık/kapalı durumu
     const [popupMessage, setPopupMessage] = useState(null); // Pop-up mesajı
+    const [editingIndex, setEditingIndex] = useState(null);
+    const [tempGroups, setTempGroups] = useState({}); // Yalnızca eklenen kısmı saklayan nesne
 
+    const handleEditClick = (index) => {
+        setEditingIndex(index);
+        setTempGroups(prev => ({ ...prev, [index]: tempGroups[index] || "" })); // Önceden bir değer varsa onu kullan
+    };
+
+    const handleInputChange = (e, index) => {
+        setTempGroups(prev => ({ ...prev, [index]: e.target.value })); // Sadece ilgili satırın groupEdited kısmını güncelle
+    };
+
+    const handleKeyPress = (e) => {
+        if (e.key === "Enter") {
+            setEditingIndex(null); // Düzenleme modunu kapat
+        }
+    };
     const username = localStorage.getItem('username')
 
     const fetchData = async () => {
@@ -156,15 +172,42 @@ function Oduller() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {paginatedData.map((item) => {
+                                {paginatedData.map((item, index) => {
                                     const savedAwards = JSON.parse(localStorage.getItem('savedAwards')) || [];
                                     const isSaved = savedAwards.some((award) => award.id === item.id); // Kaydedildi mi kontrolü
 
                                     return (
-                                        <tr key={item.id}>
+                                        <tr key={index}>
                                             <td>{item.title}</td>
                                             <td>{item.corporateName}</td>
-                                            <td>{item.group}</td>
+                                            <td
+                                                className="item-group"
+                                                onClick={() => handleEditClick(index, item.group)}
+                                            >
+                                                {editingIndex === index ? (
+                                                    <input
+                                                        type="text"
+                                                        value={tempGroups[index] || ""}
+                                                        onChange={(e) => handleInputChange(e, index)}
+                                                        onKeyDown={handleKeyPress}
+                                                        autoFocus
+                                                        onBlur={() => setEditingIndex(null)}
+                                                    />
+                                                ) : (
+                                                    <div className='group-show'>
+                                                        {tempGroups[index] ? (
+                                                            <div className='preffered-group'>
+                                                                <s>{item.group}</s>/{tempGroups[index]}
+                                                            </div>
+                                                        ) : (
+                                                            <div className='preffered-group'>
+                                                                {item.group}
+                                                            </div>
+                                                        )
+                                                        }
+                                                    </div>
+                                                )}
+                                            </td>
                                             <td>{item.score}</td>
                                             <td>
 

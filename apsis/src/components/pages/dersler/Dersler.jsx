@@ -15,6 +15,23 @@ function Dersler() {
     const [rightBarOpen, setRightBarOpen] = useState(false);
     const [popupMessage, setPopupMessage] = useState(null); // Pop-up mesajı
     const [loading, setLoading] = useState(false);
+    const [editingIndex, setEditingIndex] = useState(null);
+    const [tempGroups, setTempGroups] = useState({}); // Sadece eklenen kısmı tutan nesne
+
+    const handleEditClick = (index, currentGroup) => {
+        setEditingIndex(index);
+        setTempGroups(prev => ({ ...prev, [index]: tempGroups[index] || "" })); // Önceden girilmiş değer varsa onu kullan
+    };
+
+    const handleInputChange = (e, index) => {
+        setTempGroups(prev => ({ ...prev, [index]: e.target.value })); // Sadece ilgili satırın groupEdited kısmını güncelle
+    };
+
+    const handleKeyPress = (e) => {
+        if (e.key === "Enter") {
+            setEditingIndex(null); // Düzenleme modunu kapat
+        }
+    };
 
     const formatSemester = (semester) => {
         const yearMapping = {
@@ -210,7 +227,34 @@ function Dersler() {
                                             <td>{item.course_count}</td>
                                             <td>{item.ders_dil_adi}</td>
                                             <td>{item.dip_tur}</td>
-                                            <td>{item.groupAuto}</td>
+                                            <td
+                                                className="item-group"
+                                                onClick={() => handleEditClick(index, item.groupAuto)}
+                                            >
+                                                {editingIndex === index ? (
+                                                    <input
+                                                        type="text"
+                                                        value={tempGroups[index] || ""}
+                                                        onChange={(e) => handleInputChange(e, index)}
+                                                        onKeyDown={handleKeyPress}
+                                                        autoFocus
+                                                        onBlur={() => setEditingIndex(null)}
+                                                    />
+                                                ) : (
+                                                    <div className='group-show'>
+                                                        {tempGroups[index] ? (
+                                                            <div className='preffered-group'>
+                                                                <s>{item.groupAuto}</s>/{tempGroups[index]}
+                                                            </div>
+                                                        ) : (
+                                                            <div className='preffered-group'>
+                                                                {item.groupAuto}
+                                                            </div>
+                                                        )
+                                                        }
+                                                    </div>
+                                                )}
+                                            </td>
                                             <td>{item.scoreAuto}</td>
                                             <td>
 

@@ -16,7 +16,23 @@ function Yayinlar() {
     const [rightBarOpen, setRightBarOpen] = useState(false);
     const [popupMessage, setPopupMessage] = useState(null); // Pop-up mesajı
     const [loading, setLoading] = useState(false);
+    const [editingIndex, setEditingIndex] = useState(null);
+    const [tempGroups, setTempGroups] = useState({}); // Sadece eklenen kısmı tutan nesne
 
+    const handleEditClick = (index, currentGroup) => {
+        setEditingIndex(index);
+        setTempGroups(prev => ({ ...prev, [index]: tempGroups[index] || "" })); // Önceden girilmiş değer varsa onu kullan
+    };
+
+    const handleInputChange = (e, index) => {
+        setTempGroups(prev => ({ ...prev, [index]: e.target.value })); // Sadece ilgili satırın groupEdited kısmını güncelle
+    };
+
+    const handleKeyPress = (e) => {
+        if (e.key === "Enter") {
+            setEditingIndex(null); // Düzenleme modunu kapat
+        }
+    };
 
     const username = localStorage.getItem('username');
 
@@ -237,19 +253,19 @@ function Yayinlar() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {paginatedData.map((item) => {
+                                    {paginatedData.map((item, index) => {
                                         const savedPublications = JSON.parse(localStorage.getItem('savedPublications')) || [];
                                         const isSaved = savedPublications.some((pub) => pub.id === item.id); // Kontrol
 
                                         return publicationTypeId === 2 ? (
-                                            <tr key={item.id}>
+                                            <tr key={index}>
                                                 <td>
                                                     {item.title.length > 50 ? `${item.title.slice(0, 60)}...` : item.title}
                                                     <br />
                                                     <p style={{ color: '#5d8c6a', fontSize: '10px' }}>{item.authors ? item.authors.join(", ") : "-"}</p>
                                                 </td>
                                                 <td>{item.journalIndex || '-'}</td>
-                                                <td>{item.citationGroup}</td>
+                                                <td className="item-group">{item.citationGroup}</td>
                                                 <td>{item.citationScore}</td>
                                                 <td >
                                                     <button className="yayinlar-btn"><FaPencilAlt /></button>
@@ -259,7 +275,7 @@ function Yayinlar() {
                                                 </td>
                                             </tr>
                                         ) : (
-                                            <tr key={item.id}>
+                                            <tr key={index}>
                                                 <td>
                                                     {item.title.length > 50 ? `${item.title.slice(0, 60)}...` : item.title}
                                                     <br />
@@ -273,8 +289,35 @@ function Yayinlar() {
                                                     </p>
                                                 </td>
                                                 <td>{item.journalIndex || '-'}</td>
-                                                <td>{item.groupAuto}</td>
-                                                <td>{(item.scoreAuto || 0).toFixed(2)}</td>
+                                                <td
+                                                    className="item-group"
+                                                    onClick={() => handleEditClick(index, item.groupAuto)}
+                                                >
+                                                    {editingIndex === index ? (
+                                                        <input
+                                                            type="text"
+                                                            value={tempGroups[index] || ""}
+                                                            onChange={(e) => handleInputChange(e, index)}
+                                                            onKeyDown={handleKeyPress}
+                                                            autoFocus
+                                                            onBlur={() => setEditingIndex(null)}
+                                                        />
+                                                    ) : (
+                                                        <div className='group-show'>
+                                                            {tempGroups[index] ? (
+                                                                <div className='preffered-group'>
+                                                                    <s>{item.groupAuto}</s>/{tempGroups[index]}
+                                                                </div>
+                                                            ) : (
+                                                                <div className='preffered-group'>
+                                                                    {item.groupAuto}
+                                                                </div>
+                                                            )
+                                                            }
+                                                        </div>
+                                                    )}
+                                                </td>
+                                                <td >{(item.scoreAuto || 0).toFixed(2)}</td>
                                                 <td >
                                                     <button className="yayinlar-btn" onClick={openRightBar}><FaPencilAlt /></button>
 
