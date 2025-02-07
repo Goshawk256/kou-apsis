@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { jsPDF } from 'jspdf';
 import './Finish.css';
+import pdfMake from 'pdfmake/build/pdfmake';
+import 'pdfmake/build/vfs_fonts';
 import { 
   tableHeaders, 
   calculateSectionTotal, 
@@ -27,30 +28,176 @@ function Finish() {
     userInfo: null
   });
 
+  const convertSectionToTableData = (section) => {
+    const rows = [];
+    
+    // Başlık satırı
+    rows.push([
+      { text: section.title, colSpan: 3, style: 'tableHeader', alignment: 'center' },
+      {}, {}
+    ]);
+
+    if (section.subtitle) {
+      rows.push([
+        { text: section.subtitle, colSpan: 3, style: 'tableSubHeader', alignment: 'center' },
+        {}, {}
+      ]);
+    }
+
+    // Sütun başlıkları
+    rows.push(section.headers.map(header => ({
+      text: header,
+      style: 'columnHeader'
+    })));
+
+    // Veri satırları
+    let currentGroup = '';
+    section.data
+      .filter(item => item.groupAuto?.startsWith(section.sectionCode) || item.group?.startsWith(section.sectionCode))
+      .forEach(item => {
+        const group = item.groupAuto || item.group;
+        if (group !== currentGroup) {
+          currentGroup = group;
+          const label = section.labelCallback(group);
+          rows.push([
+            { text: label, style: 'groupHeader' },
+            { text: section.textField(item) },
+            { text: item[section.scoreField]?.toString() || '0', alignment: 'center' }
+          ]);
+        } else {
+          rows.push([
+            { text: '', style: 'groupHeader' },
+            { text: section.textField(item) },
+            { text: item[section.scoreField]?.toString() || '0', alignment: 'center' }
+          ]);
+        }
+      });
+
+    // Toplam satırı
+    rows.push([
+      { text: 'TOPLAM', colSpan: 2, style: 'totalRow', alignment: 'right' },
+      {},
+      { text: calculateSectionTotal(section.data, section.sectionCode).toString(), style: 'totalRow', alignment: 'center' }
+    ]);
+
+    return rows;
+  };
+
   const downloadPDF = () => {
-    const doc = new jsPDF();
-    doc.setFont('helvetica');
-    const element = document.querySelector('.table-container');
-    const originalStyles = {
-      height: element.style.height,
-      overflow: element.style.overflow
-    };
-    element.style.height = `${element.scrollHeight}px`;
-    element.style.overflow = 'visible';
-    doc.html(element, {
-      callback: function(doc) {
-        element.style.height = originalStyles.height;
-        element.style.overflow = originalStyles.overflow;
-        doc.save('basvuru-content.pdf');
+    const userInfo = data.userInfo ?
+      `${capitalizeName(data.userInfo.name)} ${capitalizeName(data.userInfo.surname)}` :
+      'Veri Bulunamadı';
+
+    const docDefinition = {
+      pageSize: 'A4',
+      pageMargins: [30, 30, 30, 50],
+      footer: function(currentPage, pageCount) {
+        return {
+          text: `Sayfa ${currentPage} / ${pageCount}`,
+          alignment: 'center',
+          margin: [0, 20],
+          fontSize: 9,
+          color: '#666'
+        };
       },
-      x: 0,
-      y: 10,
-      html2canvas: {
-        scale: 0.174,
-        width: element.scrollWidth,
-        height: element.scrollHeight
+      compress: true,
+      info: {
+        title: 'Başvuru Formu',
+        author: 'KOÜ APSIS',
+        subject: 'Akademik Başvuru Formu'
+      },
+      content: [
+        {
+          text: 'GENEL PUANLAMA BİLGİLERİ',
+          style: 'header',
+          alignment: 'center',
+          margin: [0, 0, 0, 10]
+        },
+        {
+          table: {
+            widths: ['*'],
+            body: [
+              [{ text: `İsim: ${userInfo}`, style: 'userInfo' }],
+              [{ text: `Tarih: ${new Date().toLocaleDateString('tr-TR')}`, style: 'userInfo' }],
+              [{ text: `Kurum: Kocaeli Üniversitesi`, style: 'userInfo' }],
+              [{ text: `Pozisyon: ${localStorage.getItem('selectedOption')}`, style: 'userInfo' }]
+            ]
+          },
+          margin: [0, 0, 0, 20]
+        },
+        ...sections.map(section => ({
+          table: {
+            widths: ['30%', '50%', '20%'],
+            body: convertSectionToTableData(section),
+            headerRows: 3,
+            dontBreakRows: true,
+            keepWithHeaderRows: 1
+          },
+          layout: {
+            hLineWidth: function() { return 0.5; },
+            vLineWidth: function() { return 0.5; },
+            hLineColor: function() { return '#aaa'; },
+            vLineColor: function() { return '#aaa'; },
+            paddingLeft: function() { return 4; },
+            paddingRight: function() { return 4; },
+            paddingTop: function() { return 3; },
+            paddingBottom: function() { return 3; },
+            fillColor: function(rowIndex, node) {
+              return (rowIndex === 0) ? '#f0f0f0' :
+                     (rowIndex === 1 && node.table.headerRows > 1) ? '#f7f7f7' : null;
+            }
+          },
+          margin: [0, 0, 0, 20]
+        }))
+      ],
+      styles: {
+        header: {
+          fontSize: 12,
+          bold: true
+        },
+        userInfo: {
+          fontSize: 9,
+          margin: [0, 4]
+        },
+        tableHeader: {
+          fontSize: 10,
+          bold: true,
+          fillColor: '#f0f0f0',
+          margin: [0, 4]
+        },
+        tableSubHeader: {
+          fontSize: 9,
+          italics: true,
+          fillColor: '#f7f7f7',
+          margin: [0, 2]
+        },
+        columnHeader: {
+          fontSize: 8,
+          bold: true,
+          fillColor: '#f5f5f5',
+          margin: [0, 2]
+        },
+        groupHeader: {
+          fontSize: 8,
+          bold: true
+        },
+        totalRow: {
+          fontSize: 9,
+          bold: true,
+          fillColor: '#f0f0f0'
+        }
+      },
+      defaultStyle: {
+        fontSize: 8,
+        lineHeight: 1.2
+      },
+      pageOrientation: 'portrait',
+      pageBreakBefore: function(currentNode) {
+        return currentNode.style && currentNode.style.indexOf('header') !== -1 && currentNode.pageNumbers.length > 1;
       }
-    });
+    };
+
+    pdfMake.createPdf(docDefinition).download('basvuru-content.pdf');
   };
 
   useEffect(() => {
@@ -106,8 +253,8 @@ function Finish() {
       groupProperty: 'groupAuto',
       labelCallback: group => `${group}) ${groupALabels[parseInt(group.slice(1)) - 1]}`,
       textField: (item) => {
-        if (!item.title) return '-';
-        return `${item.authors || ''}, ${item.title}, ${item.journalName || ''}, ${item.volume || ''}, ${item.pages || ''}, ${item.year || ''}`;
+        if (!item.title) return 'Veri girilmemiş';
+        return `${item.authors || 'Yazar girilmemiş'}, ${item.title}, ${item.journalName || 'Dergi adı girilmemiş'}, ${item.volume || 'Cilt no girilmemiş'}, ${item.pages || 'Sayfa no girilmemiş'}, ${item.year || 'Yıl girilmemiş'}`;
       },
       scoreField: 'scoreAuto',
       sectionCode: 'A'
@@ -122,8 +269,8 @@ function Finish() {
       groupProperty: 'groupAuto',
       labelCallback: group => `${group}) ${groupBLabels[parseInt(group.slice(1)) - 1]}`,
       textField: (item) => {
-        if (!item.title) return '-';
-        return `${item.authors || ''}, ${item.title}, ${item.conferenceName || ''}, ${item.location || ''}, ${item.pages || ''}, ${item.date || ''}`;
+        if (!item.title) return 'Veri girilmemiş';
+        return `${item.authors || 'Yazar girilmemiş'}, ${item.title}, ${item.conferenceName || 'Konferans adı girilmemiş'}, ${item.location || 'Konum girilmemiş'}, ${item.pages || 'Sayfa no girilmemiş'}, ${item.date || 'Tarih girilmemiş'}`;
       },
       scoreField: 'scoreAuto',
       sectionCode: 'B'
@@ -138,8 +285,8 @@ function Finish() {
       groupProperty: 'groupAuto',
       labelCallback: group => `${group}) ${groupCLabels[parseInt(group.slice(1)) - 1]}`,
       textField: (item) => {
-        if (!item.title) return '-';
-        return `${item.authors || ''}, ${item.title}, ${item.publisher || ''}, ${item.edition || ''} ${item.location || ''}, ${item.year || ''}`;
+        if (!item.title) return 'Veri girilmemiş';
+        return `${item.authors || 'Yazar girilmemiş'}, ${item.title}, ${item.publisher || 'Yayınevi girilmemiş'}, ${item.edition || 'Baskı girilmemiş'} ${item.location || 'Konum girilmemiş'}, ${item.year || 'Yıl girilmemiş'}`;
       },
       scoreField: 'scoreAuto',
       sectionCode: 'C'
@@ -154,8 +301,8 @@ function Finish() {
       groupProperty: 'groupAuto',
       labelCallback: group => `${group}) ${groupDLabels[parseInt(group.slice(1)) - 1]}`,
       textField: (item) => {
-        if (!item.title) return '-';
-        return `${item.citedWork || ''}, ${item.citationCount || ''}`;
+        if (!item.title) return 'Veri girilmemiş';
+        return `${item.citedWork || 'Atıf yapılan çalışma girilmemiş'}, Atıf sayısı: ${item.citationCount || '0'}`;
       },
       scoreField: 'scoreAuto',
       sectionCode: 'D'
@@ -170,8 +317,8 @@ function Finish() {
       groupProperty: 'group',
       labelCallback: group => `${group}) ${groupELabels[parseInt(group.slice(1)) - 1]}`,
       textField: (item) => {
-        if (!item.course_name) return '-';
-        return `${item.course_name}, ${item.program || ''}, ${item.semester || ''}, ${item.year || ''}`;
+        if (!item.course_name) return 'Veri girilmemiş';
+        return `${item.course_name}, ${item.program || 'Program girilmemiş'}, ${item.semester || 'Dönem girilmemiş'}, ${item.year || 'Yıl girilmemiş'}`;
       },
       scoreField: 'score',
       sectionCode: 'E'
@@ -186,8 +333,8 @@ function Finish() {
       groupProperty: 'groupAuto',
       labelCallback: group => `${group}) ${groupFLabels[parseInt(group.slice(1)) - 1]}`,
       textField: (item) => {
-        if (!item.title) return '-';
-        return `${item.studentName || ''}, ${item.title}, ${item.institute || ''}, ${item.year || ''}`;
+        if (!item.title) return 'Veri girilmemiş';
+        return `${item.studentName || 'Öğrenci adı girilmemiş'}, ${item.title}, ${item.institute || 'Enstitü girilmemiş'}, ${item.year || 'Yıl girilmemiş'}`;
       },
       scoreField: 'scoreAuto',
       sectionCode: 'F'
@@ -202,8 +349,8 @@ function Finish() {
       groupProperty: 'group',
       labelCallback: group => `${group}) ${groupGLabels[parseInt(group.slice(1)) - 1]}`,
       textField: (item) => {
-        if (!item.patentName) return '-';
-        return `${item.patentName}, ${item.year || ''}`;
+        if (!item.patentName) return 'Veri girilmemiş';
+        return `${item.patentName}, ${item.year || 'Yıl girilmemiş'}`;
       },
       scoreField: 'score',
       sectionCode: 'G'

@@ -9,14 +9,11 @@
 
 .table-container {
     max-height: 550px;
-    /* Taşma noktasında kaydırmayı tetiklemek için */
     overflow-y: auto;
     scrollbar-width: none;
-    /* Y ekseninde kaydırma */
     overflow-x: hidden;
-    /* X eksenindeki kaydırmayı engellemek için */
     border: 1px solid #d0d0d0;
-    /* Görselleştirme için çerçeve */
+    font-family: 'DejaVu Sans', Arial, sans-serif;
 }
 
 .finish-table {
