@@ -5,6 +5,7 @@ import { FaSync, FaCheckSquare, FaRegSquare } from 'react-icons/fa';
 import All_Url from '../../../url';
 import RightBar from '../../rightbar/RightBar';
 import NotFound from '../../errorstacks/NotFound';
+import { refreshTheToken } from '../../../authMiddleware';
 
 function YonetilenTezler() {
     const [searchQuery, setSearchQuery] = useState('');
@@ -35,6 +36,7 @@ function YonetilenTezler() {
 
 
     const fetchData = async () => {
+        await refreshTheToken();
         setLoading(true);
         try {
             const response = await axios.post(
