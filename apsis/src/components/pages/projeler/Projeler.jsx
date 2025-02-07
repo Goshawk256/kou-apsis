@@ -5,6 +5,7 @@ import axios from 'axios';
 import RightBar from '../../rightbar/RightBar';
 import All_Url from '../../../url';
 import NotFound from '../../errorstacks/NotFound';
+import { refreshTheToken } from '../../../authMiddleware';
 
 function Projeler() {
     const [searchQuery, setSearchQuery] = useState('');
@@ -33,6 +34,7 @@ function Projeler() {
     };
 
     useEffect(() => {
+        refreshTheToken();
         const fetchProjects = async () => {
             setLoading(true);
             const username = localStorage.getItem('username');
@@ -49,6 +51,7 @@ function Projeler() {
                 );
                 setTableData(response.data.data || []);
                 setFilteredData(response.data.data || []);
+
             } catch (error) {
                 console.error('Projeler alınırken bir hata oluştu:', error);
             }

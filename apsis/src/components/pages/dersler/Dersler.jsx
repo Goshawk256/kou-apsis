@@ -4,6 +4,7 @@ import { FaSync, FaCheck, FaInfo, FaCheckSquare, FaRegSquare } from 'react-icons
 import axios from 'axios';
 import RightBar from '../../rightbar/RightBar';
 import NotFound from '../../errorstacks/NotFound';
+import { refreshTheToken } from '../../../authMiddleware';
 
 import All_Url from '../../../url';
 
@@ -58,6 +59,7 @@ function Dersler() {
     };
 
     useEffect(() => {
+        refreshTheToken();
         const fetchData = async () => {
             setLoading(true);
             const username = localStorage.getItem('username');
@@ -72,7 +74,7 @@ function Dersler() {
                         }
                     }
                 );
-                console.log(response.data.data)
+
                 // Gelen verinin doğru olup olmadığını kontrol et
                 if (response.data && response.data.success && Array.isArray(response.data.data)) {
                     const courses = response.data.data.map(item => ({

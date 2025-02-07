@@ -5,6 +5,7 @@ import axios from 'axios';
 import All_Url from '../../../url';
 import RightBar from '../../rightbar/RightBar';
 import NotFound from '../../errorstacks/NotFound';
+import { refreshTheToken } from '../../../authMiddleware';
 
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -37,6 +38,7 @@ function Yayinlar() {
     const username = localStorage.getItem('username');
 
     useEffect(() => {
+        refreshTheToken();
         if (username) {
             if (publicationTypeId === 2) {
                 fetchCitations();
@@ -77,6 +79,7 @@ function Yayinlar() {
 
             if (response.data.success) {
                 setTableData(response.data.data);
+
             } else {
                 showPopup(response.data.message || 'Veri çekme başarısız.', 'error');
             }

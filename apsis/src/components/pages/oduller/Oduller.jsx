@@ -5,6 +5,7 @@ import { FaSync, FaPencilAlt, FaCheckSquare, FaRegSquare } from 'react-icons/fa'
 import All_Url from '../../../url';
 import RightBar from '../../rightbar/RightBar';
 import NotFound from '../../errorstacks/NotFound';
+import { refreshTheToken } from '../../../authMiddleware';
 
 function Oduller() {
     const [searchQuery, setSearchQuery] = useState('');
@@ -34,6 +35,7 @@ function Oduller() {
     const username = localStorage.getItem('username')
 
     const fetchData = async () => {
+        await refreshTheToken();
         setLoading(true);
         try {
             const response = await axios.post(
@@ -197,11 +199,11 @@ function Oduller() {
                                                     <div className='group-show'>
                                                         {tempGroups[index] ? (
                                                             <div className='preffered-group'>
-                                                                <s>{item.group}</s>/{tempGroups[index]}
+                                                                <s>{item.groupAuto}</s>/{tempGroups[index]}
                                                             </div>
                                                         ) : (
                                                             <div className='preffered-group'>
-                                                                {item.group}
+                                                                {item.groupAuto}
                                                             </div>
                                                         )
                                                         }

@@ -5,6 +5,7 @@ import { FaSync, FaPencilAlt, FaCheckSquare, FaRegSquare } from 'react-icons/fa'
 import All_Url from '../../../url';
 import RightBar from '../../rightbar/RightBar';
 import NotFound from '../../errorstacks/NotFound';
+import { refreshTheToken } from '../../../authMiddleware';
 
 
 function SanatsalFaaliyetler() {
@@ -19,6 +20,7 @@ function SanatsalFaaliyetler() {
     const username = localStorage.getItem('username');
 
     const fetchData = async () => {
+        await refreshTheToken();
         setLoading(true);
         try {
             const response = await axios.post(
@@ -35,6 +37,7 @@ function SanatsalFaaliyetler() {
             );
             setTableData(response.data.data); // API'den gelen veriyi alıyoruz
             setFilteredData(response.data.data); // Aynı veriyi filtrelenebilir şekilde saklıyoruz
+
         } catch (error) {
             console.error('Veri çekme hatası:', error);
         } finally {
