@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './YonetilenTezler.css';
-import { FaSync, FaCheckSquare, FaRegSquare } from 'react-icons/fa';
+import { FaSync, FaCheckSquare, FaRegSquare, FaPencilAlt } from 'react-icons/fa';
 import All_Url from '../../../url';
 import RightBar from '../../rightbar/RightBar';
 import NotFound from '../../errorstacks/NotFound';
+import { refreshTheToken } from '../../../middlewares/authMiddleware';
 
 function YonetilenTezler() {
     const [searchQuery, setSearchQuery] = useState('');
@@ -15,8 +16,27 @@ function YonetilenTezler() {
     const [rightBarOpen, setRightBarOpen] = useState(false);
     const [popupMessage, setPopupMessage] = useState(null); // Pop-up mesajı
     const username = localStorage.getItem('username');
+    const [editingIndex, setEditingIndex] = useState(null);
+    const [tempGroups, setTempGroups] = useState({}); // Yalnızca eklenen kısmı saklayan nesne
+
+    const handleEditClick = (index) => {
+        setEditingIndex(index);
+        setTempGroups(prev => ({ ...prev, [index]: tempGroups[index] || "" })); // Önceden bir değer varsa onu kullan
+    };
+
+    const handleInputChange = (e, index) => {
+        setTempGroups(prev => ({ ...prev, [index]: e.target.value })); // Sadece ilgili satırın groupEdited kısmını güncelle
+    };
+
+    const handleKeyPress = (e) => {
+        if (e.key === "Enter") {
+            setEditingIndex(null); // Düzenleme modunu kapat
+        }
+    };
+
 
     const fetchData = async () => {
+        await refreshTheToken();
         setLoading(true);
         try {
             const response = await axios.post(
@@ -33,6 +53,7 @@ function YonetilenTezler() {
             );
             setTableData(response.data.data);
             setFilteredData(response.data.data);
+
         } catch (error) {
             console.error('Veri çekme hatası:', error);
         } finally {
@@ -81,7 +102,7 @@ function YonetilenTezler() {
         setTimeout(() => setPopupMessage(null), 1500);
     };
 
-    const itemsPerPage = 6;
+    const itemsPerPage = 4;
     const paginatedData = filteredData.slice((page - 1) * itemsPerPage, page * itemsPerPage);
     const totalPages = Math.ceil(filteredData.length / itemsPerPage);
     const openRightBar = () => setRightBarOpen(true);
@@ -121,7 +142,17 @@ function YonetilenTezler() {
             {/* Row 3 - Tablo */}
             <div className="yayinlar-main-row-3">
                 {loading ? (
-                    <p>Yükleniyor...</p>
+                    <div className="hourglassBackground">
+                        <div className="hourglassContainer">
+                            <div className="hourglassCurves"></div>
+                            <div className="hourglassCapTop"></div>
+                            <div className="hourglassGlassTop"></div>
+                            <div className="hourglassSand"></div>
+                            <div className="hourglassSandStream"></div>
+                            <div className="hourglassCapBottom"></div>
+                            <div className="hourglassGlass"></div>
+                        </div>
+                    </div>
                 ) : (
                     totalPages <= 0 ? (
                         <NotFound />
@@ -145,9 +176,38 @@ function YonetilenTezler() {
                                         <tr key={item.id}>
                                             <td>{item.title}</td>
                                             <td>{item.corporateName}</td>
-                                            <td>{item.groupAuto}</td>
+                                            <td
+                                                className="item-group"
+
+                                            >
+                                                {editingIndex === item.id ? (
+                                                    <input
+                                                        type="text"
+                                                        value={tempGroups[item.id] || ""}
+                                                        onChange={(e) => handleInputChange(e, item.id)}
+                                                        onKeyDown={handleKeyPress}
+                                                        autoFocus
+                                                        onBlur={() => setEditingIndex(null)}
+                                                    />
+                                                ) : (
+                                                    <div className='group-show'>
+                                                        {tempGroups[item.id] ? (
+                                                            <div className='preffered-group'>
+                                                                <s>{item.groupAuto}</s>/{tempGroups[item.id]}
+                                                            </div>
+                                                        ) : (
+                                                            <div className='preffered-group'>
+                                                                {item.groupAuto}
+                                                            </div>
+                                                        )
+                                                        }
+                                                    </div>
+                                                )}
+                                            </td>
+
                                             <td>{item.scoreAuto}</td>
                                             <td>
+                                                <button className="yayinlar-btn" onClick={() => handleEditClick(item.id)} ><FaPencilAlt /></button>
 
                                                 <button
                                                     className="yayinlar-btn"

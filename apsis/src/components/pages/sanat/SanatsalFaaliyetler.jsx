@@ -5,6 +5,8 @@ import { FaSync, FaPencilAlt, FaCheckSquare, FaRegSquare } from 'react-icons/fa'
 import All_Url from '../../../url';
 import RightBar from '../../rightbar/RightBar';
 import NotFound from '../../errorstacks/NotFound';
+import { refreshTheToken } from '../../../middlewares/authMiddleware';
+
 
 function SanatsalFaaliyetler() {
     const [searchQuery, setSearchQuery] = useState('');
@@ -18,6 +20,7 @@ function SanatsalFaaliyetler() {
     const username = localStorage.getItem('username');
 
     const fetchData = async () => {
+        await refreshTheToken();
         setLoading(true);
         try {
             const response = await axios.post(
@@ -34,6 +37,7 @@ function SanatsalFaaliyetler() {
             );
             setTableData(response.data.data); // API'den gelen veriyi alıyoruz
             setFilteredData(response.data.data); // Aynı veriyi filtrelenebilir şekilde saklıyoruz
+
         } catch (error) {
             console.error('Veri çekme hatası:', error);
         } finally {
@@ -121,7 +125,17 @@ function SanatsalFaaliyetler() {
             {/* Row 3 - Tablo */}
             <div className="yayinlar-main-row-3">
                 {loading ? (
-                    <p>Yükleniyor...</p>
+                    <div className="hourglassBackground">
+                        <div className="hourglassContainer">
+                            <div className="hourglassCurves"></div>
+                            <div className="hourglassCapTop"></div>
+                            <div className="hourglassGlassTop"></div>
+                            <div className="hourglassSand"></div>
+                            <div className="hourglassSandStream"></div>
+                            <div className="hourglassCapBottom"></div>
+                            <div className="hourglassGlass"></div>
+                        </div>
+                    </div>
                 ) : (
                     totalPages <= 0 ? (
                         <NotFound />
@@ -143,10 +157,10 @@ function SanatsalFaaliyetler() {
                                     return (
                                         <tr key={item.id}>
                                             <td>{item.title.length > 50 ? `${item.title.slice(0, 60)}...` : item.title}</td>
-                                            <td>{item.group}</td>
+                                            <td className='item-group'>{item.group}</td>
                                             <td>{item.score}</td>
                                             <td>
-
+                                                <button className="yayinlar-btn"  ><FaPencilAlt /></button>
                                                 <button
                                                     className="yayinlar-btn"
                                                     onClick={() => saveToLocalStorage(item)}

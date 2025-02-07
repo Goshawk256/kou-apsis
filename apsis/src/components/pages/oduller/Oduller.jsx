@@ -5,6 +5,7 @@ import { FaSync, FaPencilAlt, FaCheckSquare, FaRegSquare } from 'react-icons/fa'
 import All_Url from '../../../url';
 import RightBar from '../../rightbar/RightBar';
 import NotFound from '../../errorstacks/NotFound';
+import { refreshTheToken } from '../../../middlewares/authMiddleware';
 
 function Oduller() {
     const [searchQuery, setSearchQuery] = useState('');
@@ -14,10 +15,27 @@ function Oduller() {
     const [loading, setLoading] = useState(false);
     const [rightBarOpen, setRightBarOpen] = useState(false); // Sağ panelin açık/kapalı durumu
     const [popupMessage, setPopupMessage] = useState(null); // Pop-up mesajı
+    const [editingIndex, setEditingIndex] = useState(null);
+    const [tempGroups, setTempGroups] = useState({}); // Yalnızca eklenen kısmı saklayan nesne
 
+    const handleEditClick = (index) => {
+        setEditingIndex(index);
+        setTempGroups(prev => ({ ...prev, [index]: tempGroups[index] || "" })); // Önceden bir değer varsa onu kullan
+    };
+
+    const handleInputChange = (e, index) => {
+        setTempGroups(prev => ({ ...prev, [index]: e.target.value })); // Sadece ilgili satırın groupEdited kısmını güncelle
+    };
+
+    const handleKeyPress = (e) => {
+        if (e.key === "Enter") {
+            setEditingIndex(null); // Düzenleme modunu kapat
+        }
+    };
     const username = localStorage.getItem('username')
 
     const fetchData = async () => {
+        await refreshTheToken();
         setLoading(true);
         try {
             const response = await axios.post(
@@ -127,7 +145,20 @@ function Oduller() {
             {/* Row 3 - Tablo */}
             <div className="yayinlar-main-row-3">
                 {loading ? (
-                    <p>Yükleniyor...</p>
+
+
+                    <div className="hourglassBackground">
+                        <div className="hourglassContainer">
+                            <div className="hourglassCurves"></div>
+                            <div className="hourglassCapTop"></div>
+                            <div className="hourglassGlassTop"></div>
+                            <div className="hourglassSand"></div>
+                            <div className="hourglassSandStream"></div>
+                            <div className="hourglassCapBottom"></div>
+                            <div className="hourglassGlass"></div>
+                        </div>
+                    </div>
+
                 ) : (
                     totalPages <= 0 ? (
                         <NotFound />
@@ -143,18 +174,45 @@ function Oduller() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {paginatedData.map((item) => {
+                                {paginatedData.map((item, index) => {
                                     const savedAwards = JSON.parse(localStorage.getItem('savedAwards')) || [];
                                     const isSaved = savedAwards.some((award) => award.id === item.id); // Kaydedildi mi kontrolü
 
                                     return (
-                                        <tr key={item.id}>
+                                        <tr key={index}>
                                             <td>{item.title}</td>
                                             <td>{item.corporateName}</td>
-                                            <td>{item.group}</td>
+                                            <td
+                                                className="item-group"
+
+                                            >
+                                                {editingIndex === index ? (
+                                                    <input
+                                                        type="text"
+                                                        value={tempGroups[index] || ""}
+                                                        onChange={(e) => handleInputChange(e, index)}
+                                                        onKeyDown={handleKeyPress}
+                                                        autoFocus
+                                                        onBlur={() => setEditingIndex(null)}
+                                                    />
+                                                ) : (
+                                                    <div className='group-show'>
+                                                        {tempGroups[index] ? (
+                                                            <div className='preffered-group'>
+                                                                <s>{item.group}</s>/{tempGroups[index]}
+                                                            </div>
+                                                        ) : (
+                                                            <div className='preffered-group'>
+                                                                {item.group}
+                                                            </div>
+                                                        )
+                                                        }
+                                                    </div>
+                                                )}
+                                            </td>
                                             <td>{item.score}</td>
                                             <td>
-
+                                                <button className="yayinlar-btn" onClick={() => handleEditClick(index, item.group)} ><FaPencilAlt /></button>
                                                 <button
                                                     className="yayinlar-btn"
                                                     onClick={() => saveToLocalStorage(item)}

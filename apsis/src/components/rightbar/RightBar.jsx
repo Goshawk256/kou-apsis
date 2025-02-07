@@ -89,6 +89,8 @@ function RightBar({ isOpen, onClose, id }) {
                         {uploadedFile && <p>Yüklenen Dosya: {uploadedFile.name}</p>}
                     </div>
 
+
+
                     <div className="submit-section">
                         <button onClick={() => console.log({ selectedConditions, uploadedFile })}>Kaydet</button>
                     </div>

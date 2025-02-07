@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { AxiosError } from 'axios';
 import axios from 'axios';
 import './Login.css';
 import Logo from '../../assets/unnamed.png';
@@ -10,6 +11,7 @@ function Login() {
     const [password, setPassword] = useState('');
     const [roles, setRoles] = useState([]);
     const [selectedRole, setSelectedRole] = useState('');
+    const [error, setError] = useState(null);
     const navigate = useNavigate();
 
     const fetchRoles = async (username) => {
@@ -20,7 +22,8 @@ function Login() {
                 setSelectedRole(response.data.data[0] || '');
             }
         } catch (error) {
-            console.error('Error fetching roles:', error);
+            setError(error);
+            throw new AxiosError('Hata', error);
         }
     };
 
@@ -35,55 +38,73 @@ function Login() {
             if (response.data.success) {
                 localStorage.setItem('accessToken', response.data.data.accessToken);
                 localStorage.setItem('refreshToken', response.data.data.refreshToken);
+                localStorage.setItem('role', selectedRole);
                 localStorage.setItem('username', username);
                 navigate('/home');
             }
         } catch (error) {
-            console.error('Login error:', error);
+            setError(error);
+            throw new AxiosError('Hata', error);
         }
     };
 
     return (
         <div className='main-login'>
+
             <div className='login-form'>
-                <form onSubmit={handleLogin}>
-                    <img style={{ width: "30%" }} src={Logo} alt="" />
-                    <h2 style={{ color: 'grey' }}>Kou Apsıs</h2>
-                    <div className='form-group'>
-                        <label htmlFor='username'>Kullanıcı Adı</label>
-                        <input
-                            type='text'
-                            id='username'
-                            value={username}
-                            onChange={(e) => {
-                                setUsername(e.target.value);
-                                fetchRoles(e.target.value);
-                            }}
-                            required
-                        />
+                {error ? (
+                    <div>
+
                     </div>
-                    {roles.length > 0 && (
+                ) : (
+                    <form onSubmit={handleLogin}>
+                        <img style={{ width: "30%" }} src={Logo} alt="" />
+                        <h2 style={{ color: 'grey' }}>Kou Apsıs</h2>
                         <div className='form-group'>
-                            <label htmlFor='role'>Rol Seçin</label>
-                            <select className='' id='role' value={selectedRole} onChange={(e) => setSelectedRole(e.target.value)}>
-                                {roles.map((role, index) => (
-                                    <option key={index} value={role}>{role}</option>
-                                ))}
-                            </select>
+                            <label htmlFor='username'>Kullanıcı Adı</label>
+                            <input
+                                type='text'
+                                id='username'
+                                value={username}
+                                onChange={(e) => {
+                                    setUsername(e.target.value);
+                                    fetchRoles(e.target.value);
+                                }}
+                                required
+                            />
                         </div>
-                    )}
-                    <div className='form-group'>
-                        <label htmlFor='password'>Şifre</label>
-                        <input
-                            type='password'
-                            id='password'
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            required
-                        />
-                    </div>
-                    <button className='submit-button-login' type='submit'>Giriş</button>
-                </form>
+                        {roles.length > 0 && (
+                            <div className='form-group'>
+                                <label htmlFor='role'>Rol Seçin</label>
+                                <select className='' id='role' value={selectedRole} onChange={(e) => setSelectedRole(e.target.value)}>
+                                    {roles.map((role, index) => (
+                                        <option key={index} value={role}>
+                                            {role == 'Academic' ?
+                                                (
+                                                    'Akademik Giriş'
+                                                ) :
+                                                (
+                                                    'Akademik Jüri'
+                                                )
+                                            }
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                        )}
+                        <div className='form-group'>
+                            <label htmlFor='password'>Şifre</label>
+                            <input
+                                type='password'
+                                id='password'
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                required
+                            />
+                        </div>
+                        <button className='submit-button-login' type='submit'>Giriş</button>
+                    </form>
+                )}
             </div>
         </div>
     );

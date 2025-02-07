@@ -17,31 +17,7 @@ import {
 import TableSection from './TableSection';
 
 function Finish() {
-  const [data, setData] = useState({
-    projects: [],
-    thesis: [],
-    publications: [],
-    courses: [],
-    artworks: [],
-    awards: [],
-    patents: [],
-    userInfo: null
-  });
 
-  const convertSectionToTableData = (section) => {
-    const rows = [];
-    
-    // Başlık satırı
-    rows.push([
-      { text: section.title, colSpan: 3, style: 'tableHeader', alignment: 'center' },
-      {}, {}
-    ]);
-
-    if (section.subtitle) {
-      rows.push([
-        { text: section.subtitle, colSpan: 3, style: 'tableSubHeader', alignment: 'center' },
-        {}, {}
-      ]);
     }
 
     // Sütun başlıkları
