@@ -139,7 +139,7 @@ function Dersler() {
         setTimeout(() => setPopupMessage(null), 1500); // Pop-up mesajını birkaç saniye sonra kapatıyoruz
     };
 
-    const itemsPerPage = 6; // Sayfa başına gösterilecek öğe sayısı
+    const itemsPerPage = 4; // Sayfa başına gösterilecek öğe sayısı
     const paginatedData = filteredData.slice((page - 1) * itemsPerPage, page * itemsPerPage);
     const totalPages = Math.ceil(filteredData.length / itemsPerPage);
     const openRightBar = () => setRightBarOpen(true);
