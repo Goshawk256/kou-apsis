@@ -98,7 +98,7 @@ function Projeler() {
         setTimeout(() => setPopupMessage(null), 1500);
     };
 
-    const itemsPerPage = 6; // Sayfa başına gösterilecek proje sayısı
+    const itemsPerPage = 4; // Sayfa başına gösterilecek proje sayısı
     const paginatedData = filteredData.slice((page - 1) * itemsPerPage, page * itemsPerPage);
     const totalPages = Math.ceil(filteredData.length / itemsPerPage);
     const openRightBar = () => setRightBarOpen(true);
@@ -182,7 +182,7 @@ function Projeler() {
                                             <td>{item.projectTypeName}</td>
                                             <td
                                                 className="item-group"
-                                                onClick={() => handleEditClick(index, item.group)}
+
                                             >
                                                 {editingIndex === index ? (
                                                     <input
@@ -216,7 +216,7 @@ function Projeler() {
                                             )}
                                             <td>{item.status}</td>
                                             <td>
-
+                                                <button className="yayinlar-btn" onClick={() => handleEditClick(index, item.group)} ><FaPencilAlt /></button>
                                                 <button
                                                     className="yayinlar-btn"
                                                     onClick={() => saveToLocalStorage(item)}

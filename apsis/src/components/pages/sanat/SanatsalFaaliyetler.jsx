@@ -160,7 +160,7 @@ function SanatsalFaaliyetler() {
                                             <td className='item-group'>{item.group}</td>
                                             <td>{item.score}</td>
                                             <td>
-
+                                                <button className="yayinlar-btn"  ><FaPencilAlt /></button>
                                                 <button
                                                     className="yayinlar-btn"
                                                     onClick={() => saveToLocalStorage(item)}

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './YonetilenTezler.css';
-import { FaSync, FaCheckSquare, FaRegSquare } from 'react-icons/fa';
+import { FaSync, FaCheckSquare, FaRegSquare, FaPencilAlt } from 'react-icons/fa';
 import All_Url from '../../../url';
 import RightBar from '../../rightbar/RightBar';
 import NotFound from '../../errorstacks/NotFound';
@@ -102,7 +102,7 @@ function YonetilenTezler() {
         setTimeout(() => setPopupMessage(null), 1500);
     };
 
-    const itemsPerPage = 6;
+    const itemsPerPage = 4;
     const paginatedData = filteredData.slice((page - 1) * itemsPerPage, page * itemsPerPage);
     const totalPages = Math.ceil(filteredData.length / itemsPerPage);
     const openRightBar = () => setRightBarOpen(true);
@@ -178,7 +178,7 @@ function YonetilenTezler() {
                                             <td>{item.corporateName}</td>
                                             <td
                                                 className="item-group"
-                                                onClick={() => handleEditClick(item.id)}
+
                                             >
                                                 {editingIndex === item.id ? (
                                                     <input
@@ -207,6 +207,7 @@ function YonetilenTezler() {
 
                                             <td>{item.scoreAuto}</td>
                                             <td>
+                                                <button className="yayinlar-btn" onClick={() => handleEditClick(item.id)} ><FaPencilAlt /></button>
 
                                                 <button
                                                     className="yayinlar-btn"
