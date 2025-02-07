@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AxiosError } from 'axios';
 import axios from 'axios';
@@ -16,7 +16,7 @@ function Login() {
 
     const fetchRoles = async (username) => {
         try {
-            const response = await axios.post('https://apsis.kocaeli.edu.tr/api/auth/get-roles', { username });
+            const response = await axios.post('/api/auth/get-roles', { username });
             if (response.data.success) {
                 setRoles(response.data.data);
                 setSelectedRole(response.data.data[0] || '');
@@ -30,7 +30,7 @@ function Login() {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('https://apsis.kocaeli.edu.tr/api/auth/login', {
+            const response = await axios.post('/api/auth/login', {
                 username,
                 password,
                 role: selectedRole
