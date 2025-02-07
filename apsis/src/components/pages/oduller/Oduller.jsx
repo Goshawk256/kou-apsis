@@ -49,19 +49,7 @@ function Oduller() {
                 }
             );
             setTableData(response.data.data);
-            try {
-                const response = await axios.post(
-                    `${All_Url.api_base_url}/auth/refresh`,
-                    { username, role: localStorage.getItem('role'), refreshToken: localStorage.getItem('refreshToken') },
 
-                );
-                if (response.data.success) {
-                    localStorage.setItem('accessToken', response.data.data.accessToken);
-                    console.log('Token yenilendi:', response.data.data.accessToken);
-                }
-            } catch (error) {
-                console.error('Token yenileme hatası:', error);
-            }
             setFilteredData(response.data.data);
         } catch (error) {
             console.error('Veri çekme hatası:', error);
@@ -209,11 +197,11 @@ function Oduller() {
                                                     <div className='group-show'>
                                                         {tempGroups[index] ? (
                                                             <div className='preffered-group'>
-                                                                <s>{item.group}</s>/{tempGroups[index]}
+                                                                <s>{item.groupAuto}</s>/{tempGroups[index]}
                                                             </div>
                                                         ) : (
                                                             <div className='preffered-group'>
-                                                                {item.group}
+                                                                {item.groupAuto}
                                                             </div>
                                                         )
                                                         }

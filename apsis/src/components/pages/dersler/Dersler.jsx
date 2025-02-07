@@ -73,23 +73,8 @@ function Dersler() {
                     }
                 );
 
-
                 // Gelen verinin doğru olup olmadığını kontrol et
                 if (response.data && response.data.success && Array.isArray(response.data.data)) {
-                    try {
-                        const response = await axios.post(
-                            `${All_Url.api_base_url}/auth/refresh`,
-
-                            { username, role: localStorage.getItem('role'), refreshToken: localStorage.getItem('refreshToken') },
-
-                        );
-                        if (response.data.success) {
-                            localStorage.setItem('accessToken', response.data.data.accessToken);
-                            console.log('Token yenilendi:', response.data.data.accessToken);
-                        }
-                    } catch (error) {
-                        console.error('Token yenileme hatası:', error);
-                    }
                     const courses = response.data.data.map(item => ({
                         // Her bir öğe üzerinde işlem yap
                         ...item, // item'daki tüm alanları al
