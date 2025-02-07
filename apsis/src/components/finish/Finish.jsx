@@ -1,4 +1,3 @@
-import React from 'react';
 import { jsPDF } from 'jspdf';
 import './Finish.css';
 import { useState, useEffect } from 'react';
@@ -11,7 +10,7 @@ function Finish() {
     const [savedCourses, setSavedCourses] = useState([]);
     const [savedArtworks, setSavedArtworks] = useState([]);
     const [savedAwards, setSavedAwards] = useState([]);
-    const [error, setError] = useState(null);
+    const [, setError] = useState(null);
 
     const [userInfo, setUserInfo] = useState(null);
 
