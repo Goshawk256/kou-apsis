@@ -195,7 +195,7 @@ function YonetilenTezler() {
                                             <td>{item.title}<br />
                                                 <p >
 
-                                                    <span style={{ color: '#d86921' }}>Düzenlenmedi</span>
+                                                    <span style={{ color: '#eea95b' }}>Düzenlenmedi</span>
                                                 </p>
                                             </td>
 
