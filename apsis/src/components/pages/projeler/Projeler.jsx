@@ -17,7 +17,10 @@ function Projeler() {
     const [popupMessage, setPopupMessage] = useState(null); // Pop-up mesajı
     const [editingIndex, setEditingIndex] = useState(null);
     const [tempGroups, setTempGroups] = useState({}); // Sadece eklenen kısmı tutan nesne
-
+    const [isEditMode, setIsEditMode] = useState(false);
+    const handleTableClick = () => {
+        setIsEditMode(!isEditMode); // Düzenleme modunu aç/kapat
+    };
     const handleEditClick = (index, currentGroup) => {
         setEditingIndex(index);
         setTempGroups(prev => ({ ...prev, [index]: tempGroups[index] || "" })); // Önceden girilmiş değer varsa onu kullan
@@ -128,6 +131,12 @@ function Projeler() {
                 <button className="yayinlar-refresh-btn" onClick={() => window.location.reload()}>
                     <FaSync />
                 </button>
+                <button
+                    className="yayinlar-edit-btn"
+                    onClick={() => handleTableClick()}
+                >
+                    Proje Düzenle
+                </button>
                 <div className="yayinlar-pagination">
                     <button onClick={() => setPage(page - 1)} disabled={page <= 1}>
                         ‹
@@ -177,7 +186,14 @@ function Projeler() {
                                     const isSaved = savedProjects.some((proj) => proj.id === item.id); // Kaydedildi mi kontrolü
 
                                     return (
-                                        <tr key={index}>
+                                        <tr key={index}
+                                            className={isEditMode ? "edit-mode-row" : ""}
+                                            onClick={() => {
+                                                if (isEditMode) {
+                                                    openRightBar();
+                                                }
+                                            }}
+                                        >
                                             <td>{item.projectName.length > 50 ? `${item.projectName.slice(0, 60)}...` : item.projectName}</td>
                                             <td>{item.projectTypeName}</td>
                                             <td
@@ -216,13 +232,22 @@ function Projeler() {
                                             )}
                                             <td>{item.status}</td>
                                             <td>
-                                                <button className="yayinlar-btn" onClick={() => handleEditClick(index, item.group)} ><FaPencilAlt /></button>
-                                                <button
-                                                    className="yayinlar-btn"
-                                                    onClick={() => saveToLocalStorage(item)}
-                                                >
-                                                    {isSaved ? <FaCheckSquare /> : <FaRegSquare />}
-                                                </button>
+                                                {isEditMode ? (
+                                                    <div>Seç</div>
+                                                ) : (
+                                                    <div>
+
+                                                        <button className="yayinlar-btn" onClick={() => handleEditClick(index, item.group)}><FaPencilAlt /></button>
+
+                                                        <button
+                                                            className="yayinlar-btn"
+                                                            onClick={() => saveToLocalStorage(item)}
+                                                        >
+                                                            {isSaved ? <FaCheckSquare /> : <FaRegSquare />}
+                                                        </button>
+                                                    </div>
+                                                )
+                                                }
                                             </td>
                                         </tr>
                                     );

@@ -18,7 +18,10 @@ function Dersler() {
     const [loading, setLoading] = useState(false);
     const [editingIndex, setEditingIndex] = useState(null);
     const [tempGroups, setTempGroups] = useState({}); // Sadece eklenen kısmı tutan nesne
-
+    const [isEditMode, setIsEditMode] = useState(false);
+    const handleTableClick = () => {
+        setIsEditMode(!isEditMode); // Düzenleme modunu aç/kapat
+    };
     const handleEditClick = (index, currentGroup) => {
         setEditingIndex(index);
         setTempGroups(prev => ({ ...prev, [index]: tempGroups[index] || "" })); // Önceden girilmiş değer varsa onu kullan
@@ -171,6 +174,12 @@ function Dersler() {
                 <button className="yayinlar-refresh-btn" onClick={() => window.location.reload()}>
                     <FaSync />
                 </button>
+                <button
+                    className="yayinlar-edit-btn"
+                    onClick={() => handleTableClick()}
+                >
+                    Ders Düzenle
+                </button>
                 <div className="yayinlar-pagination">
                     <button onClick={() => setPage(page - 1)} disabled={page <= 1}>
                         ‹
@@ -224,7 +233,14 @@ function Dersler() {
                                     const isSaved = savedCourses.some((savedCourse) => savedCourse.id === item.id);
 
                                     return (
-                                        <tr key={index}>
+                                        <tr key={index}
+                                            className={isEditMode ? "edit-mode-row" : ""}
+                                            onClick={() => {
+                                                if (isEditMode) {
+                                                    openRightBar();
+                                                }
+                                            }}
+                                        >
                                             <td>{formatSemester(item.semester)}</td>
                                             <td>{item.course_name}</td>
                                             <td>{item.course_count}</td>
@@ -260,14 +276,24 @@ function Dersler() {
                                             </td>
                                             <td>{item.scoreAuto}</td>
                                             <td>
-                                                <button className="yayinlar-btn" onClick={() => handleEditClick(index, item.groupAuto)} ><FaPencilAlt /></button>
-                                                <button
-                                                    className="yayinlar-btn"
-                                                    onClick={() => saveToLocalStorage(item)}
-                                                >
-                                                    {isSaved ? <FaCheckSquare /> : <FaRegSquare />}
-                                                </button>
+                                                {isEditMode ? (
+                                                    <div>Seç</div>
+                                                ) : (
+                                                    <div>
+
+                                                        <button className="yayinlar-btn" onClick={() => handleEditClick(index, item.groupAuto)}><FaPencilAlt /></button>
+
+                                                        <button
+                                                            className="yayinlar-btn"
+                                                            onClick={() => saveToLocalStorage(item)}
+                                                        >
+                                                            {isSaved ? <FaCheckSquare /> : <FaRegSquare />}
+                                                        </button>
+                                                    </div>
+                                                )
+                                                }
                                             </td>
+
                                         </tr>
                                     );
                                 })}

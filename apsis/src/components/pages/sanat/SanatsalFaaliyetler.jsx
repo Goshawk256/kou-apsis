@@ -16,7 +16,10 @@ function SanatsalFaaliyetler() {
     const [loading, setLoading] = useState(false);
     const [rightBarOpen, setRightBarOpen] = useState(false); // Sağ panelin açık/kapalı durumu
     const [popupMessage, setPopupMessage] = useState(null); // Pop-up mesajı
-
+    const [isEditMode, setIsEditMode] = useState(false);
+    const handleTableClick = () => {
+        setIsEditMode(!isEditMode); // Düzenleme modunu aç/kapat
+    };
     const username = localStorage.getItem('username');
 
     const fetchData = async () => {
@@ -112,6 +115,12 @@ function SanatsalFaaliyetler() {
                 <button className="yayinlar-refresh-btn" onClick={fetchData} disabled={loading}>
                     <FaSync />
                 </button>
+                <button
+                    className="yayinlar-edit-btn"
+                    onClick={() => handleTableClick()}
+                >
+                    Faaliyet Düzenle
+                </button>
                 <div className="yayinlar-pagination">
                     <button onClick={() => setPage(page - 1)} disabled={page <= 1}>
                         ‹
@@ -156,7 +165,14 @@ function SanatsalFaaliyetler() {
                                     const isSaved = savedArtworks.some((art) => art.id === item.id); // Kaydedildi mi kontrolü
 
                                     return (
-                                        <tr key={item.id}>
+                                        <tr key={item.id}
+                                            className={isEditMode ? "edit-mode-row" : ""}
+                                            onClick={() => {
+                                                if (isEditMode) {
+                                                    openRightBar();
+                                                }
+                                            }}
+                                        >
                                             <td>{item.title.length > 50 ? `${item.title.slice(0, 60)}...` : item.title}</td>
                                             <td className='item-group'>{item.group}</td>
                                             <td>{item.score}</td>

@@ -20,7 +20,9 @@ function Yayinlar() {
     const [editingIndex, setEditingIndex] = useState(null);
     const [tempGroups, setTempGroups] = useState({}); // Sadece eklenen kısmı tutan nesne
     const [isEditMode, setIsEditMode] = useState(false);
-
+    const handleTableClick = () => {
+        setIsEditMode(!isEditMode); // Düzenleme modunu aç/kapat
+    };
     const handleEditClick = (index, currentGroup) => {
         setEditingIndex(index);
         setTempGroups(prev => ({ ...prev, [index]: tempGroups[index] || "" })); // Önceden girilmiş değer varsa onu kullan
@@ -142,9 +144,7 @@ function Yayinlar() {
         setTimeout(() => setPopupMessage(null), 1500);
     };
 
-    const handleTableClick = () => {
-        setIsEditMode(!isEditMode); // Düzenleme modunu aç/kapat
-    };
+
 
     const itemsPerPage = 4;
     const paginatedData = filteredData.slice((page - 1) * itemsPerPage, page * itemsPerPage);

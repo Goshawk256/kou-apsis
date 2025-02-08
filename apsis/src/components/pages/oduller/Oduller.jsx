@@ -17,7 +17,10 @@ function Oduller() {
     const [popupMessage, setPopupMessage] = useState(null); // Pop-up mesajı
     const [editingIndex, setEditingIndex] = useState(null);
     const [tempGroups, setTempGroups] = useState({}); // Yalnızca eklenen kısmı saklayan nesne
-
+    const [isEditMode, setIsEditMode] = useState(false);
+    const handleTableClick = () => {
+        setIsEditMode(!isEditMode); // Düzenleme modunu aç/kapat
+    };
     const handleEditClick = (index) => {
         setEditingIndex(index);
         setTempGroups(prev => ({ ...prev, [index]: tempGroups[index] || "" })); // Önceden bir değer varsa onu kullan
@@ -132,6 +135,12 @@ function Oduller() {
                 <button className="yayinlar-refresh-btn" onClick={fetchData} disabled={loading}>
                     <FaSync />
                 </button>
+                <button
+                    className="yayinlar-edit-btn"
+                    onClick={() => handleTableClick()}
+                >
+                    Ödül Düzenle
+                </button>
                 <div className="yayinlar-pagination">
                     <button onClick={() => setPage(page - 1)} disabled={page <= 1}>
                         ‹
@@ -180,7 +189,14 @@ function Oduller() {
                                     const isSaved = savedAwards.some((award) => award.id === item.id); // Kaydedildi mi kontrolü
 
                                     return (
-                                        <tr key={index}>
+                                        <tr key={index}
+                                            className={isEditMode ? "edit-mode-row" : ""}
+                                            onClick={() => {
+                                                if (isEditMode) {
+                                                    openRightBar();
+                                                }
+                                            }}
+                                        >
                                             <td>{item.title}</td>
                                             <td>{item.corporateName}</td>
                                             <td
@@ -213,13 +229,22 @@ function Oduller() {
                                             </td>
                                             <td>{item.score}</td>
                                             <td>
-                                                <button className="yayinlar-btn" onClick={() => handleEditClick(index, item.group)} ><FaPencilAlt /></button>
-                                                <button
-                                                    className="yayinlar-btn"
-                                                    onClick={() => saveToLocalStorage(item)}
-                                                >
-                                                    {isSaved ? <FaCheckSquare /> : <FaRegSquare />}
-                                                </button>
+                                                {isEditMode ? (
+                                                    <div>Seç</div>
+                                                ) : (
+                                                    <div>
+
+                                                        <button className="yayinlar-btn" onClick={() => handleEditClick(index, item.group)}><FaPencilAlt /></button>
+
+                                                        <button
+                                                            className="yayinlar-btn"
+                                                            onClick={() => saveToLocalStorage(item)}
+                                                        >
+                                                            {isSaved ? <FaCheckSquare /> : <FaRegSquare />}
+                                                        </button>
+                                                    </div>
+                                                )
+                                                }
                                             </td>
                                         </tr>
                                     );

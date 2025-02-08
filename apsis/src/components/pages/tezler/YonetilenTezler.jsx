@@ -18,7 +18,10 @@ function YonetilenTezler() {
     const username = localStorage.getItem('username');
     const [editingIndex, setEditingIndex] = useState(null);
     const [tempGroups, setTempGroups] = useState({}); // Yalnızca eklenen kısmı saklayan nesne
-
+    const [isEditMode, setIsEditMode] = useState(false);
+    const handleTableClick = () => {
+        setIsEditMode(!isEditMode); // Düzenleme modunu aç/kapat
+    };
     const handleEditClick = (index) => {
         setEditingIndex(index);
         setTempGroups(prev => ({ ...prev, [index]: tempGroups[index] || "" })); // Önceden bir değer varsa onu kullan
@@ -126,8 +129,15 @@ function YonetilenTezler() {
                     placeholder="Dinamik arama yapın..."
                     className="yayinlar-search-input"
                 />
+
                 <button className="yayinlar-refresh-btn" onClick={fetchData} disabled={loading}>
                     <FaSync />
+                </button>
+                <button
+                    className="yayinlar-edit-btn"
+                    onClick={() => handleTableClick()}
+                >
+                    Tez Düzenle
                 </button>
                 <div className="yayinlar-pagination">
                     <button onClick={() => setPage(page - 1)} disabled={page <= 1}>
@@ -174,7 +184,14 @@ function YonetilenTezler() {
                                     const isSaved = savedTheses.some((th) => th.id === item.id); // Kaydedildi mi kontrolü
 
                                     return (
-                                        <tr key={item.id}>
+                                        <tr key={item.id}
+                                            className={isEditMode ? "edit-mode-row" : ""}
+                                            onClick={() => {
+                                                if (isEditMode) {
+                                                    openRightBar();
+                                                }
+                                            }}
+                                        >
                                             <td>{item.title}</td>
                                             <td>{item.corporateName}</td>
                                             <td
@@ -208,14 +225,22 @@ function YonetilenTezler() {
 
                                             <td>{item.scoreAuto}</td>
                                             <td>
-                                                <button className="yayinlar-btn" onClick={() => handleEditClick(item.id)} ><FaPencilAlt /></button>
+                                                {isEditMode ? (
+                                                    <div>Seç</div>
+                                                ) : (
+                                                    <div>
 
-                                                <button
-                                                    className="yayinlar-btn"
-                                                    onClick={() => saveToLocalStorage(item)}
-                                                >
-                                                    {isSaved ? <FaCheckSquare /> : <FaRegSquare />}
-                                                </button>
+                                                        <button className="yayinlar-btn" onClick={() => handleEditClick(item.id)}><FaPencilAlt /></button>
+
+                                                        <button
+                                                            className="yayinlar-btn"
+                                                            onClick={() => saveToLocalStorage(item)}
+                                                        >
+                                                            {isSaved ? <FaCheckSquare /> : <FaRegSquare />}
+                                                        </button>
+                                                    </div>
+                                                )
+                                                }
                                             </td>
                                         </tr>
                                     );
