@@ -192,7 +192,13 @@ function YonetilenTezler() {
                                                 }
                                             }}
                                         >
-                                            <td>{item.title}</td>
+                                            <td>{item.title}<br />
+                                                <p >
+
+                                                    <span style={{ color: '#d86921' }}>Düzenlenmedi</span>
+                                                </p>
+                                            </td>
+
                                             <td>{item.corporateName}</td>
                                             <td
                                                 className="item-group"

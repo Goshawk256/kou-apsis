@@ -194,7 +194,13 @@ function Projeler() {
                                                 }
                                             }}
                                         >
-                                            <td>{item.projectName.length > 50 ? `${item.projectName.slice(0, 60)}...` : item.projectName}</td>
+                                            <td>{item.projectName.length > 50 ? `${item.projectName.slice(0, 60)}...` : item.projectName}
+                                                <br />
+                                                <p >
+
+                                                    <span style={{ color: '#d86921' }}>Düzenlenmedi</span>
+                                                </p>
+                                            </td>
                                             <td>{item.projectTypeName}</td>
                                             <td
                                                 className="item-group"

@@ -173,7 +173,13 @@ function SanatsalFaaliyetler() {
                                                 }
                                             }}
                                         >
-                                            <td>{item.title.length > 50 ? `${item.title.slice(0, 60)}...` : item.title}</td>
+                                            <td>{item.title.length > 50 ? `${item.title.slice(0, 60)}...` : item.title}
+                                                <br />
+                                                <p >
+
+                                                    <span style={{ color: '#d86921' }}>Düzenlenmedi</span>
+                                                </p>
+                                            </td>
                                             <td className='item-group'>{item.group}</td>
                                             <td>{item.score}</td>
                                             <td>
