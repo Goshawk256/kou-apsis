@@ -59,9 +59,10 @@ function Dersler() {
     };
 
     useEffect(() => {
+        setLoading(true);
         refreshTheToken();
         const fetchData = async () => {
-            setLoading(true);
+
             const username = localStorage.getItem('username');
             try {
                 const response = await axios.post(

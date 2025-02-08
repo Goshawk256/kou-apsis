@@ -19,6 +19,7 @@ function Yayinlar() {
     const [loading, setLoading] = useState(false);
     const [editingIndex, setEditingIndex] = useState(null);
     const [tempGroups, setTempGroups] = useState({}); // Sadece eklenen kısmı tutan nesne
+    const [isEditMode, setIsEditMode] = useState(false);
 
     const handleEditClick = (index, currentGroup) => {
         setEditingIndex(index);
@@ -141,6 +142,10 @@ function Yayinlar() {
         setTimeout(() => setPopupMessage(null), 1500);
     };
 
+    const handleTableClick = () => {
+        setIsEditMode(!isEditMode); // Düzenleme modunu aç/kapat
+    };
+
     const itemsPerPage = 4;
     const paginatedData = filteredData.slice((page - 1) * itemsPerPage, page * itemsPerPage);
     const totalPages = Math.ceil(filteredData.length / itemsPerPage);
@@ -202,6 +207,12 @@ function Yayinlar() {
                 >
                     <FaSync />
                 </button>
+                <button
+                    className="yayinlar-edit-btn"
+                    onClick={() => handleTableClick()}
+                >
+                    {publicationTypeId === 1 ? 'Makale Düzenle' : publicationTypeId == 2 ? 'Atıf Düzenle' : publicationTypeId == 3 ? 'Kitap Düzenle' : 'Bildiri Düzenle'}
+                </button>
                 <div className="yayinlar-pagination">
                     <button onClick={() => setPage(page - 1)} disabled={page <= 1}>
                         ‹
@@ -261,7 +272,15 @@ function Yayinlar() {
                                         const isSaved = savedPublications.some((pub) => pub.id === item.id); // Kontrol
 
                                         return publicationTypeId === 2 ? (
-                                            <tr key={index}>
+                                            <tr key={index}
+                                                className={isEditMode ? "edit-mode-row" : ""}
+                                                onClick={() => {
+                                                    if (isEditMode) {
+                                                        openRightBar();
+                                                    }
+                                                }}
+                                            >
+
                                                 <td>
                                                     {item.title.length > 50 ? `${item.title.slice(0, 60)}...` : item.title}
                                                     <br />
@@ -278,7 +297,14 @@ function Yayinlar() {
                                                 </td>
                                             </tr>
                                         ) : (
-                                            <tr key={index}>
+                                            <tr key={index}
+                                                className={isEditMode ? "edit-mode-row" : ""}
+                                                onClick={() => {
+                                                    if (isEditMode) {
+                                                        openRightBar();
+                                                    }
+                                                }}
+                                            >
                                                 <td>
                                                     {item.title.length > 50 ? `${item.title.slice(0, 60)}...` : item.title}
                                                     <br />
@@ -294,7 +320,7 @@ function Yayinlar() {
                                                 <td>{item.journalIndex || '-'}</td>
                                                 <td
                                                     className="item-group"
-                                                    onClick={() => handleEditClick(index, item.groupAuto)}
+
                                                 >
                                                     {editingIndex === index ? (
                                                         <input
@@ -322,14 +348,22 @@ function Yayinlar() {
                                                 </td>
                                                 <td >{(item.scoreAuto || 0).toFixed(2)}</td>
                                                 <td >
-                                                    <button className="yayinlar-btn" onClick={openRightBar}><FaPencilAlt /></button>
+                                                    {isEditMode ? (
+                                                        <div>Seç</div>
+                                                    ) : (
+                                                        <div>
 
-                                                    <button
-                                                        className="yayinlar-btn"
-                                                        onClick={() => saveToLocalStorage(item)}
-                                                    >
-                                                        {isSaved ? <FaCheckSquare /> : <FaRegSquare />}
-                                                    </button>
+                                                            <button className="yayinlar-btn" onClick={() => handleEditClick(index, item.groupAuto)}><FaPencilAlt /></button>
+
+                                                            <button
+                                                                className="yayinlar-btn"
+                                                                onClick={() => saveToLocalStorage(item)}
+                                                            >
+                                                                {isSaved ? <FaCheckSquare /> : <FaRegSquare />}
+                                                            </button>
+                                                        </div>
+                                                    )
+                                                    }
                                                 </td>
                                             </tr>
                                         );

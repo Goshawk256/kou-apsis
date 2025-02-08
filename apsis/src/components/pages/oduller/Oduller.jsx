@@ -35,8 +35,9 @@ function Oduller() {
     const username = localStorage.getItem('username')
 
     const fetchData = async () => {
-        await refreshTheToken();
         setLoading(true);
+        await refreshTheToken();
+
         try {
             const response = await axios.post(
                 `${All_Url.api_base_url}/academic/get-awards`,
