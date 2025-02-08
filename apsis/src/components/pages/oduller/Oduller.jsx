@@ -223,11 +223,11 @@ function Oduller() {
                                                     <div className='group-show'>
                                                         {tempGroups[index] ? (
                                                             <div className='preffered-group'>
-                                                                <s>{item.group}</s>/{tempGroups[index]}
+                                                                <s>{item.group}</s>/ <span>{tempGroups[index]}</span>
                                                             </div>
                                                         ) : (
                                                             <div className='preffered-group'>
-                                                                {item.group}
+                                                                <span>{item.group}</span>
                                                             </div>
                                                         )
                                                         }

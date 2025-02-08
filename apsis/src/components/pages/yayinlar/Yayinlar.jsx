@@ -344,11 +344,11 @@ function Yayinlar() {
                                                         <div className='group-show'>
                                                             {tempGroups[index] ? (
                                                                 <div className='preffered-group'>
-                                                                    <s>{item.groupAuto}</s>/{tempGroups[index]}
+                                                                    <s>{item.groupAuto}</s>/ <span>{tempGroups[index]}</span>
                                                                 </div>
                                                             ) : (
                                                                 <div className='preffered-group'>
-                                                                    {item.groupAuto}
+                                                                    <span>{item.groupAuto}</span>
                                                                 </div>
                                                             )
                                                             }

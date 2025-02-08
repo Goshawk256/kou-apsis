@@ -218,11 +218,11 @@ function YonetilenTezler() {
                                                     <div className='group-show'>
                                                         {tempGroups[item.id] ? (
                                                             <div className='preffered-group'>
-                                                                <s>{item.groupAuto}</s>/{tempGroups[item.id]}
+                                                                <s>{item.groupAuto}</s> <span>{tempGroups[item.id]}</span>
                                                             </div>
                                                         ) : (
                                                             <div className='preffered-group'>
-                                                                {item.groupAuto}
+                                                                <span>{item.groupAuto}</span>
                                                             </div>
                                                         )
                                                         }
