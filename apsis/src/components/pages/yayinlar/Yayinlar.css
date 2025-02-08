@@ -352,11 +352,14 @@
     font-size: 14px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: start;
+
+
 }
 
 .choose-publication img {
     width: 30px;
     height: 30px;
+
 
 }
