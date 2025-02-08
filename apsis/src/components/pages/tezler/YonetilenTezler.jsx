@@ -137,7 +137,7 @@ function YonetilenTezler() {
                     className="yayinlar-edit-btn"
                     onClick={() => handleTableClick()}
                 >
-                    Tez Düzenle
+                    {isEditMode ? 'Kapat' : 'Tez Düzenle'}
                 </button>
                 <div className="yayinlar-pagination">
                     <button onClick={() => setPage(page - 1)} disabled={page <= 1}>
@@ -232,7 +232,7 @@ function YonetilenTezler() {
                                             <td>{item.scoreAuto}</td>
                                             <td>
                                                 {isEditMode ? (
-                                                    <div>Seç</div>
+                                                    <div className='choose-publication'>Seç</div>
                                                 ) : (
                                                     <div>
 

@@ -211,7 +211,13 @@ function Yayinlar() {
                     className="yayinlar-edit-btn"
                     onClick={() => handleTableClick()}
                 >
-                    {publicationTypeId === 1 ? 'Makale Düzenle' : publicationTypeId == 2 ? 'Atıf Düzenle' : publicationTypeId == 3 ? 'Kitap Düzenle' : 'Bildiri Düzenle'}
+                    {isEditMode ?
+                        (
+                            'Kapat'
+                        ) : (
+                            publicationTypeId === 1 ? 'Makale Düzenle' : publicationTypeId === 2 ? 'Atıf Düzenle' : publicationTypeId === 3 ? 'Kitap Düzenle' : 'Bildiri Düzenle'
+                        )
+                    }
                 </button>
                 <div className="yayinlar-pagination">
                     <button onClick={() => setPage(page - 1)} disabled={page <= 1}>
@@ -351,7 +357,7 @@ function Yayinlar() {
                                                 <td >{(item.scoreAuto || 0).toFixed(2)}</td>
                                                 <td >
                                                     {isEditMode ? (
-                                                        <div>Seç</div>
+                                                        <div className='choose-publication'>Seç</div>
                                                     ) : (
                                                         <div>
 

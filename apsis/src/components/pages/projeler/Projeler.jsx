@@ -135,7 +135,7 @@ function Projeler() {
                     className="yayinlar-edit-btn"
                     onClick={() => handleTableClick()}
                 >
-                    Proje Düzenle
+                    {isEditMode ? 'Kapat' : 'Proje Düzenle'}
                 </button>
                 <div className="yayinlar-pagination">
                     <button onClick={() => setPage(page - 1)} disabled={page <= 1}>
@@ -239,7 +239,7 @@ function Projeler() {
                                             <td>{item.status}</td>
                                             <td>
                                                 {isEditMode ? (
-                                                    <div>Seç</div>
+                                                    <div className='choose-publication'>Seç</div>
                                                 ) : (
                                                     <div>
 

@@ -119,7 +119,7 @@ function SanatsalFaaliyetler() {
                     className="yayinlar-edit-btn"
                     onClick={() => handleTableClick()}
                 >
-                    Faaliyet Düzenle
+                    {isEditMode ? 'Kapat' : 'Faaliyet Düzenle'}
                 </button>
                 <div className="yayinlar-pagination">
                     <button onClick={() => setPage(page - 1)} disabled={page <= 1}>

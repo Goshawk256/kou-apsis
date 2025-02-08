@@ -178,7 +178,7 @@ function Dersler() {
                     className="yayinlar-edit-btn"
                     onClick={() => handleTableClick()}
                 >
-                    Ders Düzenle
+                    {isEditMode ? 'Kapat' : 'Ders Düzenle'}
                 </button>
                 <div className="yayinlar-pagination">
                     <button onClick={() => setPage(page - 1)} disabled={page <= 1}>
@@ -284,7 +284,7 @@ function Dersler() {
                                             <td>{item.scoreAuto}</td>
                                             <td>
                                                 {isEditMode ? (
-                                                    <div>Seç</div>
+                                                    <div className='choose-publication'>Seç</div>
                                                 ) : (
                                                     <div>
 
