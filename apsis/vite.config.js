@@ -11,6 +11,8 @@ export default defineConfig({
         secure: false,
       },
     },
-    port: 5000
+    port: 5000,
+    cors: true, // Enable CORS if necessary
+    allowedHosts: ['apsis.kocaeli.edu.tr'], // Burayı ekleyin
   },
 });
