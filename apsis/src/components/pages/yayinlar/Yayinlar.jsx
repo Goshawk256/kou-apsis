@@ -6,6 +6,7 @@ import All_Url from '../../../url';
 import RightBar from '../../rightbar/RightBar';
 import NotFound from '../../errorstacks/NotFound';
 import { refreshTheToken } from '../../../middlewares/authMiddleware';
+import click from '../../../assets/click.png';
 
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -357,7 +358,9 @@ function Yayinlar() {
                                                 <td >{(item.scoreAuto || 0).toFixed(2)}</td>
                                                 <td >
                                                     {isEditMode ? (
-                                                        <div className='choose-publication'>Seç</div>
+                                                        <div className='choose-publication'>
+                                                            <img src={click} alt="" />
+                                                        </div>
                                                     ) : (
                                                         <div>
 

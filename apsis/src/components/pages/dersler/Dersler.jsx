@@ -5,6 +5,7 @@ import axios from 'axios';
 import RightBar from '../../rightbar/RightBar';
 import NotFound from '../../errorstacks/NotFound';
 import { refreshTheToken } from '../../../middlewares/authMiddleware';
+import click from '../../../assets/click.png';
 
 import All_Url from '../../../url';
 
@@ -284,7 +285,9 @@ function Dersler() {
                                             <td>{item.scoreAuto}</td>
                                             <td>
                                                 {isEditMode ? (
-                                                    <div className='choose-publication'>Seç</div>
+                                                    <div className='choose-publication'>
+                                                        <img src={click} alt="" />
+                                                    </div>
                                                 ) : (
                                                     <div>
 

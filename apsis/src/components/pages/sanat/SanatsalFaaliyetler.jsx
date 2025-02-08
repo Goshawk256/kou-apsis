@@ -17,6 +17,7 @@ function SanatsalFaaliyetler() {
     const [rightBarOpen, setRightBarOpen] = useState(false); // Sağ panelin açık/kapalı durumu
     const [popupMessage, setPopupMessage] = useState(null); // Pop-up mesajı
     const [isEditMode, setIsEditMode] = useState(false);
+    const [yapimAsamasinda, setYapimAsamasinda] = useState(true);
     const handleTableClick = () => {
         setIsEditMode(!isEditMode); // Düzenleme modunu aç/kapat
     };
@@ -96,110 +97,118 @@ function SanatsalFaaliyetler() {
     const closeRightBar = () => setRightBarOpen(false);
 
     return (
-        <div className="yayinlar-main">
-            <RightBar isOpen={rightBarOpen} onClose={closeRightBar} />
-            {popupMessage && (
-                <div className={`already-popup ${popupMessage.type}`}>
-                    {popupMessage.message}
-                </div>
-            )}
-            {/* Row 2 - Arama, Filtreleme, Yenileme */}
-            <div className="yayinlar-main-row-2">
-                <input
-                    type="text"
-                    value={searchQuery}
-                    onChange={(e) => handleSearch(e.target.value)}
-                    placeholder="Dinamik arama yapın..."
-                    className="yayinlar-search-input"
-                />
-                <button className="yayinlar-refresh-btn" onClick={fetchData} disabled={loading}>
-                    <FaSync />
-                </button>
-                <button
-                    className="yayinlar-edit-btn"
-                    onClick={() => handleTableClick()}
-                >
-                    {isEditMode ? 'Kapat' : 'Faaliyet Düzenle'}
-                </button>
-                <div className="yayinlar-pagination">
-                    <button onClick={() => setPage(page - 1)} disabled={page <= 1}>
-                        ‹
-                    </button>
-                    <span>{page}/{totalPages}</span>
-                    <button onClick={() => setPage(page + 1)} disabled={page * itemsPerPage >= filteredData.length}>
-                        ›
-                    </button>
-                </div>
+        yapimAsamasinda ? (
+            <div className='yayinlar-main'>
+                Bu Sayfa Yapım Aşamasındadır.
             </div>
-
-            {/* Row 3 - Tablo */}
-            <div className="yayinlar-main-row-3">
-                {loading ? (
-                    <div className="hourglassBackground">
-                        <div className="hourglassContainer">
-                            <div className="hourglassCurves"></div>
-                            <div className="hourglassCapTop"></div>
-                            <div className="hourglassGlassTop"></div>
-                            <div className="hourglassSand"></div>
-                            <div className="hourglassSandStream"></div>
-                            <div className="hourglassCapBottom"></div>
-                            <div className="hourglassGlass"></div>
-                        </div>
+        ) : (
+            <div className="yayinlar-main">
+                <RightBar isOpen={rightBarOpen} onClose={closeRightBar} />
+                {popupMessage && (
+                    <div className={`already-popup ${popupMessage.type}`}>
+                        {popupMessage.message}
                     </div>
-                ) : (
-                    totalPages <= 0 ? (
-                        <NotFound />
-                    ) : (
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Ad</th>
-                                    <th>Grup</th>
-                                    <th>Puan</th>
-                                    <th>İşlem</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {paginatedData.map((item) => {
-                                    const savedArtworks = JSON.parse(localStorage.getItem('savedArtworks')) || [];
-                                    const isSaved = savedArtworks.some((art) => art.id === item.id); // Kaydedildi mi kontrolü
-
-                                    return (
-                                        <tr key={item.id}
-                                            className={isEditMode ? "edit-mode-row" : ""}
-                                            onClick={() => {
-                                                if (isEditMode) {
-                                                    openRightBar();
-                                                }
-                                            }}
-                                        >
-                                            <td>{item.title.length > 50 ? `${item.title.slice(0, 60)}...` : item.title}
-                                                <br />
-                                                <p >
-
-                                                    <span style={{ color: '#eea95b' }}>Düzenlenmedi</span>
-                                                </p>
-                                            </td>
-                                            <td className='item-group'>{item.group}</td>
-                                            <td>{item.score}</td>
-                                            <td>
-                                                <button className="yayinlar-btn"  ><FaPencilAlt /></button>
-                                                <button
-                                                    className="yayinlar-btn"
-                                                    onClick={() => saveToLocalStorage(item)}
-                                                >
-                                                    {isSaved ? <FaCheckSquare /> : <FaRegSquare />}
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    );
-                                })}
-                            </tbody>
-                        </table>
-                    )
                 )}
+                {/* Row 2 - Arama, Filtreleme, Yenileme */}
+                <div className="yayinlar-main-row-2">
+                    <input
+                        type="text"
+                        value={searchQuery}
+                        onChange={(e) => handleSearch(e.target.value)}
+                        placeholder="Dinamik arama yapın..."
+                        className="yayinlar-search-input"
+                    />
+                    <button className="yayinlar-refresh-btn" onClick={fetchData} disabled={loading}>
+                        <FaSync />
+                    </button>
+                    <button
+                        className="yayinlar-edit-btn"
+                        onClick={() => handleTableClick()}
+                    >
+                        {isEditMode ? 'Kapat' : 'Faaliyet Düzenle'}
+                    </button>
+                    <div className="yayinlar-pagination">
+                        <button onClick={() => setPage(page - 1)} disabled={page <= 1}>
+                            ‹
+                        </button>
+                        <span>{page}/{totalPages}</span>
+                        <button onClick={() => setPage(page + 1)} disabled={page * itemsPerPage >= filteredData.length}>
+                            ›
+                        </button>
+                    </div>
+                </div>
+
+                {/* Row 3 - Tablo */}
+                <div className="yayinlar-main-row-3">
+                    {loading ? (
+                        <div className="hourglassBackground">
+                            <div className="hourglassContainer">
+                                <div className="hourglassCurves"></div>
+                                <div className="hourglassCapTop"></div>
+                                <div className="hourglassGlassTop"></div>
+                                <div className="hourglassSand"></div>
+                                <div className="hourglassSandStream"></div>
+                                <div className="hourglassCapBottom"></div>
+                                <div className="hourglassGlass"></div>
+                            </div>
+                        </div>
+                    ) : (
+                        totalPages <= 0 ? (
+                            <NotFound />
+                        ) : (
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Ad</th>
+                                        <th>Grup</th>
+                                        <th>Puan</th>
+                                        <th>İşlem</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {paginatedData.map((item) => {
+                                        const savedArtworks = JSON.parse(localStorage.getItem('savedArtworks')) || [];
+                                        const isSaved = savedArtworks.some((art) => art.id === item.id); // Kaydedildi mi kontrolü
+
+                                        return (
+                                            <tr key={item.id}
+                                                className={isEditMode ? "edit-mode-row" : ""}
+                                                onClick={() => {
+                                                    if (isEditMode) {
+                                                        openRightBar();
+                                                    }
+                                                }}
+                                            >
+                                                <td>{item.title.length > 50 ? `${item.title.slice(0, 60)}...` : item.title}
+                                                    <br />
+                                                    <p >
+
+                                                        <span style={{ color: '#eea95b' }}>Düzenlenmedi</span>
+                                                    </p>
+                                                </td>
+                                                <td className='item-group'>{item.group}</td>
+                                                <td>{item.score}</td>
+                                                <td>
+                                                    <button className="yayinlar-btn"  ><FaPencilAlt /></button>
+                                                    <button
+                                                        className="yayinlar-btn"
+                                                        onClick={() => saveToLocalStorage(item)}
+                                                    >
+                                                        {isSaved ? <FaCheckSquare /> : <FaRegSquare />}
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        );
+                                    })}
+                                </tbody>
+                            </table>
+                        )
+                    )}
+                </div>
             </div>
-        </div>
+        )
+
+
     );
 }
 

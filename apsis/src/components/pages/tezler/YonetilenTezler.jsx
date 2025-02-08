@@ -6,6 +6,7 @@ import All_Url from '../../../url';
 import RightBar from '../../rightbar/RightBar';
 import NotFound from '../../errorstacks/NotFound';
 import { refreshTheToken } from '../../../middlewares/authMiddleware';
+import click from '../../../assets/click.png';
 
 function YonetilenTezler() {
     const [searchQuery, setSearchQuery] = useState('');
@@ -232,7 +233,9 @@ function YonetilenTezler() {
                                             <td>{item.scoreAuto}</td>
                                             <td>
                                                 {isEditMode ? (
-                                                    <div className='choose-publication'>Seç</div>
+                                                    <div className='choose-publication'>
+                                                        <img src={click} alt="" />
+                                                    </div>
                                                 ) : (
                                                     <div>
 

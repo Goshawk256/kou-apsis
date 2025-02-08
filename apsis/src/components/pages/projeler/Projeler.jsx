@@ -6,6 +6,7 @@ import RightBar from '../../rightbar/RightBar';
 import All_Url from '../../../url';
 import NotFound from '../../errorstacks/NotFound';
 import { refreshTheToken } from '../../../middlewares/authMiddleware';
+import click from '../../../assets/click.png';
 
 function Projeler() {
     const [searchQuery, setSearchQuery] = useState('');
@@ -239,7 +240,9 @@ function Projeler() {
                                             <td>{item.status}</td>
                                             <td>
                                                 {isEditMode ? (
-                                                    <div className='choose-publication'>Seç</div>
+                                                    <div className='choose-publication'>
+                                                        <img src={click} alt="" />
+                                                    </div>
                                                 ) : (
                                                     <div>
 
