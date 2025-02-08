@@ -59,10 +59,11 @@ function Login() {
                 ) : (
                     <form onSubmit={handleLogin}>
                         <img style={{ width: "30%" }} src={Logo} alt="" />
-                        <h2 style={{ color: 'grey' }}>Kou Apsıs</h2>
+                        <h2 style={{ color: 'white' }}>Kou Apsıs</h2>
                         <div className='form-group'>
                             <label htmlFor='username'>Kullanıcı Adı</label>
                             <input
+                                className='input-login'
                                 type='text'
                                 id='username'
                                 value={username}
@@ -75,10 +76,10 @@ function Login() {
                         </div>
                         {roles.length > 0 && (
                             <div className='form-group'>
-                                <label htmlFor='role'>Rol Seçin</label>
+                                <label htmlFor='role'>Kullanıcı Rolü</label>
                                 <select className='' id='role' value={selectedRole} onChange={(e) => setSelectedRole(e.target.value)}>
                                     {roles.map((role, index) => (
-                                        <option key={index} value={role}>
+                                        <option key={index} value={role} style={{ backgroundColor: 'green' }}>
                                             {role == 'Academic' ?
                                                 (
                                                     'Akademik Giriş'
@@ -93,8 +94,9 @@ function Login() {
                             </div>
                         )}
                         <div className='form-group'>
-                            <label htmlFor='password'>Şifre</label>
+                            <label className='password-label' htmlFor='password'>Şifre</label>
                             <input
+                                className='input-login'
                                 type='password'
                                 id='password'
                                 value={password}
