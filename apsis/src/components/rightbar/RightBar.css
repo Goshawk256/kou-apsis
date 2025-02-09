@@ -2,10 +2,10 @@
     position: fixed;
     top: 0;
     right: -700px;
-    width: 500px;
+    width: 400px;
     height: 95%;
     background-color: #f0f0f0;
-    color: rgb(184, 184, 184);
+    color: rgb(67, 67, 67);
     padding: 20px;
     transition: right 0.3s ease-in-out;
 
@@ -59,7 +59,11 @@
 }
 
 .close-btn {
-    background-color: #e67979;
+    background-color: #e22c2c;
+}
+
+.close-btn:hover {
+    background-color: red;
 }
 
 .right-bar-content {
@@ -116,7 +120,7 @@
 }
 
 .checkbox-input p {
-    font-size: 14px;
+    font-size: 12px;
 }
 
 .checkbox-input .label:has(input:checked)::before {

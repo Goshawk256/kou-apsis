@@ -82,7 +82,7 @@ function Login() {
                                         <option key={index} value={role} style={{ backgroundColor: 'green' }}>
                                             {role == 'Academic' ?
                                                 (
-                                                    'Akademik Giriş'
+                                                    'Akademik Personel'
                                                 ) :
                                                 (
                                                     'Akademik Jüri'
