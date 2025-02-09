@@ -1,14 +1,42 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import axios from 'axios';
+
 import HomePage from './home/HomePage';
 import Login from './components/login/Login';
-import Header from './components/header/Header';
-
-
 import Finish from './components/finish/Finish';
+
+
+{/*
+  const AxiosInterceptor = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const responseInterceptor = axios.interceptors.response.use(
+      (response) => response,
+      (error) => {
+        if (error.response && error.response.status === 401) {
+
+          localStorage.removeItem('accesToken'); navigate('/');
+        }
+        return Promise.reject(error);
+      }
+    );
+
+    return () => {
+      axios.interceptors.response.eject(responseInterceptor);
+    };
+  }, [navigate]);
+
+  return null;
+};
+  
+  */}
 
 function App() {
   return (
     <Router>
+      {/* <AxiosInterceptor /> */}
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/home" element={<HomePage />} />
@@ -17,7 +45,5 @@ function App() {
     </Router>
   );
 }
-
-
 
 export default App;
