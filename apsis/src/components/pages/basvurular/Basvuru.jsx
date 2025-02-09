@@ -179,7 +179,7 @@ function Basvuru({ onSelect }) {
                             className='basvuru-ileri-button'
                             onClick={() => (currentPage === totalPages ? handleFinish() : handleNext())}
                         >
-                            İleri
+                            {currentPage === totalPages ? 'Başvur' : 'İleri'}
                         </button>
                     </div>
                 </div>
