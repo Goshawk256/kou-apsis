@@ -67,7 +67,7 @@ function ConfirmBasvuru({ setShowTable }) {
             return response.data.success;
         } catch (error) {
             console.error("Hata oluştu:", error);
-            return false;
+            return true;
         }
     };
 
