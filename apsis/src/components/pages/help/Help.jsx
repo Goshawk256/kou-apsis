@@ -26,7 +26,7 @@ function Help() {
     return (
         <div className='help-main'>
             <img src={images[currentImageIndex]} alt="Help" className='help-image' />
-            <button onClick={nextImage}>Next Image</button>
+            <button className='nxt-img-button' onClick={nextImage}>Devam Et</button>
         </div>
     );
 }
