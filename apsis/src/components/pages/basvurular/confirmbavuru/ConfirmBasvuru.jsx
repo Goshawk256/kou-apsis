@@ -45,21 +45,32 @@ function ConfirmBasvuru({ setShowTable }) {
 
     const valideDatas = async () => {
         const token = localStorage.getItem('accesToken');
+
+
+        if (!formattedPublications || formattedPublications.length === 0) {
+            console.error("Hata: Yayın bilgileri eksik!");
+            return false;
+        }
+
+        const publicationIds = formattedPublications.map(item => item.id);
+
         try {
             const response = await axios.post(`${All_Url.api_base_url}/academic/validate-application`, {
-                publicationIds: formattedPublications.map(item => item.id),
+                publicationIds: publicationIds,
                 title: localStorage.getItem('selectedOption'),
             }, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
             });
+
             return response.data.success;
         } catch (error) {
             console.error("Hata oluştu:", error);
             return false;
         }
     };
+
 
     return (
         <div className='confirm-basvuru'>
