@@ -5,16 +5,59 @@ import 'dayjs/locale/tr';  // Türkçe dil dosyasını içe aktarıyoruz
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { StaticDatePicker } from '@mui/x-date-pickers/StaticDatePicker';
+import { useEffect } from 'react';
+import axios from 'axios';
+import All_Url from '../../../../url';
 
-function ConfirmBasvuru({ setShowTable }) {  // setShowTable fonksiyonu props olarak alınıyor
+function ConfirmBasvuru({ setShowTable }) {
     const [selected, setSelected] = useState("");
+    const [formattedPublications, setFormattedPublications] = useState([]);
 
-    const handleSaveToLocalStorage = () => {
-        if (selected) {
-            localStorage.setItem("selectedOption", selected);
-            setShowTable(true);  // showTable'yi true yapıyoruz
-        } else {
+    useEffect(() => {
+        const savedPublications = JSON.parse(localStorage.getItem('savedPublications')) || [];
+        const formattedPubs = savedPublications.map(item => ({
+            id: item.id,
+            title: item.title,
+            group: item.groupAuto,
+            type: 'Yayın',
+            score: item.scoreAuto,
+            authors: item.authors || []
+        }));
+
+        setFormattedPublications(formattedPubs);
+    }, []);
+
+    const handleSaveToLocalStorage = async () => {
+        if (!selected) {
             alert("Lütfen bir birim seçin!");
+            return;
+        }
+
+        localStorage.setItem("selectedOption", selected);
+
+        const isValid = await valideDatas();
+        if (isValid) {
+            setShowTable(true);
+        } else {
+            alert("Başvuru kaydı oluşturulamadı. Yeterli puana sahip değilsiniz!");
+        }
+    };
+
+    const valideDatas = async () => {
+        const token = localStorage.getItem('accesToken');
+        try {
+            const response = await axios.post(`${All_Url.api_base_url}/academic/validate-application`, {
+                publicationIds: formattedPublications.map(item => item.id),
+                title: localStorage.getItem('selectedOption'),
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            return response.data.success;
+        } catch (error) {
+            console.error("Hata oluştu:", error);
+            return false;
         }
     };
 
