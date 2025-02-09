@@ -182,12 +182,12 @@ function Projeler() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {paginatedData.map((item, index) => {
+                                {paginatedData.map((item) => {
                                     const savedProjects = JSON.parse(localStorage.getItem('savedProjects')) || [];
                                     const isSaved = savedProjects.some((proj) => proj.id === item.id); // Kaydedildi mi kontrolü
 
                                     return (
-                                        <tr key={index}
+                                        <tr key={item.id}
                                             className={isEditMode ? "edit-mode-row" : ""}
                                             onClick={() => {
                                                 if (isEditMode) {
@@ -207,20 +207,20 @@ function Projeler() {
                                                 className="item-group"
 
                                             >
-                                                {editingIndex === index ? (
+                                                {editingIndex === item.id ? (
                                                     <input
                                                         type="text"
-                                                        value={tempGroups[index] || ""}
-                                                        onChange={(e) => handleInputChange(e, index)}
+                                                        value={tempGroups[item.id] || ""}
+                                                        onChange={(e) => handleInputChange(e, item.id)}
                                                         onKeyDown={handleKeyPress}
                                                         autoFocus
                                                         onBlur={() => setEditingIndex(null)}
                                                     />
                                                 ) : (
                                                     <div className='group-show'>
-                                                        {tempGroups[index] ? (
+                                                        {tempGroups[item.id] ? (
                                                             <div className='preffered-group'>
-                                                                <s>{item.group}</s>/ <span>{tempGroups[index]}</span>
+                                                                <s>{item.group}</s>/ <span>{tempGroups[item.id]}</span>
                                                             </div>
                                                         ) : (
                                                             <div className='preffered-group'>
@@ -246,7 +246,7 @@ function Projeler() {
                                                 ) : (
                                                     <div>
 
-                                                        <button className="yayinlar-btn" onClick={() => handleEditClick(index, item.group)}><FaPencilAlt /></button>
+                                                        <button className="yayinlar-btn" onClick={() => handleEditClick(item.id, item.group)}><FaPencilAlt /></button>
 
                                                         <button
                                                             className="yayinlar-btn"

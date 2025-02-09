@@ -229,12 +229,12 @@ function Dersler() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {paginatedData.map((item, index) => {
+                                {paginatedData.map((item) => {
                                     const savedCourses = JSON.parse(localStorage.getItem('savedCourses')) || [];
                                     const isSaved = savedCourses.some((savedCourse) => savedCourse.id === item.id);
 
                                     return (
-                                        <tr key={index}
+                                        <tr key={item.id}
                                             className={isEditMode ? "edit-mode-row" : ""}
                                             onClick={() => {
                                                 if (isEditMode) {
@@ -258,20 +258,20 @@ function Dersler() {
                                                 className="item-group"
 
                                             >
-                                                {editingIndex === index ? (
+                                                {editingIndex === item.id ? (
                                                     <input
                                                         type="text"
-                                                        value={tempGroups[index] || ""}
-                                                        onChange={(e) => handleInputChange(e, index)}
+                                                        value={tempGroups[item.id] || ""}
+                                                        onChange={(e) => handleInputChange(e, item.id)}
                                                         onKeyDown={handleKeyPress}
                                                         autoFocus
                                                         onBlur={() => setEditingIndex(null)}
                                                     />
                                                 ) : (
                                                     <div className='group-show'>
-                                                        {tempGroups[index] ? (
+                                                        {tempGroups[item.id] ? (
                                                             <div className='preffered-group'>
-                                                                <s>{item.groupAuto}</s>/ <span>{tempGroups[index]}</span>
+                                                                <s>{item.groupAuto}</s>/ <span>{tempGroups[item.id]}</span>
                                                             </div>
                                                         ) : (
                                                             <div className='preffered-group'>
@@ -291,7 +291,7 @@ function Dersler() {
                                                 ) : (
                                                     <div>
 
-                                                        <button className="yayinlar-btn" onClick={() => handleEditClick(index, item.groupAuto)}><FaPencilAlt /></button>
+                                                        <button className="yayinlar-btn" onClick={() => handleEditClick(item.id, item.groupAuto)}><FaPencilAlt /></button>
 
                                                         <button
                                                             className="yayinlar-btn"
