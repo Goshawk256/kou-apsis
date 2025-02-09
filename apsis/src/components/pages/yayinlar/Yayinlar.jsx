@@ -156,7 +156,7 @@ function Yayinlar() {
 
     return (
         <div className={`yayinlar-main`}>
-            <RightBar isOpen={rightBarOpen} onClose={closeRightBar} />
+            <RightBar isOpen={rightBarOpen} onClose={closeRightBar} id='yayin' />
 
             {popupMessage && (
                 <div className={`already-popup ${popupMessage.type}`}>
