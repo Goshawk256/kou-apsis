@@ -12,6 +12,7 @@ import Yayinlar from '../components/pages/yayinlar/Yayinlar';
 import Projeler from '../components/pages/projeler/Projeler';
 import Basvurular from '../components/pages/basvurular/Basvuru';
 import Finish from '../components/finish/Finish';
+import Help from '../components/pages/help/Help';
 
 
 function HomePage() {
@@ -38,6 +39,8 @@ function HomePage() {
                 return <Basvurular onSelect={setSelectedPage} />;
             case 'Finish':
                 return <Finish />;
+            case 'Help':
+                return <Help />;
             default:
                 return <AnaSayfa />;
         }
