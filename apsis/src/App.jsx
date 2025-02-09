@@ -31,7 +31,7 @@ import Finish from './components/finish/Finish';
   return null;
 };
   
-  */}
+*/}
 
 function App() {
   return (
