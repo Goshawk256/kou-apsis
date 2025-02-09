@@ -11,7 +11,6 @@ import yayinIcon from '../../assets/yayinlar.svg'
 import tezIcon from '../../assets/yonetilenTezler.svg'
 import helpIcon from '../../assets/help.png'
 
-
 function SideBar({ onSelect }) {
 
     const items = [
@@ -23,8 +22,7 @@ function SideBar({ onSelect }) {
         { name: "Ödüller", icon: <img src={odulIcon} alt="Ödüller" /> },
         { name: "Sanatsal Faaliyet", icon: <img src={sanatIcon} alt="Sanatsal Faaliyet" /> },
         { name: "Başvuru Yap", icon: <img src={basvuruIcon} alt="Başvurular" /> },
-        { name: "Help", icon: <img src={helpIcon} alt="Help" /> },
-
+        { name: "Yardım", icon: <img src={helpIcon} alt="Help" /> },
     ];
 
 

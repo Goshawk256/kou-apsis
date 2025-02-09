@@ -39,7 +39,7 @@ function HomePage() {
                 return <Basvurular onSelect={setSelectedPage} />;
             case 'Finish':
                 return <Finish />;
-            case 'Help':
+            case 'Yardım':
                 return <Help />;
             default:
                 return <AnaSayfa />;
