@@ -1,11 +1,15 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import All_Url from '../../../../url.js'
-import { useState } from 'react';
-import './MyApplications.css'
+import All_Url from '../../../../url.js';
+import NotFound from '../../../errorstacks/NotFound.jsx';
+import BasvuruInfo from '../../../../../kou-apsis/apsis/src/components/customs/infostacks/BasvuruInfo.jsx';
+import './MyApplications.css';
 
 function MyApplications({ onSelect }) {
     const [loading, setLoading] = useState(false);
+    const [applications, setApplications] = useState([]);
+    const [selectedApplication, setSelectedApplication] = useState(null);
+
     useEffect(() => {
         const fetchApplications = async () => {
             setLoading(true);
@@ -17,7 +21,7 @@ function MyApplications({ onSelect }) {
                 });
 
                 if (response.data.success) {
-                    console.log(response.data.data);
+                    setApplications(response.data.data.applications);
                 }
             } catch (error) {
                 console.error('Veri çekme hatası:', error);
@@ -62,26 +66,60 @@ function MyApplications({ onSelect }) {
                                     </tr>
                                 </thead>
                                 <tbody className='myapplications-table-body'>
-                                    <tr>
-                                        <td>10.10.2021</td>
-                                        <td>Doç. Dr.</td>
-                                        <td>Akademik Kadro</td>
-                                        <td>Onay Bekliyor</td>
-                                        <td>
-                                            <button className='myapplications-button'>Detay</button>
-                                        </td>
-                                    </tr>
+                                    {applications.length > 0 ? (
+                                        applications.map((app) => (
+                                            <tr key={app.applicationId}>
+                                                <td>{new Date().toLocaleDateString()}</td>
+                                                <td>{app.title}</td>
+                                                <td>{app.userType === 'Academic' ? 'Kurum İçi' : 'Kurum Dışı'}</td>
+                                                <td>
+                                                    {app.applicationStatus === 'pending'
+                                                        ? 'Beklemede'
+                                                        : app.applicationStatus === 'rejected'
+                                                            ? 'Reddedildi'
+                                                            : 'Onaylandı'}
+                                                </td>
+                                                <td>
+                                                    <button className='myapplications-button' onClick={() => setSelectedApplication(app)}>Detay</button>
+                                                </td>
+                                            </tr>
+                                        ))
+                                    ) : (
+                                        <tr>
+                                            <td colSpan="5"><NotFound /></td>
+                                        </tr>
+                                    )}
                                 </tbody>
                             </table>
                         </div>
                     </div>
-
                 </>
-            )
-
-            }
-
-
+            )}
+            {selectedApplication && (
+                <div className='popup'>
+                    <div className='popup-inner'>
+                        <h2>Başvuru Detayları</h2>
+                        <div className='first-row'>
+                            <p><strong>Başvurulan Kadro:</strong> {selectedApplication.title}</p>
+                            <p><strong>Başvuru Tipi:</strong> {selectedApplication.userType === 'Academic' ? 'Kurum İçi' : 'Kurum Dışı'}</p>
+                        </div>
+                        {['publications', 'projects', 'thesis', 'books', 'awards', 'lessons', 'citations', 'artworks', ''].map((category) => (
+                            selectedApplication[category] && selectedApplication[category].length > 0 && (
+                                <div key={category}>
+                                    <h3>{category.charAt(0).toUpperCase() + category.slice(1)}</h3>
+                                    <ul>
+                                        {selectedApplication[category].map(item => (
+                                            <li key={item.id}>{item.title || item.projectName || item.bookName || item.awardName || item.thesisTitle}</li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )
+                        ))}
+                        <button onClick={() => setSelectedApplication(null)}>Kapat</button>
+                    </div>
+                    <BasvuruInfo />
+                </div>
+            )}
         </div>
     );
 }
