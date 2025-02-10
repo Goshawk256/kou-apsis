@@ -86,7 +86,7 @@ function MyApplications({ onSelect }) {
                                         ))
                                     ) : (
                                         <tr>
-                                            <td colSpan="5"><NotFound /></td>
+                                            <td colSpan="4"><NotFound /></td>
                                         </tr>
                                     )}
                                 </tbody>
