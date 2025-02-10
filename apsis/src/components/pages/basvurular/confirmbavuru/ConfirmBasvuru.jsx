@@ -8,6 +8,7 @@ import { useEffect } from 'react';
 import axios from 'axios';
 import All_Url from '../../../../url';
 import MyApplications from '../basvurularim/MyApplications';
+import previous from '../../../../assets/previous.png';
 
 
 function ConfirmBasvuru({ setShowTable }) {
@@ -80,7 +81,7 @@ function ConfirmBasvuru({ setShowTable }) {
                 (
                     <MyApplications onSelect={() => { setIsMyApplications(false) }} />
                 ) : (
-                    <>
+                    <div className='confirm-content'>
                         <h1 className='confirm-title'>Başvuru Kaydı Oluşturma</h1>
                         <h5 className='birim-title'>Başvurulacak Birim:</h5>
                         <div className="radio-input">
@@ -130,7 +131,10 @@ function ConfirmBasvuru({ setShowTable }) {
                                 İleri
                             </button>
                         </div>
-                    </>
+                        <button onClick={() => { setIsMyApplications(true) }} className='confirm-geri-button'>
+                            <img src={previous} alt="" />
+                        </button>
+                    </div>
                 )
             }
         </div >
