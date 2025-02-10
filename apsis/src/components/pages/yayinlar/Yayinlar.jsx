@@ -312,8 +312,8 @@ function Yayinlar() {
                                                             month: 'long',
                                                             year: 'numeric',
                                                         })}
-                                                        /
-                                                        <span style={{ color: '#eea95b' }}>Düzenlenmedi</span>
+                                                        {/*  /
+                                                        <span style={{ color: '#eea95b' }}>Düzenlenmedi</span> */}
                                                     </p>
                                                 </td>
                                                 <td>{item.journalIndex || '-'}</td>

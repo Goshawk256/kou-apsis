@@ -180,11 +180,11 @@ function SanatsalFaaliyetler() {
                                                 }}
                                             >
                                                 <td>{item.title.length > 50 ? `${item.title.slice(0, 60)}...` : item.title}
-                                                    <br />
+                                                    {/*  <br />
                                                     <p >
 
                                                         <span style={{ color: '#eea95b' }}>Düzenlenmedi</span>
-                                                    </p>
+                                                    </p> */}
                                                 </td>
                                                 <td className='item-group'>{item.group}</td>
                                                 <td>{item.score}</td>

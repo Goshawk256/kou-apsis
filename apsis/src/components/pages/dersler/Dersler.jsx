@@ -174,12 +174,7 @@ function Dersler() {
                 <button className="yayinlar-refresh-btn" onClick={() => window.location.reload()}>
                     <FaSync />
                 </button>
-                <button
-                    className="yayinlar-edit-btn"
-                    onClick={() => handleTableClick()}
-                >
-                    {isEditMode ? 'Kapat' : 'Ders Düzenle'}
-                </button>
+
                 <div className="yayinlar-pagination">
                     <button onClick={() => setPage(page - 1)} disabled={page <= 1}>
                         ‹
@@ -242,11 +237,11 @@ function Dersler() {
                                             }}
                                         >
                                             <td>{item.course_name}
-                                                <br />
+                                                {/*  <br />
                                                 <p >
 
                                                     <span style={{ color: '#eea95b' }}>Düzenlenmedi</span>
-                                                </p>
+                                                </p> */}
                                             </td>
                                             <td>{formatSemester(item.semester)}</td>
 

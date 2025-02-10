@@ -180,11 +180,12 @@ function YonetilenTezler() {
                                         <tr key={item.id}
                                             className={isEditMode ? "edit-mode-row" : ""}
                                         >
-                                            <td>{item.title}<br />
+                                            <td>{item.title}
+                                                {/*  <br />
                                                 <p >
 
                                                     <span style={{ color: '#eea95b' }}>Düzenlenmedi</span>
-                                                </p>
+                                                </p> */}
                                             </td>
 
                                             <td>{item.corporateName}</td>

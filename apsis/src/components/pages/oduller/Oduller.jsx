@@ -134,12 +134,7 @@ function Oduller() {
                 <button className="yayinlar-refresh-btn" onClick={fetchData} disabled={loading}>
                     <FaSync />
                 </button>
-                <button
-                    className="yayinlar-edit-btn"
-                    onClick={() => handleTableClick()}
-                >
-                    {isEditMode ? 'Kapat' : 'Ödül Düzenle'}
-                </button>
+
                 <div className="yayinlar-pagination">
                     <button onClick={() => setPage(page - 1)} disabled={page <= 1}>
                         ‹
@@ -193,11 +188,11 @@ function Oduller() {
 
                                         >
                                             <td>{item.title}
-                                                <br />
+                                                {/* <br />
                                                 <p >
 
                                                     <span style={{ color: '#eea95b' }}>Düzenlenmedi</span>
-                                                </p>
+                                                </p> */}
                                             </td>
                                             <td>{item.corporateName}</td>
                                             <td
