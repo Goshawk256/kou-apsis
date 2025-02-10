@@ -77,18 +77,22 @@ function RightBar({ isOpen, onClose, id, editingIndex, tempGroups, onGroupChange
                                     type="text"
                                     value={tempGroups[editingIndex] || ""}
                                     onChange={(e) => {
-                                        const newValue = e.target.value.toUpperCase(); // Girilen değeri büyük harfe çevir
-
-                                        // Kullanıcının girdiği değer, `allowedList`'teki herhangi bir değerin BAŞLANGICI mı?
+                                        const newValue = e.target.value.toUpperCase();
                                         const isValidInput = allowedList.some(item => item.startsWith(newValue));
 
-                                        // Eğer `newValue`, `allowedList`'teki bir değerin başlangıcıysa veya tamamen eşleşiyorsa güncelle
                                         if (isValidInput || allowedList.includes(newValue)) {
                                             onGroupChange(editingIndex, newValue);
                                         }
                                     }}
+                                    onKeyDown={(e) => {
+                                        if (e.key === "Enter") {
+                                            e.preventDefault(); // Enter'ın yeni satır eklemesini engeller
+                                            onClose(); // İşlem tamamlandığında paneli kapatabilir veya başka bir işlem yapabilirsin
+                                        }
+                                    }}
                                     autoFocus
                                 />
+
 
 
                             )}
@@ -160,14 +164,17 @@ function RightBar({ isOpen, onClose, id, editingIndex, tempGroups, onGroupChange
                                 type="text"
                                 value={tempGroups[editingIndex] || ""}
                                 onChange={(e) => {
-                                    const newValue = e.target.value.toUpperCase(); // Girilen değeri büyük harfe çevir
-
-                                    // Kullanıcının girdiği değer, `allowedList`'teki herhangi bir değerin BAŞLANGICI mı?
+                                    const newValue = e.target.value.toUpperCase();
                                     const isValidInput = allowedList.some(item => item.startsWith(newValue));
 
-                                    // Eğer `newValue`, `allowedList`'teki bir değerin başlangıcıysa veya tamamen eşleşiyorsa güncelle
                                     if (isValidInput || allowedList.includes(newValue)) {
                                         onGroupChange(editingIndex, newValue);
+                                    }
+                                }}
+                                onKeyDown={(e) => {
+                                    if (e.key === "Enter") {
+                                        e.preventDefault(); // Enter'ın yeni satır eklemesini engeller
+                                        onClose(); // İşlem tamamlandığında paneli kapatabilir veya başka bir işlem yapabilirsin
                                     }
                                 }}
                                 autoFocus
