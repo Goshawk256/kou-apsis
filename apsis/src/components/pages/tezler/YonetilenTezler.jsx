@@ -20,8 +20,10 @@ function YonetilenTezler() {
     const [editingIndex, setEditingIndex] = useState(null);
     const [tempGroups, setTempGroups] = useState({}); // Yalnızca eklenen kısmı saklayan nesne
     const [isEditMode, setIsEditMode] = useState(false);
+    const [currentGroup, setCurrentGroup] = useState(null);
 
-    const handleEditClick = (index) => {
+    const handleEditClick = (index, currentGroup) => {
+        setCurrentGroup(currentGroup);
         setEditingIndex(index);
         setTempGroups(prev => ({ ...prev, [index]: tempGroups[index] || "" })); // Önceden bir değer varsa onu kullan
         openRightBar();
@@ -112,7 +114,7 @@ function YonetilenTezler() {
         <div className="yayinlar-main">
             <RightBar isOpen={rightBarOpen} onClose={closeRightBar} editingIndex={editingIndex}
                 tempGroups={tempGroups}
-                onGroupChange={handleGroupChange} />
+                onGroupChange={handleGroupChange} group={currentGroup} />
             {popupMessage && (
                 <div className={`already-popup ${popupMessage.type}`}>
                     {popupMessage.message}
@@ -220,7 +222,7 @@ function YonetilenTezler() {
                                                 ) : (
                                                     <div>
 
-                                                        <button className="yayinlar-btn" onClick={() => handleEditClick(item.id)}><FaPencilAlt /></button>
+                                                        <button className="yayinlar-btn" onClick={() => handleEditClick(item.id, item.scoreAuto)}><FaPencilAlt /></button>
 
                                                         <button
                                                             className="yayinlar-btn"

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './RightBar.css';
 
 
-function RightBar({ isOpen, onClose, id, editingIndex, tempGroups, onGroupChange }) {
+function RightBar({ isOpen, onClose, id, editingIndex, tempGroups, onGroupChange, group }) {
 
     const [selectedConditions, setSelectedConditions] = useState([]);
     const [uploadedFile, setUploadedFile] = useState(null);
@@ -43,6 +43,7 @@ function RightBar({ isOpen, onClose, id, editingIndex, tempGroups, onGroupChange
                         </div>
                         <div className="right-bar-content">
                             <label style={{ fontWeight: '700', marginBottom: '3%', display: 'flex', justifyContent: 'start', width: '100%', fontSize: '14px' }}>Grup Bigisi Düzenleme</label>
+                            <span>Aktif Grup: {group}</span>
                             {editingIndex !== null && (
                                 <input
                                     type="text"
@@ -51,6 +52,8 @@ function RightBar({ isOpen, onClose, id, editingIndex, tempGroups, onGroupChange
                                     autoFocus
                                 />
                             )}
+
+
                             <label style={{ fontWeight: '700', marginBottom: '3%', display: 'flex', justifyContent: 'start', width: '100%', fontSize: '14px' }}>Başlıca Yazar Durumu</label>
                             <div className="checkbox-input">
                                 {[8, 9, 10].map(condition => (
@@ -111,6 +114,7 @@ function RightBar({ isOpen, onClose, id, editingIndex, tempGroups, onGroupChange
                     <div className={`overlay ${isOpen ? 'open' : ''}`} onClick={onClose}></div>
                     <div className={`right-bar ${isOpen ? 'open' : ''} `}>
                         <label style={{ fontWeight: '700', marginBottom: '3%', display: 'flex', justifyContent: 'start', width: '100%', fontSize: '14px' }}>Grup Bigisi Düzenleme</label>
+                        <span>Aktif Grup: {group}</span>
                         {editingIndex !== null && (
                             <input
                                 type="text"

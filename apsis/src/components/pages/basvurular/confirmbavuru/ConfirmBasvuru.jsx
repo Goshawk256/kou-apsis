@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import './ConfirmBasvuru.css';
-import dayjs from 'dayjs';
 import 'dayjs/locale/tr';  // Türkçe dil dosyasını içe aktarıyoruz
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';

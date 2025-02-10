@@ -20,9 +20,11 @@ function Yayinlar() {
     const [loading, setLoading] = useState(false);
     const [editingIndex, setEditingIndex] = useState(null);
     const [tempGroups, setTempGroups] = useState({}); // Sadece eklenen kısmı tutan nesne
+    const [currentGroup, setCurrentGroup] = useState(null);
     const [isEditMode, setIsEditMode] = useState(false);
 
     const handleEditClick = (index, currentGroup) => {
+        setCurrentGroup(currentGroup);
         setEditingIndex(index);
         setTempGroups(prev => ({ ...prev, [index]: tempGroups[index] || "" }));
         openRightBar();
@@ -156,7 +158,7 @@ function Yayinlar() {
         <div className={`yayinlar-main`}>
             <RightBar isOpen={rightBarOpen} onClose={closeRightBar} id='yayin' editingIndex={editingIndex}
                 tempGroups={tempGroups}
-                onGroupChange={handleGroupChange} />
+                onGroupChange={handleGroupChange} group={currentGroup} />
 
             {popupMessage && (
                 <div className={`already-popup ${popupMessage.type}`}>

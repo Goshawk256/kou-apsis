@@ -20,11 +20,14 @@ function Dersler() {
     const [editingIndex, setEditingIndex] = useState(null);
     const [tempGroups, setTempGroups] = useState({}); // Sadece eklenen kısmı tutan nesne
     const [isEditMode, setIsEditMode] = useState(false);
+    const [currentGroup, setCurrentGroup] = useState(null);
 
     const handleEditClick = (index, currentGroup) => {
+        setCurrentGroup(currentGroup);
         setEditingIndex(index);
         setTempGroups(prev => ({ ...prev, [index]: tempGroups[index] || "" })); // Önceden girilmiş değer varsa onu kullan
         openRightBar();
+
     };
 
 
@@ -159,7 +162,7 @@ function Dersler() {
             {/* Sağ panel */}
             <RightBar isOpen={rightBarOpen} onClose={closeRightBar} editingIndex={editingIndex}
                 tempGroups={tempGroups}
-                onGroupChange={handleGroupChange} />
+                onGroupChange={handleGroupChange} group={currentGroup} />
 
             {/* Row 2 - Arama, Filtreleme, Yenileme */}
             <div className="yayinlar-main-row-2">
