@@ -116,7 +116,7 @@ function MyApplications({ onSelect }) {
                         ))}
                         <button onClick={() => setSelectedApplication(null)}>Kapat</button>
                     </div>
-                    <BasvuruInfo />
+
                 </div>
             )}
         </div>
