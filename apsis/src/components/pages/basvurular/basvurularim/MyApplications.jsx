@@ -3,6 +3,7 @@ import axios from 'axios';
 import All_Url from '../../../../url.js';
 import NotFound from '../../../errorstacks/NotFound.jsx';
 import './MyApplications.css';
+import { motion, AnimatePresence } from 'framer-motion';
 
 function MyApplications({ onSelect }) {
     const [loading, setLoading] = useState(false);
@@ -52,42 +53,49 @@ function MyApplications({ onSelect }) {
 
                     <div className='myapplications-content'>
                         <div className='myapplications-table'>
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Başvuru Tarihi</th>
-                                        <th>Başvurulan Kadro</th>
-                                        <th>Başvuru Tipi</th>
-                                        <th>Başvuru Durumu</th>
-                                        <th>İşlemler</th>
-                                    </tr>
-                                </thead>
-                                <tbody className='myapplications-table-body'>
-                                    {applications.length > 0 ? (
-                                        applications.map((app) => (
-                                            <tr key={app.applicationId}>
-                                                <td>{new Date().toLocaleDateString()}</td>
-                                                <td>{app.title}</td>
-                                                <td>{app.userType === 'Academic' ? 'Kurum İçi' : 'Kurum Dışı'}</td>
-                                                <td>
-                                                    {app.applicationStatus === 'pending'
-                                                        ? 'Beklemede'
-                                                        : app.applicationStatus === 'rejected'
-                                                            ? 'Reddedildi'
-                                                            : 'Onaylandı'}
-                                                </td>
-                                                <td>
-                                                    <button className='myapplications-button' onClick={() => setSelectedApplication(app)}>Detay</button>
-                                                </td>
-                                            </tr>
-                                        ))
-                                    ) : (
+                            <AnimatePresence mode="wait">
+                                <motion.table
+                                    initial={{ opacity: 0, x: -50 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    exit={{ opacity: 0, x: 50 }}
+                                    transition={{ duration: 0.3 }}
+                                >
+                                    <thead>
                                         <tr>
-                                            <td colSpan="4"><NotFound /></td>
+                                            <th>Başvuru Tarihi</th>
+                                            <th>Başvurulan Kadro</th>
+                                            <th>Başvuru Tipi</th>
+                                            <th>Başvuru Durumu</th>
+                                            <th>İşlemler</th>
                                         </tr>
-                                    )}
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody className='myapplications-table-body'>
+                                        {applications.length > 0 ? (
+                                            applications.map((app) => (
+                                                <tr key={app.applicationId}>
+                                                    <td>{new Date().toLocaleDateString()}</td>
+                                                    <td>{app.title}</td>
+                                                    <td>{app.userType === 'Academic' ? 'Kurum İçi' : 'Kurum Dışı'}</td>
+                                                    <td>
+                                                        {app.applicationStatus === 'pending'
+                                                            ? 'Beklemede'
+                                                            : app.applicationStatus === 'rejected'
+                                                                ? 'Reddedildi'
+                                                                : 'Onaylandı'}
+                                                    </td>
+                                                    <td>
+                                                        <button className='myapplications-button' onClick={() => setSelectedApplication(app)}>Detay</button>
+                                                    </td>
+                                                </tr>
+                                            ))
+                                        ) : (
+                                            <tr>
+                                                <td colSpan="4"><NotFound /></td>
+                                            </tr>
+                                        )}
+                                    </tbody>
+                                </motion.table>
+                            </AnimatePresence>
                         </div>
                     </div>
                     <div className='myapplication-buttons'>
