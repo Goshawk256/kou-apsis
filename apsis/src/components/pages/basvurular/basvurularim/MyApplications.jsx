@@ -49,9 +49,7 @@ function MyApplications({ onSelect }) {
             ) : (
                 <>
                     <h1 className='myapplications-header'>Başvurularım</h1>
-                    <div className='myapplication-buttons'>
-                        <button onClick={onSelect}>Yeni Başvuru</button>
-                    </div>
+
                     <div className='myapplications-content'>
                         <div className='myapplications-table'>
                             <table>
@@ -91,6 +89,9 @@ function MyApplications({ onSelect }) {
                                 </tbody>
                             </table>
                         </div>
+                    </div>
+                    <div className='myapplication-buttons'>
+                        <button onClick={onSelect}>Yeni Başvuru</button>
                     </div>
                 </>
             )}
