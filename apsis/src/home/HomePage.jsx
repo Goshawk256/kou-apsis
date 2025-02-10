@@ -35,7 +35,7 @@ function HomePage() {
                 return <Oduller />;
             case 'Sanatsal Faaliyet':
                 return <SanatsalFaaliyetler />;
-            case 'Başvuru Yap':
+            case 'Başvuru':
                 return <Basvurular onSelect={setSelectedPage} />;
             case 'Finish':
                 return <Finish />;

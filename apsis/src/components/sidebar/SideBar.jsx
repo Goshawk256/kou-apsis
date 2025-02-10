@@ -21,7 +21,7 @@ function SideBar({ onSelect }) {
         { name: "Proje Görevlerim", icon: <img src={gorevIcon} alt="Görevler" /> },
         { name: "Ödüller", icon: <img src={odulIcon} alt="Ödüller" /> },
         { name: "Sanatsal Faaliyet", icon: <img src={sanatIcon} alt="Sanatsal Faaliyet" /> },
-        { name: "Başvuru Yap", icon: <img src={basvuruIcon} alt="Başvurular" /> },
+        { name: "Başvuru", icon: <img src={basvuruIcon} alt="Başvurular" /> },
         { name: "Yardım", icon: <img src={helpIcon} alt="Help" /> },
     ];
 
