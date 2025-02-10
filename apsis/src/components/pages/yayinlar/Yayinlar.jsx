@@ -8,6 +8,7 @@ import NotFound from '../../errorstacks/NotFound';
 import { refreshTheToken } from '../../../middlewares/authMiddleware';
 import click from '../../../assets/click.png';
 
+
 import { motion, AnimatePresence } from 'framer-motion';
 
 function Yayinlar() {
@@ -22,6 +23,7 @@ function Yayinlar() {
     const [tempGroups, setTempGroups] = useState({}); // Sadece eklenen kısmı tutan nesne
     const [currentGroup, setCurrentGroup] = useState(null);
     const [isEditMode, setIsEditMode] = useState(false);
+    const [name, setName] = useState("makale");
 
     const handleEditClick = (index, currentGroup) => {
         setCurrentGroup(currentGroup);
@@ -158,7 +160,7 @@ function Yayinlar() {
         <div className={`yayinlar-main`}>
             <RightBar isOpen={rightBarOpen} onClose={closeRightBar} id='yayin' editingIndex={editingIndex}
                 tempGroups={tempGroups}
-                onGroupChange={handleGroupChange} group={currentGroup} />
+                onGroupChange={handleGroupChange} group={currentGroup} name={name} />
 
             {popupMessage && (
                 <div className={`already-popup ${popupMessage.type}`}>
@@ -170,25 +172,39 @@ function Yayinlar() {
             <div className="yayinlar-main-row-1">
                 <button
                     className={`yayinlar-btn ${publicationTypeId === 1 ? 'active' : ''}`}
-                    onClick={() => setPublicationTypeId(1)}
+                    onClick={() => {
+                        setPublicationTypeId(1);
+                        setName("publication")
+                    }}
                 >
                     Makaleler
                 </button>
                 <button
                     className={`yayinlar-btn ${publicationTypeId === 2 ? 'active' : ''}`}
-                    onClick={() => setPublicationTypeId(2)}
+                    onClick={() => {
+                        setPublicationTypeId(2);
+                        setName('citation')
+
+                    }}
                 >
                     Atıflarım
                 </button>
                 <button
                     className={`yayinlar-btn ${publicationTypeId === 3 ? 'active' : ''}`}
-                    onClick={() => setPublicationTypeId(3)}
+                    onClick={() => {
+                        setPublicationTypeId(3);
+                        setName('book')
+                    }}
                 >
                     Kitaplar
                 </button>
                 <button
                     className={`yayinlar-btn ${publicationTypeId === 4 ? 'active' : ''}`}
-                    onClick={() => setPublicationTypeId(4)}
+                    onClick={() => {
+                        setPublicationTypeId(4);
+                        setName('declaration')
+
+                    }}
                 >
                     Bildiriler
                 </button>
@@ -371,7 +387,7 @@ function Yayinlar() {
 
                 }
             </div>
-        </div>
+        </div >
     );
 }
 

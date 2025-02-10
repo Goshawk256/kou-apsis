@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
+import { useEffect } from 'react';
+import { lessonGroups, projectGroups, publicationGroups, awardGroups, artGroups, thesisGroups, bookGroups, declarationGroups, citationGroups } from '../../middlewares/groupSchemeMiddleware';
 import './RightBar.css';
 
 
-function RightBar({ isOpen, onClose, id, editingIndex, tempGroups, onGroupChange, group }) {
+function RightBar({ isOpen, onClose, id, editingIndex, tempGroups, onGroupChange, group, name }) {
 
     const [selectedConditions, setSelectedConditions] = useState([]);
     const [uploadedFile, setUploadedFile] = useState(null);
+    const [allowedList, setAllowedList] = useState([]);
 
     const handleSelection = (condition) => {
         if (selectedConditions.includes(condition)) {
@@ -32,6 +35,31 @@ function RightBar({ isOpen, onClose, id, editingIndex, tempGroups, onGroupChange
         return conditionTexts[condition] || `Özel Durum ${condition}`;
     };
 
+    useEffect(() => {
+        console.log(name);
+
+        if (name === 'makale')
+            setAllowedList(publicationGroups());
+        else if (name === 'thesis')
+            setAllowedList(thesisGroups());
+        else if (name === 'project')
+            setAllowedList(projectGroups());
+        else if (name === 'artwork')
+            setAllowedList(artGroups());
+        else if (name === 'award')
+            setAllowedList(awardGroups());
+        else if (name === 'lesson')
+            setAllowedList(lessonGroups());
+        else if (name == 'citation')
+            setAllowedList(citationGroups());
+        else if (name == 'book')
+            setAllowedList(bookGroups());
+        else if (name == 'declaration')
+            setAllowedList(declarationGroups())
+
+    }, [name]);
+
+
     return (
         <>
             {id === 'yayin' ? (
@@ -48,9 +76,21 @@ function RightBar({ isOpen, onClose, id, editingIndex, tempGroups, onGroupChange
                                 <input
                                     type="text"
                                     value={tempGroups[editingIndex] || ""}
-                                    onChange={(e) => onGroupChange(editingIndex, e.target.value)}
+                                    onChange={(e) => {
+                                        const newValue = e.target.value.toUpperCase(); // Girilen değeri büyük harfe çevir
+
+                                        // Kullanıcının girdiği değer, `allowedList`'teki herhangi bir değerin BAŞLANGICI mı?
+                                        const isValidInput = allowedList.some(item => item.startsWith(newValue));
+
+                                        // Eğer `newValue`, `allowedList`'teki bir değerin başlangıcıysa veya tamamen eşleşiyorsa güncelle
+                                        if (isValidInput || allowedList.includes(newValue)) {
+                                            onGroupChange(editingIndex, newValue);
+                                        }
+                                    }}
                                     autoFocus
                                 />
+
+
                             )}
 
 
@@ -119,9 +159,20 @@ function RightBar({ isOpen, onClose, id, editingIndex, tempGroups, onGroupChange
                             <input
                                 type="text"
                                 value={tempGroups[editingIndex] || ""}
-                                onChange={(e) => onGroupChange(editingIndex, e.target.value)}
+                                onChange={(e) => {
+                                    const newValue = e.target.value.toUpperCase(); // Girilen değeri büyük harfe çevir
+
+                                    // Kullanıcının girdiği değer, `allowedList`'teki herhangi bir değerin BAŞLANGICI mı?
+                                    const isValidInput = allowedList.some(item => item.startsWith(newValue));
+
+                                    // Eğer `newValue`, `allowedList`'teki bir değerin başlangıcıysa veya tamamen eşleşiyorsa güncelle
+                                    if (isValidInput || allowedList.includes(newValue)) {
+                                        onGroupChange(editingIndex, newValue);
+                                    }
+                                }}
                                 autoFocus
                             />
+
                         )}
                     </div>
                 </>

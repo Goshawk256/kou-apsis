@@ -162,7 +162,7 @@ function Dersler() {
             {/* Sağ panel */}
             <RightBar isOpen={rightBarOpen} onClose={closeRightBar} editingIndex={editingIndex}
                 tempGroups={tempGroups}
-                onGroupChange={handleGroupChange} group={currentGroup} />
+                onGroupChange={handleGroupChange} group={currentGroup} name={'lesson'} />
 
             {/* Row 2 - Arama, Filtreleme, Yenileme */}
             <div className="yayinlar-main-row-2">
