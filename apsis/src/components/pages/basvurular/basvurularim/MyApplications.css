@@ -3,18 +3,32 @@
     height: 500px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: start;
     flex-direction: column;
 }
 
 .myapplications-content {
+    margin-top: 1%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: start;
     width: 100%;
-    height: 80%;
+    height: 70%;
 
+
+}
+
+.myapplication-buttons {
+    width: 80%;
+    height: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
+
+.myapplications-header {
+    color: grey;
 }
 
 .myapplications-table {
@@ -30,11 +44,42 @@
     width: 80%;
     border: 1px solid #eaeafa;
 
+
 }
 
 .myapplications-table table thead {
     background-color: #1FA54E;
+}
 
+.myapplications-table table thead th {
+    padding: 10px;
+    color: white;
+}
 
+.myapplications-button {
+    padding: 10px;
+    background-color: #1FA54E;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    width: 100%;
+    cursor: pointer;
 
+}
+
+.myapplication-buttons button {
+    height: 100%;
+    width: 10%;
+    border: none;
+    background-color: #1FA54E;
+    color: #ffff;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.myapplications-table-body tr td {
+    padding: 5px;
+    font-size: 14px;
+    font-weight: 500;
+    color: grey;
 }

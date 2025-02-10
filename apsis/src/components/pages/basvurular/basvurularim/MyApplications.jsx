@@ -27,6 +27,9 @@ function MyApplications({ onSelect }) {
     return (
         <div className='myapplications-main'>
             <h1 className='myapplications-header'>Başvurularım</h1>
+            <div className='myapplication-buttons'>
+                <button onClick={onSelect}>Yeni Başvuru</button>
+            </div>
             <div className='myapplications-content'>
                 <div className='myapplications-table'>
                     <table>
@@ -38,7 +41,7 @@ function MyApplications({ onSelect }) {
                                 <th>İşlemler</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody className='myapplications-table-body'>
                             <tr>
                                 <td>10.10.2021</td>
                                 <td>Proje Adı</td>
@@ -50,7 +53,9 @@ function MyApplications({ onSelect }) {
                         </tbody>
                     </table>
                 </div>
+
             </div>
+
         </div>
     );
 }
