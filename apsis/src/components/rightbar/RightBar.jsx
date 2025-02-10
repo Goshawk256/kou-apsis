@@ -36,7 +36,7 @@ function RightBar({ isOpen, onClose, id, editingIndex, tempGroups, onGroupChange
     };
 
     useEffect(() => {
-        console.log(name);
+
 
         if (name === 'makale')
             setAllowedList(publicationGroups());

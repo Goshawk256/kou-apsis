@@ -11,7 +11,7 @@ export const refreshTheToken = async () => {
 
         if (response) {
             localStorage.setItem('accessToken', response.data.accessToken);
-            console.log('Token yenileme başarılı');
+
         }
         else {
             console.log('Token yenileme başarısız');

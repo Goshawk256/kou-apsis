@@ -289,11 +289,7 @@ function Yayinlar() {
                                             <tr key={item.id
                                             }
                                                 className={isEditMode ? "edit-mode-row" : ""}
-                                            // onClick={() => {
-                                            // if (isEditMode) {
-                                            // openRightBar();
-                                            //}
-                                            // }}
+
                                             >
 
                                                 <td>
@@ -314,11 +310,7 @@ function Yayinlar() {
                                         ) : (
                                             <tr key={item.id}
                                                 className={isEditMode ? "edit-mode-row" : ""}
-                                            // onClick={() => {
-                                            // if (isEditMode) {
-                                            //     openRightBar();
-                                            // }
-                                            // }}
+
                                             >
                                                 <td>
                                                     {item.title.length > 50 ? `${item.title.slice(0, 60)}...` : item.title}
@@ -330,8 +322,7 @@ function Yayinlar() {
                                                             month: 'long',
                                                             year: 'numeric',
                                                         })}
-                                                        {/*  /
-                                                        <span style={{ color: '#eea95b' }}>Düzenlenmedi</span> */}
+
                                                     </p>
                                                 </td>
                                                 <td>{item.journalIndex || '-'}</td>
