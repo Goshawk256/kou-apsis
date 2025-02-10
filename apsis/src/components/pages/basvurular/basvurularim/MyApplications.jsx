@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import All_Url from '../../../../url.js';
 import NotFound from '../../../errorstacks/NotFound.jsx';
-import BasvuruInfo from '../../../../../kou-apsis/apsis/src/components/customs/infostacks/BasvuruInfo.jsx';
 import './MyApplications.css';
 
 function MyApplications({ onSelect }) {
