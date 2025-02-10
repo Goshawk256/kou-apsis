@@ -7,7 +7,7 @@ import { StaticDatePicker } from '@mui/x-date-pickers/StaticDatePicker';
 import { useEffect } from 'react';
 import axios from 'axios';
 import All_Url from '../../../../url';
-import MyApplications from '../myapplications/MyApplications';
+import MyApplications from '../basvurularim/MyApplications';
 
 
 function ConfirmBasvuru({ setShowTable }) {
