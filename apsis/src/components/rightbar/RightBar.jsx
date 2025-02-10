@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './RightBar.css';
 
 
-function RightBar({ isOpen, onClose, id }) {
+function RightBar({ isOpen, onClose, id, editingIndex, tempGroups, onGroupChange }) {
 
     const [selectedConditions, setSelectedConditions] = useState([]);
     const [uploadedFile, setUploadedFile] = useState(null);
@@ -42,6 +42,15 @@ function RightBar({ isOpen, onClose, id }) {
                             <button className="close-btn" onClick={onClose}>X</button>
                         </div>
                         <div className="right-bar-content">
+                            <label style={{ fontWeight: '700', marginBottom: '3%', display: 'flex', justifyContent: 'start', width: '100%', fontSize: '14px' }}>Grup Bigisi Düzenleme</label>
+                            {editingIndex !== null && (
+                                <input
+                                    type="text"
+                                    value={tempGroups[editingIndex] || ""}
+                                    onChange={(e) => onGroupChange(editingIndex, e.target.value)}
+                                    autoFocus
+                                />
+                            )}
                             <label style={{ fontWeight: '700', marginBottom: '3%', display: 'flex', justifyContent: 'start', width: '100%', fontSize: '14px' }}>Başlıca Yazar Durumu</label>
                             <div className="checkbox-input">
                                 {[8, 9, 10].map(condition => (
@@ -101,7 +110,15 @@ function RightBar({ isOpen, onClose, id }) {
                 <>
                     <div className={`overlay ${isOpen ? 'open' : ''}`} onClick={onClose}></div>
                     <div className={`right-bar ${isOpen ? 'open' : ''} `}>
-                        Henüz bir içerik bulunmamaktadır.
+                        <label style={{ fontWeight: '700', marginBottom: '3%', display: 'flex', justifyContent: 'start', width: '100%', fontSize: '14px' }}>Grup Bigisi Düzenleme</label>
+                        {editingIndex !== null && (
+                            <input
+                                type="text"
+                                value={tempGroups[editingIndex] || ""}
+                                onChange={(e) => onGroupChange(editingIndex, e.target.value)}
+                                autoFocus
+                            />
+                        )}
                     </div>
                 </>
 

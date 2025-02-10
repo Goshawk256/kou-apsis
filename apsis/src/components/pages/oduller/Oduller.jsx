@@ -19,22 +19,18 @@ function Oduller() {
     const [editingIndex, setEditingIndex] = useState(null);
     const [tempGroups, setTempGroups] = useState({}); // Yalnızca eklenen kısmı saklayan nesne
     const [isEditMode, setIsEditMode] = useState(false);
-    const handleTableClick = () => {
-        setIsEditMode(!isEditMode); // Düzenleme modunu aç/kapat
-    };
+
     const handleEditClick = (index) => {
         setEditingIndex(index);
         setTempGroups(prev => ({ ...prev, [index]: tempGroups[index] || "" })); // Önceden bir değer varsa onu kullan
+        openRightBar();
     };
 
-    const handleInputChange = (e, index) => {
-        setTempGroups(prev => ({ ...prev, [index]: e.target.value })); // Sadece ilgili satırın groupEdited kısmını güncelle
-    };
-
-    const handleKeyPress = (e) => {
-        if (e.key === "Enter") {
-            setEditingIndex(null); // Düzenleme modunu kapat
-        }
+    const handleGroupChange = (id, newValue) => {
+        setTempGroups((prev) => ({
+            ...prev,
+            [id]: newValue,
+        }));
     };
     const username = localStorage.getItem('username')
 
@@ -122,7 +118,9 @@ function Oduller() {
             )}
 
             {/* Sağ panel */}
-            <RightBar isOpen={rightBarOpen} onClose={closeRightBar} />
+            <RightBar isOpen={rightBarOpen} onClose={closeRightBar} editingIndex={editingIndex}
+                tempGroups={tempGroups}
+                onGroupChange={handleGroupChange} />
 
             {/* Row 2 - Arama, Filtreleme, Yenileme */}
             <div className="yayinlar-main-row-2">
@@ -192,11 +190,7 @@ function Oduller() {
                                     return (
                                         <tr key={item.id}
                                             className={isEditMode ? "edit-mode-row" : ""}
-                                            onClick={() => {
-                                                if (isEditMode) {
-                                                    openRightBar();
-                                                }
-                                            }}
+
                                         >
                                             <td>{item.title}
                                                 <br />
@@ -210,29 +204,20 @@ function Oduller() {
                                                 className="item-group"
 
                                             >
-                                                {editingIndex === item.id ? (
-                                                    <input
-                                                        type="text"
-                                                        value={tempGroups[item.id] || ""}
-                                                        onChange={(e) => handleInputChange(e, item.id)}
-                                                        onKeyDown={handleKeyPress}
-                                                        autoFocus
-                                                        onBlur={() => setEditingIndex(null)}
-                                                    />
-                                                ) : (
-                                                    <div className='group-show'>
-                                                        {tempGroups[item.id] ? (
-                                                            <div className='preffered-group'>
-                                                                <s>{item.group}</s>/ <span>{tempGroups[item.id]}</span>
-                                                            </div>
-                                                        ) : (
-                                                            <div className='preffered-group'>
-                                                                <span>{item.group}</span>
-                                                            </div>
-                                                        )
-                                                        }
-                                                    </div>
-                                                )}
+
+                                                <div className='group-show'>
+                                                    {tempGroups[item.id] ? (
+                                                        <div className='preffered-group'>
+                                                            <s>{item.group}</s>/ <span>{tempGroups[item.id]}</span>
+                                                        </div>
+                                                    ) : (
+                                                        <div className='preffered-group'>
+                                                            <span>{item.group}</span>
+                                                        </div>
+                                                    )
+                                                    }
+                                                </div>
+
                                             </td>
                                             <td>{item.score}</td>
                                             <td>

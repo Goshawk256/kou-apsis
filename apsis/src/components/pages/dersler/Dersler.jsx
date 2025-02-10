@@ -20,24 +20,21 @@ function Dersler() {
     const [editingIndex, setEditingIndex] = useState(null);
     const [tempGroups, setTempGroups] = useState({}); // Sadece eklenen kısmı tutan nesne
     const [isEditMode, setIsEditMode] = useState(false);
-    const handleTableClick = () => {
-        setIsEditMode(!isEditMode); // Düzenleme modunu aç/kapat
-    };
+
     const handleEditClick = (index, currentGroup) => {
         setEditingIndex(index);
         setTempGroups(prev => ({ ...prev, [index]: tempGroups[index] || "" })); // Önceden girilmiş değer varsa onu kullan
+        openRightBar();
     };
 
-    const handleInputChange = (e, index) => {
-        setTempGroups(prev => ({ ...prev, [index]: e.target.value })); // Sadece ilgili satırın groupEdited kısmını güncelle
-    };
 
-    const handleKeyPress = (e) => {
-        if (e.key === "Enter") {
-            setEditingIndex(null); // Düzenleme modunu kapat
-        }
-    };
 
+    const handleGroupChange = (id, newValue) => {
+        setTempGroups((prev) => ({
+            ...prev,
+            [id]: newValue,
+        }));
+    };
     const formatSemester = (semester) => {
         const yearMapping = {
             '2122': '2021-2022',
@@ -160,7 +157,9 @@ function Dersler() {
             )}
 
             {/* Sağ panel */}
-            <RightBar isOpen={rightBarOpen} onClose={closeRightBar} />
+            <RightBar isOpen={rightBarOpen} onClose={closeRightBar} editingIndex={editingIndex}
+                tempGroups={tempGroups}
+                onGroupChange={handleGroupChange} />
 
             {/* Row 2 - Arama, Filtreleme, Yenileme */}
             <div className="yayinlar-main-row-2">
@@ -258,29 +257,20 @@ function Dersler() {
                                                 className="item-group"
 
                                             >
-                                                {editingIndex === item.id ? (
-                                                    <input
-                                                        type="text"
-                                                        value={tempGroups[item.id] || ""}
-                                                        onChange={(e) => handleInputChange(e, item.id)}
-                                                        onKeyDown={handleKeyPress}
-                                                        autoFocus
-                                                        onBlur={() => setEditingIndex(null)}
-                                                    />
-                                                ) : (
-                                                    <div className='group-show'>
-                                                        {tempGroups[item.id] ? (
-                                                            <div className='preffered-group'>
-                                                                <s>{item.groupAuto}</s>/ <span>{tempGroups[item.id]}</span>
-                                                            </div>
-                                                        ) : (
-                                                            <div className='preffered-group'>
-                                                                <span>{item.groupAuto}</span>
-                                                            </div>
-                                                        )
-                                                        }
-                                                    </div>
-                                                )}
+
+                                                <div className='group-show'>
+                                                    {tempGroups[item.id] ? (
+                                                        <div className='preffered-group'>
+                                                            <s>{item.groupAuto}</s>/ <span>{tempGroups[item.id]}</span>
+                                                        </div>
+                                                    ) : (
+                                                        <div className='preffered-group'>
+                                                            <span>{item.groupAuto}</span>
+                                                        </div>
+                                                    )
+                                                    }
+                                                </div>
+
                                             </td>
                                             <td>{item.scoreAuto}</td>
                                             <td>

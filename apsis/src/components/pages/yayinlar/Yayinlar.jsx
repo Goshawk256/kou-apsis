@@ -21,23 +21,15 @@ function Yayinlar() {
     const [editingIndex, setEditingIndex] = useState(null);
     const [tempGroups, setTempGroups] = useState({}); // Sadece eklenen kısmı tutan nesne
     const [isEditMode, setIsEditMode] = useState(false);
-    const handleTableClick = () => {
-        setIsEditMode(!isEditMode); // Düzenleme modunu aç/kapat
-    };
+
     const handleEditClick = (index, currentGroup) => {
         setEditingIndex(index);
-        setTempGroups(prev => ({ ...prev, [index]: tempGroups[index] || "" })); // Önceden girilmiş değer varsa onu kullan
+        setTempGroups(prev => ({ ...prev, [index]: tempGroups[index] || "" }));
+        openRightBar();
+        //setIsEditMode(!isEditMode); // Düzenleme modunu aç/kapat
     };
 
-    const handleInputChange = (e, index) => {
-        setTempGroups(prev => ({ ...prev, [index]: e.target.value })); // Sadece ilgili satırın groupEdited kısmını güncelle
-    };
 
-    const handleKeyPress = (e) => {
-        if (e.key === "Enter") {
-            setEditingIndex(null); // Düzenleme modunu kapat
-        }
-    };
 
     const username = localStorage.getItem('username');
 
@@ -145,6 +137,12 @@ function Yayinlar() {
         setTimeout(() => setPopupMessage(null), 1500);
     };
 
+    const handleGroupChange = (id, newValue) => {
+        setTempGroups((prev) => ({
+            ...prev,
+            [id]: newValue,
+        }));
+    };
 
 
     const itemsPerPage = 4;
@@ -156,7 +154,9 @@ function Yayinlar() {
 
     return (
         <div className={`yayinlar-main`}>
-            <RightBar isOpen={rightBarOpen} onClose={closeRightBar} id='yayin' />
+            <RightBar isOpen={rightBarOpen} onClose={closeRightBar} id='yayin' editingIndex={editingIndex}
+                tempGroups={tempGroups}
+                onGroupChange={handleGroupChange} />
 
             {popupMessage && (
                 <div className={`already-popup ${popupMessage.type}`}>
@@ -208,18 +208,7 @@ function Yayinlar() {
                 >
                     <FaSync />
                 </button>
-                <button
-                    className="yayinlar-edit-btn"
-                    onClick={() => handleTableClick()}
-                >
-                    {isEditMode ?
-                        (
-                            'Kapat'
-                        ) : (
-                            publicationTypeId === 1 ? 'Makale Düzenle' : publicationTypeId === 2 ? 'Atıf Düzenle' : publicationTypeId === 3 ? 'Kitap Düzenle' : 'Bildiri Düzenle'
-                        )
-                    }
-                </button>
+
                 <div className="yayinlar-pagination">
                     <button onClick={() => setPage(page - 1)} disabled={page <= 1}>
                         ‹
@@ -282,11 +271,11 @@ function Yayinlar() {
                                             <tr key={item.id
                                             }
                                                 className={isEditMode ? "edit-mode-row" : ""}
-                                                onClick={() => {
-                                                    if (isEditMode) {
-                                                        openRightBar();
-                                                    }
-                                                }}
+                                            // onClick={() => {
+                                            // if (isEditMode) {
+                                            // openRightBar();
+                                            //}
+                                            // }}
                                             >
 
                                                 <td>
@@ -307,11 +296,11 @@ function Yayinlar() {
                                         ) : (
                                             <tr key={item.id}
                                                 className={isEditMode ? "edit-mode-row" : ""}
-                                                onClick={() => {
-                                                    if (isEditMode) {
-                                                        openRightBar();
-                                                    }
-                                                }}
+                                            // onClick={() => {
+                                            // if (isEditMode) {
+                                            //     openRightBar();
+                                            // }
+                                            // }}
                                             >
                                                 <td>
                                                     {item.title.length > 50 ? `${item.title.slice(0, 60)}...` : item.title}
@@ -332,29 +321,20 @@ function Yayinlar() {
                                                     className="item-group"
 
                                                 >
-                                                    {editingIndex === item.id ? (
-                                                        <input
-                                                            type="text"
-                                                            value={tempGroups[item.id] || ""}
-                                                            onChange={(e) => handleInputChange(e, item.id)}
-                                                            onKeyDown={handleKeyPress}
-                                                            autoFocus
-                                                            onBlur={() => setEditingIndex(null)}
-                                                        />
-                                                    ) : (
-                                                        <div className='group-show'>
-                                                            {tempGroups[item.id] ? (
-                                                                <div className='preffered-group'>
-                                                                    <s>{item.groupAuto}</s>/ <span>{tempGroups[item.id]}</span>
-                                                                </div>
-                                                            ) : (
-                                                                <div className='preffered-group'>
-                                                                    <span>{item.groupAuto}</span>
-                                                                </div>
-                                                            )
-                                                            }
-                                                        </div>
-                                                    )}
+
+                                                    <div className='group-show'>
+                                                        {tempGroups[item.id] ? (
+                                                            <div className='preffered-group'>
+                                                                <s>{item.groupAuto}</s>/ <span>{tempGroups[item.id]}</span>
+                                                            </div>
+                                                        ) : (
+                                                            <div className='preffered-group'>
+                                                                <span>{item.groupAuto}</span>
+                                                            </div>
+                                                        )
+                                                        }
+                                                    </div>
+
                                                 </td>
                                                 <td >{(item.scoreAuto || 0).toFixed(2)}</td>
                                                 <td >

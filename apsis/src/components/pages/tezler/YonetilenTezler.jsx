@@ -20,24 +20,19 @@ function YonetilenTezler() {
     const [editingIndex, setEditingIndex] = useState(null);
     const [tempGroups, setTempGroups] = useState({}); // Yalnızca eklenen kısmı saklayan nesne
     const [isEditMode, setIsEditMode] = useState(false);
-    const handleTableClick = () => {
-        setIsEditMode(!isEditMode); // Düzenleme modunu aç/kapat
-    };
+
     const handleEditClick = (index) => {
         setEditingIndex(index);
         setTempGroups(prev => ({ ...prev, [index]: tempGroups[index] || "" })); // Önceden bir değer varsa onu kullan
+        openRightBar();
     };
 
-    const handleInputChange = (e, index) => {
-        setTempGroups(prev => ({ ...prev, [index]: e.target.value })); // Sadece ilgili satırın groupEdited kısmını güncelle
+    const handleGroupChange = (id, newValue) => {
+        setTempGroups((prev) => ({
+            ...prev,
+            [id]: newValue,
+        }));
     };
-
-    const handleKeyPress = (e) => {
-        if (e.key === "Enter") {
-            setEditingIndex(null); // Düzenleme modunu kapat
-        }
-    };
-
 
     const fetchData = async () => {
         setLoading(true);
@@ -115,7 +110,9 @@ function YonetilenTezler() {
 
     return (
         <div className="yayinlar-main">
-            <RightBar isOpen={rightBarOpen} onClose={closeRightBar} />
+            <RightBar isOpen={rightBarOpen} onClose={closeRightBar} editingIndex={editingIndex}
+                tempGroups={tempGroups}
+                onGroupChange={handleGroupChange} />
             {popupMessage && (
                 <div className={`already-popup ${popupMessage.type}`}>
                     {popupMessage.message}
@@ -134,12 +131,7 @@ function YonetilenTezler() {
                 <button className="yayinlar-refresh-btn" onClick={fetchData} disabled={loading}>
                     <FaSync />
                 </button>
-                <button
-                    className="yayinlar-edit-btn"
-                    onClick={() => handleTableClick()}
-                >
-                    {isEditMode ? 'Kapat' : 'Tez Düzenle'}
-                </button>
+
                 <div className="yayinlar-pagination">
                     <button onClick={() => setPage(page - 1)} disabled={page <= 1}>
                         ‹
@@ -187,11 +179,6 @@ function YonetilenTezler() {
                                     return (
                                         <tr key={item.id}
                                             className={isEditMode ? "edit-mode-row" : ""}
-                                            onClick={() => {
-                                                if (isEditMode) {
-                                                    openRightBar();
-                                                }
-                                            }}
                                         >
                                             <td>{item.title}<br />
                                                 <p >
@@ -205,29 +192,22 @@ function YonetilenTezler() {
                                                 className="item-group"
 
                                             >
-                                                {editingIndex === item.id ? (
-                                                    <input
-                                                        type="text"
-                                                        value={tempGroups[item.id] || ""}
-                                                        onChange={(e) => handleInputChange(e, item.id)}
-                                                        onKeyDown={handleKeyPress}
-                                                        autoFocus
-                                                        onBlur={() => setEditingIndex(null)}
-                                                    />
-                                                ) : (
-                                                    <div className='group-show'>
-                                                        {tempGroups[item.id] ? (
-                                                            <div className='preffered-group'>
-                                                                <s>{item.groupAuto}</s> <span>{tempGroups[item.id]}</span>
-                                                            </div>
-                                                        ) : (
-                                                            <div className='preffered-group'>
-                                                                <span>{item.groupAuto}</span>
-                                                            </div>
-                                                        )
-                                                        }
-                                                    </div>
-                                                )}
+
+
+
+                                                <div className='group-show'>
+                                                    {tempGroups[item.id] ? (
+                                                        <div className='preffered-group'>
+                                                            <s>{item.groupAuto}</s> <span>{tempGroups[item.id]}</span>
+                                                        </div>
+                                                    ) : (
+                                                        <div className='preffered-group'>
+                                                            <span>{item.groupAuto}</span>
+                                                        </div>
+                                                    )
+                                                    }
+                                                </div>
+
                                             </td>
 
                                             <td>{item.scoreAuto}</td>
