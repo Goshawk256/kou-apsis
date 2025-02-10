@@ -26,7 +26,31 @@ function MyApplications({ onSelect }) {
 
     return (
         <div className='myapplications-main'>
-            <button onClick={onSelect}>selam</button>
+            <h1 className='myapplications-header'>Başvurularım</h1>
+            <div className='myapplications-content'>
+                <div className='myapplications-table'>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Başvuru Tarihi</th>
+                                <th>Proje Adı</th>
+                                <th>Proje Durumu</th>
+                                <th>İşlemler</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>10.10.2021</td>
+                                <td>Proje Adı</td>
+                                <td>Onay Bekliyor</td>
+                                <td>
+                                    <button className='myapplications-button'>Detay</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     );
 }
