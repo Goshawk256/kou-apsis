@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import './HomePage.css';
 import SideBar from '../academic/components/sidebar/SideBar';
@@ -13,11 +13,23 @@ import Projeler from '../academic/components/pages/projeler/Projeler';
 import Basvurular from '../academic/components/pages/basvurular/Basvuru';
 import Finish from '../academic/components/pages/finish/Finish';
 import Help from '../academic/components/pages/help/Help';
-
+import JuriAna from '../jury/components/pages/anasayfa/JuriAna';
 
 function HomePage() {
-
     const [selectedPage, setSelectedPage] = useState('Ana Sayfa');
+    const [role, setRole] = useState('');
+
+    useEffect(() => {
+        const token = localStorage.getItem('accessToken');
+        if (token) {
+            try {
+                const payload = JSON.parse(atob(token.split('.')[1])); // JWT'nin payload kısmını decode et
+                setRole(payload.role); // role değerini güncelle
+            } catch (error) {
+                console.error('Token çözümleme hatası:', error);
+            }
+        }
+    }, []);
 
     const renderContent = () => {
         switch (selectedPage) {
@@ -47,23 +59,27 @@ function HomePage() {
     };
 
     return (
-        <div className={`main-homepage `}>
-            <Header />
-            <SideBar onSelect={setSelectedPage} />
-            <div className="flexible-component">
-                <AnimatePresence mode="wait">
-                    <motion.div
-                        key={selectedPage}
-                        initial={{ opacity: 0, x: -50 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: 50 }}
-                        transition={{ duration: 0.3 }}
-                    >
-                        {renderContent()}
-                    </motion.div>
-                </AnimatePresence>
+        role === 'Academic' ? (
+            <div className="main-homepage">
+                <Header />
+                <SideBar onSelect={setSelectedPage} />
+                <div className="flexible-component">
+                    <AnimatePresence mode="wait">
+                        <motion.div
+                            key={selectedPage}
+                            initial={{ opacity: 0, x: -50 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            exit={{ opacity: 0, x: 50 }}
+                            transition={{ duration: 0.3 }}
+                        >
+                            {renderContent()}
+                        </motion.div>
+                    </AnimatePresence>
+                </div>
             </div>
-        </div>
+        ) : (
+            <JuriAna />
+        )
     );
 }
 
