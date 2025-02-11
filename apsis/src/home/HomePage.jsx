@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import './HomePage.css';
-import SideBar from '../components/sidebar/SideBar';
-import Header from '../components/header/Header';
-import AnaSayfa from '../components/pages/anasayfa/AnaSayfa';
-import Dersler from '../components/pages/dersler/Dersler';
-import Oduller from '../components/pages/oduller/Oduller';
-import SanatsalFaaliyetler from '../components/pages/sanat/SanatsalFaaliyetler';
-import YonetilenTezler from '../components/pages/tezler/YonetilenTezler';
-import Yayinlar from '../components/pages/yayinlar/Yayinlar';
-import Projeler from '../components/pages/projeler/Projeler';
-import Basvurular from '../components/pages/basvurular/Basvuru';
-import Finish from '../components/pages/finish/Finish';
-import Help from '../components/pages/help/Help';
+import SideBar from '../academic/components/sidebar/SideBar';
+import Header from '../academic/components/header/Header';
+import AnaSayfa from '../academic/components/pages/anasayfa/AnaSayfa';
+import Dersler from '../academic/components/pages/dersler/Dersler';
+import Oduller from '../academic/components/pages/oduller/Oduller';
+import SanatsalFaaliyetler from '../academic/components/pages/sanat/SanatsalFaaliyetler';
+import YonetilenTezler from '../academic/components/pages/tezler/YonetilenTezler';
+import Yayinlar from '../academic/components/pages/yayinlar/Yayinlar';
+import Projeler from '../academic/components/pages/projeler/Projeler';
+import Basvurular from '../academic/components/pages/basvurular/Basvuru';
+import Finish from '../academic/components/pages/finish/Finish';
+import Help from '../academic/components/pages/help/Help';
 
 
 function HomePage() {

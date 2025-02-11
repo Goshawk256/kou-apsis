@@ -3,8 +3,8 @@ import { useEffect } from 'react';
 import axios from 'axios';
 
 import HomePage from './home/HomePage';
-import Login from './components/login/Login';
-import Finish from './components/pages/finish/Finish';
+import Login from './login/Login';
+import Finish from './academic/components/pages/finish/Finish';
 
 
 {/*
