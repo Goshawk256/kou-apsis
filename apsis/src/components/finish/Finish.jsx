@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import './Finish.css';
 import pdfMake from 'pdfmake/build/pdfmake';
+import All_Url from '../../url';
+import axios from 'axios';
 import 'pdfmake/build/vfs_fonts';
 import {
     tableHeaders,
@@ -27,6 +29,7 @@ function Finish() {
         patents: [],
         userInfo: null
     });
+    const [sendData, setSendData] = useState([]);
 
     const convertSectionToTableData = (section) => {
         const rows = [];
@@ -233,8 +236,69 @@ function Finish() {
         } catch (err) {
             console.error('Error loading data:', err);
         }
-    }, []);
 
+        const savedProjects = JSON.parse(localStorage.getItem('savedProjects')) || [];
+        const savedThesis = JSON.parse(localStorage.getItem('savedThesis')) || [];
+        const savedPublications = JSON.parse(localStorage.getItem('savedPublications')) || [];
+        const savedAwards = JSON.parse(localStorage.getItem('savedAwards')) || [];
+        const savedArtworks = JSON.parse(localStorage.getItem('savedArtworks')) || [];
+        const savedLessons = JSON.parse(localStorage.getItem('savedCourses')) || [];
+
+
+        let data = {
+            title: localStorage.getItem('selectedOption'),
+            username: localStorage.getItem('username'),
+            date: new Date().toISOString(),
+        };
+
+
+        if (savedPublications.length > 0) {
+            data.publications = savedPublications.map(item => ({ publicationId: item.id }));
+        }
+        if (savedProjects.length > 0) {
+            data.projects = savedProjects.map(item => ({ projectId: item.id }));
+        }
+        if (savedThesis.length > 0) {
+            data.thesis = savedThesis.map(item => ({ thesisId: item.id }));
+        }
+        if (savedLessons.length > 0) {
+            data.lessons = savedLessons.map(item => ({ lessonId: item.id }));
+        }
+        if (savedAwards.length > 0) {
+            data.awards = savedAwards.map(item => ({ awardId: item.id }));
+        }
+        if (savedArtworks.length > 0) {
+            data.artworks = savedArtworks.map(item => ({ artworkId: item.id }));
+        }
+
+        setSendData(data);
+
+
+
+
+    }, []);
+    const handleApplication = async () => {
+        const token = localStorage.getItem('accessToken');
+        if (!token) {
+            alert('Oturum açılmadı!');
+            return;
+        }
+        try {
+            const response = await axios.post(`${All_Url.api_base_url}/academic/add-application`, {
+                ...sendData
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            alert('Başvuru tamamlandı!');
+
+            return response.data.success;
+
+        } catch (error) {
+            console.error("Hata oluştu:", error);
+        }
+    };
     const capitalizeName = (name) => {
         if (!name) return '';
         return name.charAt(0).toLocaleUpperCase('tr-TR') + name.slice(1).toLocaleLowerCase('tr-TR');
@@ -399,7 +463,10 @@ function Finish() {
                     />
                 ))}
             </div>
-            <button className='finish-button' onClick={downloadPDF}>İndir</button>
+            <div className='finish-buttons' >
+                <button className='finish-button' onClick={downloadPDF}>İndir</button>
+                <button onClick={() => { handleApplication() }} className='finish-button'>Başvuruyu Tamala</button>
+            </div>
         </div>
     );
 }

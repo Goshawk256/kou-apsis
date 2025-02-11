@@ -11,7 +11,7 @@ function Basvuru({ onSelect }) {
     const itemsPerPage = 7;
     const [totalScore, setTotalScore] = useState(0);
     const [showTable, setShowTable] = useState(false);
-    const [sendData, setSendData] = useState([]);
+
     useEffect(() => {
         const savedProjects = JSON.parse(localStorage.getItem('savedProjects')) || [];
         const savedThesis = JSON.parse(localStorage.getItem('savedThesis')) || [];
@@ -21,33 +21,7 @@ function Basvuru({ onSelect }) {
         const savedLessons = JSON.parse(localStorage.getItem('savedCourses')) || [];
 
 
-        let data = {
-            title: localStorage.getItem('selectedOption'),
-            username: localStorage.getItem('username'),
-            date: new Date().toISOString(),
-        };
 
-
-        if (savedPublications.length > 0) {
-            data.publications = savedPublications.map(item => ({ publicationId: item.id }));
-        }
-        if (savedProjects.length > 0) {
-            data.projects = savedProjects.map(item => ({ projectId: item.id }));
-        }
-        if (savedThesis.length > 0) {
-            data.thesis = savedThesis.map(item => ({ thesisId: item.id }));
-        }
-        if (savedLessons.length > 0) {
-            data.lessons = savedLessons.map(item => ({ lessonId: item.id }));
-        }
-        if (savedAwards.length > 0) {
-            data.awards = savedAwards.map(item => ({ awardId: item.id }));
-        }
-        if (savedArtworks.length > 0) {
-            data.artworks = savedArtworks.map(item => ({ artworkId: item.id }));
-        }
-
-        setSendData(data);
 
 
         const formattedProjects = savedProjects.map(item => ({
@@ -156,28 +130,7 @@ function Basvuru({ onSelect }) {
         onSelect('Finish');
     }
 
-    const handleApplication = async () => {
-        const token = localStorage.getItem('accessToken');
-        if (!token) {
-            alert('Oturum açılmadı!');
-            return;
-        }
-        try {
-            const response = await axios.post(`${All_Url.api_base_url}/academic/add-application`, {
-                ...sendData
-            }, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            });
 
-            handleFinish();
-            return response.data.success;
-
-        } catch (error) {
-            console.error("Hata oluştu:", error);
-        }
-    };
 
 
 
@@ -235,7 +188,7 @@ function Basvuru({ onSelect }) {
                         </button>
                         <button
                             className='basvuru-ileri-button'
-                            onClick={() => (currentPage === totalPages ? handleApplication() : handleNext())}
+                            onClick={() => (currentPage === totalPages ? handleFinish() : handleNext())}
                         >
                             İleri
                         </button>
