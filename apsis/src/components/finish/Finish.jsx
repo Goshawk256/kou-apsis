@@ -4,6 +4,7 @@ import pdfMake from 'pdfmake/build/pdfmake';
 import All_Url from '../../url';
 import axios from 'axios';
 import 'pdfmake/build/vfs_fonts';
+import file from '../../assets/file.png';
 import {
     tableHeaders,
     calculateSectionTotal,
@@ -462,11 +463,15 @@ function Finish() {
                         sectionTotal={calculateSectionTotal(section.data, section.sectionCode)}
                     />
                 ))}
+                <button className='download-button' onClick={downloadPDF}>
+                    <img src={file} alt="" />
+                </button>
             </div>
             <div className='finish-buttons' >
-                <button className='finish-button' onClick={downloadPDF}>İndir</button>
+
                 <button onClick={() => { handleApplication() }} className='finish-button'>Başvuruyu Tamala</button>
             </div>
+
         </div>
     );
 }
