@@ -11,7 +11,7 @@ import YonetilenTezler from '../components/pages/tezler/YonetilenTezler';
 import Yayinlar from '../components/pages/yayinlar/Yayinlar';
 import Projeler from '../components/pages/projeler/Projeler';
 import Basvurular from '../components/pages/basvurular/Basvuru';
-import Finish from '../components/finish/Finish';
+import Finish from '../components/pages/finish/Finish';
 import Help from '../components/pages/help/Help';
 
 

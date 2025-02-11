@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import HomePage from './home/HomePage';
 import Login from './components/login/Login';
-import Finish from './components/finish/Finish';
+import Finish from './components/pages/finish/Finish';
 
 
 {/*

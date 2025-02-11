@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import './Finish.css';
 import pdfMake from 'pdfmake/build/pdfmake';
-import All_Url from '../../url';
+import All_Url from '../../../url';
 import axios from 'axios';
 import 'pdfmake/build/vfs_fonts';
-import file from '../../assets/file.png';
+import file from '../../../assets/file.png';
 import {
     tableHeaders,
     calculateSectionTotal,
