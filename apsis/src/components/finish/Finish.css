@@ -115,12 +115,12 @@
 }
 
 .download-button {
-    position: fixed;
+    position: absolute;
     display: flex;
     align-items: center;
     justify-content: center;
-    top: 16%;
-    right: 2.1%;
+    top: 0%;
+    right: 0%;
     border: none;
     background-color: #1FA54E;
     width: 50px;
@@ -130,7 +130,7 @@
     border-top-left-radius: 0;
     border-bottom-right-radius: 0;
     cursor: pointer;
-    transition: all 0.5s ease;
+    transition: background-color 0.5s ease;
 }
 
 .download-button:hover {
