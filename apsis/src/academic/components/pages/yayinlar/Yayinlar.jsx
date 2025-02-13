@@ -7,8 +7,6 @@ import RightBar from '../../rightbar/RightBar';
 import NotFound from '../../errorstacks/NotFound';
 import { refreshTheToken } from '../../../../middlewares/authMiddleware';
 import click from '../../../../assets/click.png';
-
-
 import { motion, AnimatePresence } from 'framer-motion';
 
 function Yayinlar() {

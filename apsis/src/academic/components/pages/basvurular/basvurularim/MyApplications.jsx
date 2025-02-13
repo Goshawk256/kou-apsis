@@ -84,7 +84,7 @@ function MyApplications({ onSelect }) {
                                                                 : 'Onaylandı'}
                                                     </td>
                                                     <td>
-                                                        <button className='myapplications-button' onClick={() => setSelectedApplication(app)}>Detay</button>
+                                                        <button className='myapplications-button' >PDF indir</button>
                                                     </td>
                                                 </tr>
                                             ))
