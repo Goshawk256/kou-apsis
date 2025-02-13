@@ -74,7 +74,7 @@
 }
 
 .application-type-success span {
-    color: black;
+    color: #686868;
     font-size: large;
     margin-left: 2%;
     font-weight: 600;
@@ -103,7 +103,7 @@
 }
 
 .application-type-waiting span {
-    color: black;
+    color: #686868;
     font-size: large;
     margin-left: 2%;
     font-weight: 600;
@@ -132,7 +132,7 @@
 }
 
 .application-type-reject span {
-    color: black;
+    color: #686868;
     font-size: large;
     margin-left: 2%;
     font-weight: 600;
