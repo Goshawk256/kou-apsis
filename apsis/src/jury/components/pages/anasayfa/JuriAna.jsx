@@ -6,7 +6,11 @@ function JuriAna() {
     return (
         <div className='main-juriana'>
             <JuriHeader />
-            JuriAna
+            <div className='juriana-content'>
+
+
+            </div>
+
         </div>
     )
 }
