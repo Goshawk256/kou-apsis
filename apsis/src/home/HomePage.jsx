@@ -13,7 +13,7 @@ import Projeler from '../academic/components/pages/projeler/Projeler';
 import Basvurular from '../academic/components/pages/basvurular/Basvuru';
 import Finish from '../academic/components/pages/finish/Finish';
 import Help from '../academic/components/pages/help/Help';
-import JuriAna from '../jury/components/pages/anasayfa/JuriAna';
+import JuriHomepage from '../jury/components/JuriHomepage';
 
 function HomePage() {
     const [selectedPage, setSelectedPage] = useState('Ana Sayfa');
@@ -78,7 +78,7 @@ function HomePage() {
                 </div>
             </div>
         ) : (
-            <JuriAna />
+            <JuriHomepage />
         )
     );
 }
