@@ -62,6 +62,7 @@ function MyApplications({ onSelect }) {
                                 >
                                     <thead>
                                         <tr>
+                                            <th>Takip Numarası</th>
                                             <th>Başvuru Tarihi</th>
                                             <th>Başvurulan Kadro</th>
                                             <th>Başvuru Tipi</th>
@@ -73,6 +74,7 @@ function MyApplications({ onSelect }) {
                                         {applications.length > 0 ? (
                                             applications.map((app) => (
                                                 <tr key={app.applicationId}>
+                                                    <td>{app.applicationId}</td>
                                                     <td>{new Date().toLocaleDateString()}</td>
                                                     <td>{app.title}</td>
                                                     <td>{app.userType === 'Academic' ? 'Kurum İçi' : 'Kurum Dışı'}</td>
