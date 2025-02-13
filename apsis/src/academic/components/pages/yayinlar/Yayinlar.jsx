@@ -302,7 +302,7 @@ function Yayinlar() {
                                                 <td>{item.citationScore}</td>
                                                 <td >
                                                     <button className="yayinlar-btn"><FaPencilAlt /></button>
-                                                    <button className="yayinlar-btn" onClick={openRightBar}>
+                                                    <button className="yayinlar-btn" onClick={publicationTypeId === 1 ? () => openRightBar() : null}>
                                                         {isSaved ? <FaInfo /> : <FaCheck />}
                                                     </button>
                                                 </td>
@@ -343,7 +343,6 @@ function Yayinlar() {
                                                         )
                                                         }
                                                     </div>
-
                                                 </td>
                                                 <td >{(item.scoreAuto || 0).toFixed(2)}</td>
                                                 <td >
@@ -354,7 +353,7 @@ function Yayinlar() {
                                                     ) : (
                                                         <div>
 
-                                                            <button className="yayinlar-btn" onClick={() => handleEditClick(item.id, item.groupAuto)}><FaPencilAlt /></button>
+                                                            <button className="yayinlar-btn" onClick={publicationTypeId == 1 ? () => handleEditClick(item.id, item.groupAuto) : null}><FaPencilAlt /></button>
 
                                                             <button
                                                                 className="yayinlar-btn"
