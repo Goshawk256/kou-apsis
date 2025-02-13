@@ -6,19 +6,9 @@ import './JuriAna.css'
 
 function JuriAna() {
     const [selectedPage, setSelectedPage] = useState('Ana Sayfa');
-    const [role, setRole] = useState('');
 
-    useEffect(() => {
-        const token = localStorage.getItem('accessToken');
-        if (token) {
-            try {
-                const payload = JSON.parse(atob(token.split('.')[1])); // JWT'nin payload kısmını decode et
-                setRole(payload.role); // role değerini güncelle
-            } catch (error) {
-                console.error('Token çözümleme hatası:', error);
-            }
-        }
-    }, []);
+
+
 
     const renderContent = () => {
         switch (selectedPage) {
