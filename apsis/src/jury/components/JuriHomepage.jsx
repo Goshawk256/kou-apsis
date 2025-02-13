@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import JuriHeader from './header/JuriHeader'
 import JuriSidebar from './sidebar/JuriSidebar'
+import JuriAna from './pages/anasayfa/JuriAna';
 
 
 function JuriHomepage() {
@@ -13,7 +14,7 @@ function JuriHomepage() {
     const renderContent = () => {
         switch (selectedPage) {
             case 'Ana Sayfa':
-                return <div>selam ana</div>;
+                return <JuriAna />;
             case 'Mesajlar':
                 return <div>selam mesajlar</div>;
             case 'Başvurular':

@@ -7,8 +7,8 @@ function JuriAna() {
 
     return (
 
-        <div className="main-homepage">
-
+        <div className="main-juriana">
+            selam ana
         </div>
 
     );
