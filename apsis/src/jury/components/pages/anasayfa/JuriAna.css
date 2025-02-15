@@ -268,17 +268,21 @@
     align-items: center;
     justify-content: space-between;
 
+
 }
 
 .user-department button {
-    width: 35px;
-    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 25px;
+    height: 25px;
     border: none;
     border-radius: 10px;
     cursor: pointer;
     background-color: transparent;
     color: white;
-    margin-right: 2%;
+
 }
 
 .user-department button img {
