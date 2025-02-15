@@ -6,6 +6,11 @@ import check from '../../../../assets/check.png'
 import './JuriAna.css'
 
 function JuriAna({ onSelect }) {
+    const [isOndegerlendirme, setIsOndegerlendirme] = useState('ondegerlendirme');
+
+    const handleOndegerlendirme = (text) => {
+        setIsOndegerlendirme(text);
+    }
 
 
     return (
@@ -13,8 +18,8 @@ function JuriAna({ onSelect }) {
         <div className="main-juriana">
             <div className='juriana-content' >
                 <div className='basvurular-top-sections' >
-                    <button>Ön Değerlendirme Başvuruları</button>
-                    <button>Kadro Başvuruları</button>
+                    <button onClick={() => { handleOndegerlendirme('ondegerlendirme') }} className={`basvurular-degerlendirme-btn ${isOndegerlendirme == 'ondegerlendirme' ? 'active' : ''}`}>Ön Değerlendirme Başvuruları</button>
+                    <button onClick={() => { handleOndegerlendirme('kadro') }} className={`basvurular-degerlendirme-btn ${isOndegerlendirme == 'kadro' ? 'active' : ''}`}>Kadro Başvuruları</button>
                 </div>
                 <div></div>
                 <div className='juriana-columns' >
