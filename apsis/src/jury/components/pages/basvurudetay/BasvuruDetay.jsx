@@ -3,7 +3,7 @@ import './BasvuruDetay.css'
 
 function BasvuruDetay() {
     return (
-        <div>BasvuruDetay</div>
+        <div className='main-basvurudetay'> BasvuruDetay</div>
     )
 }
 

@@ -15,13 +15,12 @@ function JuriHomepage() {
     const renderContent = () => {
         switch (selectedPage) {
             case 'Ana Sayfa':
-                return <JuriAna />;
-            case 'Mesajlar':
-                return <div>selam mesajlar</div>;
-            case 'Başvurular':
-                return <div>selam dersler</div>;
+                return <JuriAna onSelect={setSelectedPage} />;
+
+            case 'Basvurudetay':
+                return <BasvuruDetay />;
             default:
-                return <div>selam ana</div>;
+                return <JuriAna />;
         }
     };
 

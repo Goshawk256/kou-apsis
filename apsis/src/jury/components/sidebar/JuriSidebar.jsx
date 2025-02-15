@@ -12,8 +12,7 @@ function JuriSidebar({ onSelect }) {
 
     const items = [
         { name: "Ana Sayfa", icon: <img src={homeIcon} alt="Home" /> },
-        { name: "Mesajlar", icon: <img src={yayinIcon} alt="Yayınlar" /> },
-        { name: "Başvurular", icon: <img src={dersIcon} alt="Dersler" /> },
+
 
     ];
 

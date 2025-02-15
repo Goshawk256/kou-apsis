@@ -5,7 +5,7 @@ import check from '../../../../assets/check.png'
 
 import './JuriAna.css'
 
-function JuriAna() {
+function JuriAna({ onSelect }) {
 
 
     return (
@@ -45,7 +45,7 @@ function JuriAna() {
                                                 <img src={document} alt="" />
 
                                             </button>
-                                            <button>
+                                            <button onClick={() => onSelect('Basvurudetay')}>
                                                 <img src={check} alt="" />
                                             </button>
                                         </div>
@@ -86,7 +86,7 @@ function JuriAna() {
                                                 <img src={document} alt="" />
 
                                             </button>
-                                            <button>
+                                            <button onClick={() => onSelect('Basvurudetay')}>
                                                 <img src={check} alt="" />
                                             </button>
                                         </div>
@@ -127,7 +127,7 @@ function JuriAna() {
                                                 <img src={document} alt="" />
 
                                             </button>
-                                            <button>
+                                            <button onClick={() => onSelect('Basvurudetay')}>
                                                 <img src={check} alt="" />
                                             </button>
                                         </div>

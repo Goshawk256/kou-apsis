@@ -1,0 +1,10 @@
+.main-basvurudetay {
+    display: flex;
+    flex-direction: column;
+    margin-top: 2%;
+    width: 100%;
+    height: 550px;
+    margin-left: 4%;
+    border-radius: 10px;
+    background-color: #fff;
+}
