@@ -32,9 +32,9 @@ function Header() {
 
 
                 const response = await getUserInfoByUsername(username);
-
-                const userInfoData = response?.data?.data?.[0];
-
+                console.log(response.data);
+                const userInfoData = response?.data;
+                console.log(userInfoData);
                 if (userInfoData) {
                     setUserInfo(userInfoData);
                 } else {
@@ -77,32 +77,11 @@ function Header() {
                         <span className="msg-count">0</span>
                     </button>
                     <div className="username">
-                        {username === 'suhapsahin' ? (
-                            <span>Doç. Dr. {username} </span>
-                        ) : (
-                            (userInfo?.cvTitle?.primary || '') + username
-                        )}
-                    </div>
-                    <div className="checkbox-wrapper-35">
 
-                        {
-                            /*
-                            <label htmlFor="themeSwitch">
-                                <span className="switch-x-toggletext">
-                                    <span className="switch-x-unchecked">
-                                        <span className="switch-x-hiddenlabel">Unchecked: </span>
-                                        Aydınlık
-                                    </span>
-                                    <span className="switch-x-checked">
-                                        <span className="switch-x-hiddenlabel">Checked: </span>
-                                        Karanlık
-                                    </span>
-                                </span>
-                                <span className="switch-x-text">Tema </span>
-                            </label>
-                            */
-                        }
+                        {userInfo?.fullName}
+
                     </div>
+
                     <button onClick={handleLogout} className="logout-button">
                         <img src={logoutIcon} alt="Logout" />
                     </button>
