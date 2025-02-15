@@ -32,9 +32,9 @@ function Header() {
 
 
                 const response = await getUserInfoByUsername(username);
-                console.log(response.data);
+
                 const userInfoData = response?.data;
-                console.log(userInfoData);
+
                 if (userInfoData) {
                     setUserInfo(userInfoData);
                 } else {

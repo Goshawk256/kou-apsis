@@ -18,7 +18,7 @@ function JuriHomepage() {
                 return <JuriAna onSelect={setSelectedPage} />;
 
             case 'Basvurudetay':
-                return <BasvuruDetay />;
+                return <div>selam dersler</div>;
             default:
                 return <JuriAna />;
         }

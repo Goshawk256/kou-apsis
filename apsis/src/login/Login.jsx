@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AxiosError } from 'axios';
 import axios from 'axios';
 import './Login.css';
 import Logo from '../assets/unnamed.png';
+
 
 
 function Login() {
@@ -47,6 +48,10 @@ function Login() {
             throw new AxiosError('Hata', error);
         }
     };
+
+
+
+
 
     return (
         <div className='main-login'>
