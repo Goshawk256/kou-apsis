@@ -1,11 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AxiosError } from 'axios';
 import axios from 'axios';
 import './Login.css';
 import Logo from '../assets/unnamed.png';
-
-
 
 function Login() {
     const [username, setUsername] = useState('');
@@ -14,6 +11,49 @@ function Login() {
     const [selectedRole, setSelectedRole] = useState('');
     const [error, setError] = useState(null);
     const navigate = useNavigate();
+
+    // Token kontrolü: Eğer geçerli token varsa direkt yönlendir
+    useEffect(() => {
+        const accessToken = localStorage.getItem('accessToken');
+        const refreshToken = localStorage.getItem('refreshToken');
+
+        const isTokenExpired = (token) => {
+            try {
+                const payload = JSON.parse(atob(token.split('.')[1]));
+                return payload.exp < Math.floor(Date.now() / 1000);
+            } catch (error) {
+                console.error("JWT çözümleme hatası:", error);
+                return true;
+            }
+        };
+
+        const refreshAccessToken = async () => {
+            try {
+                const response = await axios.post('/api/auth/refresh', {
+                    refreshToken,
+                    username: localStorage.getItem('username'),
+                    role: localStorage.getItem('role')
+                });
+
+                if (response.data.success) {
+                    localStorage.setItem('accessToken', response.data.data.accessToken);
+                    navigate('/home'); // Token yenilendiyse yönlendir
+                } else {
+                    console.error('Token yenilenemedi');
+                }
+            } catch (error) {
+                console.error('Token yenileme hatası:', error);
+            }
+        };
+
+        if (accessToken) {
+            if (!isTokenExpired(accessToken)) {
+                navigate('/home'); // Token geçerli ise direkt yönlendir
+            } else if (refreshToken) {
+                refreshAccessToken(); // Token süresi dolmuşsa yenilemeye çalış
+            }
+        }
+    }, [navigate]);
 
     const fetchRoles = async (username) => {
         try {
@@ -24,7 +64,7 @@ function Login() {
             }
         } catch (error) {
             setError(error);
-            throw new AxiosError('Hata', error);
+            console.error("Rol getirme hatası:", error);
         }
     };
 
@@ -36,29 +76,23 @@ function Login() {
                 password,
                 role: selectedRole
             });
+
             if (response.data.success) {
                 localStorage.setItem('accessToken', response.data.data.accessToken);
                 localStorage.setItem('refreshToken', response.data.data.refreshToken);
                 localStorage.setItem('role', selectedRole);
                 localStorage.setItem('username', username);
-                navigate('/home');
+                navigate('/home'); // Başarılı giriş sonrası yönlendirme
             }
         } catch (error) {
             setError(error);
-            throw new AxiosError('Hata', error);
+            console.error("Giriş hatası:", error);
         }
     };
 
-
-
-
-
     return (
         <div className='main-login'>
-
             <div className='login-form'>
-
-
                 <form onSubmit={handleLogin}>
                     <img style={{ width: "30%" }} src={Logo} alt="" />
                     <h2 style={{ color: 'white' }}>Kou Apsıs</h2>
@@ -82,14 +116,7 @@ function Login() {
                             <select className='' id='role' value={selectedRole} onChange={(e) => setSelectedRole(e.target.value)}>
                                 {roles.map((role, index) => (
                                     <option key={index} value={role} style={{ backgroundColor: 'green' }}>
-                                        {role == 'Academic' ?
-                                            (
-                                                'Akademik Personel'
-                                            ) :
-                                            (
-                                                'Akademik Jüri'
-                                            )
-                                        }
+                                        {role === 'Academic' ? 'Akademik Personel' : 'Akademik Jüri'}
                                     </option>
                                 ))}
                             </select>
@@ -108,7 +135,6 @@ function Login() {
                     </div>
                     <button className='submit-button-login' type='submit'>Giriş</button>
                 </form>
-
             </div>
         </div>
     );
