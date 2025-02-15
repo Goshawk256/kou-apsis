@@ -1,16 +1,19 @@
 async function getUserInfoByUsername(username) {
     try {
-        const response = await fetch('https://apsis.kocaeli.edu.tr/api/user/get-user-by-username', {
+        localStorage.getItem('accessToken');
+        const response = await fetch('https://apsis.kocaeli.edu.tr/api/academic/get-me', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${localStorage.getItem('accessToken')}`
             },
-            body: JSON.stringify({ username })
+
         });
 
         if (!response.ok) {
             throw new Error('Kullanıcı bilgileri alınamadı');
         }
+
 
         return await response.json();
     } catch (error) {

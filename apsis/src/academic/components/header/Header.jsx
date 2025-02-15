@@ -33,7 +33,7 @@ function Header() {
 
                 const response = await getUserInfoByUsername(username);
 
-                const userInfoData = response?.data?.[0];
+                const userInfoData = response?.data?.data?.[0];
 
                 if (userInfoData) {
                     setUserInfo(userInfoData);

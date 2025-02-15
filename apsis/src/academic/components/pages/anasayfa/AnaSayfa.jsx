@@ -37,6 +37,7 @@ function AnaSayfa() {
         const fetchData = async () => {
             try {
                 const userInfoData = await getUserInfoByUsername(username);
+
                 const lessonData = await getLessonByUsername(username);
 
 
@@ -57,7 +58,7 @@ function AnaSayfa() {
                 const mastersStudents = semesterData?.student_stats?.masters_students || 0;
 
                 setUserInfo({
-                    ...userInfoData.data[0],
+                    ...userInfoData.data,
                     studentdata: {
                         phdStudentCount: doctoralStudents,
                         masterStudentCount: mastersStudents,
