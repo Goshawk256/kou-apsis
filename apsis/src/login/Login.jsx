@@ -12,7 +12,7 @@ function Login() {
     const [error, setError] = useState(null);
     const navigate = useNavigate();
 
-    // Token kontrolü: Eğer geçerli token varsa direkt yönlendir
+
     useEffect(() => {
         const accessToken = localStorage.getItem('accessToken');
         const refreshToken = localStorage.getItem('refreshToken');
