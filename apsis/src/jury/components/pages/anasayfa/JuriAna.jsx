@@ -12,9 +12,11 @@ function JuriAna({ onSelect }) {
 
         <div className="main-juriana">
             <div className='juriana-content' >
-                <div className='juriana-header' >
-                    <h1>Başvurular</h1>
+                <div className='basvurular-top-sections' >
+                    <button>Ön Değerlendirme Başvuruları</button>
+                    <button>Kadro Başvuruları</button>
                 </div>
+                <div></div>
                 <div className='juriana-columns' >
                     <div className='juriana-column' >
                         <div className='application-type-waiting' >

@@ -52,61 +52,58 @@ function Login() {
         <div className='main-login'>
 
             <div className='login-form'>
-                {error ? (
-                    <div>
 
+
+                <form onSubmit={handleLogin}>
+                    <img style={{ width: "30%" }} src={Logo} alt="" />
+                    <h2 style={{ color: 'white' }}>Kou Apsıs</h2>
+                    <div className='form-group'>
+                        <label htmlFor='username'>Kullanıcı Adı</label>
+                        <input
+                            className='input-login'
+                            type='text'
+                            id='username'
+                            value={username}
+                            onChange={(e) => {
+                                setUsername(e.target.value);
+                                fetchRoles(e.target.value);
+                            }}
+                            required
+                        />
                     </div>
-                ) : (
-                    <form onSubmit={handleLogin}>
-                        <img style={{ width: "30%" }} src={Logo} alt="" />
-                        <h2 style={{ color: 'white' }}>Kou Apsıs</h2>
+                    {roles.length > 0 && (
                         <div className='form-group'>
-                            <label htmlFor='username'>Kullanıcı Adı</label>
-                            <input
-                                className='input-login'
-                                type='text'
-                                id='username'
-                                value={username}
-                                onChange={(e) => {
-                                    setUsername(e.target.value);
-                                    fetchRoles(e.target.value);
-                                }}
-                                required
-                            />
+                            <label htmlFor='role'>Kullanıcı Rolü</label>
+                            <select className='' id='role' value={selectedRole} onChange={(e) => setSelectedRole(e.target.value)}>
+                                {roles.map((role, index) => (
+                                    <option key={index} value={role} style={{ backgroundColor: 'green' }}>
+                                        {role == 'Academic' ?
+                                            (
+                                                'Akademik Personel'
+                                            ) :
+                                            (
+                                                'Akademik Jüri'
+                                            )
+                                        }
+                                    </option>
+                                ))}
+                            </select>
                         </div>
-                        {roles.length > 0 && (
-                            <div className='form-group'>
-                                <label htmlFor='role'>Kullanıcı Rolü</label>
-                                <select className='' id='role' value={selectedRole} onChange={(e) => setSelectedRole(e.target.value)}>
-                                    {roles.map((role, index) => (
-                                        <option key={index} value={role} style={{ backgroundColor: 'green' }}>
-                                            {role == 'Academic' ?
-                                                (
-                                                    'Akademik Personel'
-                                                ) :
-                                                (
-                                                    'Akademik Jüri'
-                                                )
-                                            }
-                                        </option>
-                                    ))}
-                                </select>
-                            </div>
-                        )}
-                        <div className='form-group'>
-                            <label className='password-label' htmlFor='password'>Şifre</label>
-                            <input
-                                className='input-login'
-                                type='password'
-                                id='password'
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                required
-                            />
-                        </div>
-                        <button className='submit-button-login' type='submit'>Giriş</button>
-                    </form>
-                )}
+                    )}
+                    <div className='form-group'>
+                        <label className='password-label' htmlFor='password'>Şifre</label>
+                        <input
+                            className='input-login'
+                            type='password'
+                            id='password'
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <button className='submit-button-login' type='submit'>Giriş</button>
+                </form>
+
             </div>
         </div>
     );
