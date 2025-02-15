@@ -189,6 +189,11 @@
     border-radius: 50%;
 }
 
+.divider-horizontal {
+    width: 100%;
+    border: 1px solid #eaeaea;
+}
+
 .a-c-r-1-2 {
     display: flex;
     flex-direction: column;

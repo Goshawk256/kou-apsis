@@ -30,10 +30,19 @@ function JuriAna() {
                                         <span>Suhap Şahin</span>
                                         <span>suhapsahin@kocaeli.edu.tr</span>
                                     </div>
+                                    
                                 </div>
+                                <div className='divider-horizontal'></div>
                                 <div className='a-c-r-2' >
-                                    <div className='a-c-r-2-1' ></div>
-                                    <div className='a-c-r-2-2' ></div>
+                                    <div className='a-c-r-2-1' >
+                                        <div>
+                                            <span>Doç. Dr.</span>
+                                        </div>
+                                        <div>
+
+                                        </div>
+                                    </div>
+                                   
                                 </div>
                             </div>
 
