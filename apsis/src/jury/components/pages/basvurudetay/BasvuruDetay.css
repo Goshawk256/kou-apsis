@@ -1,4 +1,5 @@
 .main-basvurudetay {
+    position: relative;
     display: flex;
     flex-direction: column;
     margin-top: 2%;
@@ -7,4 +8,22 @@
     margin-left: 4%;
     border-radius: 10px;
     background-color: #fff;
+}
+
+.go-back-button {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    background-color: #fff;
+    border: none;
+    color: #000;
+    width: 80px;
+    height: 80px;
+    cursor: pointer;
+}
+
+.go-back-button img {
+    width: 40px;
+    height: 40px;
 }
