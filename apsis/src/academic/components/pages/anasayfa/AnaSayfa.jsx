@@ -36,7 +36,7 @@ function AnaSayfa() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const userInfoData = await getUserInfoByUsername(username);
+                const userInfoData = await getUserInfoByUsername();
 
                 const lessonData = await getLessonByUsername(username);
 

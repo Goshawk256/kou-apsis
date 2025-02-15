@@ -21,21 +21,18 @@ import JuriHomepage from '../jury/components/JuriHomepage';
 function HomePage() {
     const [selectedPage, setSelectedPage] = useState('Ana Sayfa');
     const role = localStorage.getItem('role');
+    const [isLoading, setIsLoading] = useState(true);
     const navigate = useNavigate();
-
     useEffect(() => {
         const accessToken = localStorage.getItem('accessToken');
         const refreshToken = localStorage.getItem('refreshToken');
         const username = localStorage.getItem('username');
         const storedRole = localStorage.getItem('role');
 
-        // Kullanıcıyı giriş sayfasına yönlendirme fonksiyonu
         const navigateLogin = () => {
-
             navigate('/');
         };
 
-        // JWT token süresini kontrol eden fonksiyon
         const isTokenExpired = (token) => {
             try {
                 const payload = JSON.parse(atob(token.split('.')[1]));
@@ -46,7 +43,6 @@ function HomePage() {
             }
         };
 
-        // Refresh token ile yeni token al
         const refreshAccessToken = async () => {
             try {
                 const response = await axios.post(`${All_Url.api_base_url}/auth/refresh`, {
@@ -59,8 +55,7 @@ function HomePage() {
 
                 if (response.data?.accessToken) {
                     localStorage.setItem('accessToken', response.data.accessToken);
-
-
+                    setIsLoading(false); // Token yenilendiyse yüklenme bitti
                 } else {
                     navigateLogin();
                 }
@@ -79,14 +74,7 @@ function HomePage() {
                 navigateLogin();
             }
         } else {
-            // Token geçerliyse rolü set et
-            try {
-                const payload = JSON.parse(atob(accessToken.split('.')[1]));
-
-            } catch (error) {
-                console.error("JWT çözümleme hatası:", error);
-                navigateLogin();
-            }
+            setIsLoading(false); // Token zaten geçerliyse yüklenme bitti
         }
     }, [navigate]);
 
@@ -106,8 +94,23 @@ function HomePage() {
         }
     };
 
-    if (!role) return <div>Loading...</div>;
 
+    if (isLoading) {
+        return <div>
+
+            <div className="hourglassBackground">
+                <div className="hourglassContainer">
+                    <div className="hourglassCurves"></div>
+                    <div className="hourglassCapTop"></div>
+                    <div className="hourglassGlassTop"></div>
+                    <div className="hourglassSand"></div>
+                    <div className="hourglassSandStream"></div>
+                    <div className="hourglassCapBottom"></div>
+                    <div className="hourglassGlass"></div>
+                </div>
+            </div>
+        </div>;// Token işlemi bitene kadar yükleniyor göstermek
+    }
     return (
         role === 'Academic' ? (
             <div className="main-homepage">

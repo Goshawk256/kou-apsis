@@ -1,4 +1,4 @@
-async function getUserInfoByUsername(username) {
+async function getUserInfoByUsername() {
     try {
         localStorage.getItem('accessToken');
         const response = await fetch('https://apsis.kocaeli.edu.tr/api/academic/get-me', {
