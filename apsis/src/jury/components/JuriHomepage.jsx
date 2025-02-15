@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import JuriHeader from './header/JuriHeader'
 import JuriSidebar from './sidebar/JuriSidebar'
 import JuriAna from './pages/anasayfa/JuriAna';
+import BasvuruDetay from './pages/basvurudetay/BasvuruDetay';
 
 
 function JuriHomepage() {
