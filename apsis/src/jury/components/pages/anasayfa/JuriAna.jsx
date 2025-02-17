@@ -69,7 +69,6 @@ function JuriAna({ onSelect }) {
 
                                             </div>
                                         </div>
-
                                     </div>
                                 </div>
 
@@ -77,7 +76,6 @@ function JuriAna({ onSelect }) {
                                     <div className='application-type-success' >
                                         <span>ONAYLANAN</span>
                                         <button>20</button>
-
                                     </div>
 
                                     <div className='application-content' >
@@ -90,7 +88,6 @@ function JuriAna({ onSelect }) {
                                                     <span className='username-span'>Suhap Şahin</span>
                                                     <span className='usermail-span' >suhapsahin@kocaeli.edu.tr</span>
                                                 </div>
-
                                             </div>
                                             <div className='divider-horizontal'></div>
                                             <div className='a-c-r-2' >
@@ -108,19 +105,15 @@ function JuriAna({ onSelect }) {
                                                         </button>
                                                     </div>
                                                 </div>
-
                                             </div>
                                         </div>
-
                                     </div>
                                 </div>
                                 <div className='juriana-column' >
                                     <div className='application-type-reject' >
-
                                         <span>REDDEDİLEN</span>
                                         <button>20</button>
                                     </div>
-
                                     <div className='application-content' >
                                         <div className='application-card-reject' >
                                             <div className='a-c-r-1' >
@@ -131,7 +124,6 @@ function JuriAna({ onSelect }) {
                                                     <span className='username-span'>Suhap Şahin</span>
                                                     <span className='usermail-span' >suhapsahin@kocaeli.edu.tr</span>
                                                 </div>
-
                                             </div>
                                             <div className='divider-horizontal'></div>
                                             <div className='a-c-r-2' >
@@ -149,10 +141,8 @@ function JuriAna({ onSelect }) {
                                                         </button>
                                                     </div>
                                                 </div>
-
                                             </div>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
@@ -171,7 +161,6 @@ function JuriAna({ onSelect }) {
                                         <span>BEKLEYEN</span>
                                         <button>20</button>
                                     </div>
-
                                     <div className='application-content' >
                                         <div className='application-card' >
                                             <div className='a-c-r-1' >
@@ -182,7 +171,6 @@ function JuriAna({ onSelect }) {
                                                     <span className='username-span'>Suhap Şahin</span>
                                                     <span className='usermail-span' >suhapsahin@kocaeli.edu.tr</span>
                                                 </div>
-
                                             </div>
                                             <div className='divider-horizontal'></div>
                                             <div className='a-c-r-2' >
@@ -193,26 +181,21 @@ function JuriAna({ onSelect }) {
                                                     <div className='user-department' >
                                                         <button>
                                                             <img src={document} alt="" />
-
                                                         </button>
                                                         <button onClick={() => onSelect('Basvurudetay')}>
                                                             <img src={check} alt="" />
                                                         </button>
                                                     </div>
                                                 </div>
-
                                             </div>
                                         </div>
-
                                     </div>
                                 </div>
                                 <div className='juriana-column' >
                                     <div className='application-type-success' >
                                         <span>ONAYLANAN</span>
                                         <button>20</button>
-
                                     </div>
-
                                     <div className='application-content' >
                                         <div className='application-card-apply' >
                                             <div className='a-c-r-1' >
@@ -223,7 +206,6 @@ function JuriAna({ onSelect }) {
                                                     <span className='username-span'>Suhap Şahin</span>
                                                     <span className='usermail-span' >suhapsahin@kocaeli.edu.tr</span>
                                                 </div>
-
                                             </div>
                                             <div className='divider-horizontal'></div>
                                             <div className='a-c-r-2' >
@@ -234,26 +216,21 @@ function JuriAna({ onSelect }) {
                                                     <div className='user-department' >
                                                         <button>
                                                             <img src={document} alt="" />
-
                                                         </button>
                                                         <button onClick={() => onSelect('Basvurudetay')}>
                                                             <img src={check} alt="" />
                                                         </button>
                                                     </div>
                                                 </div>
-
                                             </div>
                                         </div>
-
                                     </div>
                                 </div>
                                 <div className='juriana-column' >
                                     <div className='application-type-reject' >
-
                                         <span>REDDEDİLEN</span>
                                         <button>20</button>
                                     </div>
-
                                     <div className='application-content' >
                                         <div className='application-card-reject' >
                                             <div className='a-c-r-1' >
@@ -264,7 +241,6 @@ function JuriAna({ onSelect }) {
                                                     <span className='username-span'>Suhap Şahin</span>
                                                     <span className='usermail-span' >suhapsahin@kocaeli.edu.tr</span>
                                                 </div>
-
                                             </div>
                                             <div className='divider-horizontal'></div>
                                             <div className='a-c-r-2' >
@@ -282,10 +258,8 @@ function JuriAna({ onSelect }) {
                                                         </button>
                                                     </div>
                                                 </div>
-
                                             </div>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
@@ -294,7 +268,6 @@ function JuriAna({ onSelect }) {
                     }
                 </div>
             </motion.div>
-
         </AnimatePresence>
 
     );

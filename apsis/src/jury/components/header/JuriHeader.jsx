@@ -9,7 +9,7 @@ function JuriHeader() {
 
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const navigate = useNavigate();
-    // const [error, setError] = useState(null)
+
     const [userInfo, setUserInfo] = useState(null);
     const username = localStorage.getItem('username');
 
