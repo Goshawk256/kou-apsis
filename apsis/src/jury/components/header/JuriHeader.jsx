@@ -33,7 +33,7 @@ function JuriHeader() {
 
                 const response = await getUserInfoByUsername(username);
 
-                const userInfoData = response?.data?.[0];
+                const userInfoData = response?.data;
 
                 if (userInfoData) {
                     setUserInfo(userInfoData);
@@ -56,6 +56,8 @@ function JuriHeader() {
     }, [username]);
 
 
+
+
     return (
         isLoggedIn ? (
             isLoading ? (
@@ -66,7 +68,7 @@ function JuriHeader() {
                 <div className={`header-container`}>
                     <div className="site-name">
                         <img src={logoLight} alt="Logo" />
-                        <span className="shining-text">Kocaeli Üniversitesi Akademik Puan Sistemi(JURI)</span>
+                        <span className="shining-text">Kocaeli Üniversitesi Akademik Puan Sistemi(Jüri Portalı)</span>
                     </div>
                     <button className="inbox-btn">
                         <svg viewBox="0 0 512 512" height="10" xmlns="http://www.w3.org/2000/svg">
