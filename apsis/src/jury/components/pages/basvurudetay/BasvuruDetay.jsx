@@ -26,6 +26,7 @@ function BasvuruDetay({ onSelect }) {
                                     <th>İçerik Grubu</th>
                                     <th>İçerik Puanı</th>
                                     <th>Yüklenen Belge</th>
+                                    <th>Başvuru Tipi</th>
                                     <th>İşlem</th>
                                 </tr>
                             </thead>
@@ -35,6 +36,7 @@ function BasvuruDetay({ onSelect }) {
                                     <td>A5</td>
                                     <td>90</td>
                                     <td><a href='https://www.google.com'>Belge</a></td>
+                                    <td>Kadro Başvurusu</td>
                                     <td> <button><FaPencilAlt /></button></td>
                                 </tr>
 

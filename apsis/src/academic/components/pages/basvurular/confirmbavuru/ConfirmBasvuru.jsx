@@ -38,6 +38,7 @@ function ConfirmBasvuru({ setShowTable }) {
 
         localStorage.setItem("selectedOption", selected);
 
+
         const isValid = await valideDatas();
         if (isValid) {
             setShowTable(true);
@@ -47,8 +48,8 @@ function ConfirmBasvuru({ setShowTable }) {
     };
 
     const valideDatas = async () => {
-        const token = localStorage.getItem('accesToken');
-
+        const token = localStorage.getItem('accessToken');
+        const title = localStorage.getItem('selectedOption');
 
         if (!formattedPublications || formattedPublications.length === 0) {
             console.error("Hata: Yayın bilgileri eksik!");
@@ -58,12 +59,15 @@ function ConfirmBasvuru({ setShowTable }) {
         const publicationIds = formattedPublications.map(item => item.id);
 
         try {
+            console.log(publicationIds);
+            console.log(title);
             const response = await axios.post(`${All_Url.api_base_url}/academic/validate-application`, {
+
                 publicationIds: publicationIds,
-                title: localStorage.getItem('selectedOption'),
+                title: title,
             }, {
                 headers: {
-                    'Authorization': `Bearer ${token}`
+                    Authorization: `Bearer ${token}`
                 }
             });
 

@@ -131,10 +131,6 @@ function Basvuru({ onSelect }) {
 
 
 
-
-
-
-
     return (
         showTable ? (
             <div className='basvuru-main'>
