@@ -63,7 +63,7 @@ function JuriAna({ onSelect }) {
                             <button>
                                 <img src={document} alt="" />
                             </button>
-                            <button onClick={() => onSelect('Basvurudetay', app.applicationId)}>
+                            <button onClick={() => { onSelect('Basvurudetay'); localStorage.setItem('selectedApplication', app.applicationId); }}>
                                 <img src={check} alt="" />
                             </button>
                         </div>

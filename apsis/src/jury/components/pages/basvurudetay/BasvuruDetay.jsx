@@ -6,26 +6,34 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import All_Url from '../../../../url.js';
 
-function BasvuruDetay({ onSelect, basvuruId }) {
+function BasvuruDetay({ onSelect }) {
     const [selectedApplication, setSelectedApplication] = useState(null);
     const [loading, setLoading] = useState(true);
+
+
+
     useEffect(() => {
         const token = localStorage.getItem('accessToken');
+
         const fetchData = async () => {
             try {
+
+                const basvuruId = localStorage.getItem('selectedApplication');
+                console.log(basvuruId);
                 const response = await axios.post(`${All_Url.api_base_url}/jury/get-applications`, {}, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
                 });
-                if (response.data.data.preliminaryApplications) {
-                    const selectedApplication = response.data.data.preliminaryApplications.find(app => app.applicationId === basvuruId);
-                    setSelectedApplication(selectedApplication);
-                }
-                else if (response.data.data.scientificApplications) {
-                    const selectedApplication = response.data.data.finalApplications.find(app => app.applicationId === basvuruId);
-                    setSelectedApplication(selectedApplication);
-                }
+                const preliminaryApps = response.data.data.preliminaryApplications || [];
+                console.log(preliminaryApps);
+                const scientificApps = response.data.data.scientificApplications || [];
+                console.log(scientificApps);
+
+                const selectedApplication = [...preliminaryApps, ...scientificApps].find(app => app.applicationId === basvuruId);
+
+                setSelectedApplication(selectedApplication);
+                console.log(selectedApplication);
             } catch (error) {
                 console.error("Hata oluştu:", error);
             }
@@ -34,13 +42,13 @@ function BasvuruDetay({ onSelect, basvuruId }) {
             }
         };
         fetchData();
-    }, [basvuruId]);
+    }, []);
     return (
 
         loading ? (
             'yükleniyor'
         ) : (
-            selectedApplication ?
+            selectedApplication.length == 0 ?
                 (
                     'selam'
                 ) : (
@@ -51,7 +59,7 @@ function BasvuruDetay({ onSelect, basvuruId }) {
 
                         <div className='basvurudetay-content' >
                             <div className='basvurudetay-header'>
-                                <span className='user-header'>{selectedApplication.applicantUsername}</span>
+                                <span className='user-header'>{selectedApplication.userMail}</span>
                                 <span className='user-date'>Başvuru Tarihi: 12.05.2021</span>
                             </div>
                             <div className='basvurudetay-inner'>
