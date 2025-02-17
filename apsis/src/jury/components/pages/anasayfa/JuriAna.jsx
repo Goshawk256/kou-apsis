@@ -30,7 +30,7 @@ function JuriAna({ onSelect }) {
                                 <button onClick={() => { handleOndegerlendirme('ondegerlendirme') }} className={`basvurular-degerlendirme-btn ${isOndegerlendirme == 'ondegerlendirme' ? 'active' : ''}`}>Ön Değerlendirme Başvuruları</button>
                                 <button onClick={() => { handleOndegerlendirme('kadro') }} className={`basvurular-degerlendirme-btn ${isOndegerlendirme == 'kadro' ? 'active' : ''}`}>Kadro Başvuruları</button>
                             </div>
-                            <div></div>
+
                             <div className='juriana-columns' >
                                 <div className='juriana-column' >
                                     <div className='application-type-waiting' >
@@ -59,7 +59,6 @@ function JuriAna({ onSelect }) {
                                                     <div className='user-department' >
                                                         <button>
                                                             <img src={document} alt="" />
-
                                                         </button>
                                                         <button onClick={() => onSelect('Basvurudetay')}>
                                                             <img src={check} alt="" />
@@ -77,7 +76,6 @@ function JuriAna({ onSelect }) {
                                         <span>ONAYLANAN</span>
                                         <button>20</button>
                                     </div>
-
                                     <div className='application-content' >
                                         <div className='application-card-apply' >
                                             <div className='a-c-r-1' >
@@ -98,7 +96,6 @@ function JuriAna({ onSelect }) {
                                                     <div className='user-department' >
                                                         <button>
                                                             <img src={document} alt="" />
-
                                                         </button>
                                                         <button onClick={() => onSelect('Basvurudetay')}>
                                                             <img src={check} alt="" />
@@ -154,7 +151,7 @@ function JuriAna({ onSelect }) {
                                 <button onClick={() => { handleOndegerlendirme('ondegerlendirme') }} className={`basvurular-degerlendirme-btn ${isOndegerlendirme == 'ondegerlendirme' ? 'active' : ''}`}>Ön Değerlendirme Başvuruları</button>
                                 <button onClick={() => { handleOndegerlendirme('kadro') }} className={`basvurular-degerlendirme-btn ${isOndegerlendirme == 'kadro' ? 'active' : ''}`}>Kadro Başvuruları</button>
                             </div>
-                            <div></div>
+
                             <div className='juriana-columns' >
                                 <div className='juriana-column' >
                                     <div className='application-type-waiting' >

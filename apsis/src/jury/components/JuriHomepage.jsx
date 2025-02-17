@@ -16,7 +16,6 @@ function JuriHomepage() {
         switch (selectedPage) {
             case 'Ana Sayfa':
                 return <JuriAna onSelect={setSelectedPage} />;
-
             case 'Basvurudetay':
                 return <BasvuruDetay onSelect={setSelectedPage} />;
             default:
