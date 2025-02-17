@@ -253,23 +253,23 @@ function Finish() {
         };
 
 
-        if (savedPublications.length > 0) {
-            data.publications = savedPublications.map(item => ({ publicationId: item.id }));
+        if (savedPublications.length >= 0) {
+            data.publications = savedPublications.map(item => ({ publicationId: item.id })) || [];
         }
-        if (savedProjects.length > 0) {
-            data.projects = savedProjects.map(item => ({ projectId: item.id }));
+        if (savedProjects.length >= 0) {
+            data.projects = savedProjects.map(item => ({ projectId: item.id })) || [];
         }
-        if (savedThesis.length > 0) {
-            data.thesis = savedThesis.map(item => ({ thesisId: item.id }));
+        if (savedThesis.length >= 0) {
+            data.advisingThesis = savedThesis.map(item => ({ thesisId: item.id })) || [];
         }
-        if (savedLessons.length > 0) {
-            data.lessons = savedLessons.map(item => ({ lessonId: item.id }));
+        if (savedLessons.length >= 0) {
+            data.lessons = savedLessons.map(item => ({ lessonId: item.id })) || [];
         }
-        if (savedAwards.length > 0) {
-            data.awards = savedAwards.map(item => ({ awardId: item.id }));
+        if (savedAwards.length >= 0) {
+            data.awards = savedAwards.map(item => ({ awardId: item.id })) || [];
         }
-        if (savedArtworks.length > 0) {
-            data.artworks = savedArtworks.map(item => ({ artworkId: item.id }));
+        if (savedArtworks.length >= 0) {
+            data.artworks = savedArtworks.map(item => ({ artworkId: item.id })) || [];
         }
 
         setSendData(data);
