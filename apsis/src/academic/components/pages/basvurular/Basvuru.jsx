@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import ConfirmBasvuru from './confirmbavuru/ConfirmBasvuru';
+import PropTypes from 'prop-types';
 
 
 import './Basvuru.css';
@@ -199,5 +200,8 @@ function Basvuru({ onSelect }) {
         )
     );
 }
+Basvuru.propTypes = {
+    onSelect: PropTypes.func.isRequired,
+};
 
 export default Basvuru;

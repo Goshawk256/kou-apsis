@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import user from '../../../../assets/user.png';
 import document from '../../../../assets/document.png';
 import check from '../../../../assets/check.png';
@@ -6,6 +6,7 @@ import All_Url from '../../../../url.js';
 import { motion, AnimatePresence } from 'framer-motion';
 import axios from 'axios';
 import './JuriAna.css';
+import PropTypes from 'prop-types';
 
 function JuriAna({ onSelect }) {
     const [isOndegerlendirme, setIsOndegerlendirme] = useState('ondegerlendirme');
@@ -123,5 +124,9 @@ function JuriAna({ onSelect }) {
         </AnimatePresence>
     );
 }
+JuriAna.propTypes = {
+    onSelect: PropTypes.func.isRequired,
+};
+
 
 export default JuriAna;

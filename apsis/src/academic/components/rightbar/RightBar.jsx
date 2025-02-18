@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
+import PropTypes from 'prop-types';
 import { useEffect } from 'react';
 import { lessonGroups, projectGroups, publicationGroups, awardGroups, artGroups, thesisGroups, bookGroups, declarationGroups, citationGroups } from '../../../middlewares/groupSchemeMiddleware';
 import './RightBar.css';
@@ -188,5 +189,15 @@ function RightBar({ isOpen, onClose, id, editingIndex, tempGroups, onGroupChange
         </>
     );
 }
+RightBar.propTypes = {
+    isOpen: PropTypes.bool.isRequired,
+    onClose: PropTypes.func.isRequired,
+    id: PropTypes.string.isRequired,
+    editingIndex: PropTypes.number,
+    tempGroups: PropTypes.array.isRequired,
+    onGroupChange: PropTypes.func.isRequired,
+    group: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+};
 
 export default RightBar;

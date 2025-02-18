@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
+import PropTypes from 'prop-types';
 import './ConfirmBasvuru.css';
 import 'dayjs/locale/tr';  // Türkçe dil dosyasını içe aktarıyoruz
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -89,7 +90,7 @@ function ConfirmBasvuru({ setShowTable }) {
                         <h1 className='confirm-title'>Başvuru Kaydı Oluşturma</h1>
                         <h5 className='birim-title'>Başvurulacak Birim:</h5>
                         <div className="radio-input">
-                            {["Dr.Öğr.Ü", "Doç. Dr.", "Prof. Dr."].map((role, index) => {
+                            {["Dr.Öğr.Ü", "Doç. Dr.", "Prof. Dr."].map((role) => {
                                 return (
                                     <label key={role} className={`label ${selected === role ? "selected" : ""}`}>
                                         <input
@@ -144,5 +145,8 @@ function ConfirmBasvuru({ setShowTable }) {
         </div >
     );
 }
+ConfirmBasvuru.propTypes = {
+    setShowTable: PropTypes.func.isRequired,
+};
 
 export default ConfirmBasvuru;

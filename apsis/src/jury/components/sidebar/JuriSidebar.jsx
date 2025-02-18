@@ -1,11 +1,10 @@
-import React from 'react';
-import './JuriSidebar.css';
 
-import dersIcon from '../../../assets/dersler.svg'
+import './JuriSidebar.css';
+import PropTypes from 'prop-types';
+
 
 import homeIcon from '../../../assets/home.svg'
 
-import yayinIcon from '../../../assets/yayinlar.svg'
 
 
 function JuriSidebar({ onSelect }) {
@@ -47,5 +46,9 @@ function JuriSidebar({ onSelect }) {
         </div>
     );
 }
+JuriSidebar.propTypes = {
+    onSelect: PropTypes.func.isRequired,
+};
+
 
 export default JuriSidebar;

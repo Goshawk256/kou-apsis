@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 import All_Url from '../../../../../url.js';
 import NotFound from '../../../errorstacks/NotFound.jsx';
@@ -133,5 +134,8 @@ function MyApplications({ onSelect }) {
         </div>
     );
 }
+MyApplications.propTypes = {
+    onSelect: PropTypes.func.isRequired,
+};
 
 export default MyApplications;

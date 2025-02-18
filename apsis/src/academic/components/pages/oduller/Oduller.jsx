@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Oduller.css';
 import { FaSync, FaPencilAlt, FaCheckSquare, FaRegSquare } from 'react-icons/fa';
@@ -18,7 +18,7 @@ function Oduller() {
     const [popupMessage, setPopupMessage] = useState(null); // Pop-up mesajı
     const [editingIndex, setEditingIndex] = useState(null);
     const [tempGroups, setTempGroups] = useState({}); // Yalnızca eklenen kısmı saklayan nesne
-    const [isEditMode, setIsEditMode] = useState(false);
+    const [isEditMode,] = useState(false);
     const [currentGroup, setCurrentGroup] = useState(null);
 
     const handleEditClick = (index, currentGroup) => {

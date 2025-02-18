@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import  { useRef, useEffect, useState } from 'react';
 import './AnaSayfa.css';
 import { Bar } from 'react-chartjs-2'; // Bar ve Doughnut grafiklerini import edelim
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, ArcElement, Title, Tooltip, Legend } from 'chart.js';
@@ -13,7 +13,7 @@ function AnaSayfa() {
 
     const [userInfo, setUserInfo] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const [, setError] = useState(null);
     const chartRef = useRef(null);
     const username = localStorage.getItem('username');
     const getCurrentSemester = () => {

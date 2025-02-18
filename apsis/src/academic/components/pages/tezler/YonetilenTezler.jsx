@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import axios from 'axios';
 import './YonetilenTezler.css';
 import { FaSync, FaCheckSquare, FaRegSquare, FaPencilAlt } from 'react-icons/fa';
@@ -19,7 +19,7 @@ function YonetilenTezler() {
     const username = localStorage.getItem('username');
     const [editingIndex, setEditingIndex] = useState(null);
     const [tempGroups, setTempGroups] = useState({}); // Yalnızca eklenen kısmı saklayan nesne
-    const [isEditMode, setIsEditMode] = useState(false);
+    const [isEditMode, ] = useState(false);
     const [currentGroup, setCurrentGroup] = useState(null);
 
     const handleEditClick = (index, currentGroup) => {

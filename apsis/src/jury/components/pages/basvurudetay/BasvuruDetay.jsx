@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import './BasvuruDetay.css';
 import previous from '../../../../assets/previous.png';
 import { FaPencilAlt } from 'react-icons/fa';
@@ -112,5 +113,8 @@ function BasvuruDetay({ onSelect }) {
         )
     );
 }
+BasvuruDetay.propTypes = {
+    onSelect: PropTypes.func.isRequired,
+};
 
 export default BasvuruDetay;

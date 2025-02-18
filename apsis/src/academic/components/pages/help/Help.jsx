@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import './Help.css';
 import gorsel1 from '../../../../assets/gorsel1.png';
 import gorsel2 from '../../../../assets/gorsel2.png';

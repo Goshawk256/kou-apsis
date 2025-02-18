@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import axios from 'axios';
 import './SanatsalFaaliyetler.css';
 import { FaSync, FaPencilAlt, FaCheckSquare, FaRegSquare } from 'react-icons/fa';
@@ -17,7 +17,7 @@ function SanatsalFaaliyetler() {
     const [rightBarOpen, setRightBarOpen] = useState(false); // Sağ panelin açık/kapalı durumu
     const [popupMessage, setPopupMessage] = useState(null); // Pop-up mesajı
     const [isEditMode, setIsEditMode] = useState(false);
-    const [yapimAsamasinda, setYapimAsamasinda] = useState(true);
+    const [yapimAsamasinda, ] = useState(true);
     const handleTableClick = () => {
         setIsEditMode(!isEditMode); // Düzenleme modunu aç/kapat
     };

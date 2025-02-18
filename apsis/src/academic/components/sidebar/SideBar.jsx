@@ -1,5 +1,5 @@
-import React from 'react';
 import './SideBar.css';
+import PropTypes from 'prop-types';
 
 import sanatIcon from '../../../assets/artistikFaaliyetler.svg'
 import basvuruIcon from '../../../assets/basvuru.svg'
@@ -9,7 +9,6 @@ import homeIcon from '../../../assets/home.svg'
 import odulIcon from '../../../assets/odul.svg'
 import yayinIcon from '../../../assets/yayinlar.svg'
 import tezIcon from '../../../assets/yonetilenTezler.svg'
-import helpIcon from '../../../assets/help.png'
 
 function SideBar({ onSelect }) {
 
@@ -56,5 +55,8 @@ function SideBar({ onSelect }) {
         </div>
     );
 }
+SideBar.propTypes = {
+    onSelect: PropTypes.func.isRequired,
+};
 
 export default SideBar;

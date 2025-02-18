@@ -1,4 +1,4 @@
-import React from 'react'
+
 import './JuriBasvurular.css'
 function JuriBasvurular() {
     return (
@@ -6,4 +6,4 @@ function JuriBasvurular() {
     )
 }
 
-export default JuriBasvurular
+export default JuriBasvurular;

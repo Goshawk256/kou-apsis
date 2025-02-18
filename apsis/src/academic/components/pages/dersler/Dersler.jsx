@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './Dersler.css';
-import { FaSync, FaCheck, FaInfo, FaCheckSquare, FaRegSquare, FaPencilAlt } from 'react-icons/fa';
+import { FaSync, FaCheckSquare, FaRegSquare, FaPencilAlt } from 'react-icons/fa';
 import axios from 'axios';
 import RightBar from '../../rightbar/RightBar';
 import NotFound from '../../errorstacks/NotFound';
@@ -19,7 +19,7 @@ function Dersler() {
     const [loading, setLoading] = useState(false);
     const [editingIndex, setEditingIndex] = useState(null);
     const [tempGroups, setTempGroups] = useState({}); // Sadece eklenen kısmı tutan nesne
-    const [isEditMode, setIsEditMode] = useState(false);
+    const [isEditMode,] = useState(false);
     const [currentGroup, setCurrentGroup] = useState(null);
 
     const handleEditClick = (index, currentGroup) => {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import './Yayinlar.css';
 import { FaSync, FaPencilAlt, FaCheckSquare, FaInfo, FaRegSquare, FaCheck } from 'react-icons/fa';
 import axios from 'axios';
@@ -20,7 +20,7 @@ function Yayinlar() {
     const [editingIndex, setEditingIndex] = useState(null);
     const [tempGroups, setTempGroups] = useState({}); // Sadece eklenen kısmı tutan nesne
     const [currentGroup, setCurrentGroup] = useState(null);
-    const [isEditMode, setIsEditMode] = useState(false);
+    const [isEditMode, ] = useState(false);
     const [name, setName] = useState("makale");
 
     const handleEditClick = (index, currentGroup) => {
@@ -82,7 +82,7 @@ function Yayinlar() {
                 showPopup(response.data.message || 'Veri çekme başarısız.', 'error');
             }
         } catch (error) {
-            showPopup('Veri çekerken bir hata oluştu.', 'error');
+            showPopup('Veri çekerken bir hata oluştu.', error);
         }
         finally {
             setLoading(false);
@@ -102,7 +102,7 @@ function Yayinlar() {
                 showPopup('Atıf verileri çekilirken hata oluştu.', 'error');
             }
         } catch (error) {
-            showPopup('Veri çekerken bir hata oluştu.', 'error');
+            showPopup('Veri çekerken bir hata oluştu.', error);
         }
     };
 

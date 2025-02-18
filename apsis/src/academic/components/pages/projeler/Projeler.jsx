@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import './Projeler.css';
 import { FaSync, FaPencilAlt, FaCheckSquare, FaRegSquare } from 'react-icons/fa';
 import axios from 'axios';
@@ -18,7 +18,7 @@ function Projeler() {
     const [popupMessage, setPopupMessage] = useState(null); // Pop-up mesajı
     const [editingIndex, setEditingIndex] = useState(null);
     const [tempGroups, setTempGroups] = useState({}); // Sadece eklenen kısmı tutan nesne
-    const [isEditMode, setIsEditMode] = useState(false);
+    const [isEditMode, ] = useState(false);
     const [currentGroup, setCurrentGroup] = useState(null);
 
     const handleEditClick = (index, currentGroup) => {
