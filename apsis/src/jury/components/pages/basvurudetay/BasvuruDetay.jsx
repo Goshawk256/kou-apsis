@@ -1,4 +1,4 @@
-import  { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import './BasvuruDetay.css';
 import previous from '../../../../assets/previous.png';
@@ -14,15 +14,16 @@ function BasvuruDetay({ onSelect }) {
     const [currentPage, setCurrentPage] = useState(1);
     const [searchTerm, setSearchTerm] = useState('');
     const itemsPerPage = 5;
-    const transformData = (categoryData, category) => {
+
+    const transformData = (categoryData) => {
         return categoryData.map(item => ({
-            title: item.title || item.projectName || '', // title veya projectName kullanılır
+            title: item.title || item.projectName || item.course_name || '', // title veya projectName kullanılır
             score: item.score || 0, // score, mevcut değilse 0
             group: item.group || '', // group bilgisi
             documentUrl: item.documentUrl || '#', // Belge bağlantısı
         }));
     };
-    
+
     useEffect(() => {
         const token = localStorage.getItem('accessToken');
         const fetchData = async () => {
@@ -47,36 +48,31 @@ function BasvuruDetay({ onSelect }) {
 
     useEffect(() => {
         if (selectedApplication) {
-            const transformed = [];
-    
-            // Her kategori için veri dönüştürme
-            ['publications', 'lessons', 'thesis', 'projects', 'awards', 'artworks'].forEach(category => {
-                if (selectedApplication[category]) {
-                    transformed.push(...transformData(selectedApplication[category], category));
-                }
-            });
-    
-            setData(transformed); // Veriyi güncelle
-            setCurrentPage(1);
+            const selectedData = selectedApplication[selectedCategory];
+            if (selectedData) {
+                setData(transformData(selectedData)); // Veriyi dönüştürüp state'e set et
+            }
+            setCurrentPage(1); // Sayfayı sıfırlıyoruz
         }
-    }, [selectedApplication]);
-    
+    }, [selectedApplication, selectedCategory]);
+
+    // Arama ve sayfalama
     const filteredData = data.filter(item => (item.title?.toLowerCase()).includes(searchTerm.toLowerCase()));
     const displayedData = filteredData.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
-    
     const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+
     return (
-        loading ?  <div className="hourglassBackground">
-                        <div className="hourglassContainer">
-                            <div className="hourglassCurves"></div>
-                            <div className="hourglassCapTop"></div>
-                            <div className="hourglassGlassTop"></div>
-                            <div className="hourglassSand"></div>
-                            <div className="hourglassSandStream"></div>
-                            <div className="hourglassCapBottom"></div>
-                            <div className="hourglassGlass"></div>
-                        </div>
-                    </div> : (
+        loading ? <div className="hourglassBackground">
+            <div className="hourglassContainer">
+                <div className="hourglassCurves"></div>
+                <div className="hourglassCapTop"></div>
+                <div className="hourglassGlassTop"></div>
+                <div className="hourglassSand"></div>
+                <div className="hourglassSandStream"></div>
+                <div className="hourglassCapBottom"></div>
+                <div className="hourglassGlass"></div>
+            </div>
+        </div> : (
             !selectedApplication ? ('Başvuru bulunamadı') : (
                 <div className='main-basvurudetay'>
                     <button className='go-back-button' onClick={() => onSelect('Ana Sayfa')}>
@@ -89,8 +85,12 @@ function BasvuruDetay({ onSelect }) {
                         </div>
                         <div className='basvurudetay-inner'>
                             <div className='table-section'>
-                                {['publications', 'lessons', 'thesis', 'projects', 'awards', 'artworks'].map(category => (
-                                    <button key={category} onClick={() => setSelectedCategory(category)}>
+                                {['publications', 'lessons', 'advisingThesis', 'projects', 'awards', 'artworks'].map(category => (
+                                    <button
+                                        key={category}
+                                        onClick={() => setSelectedCategory(category)}
+                                        className={selectedCategory === category ? 'active' : ''}
+                                    >
                                         {category.toUpperCase()}
                                     </button>
                                 ))}
@@ -121,19 +121,18 @@ function BasvuruDetay({ onSelect }) {
                                         </tr>
                                     </thead>
                                     <tbody>
-    {displayedData.length > 0 ? displayedData.map(item => (
-        <tr key={item.title}>
-            <td>{item.title}</td>
-            <td>{item.group}</td>
-            <td>{item.score}</td>
-            <td><a href={item.documentUrl}>Belge</a></td>
-            <td><button><FaPencilAlt /></button></td>
-        </tr>
-    )) : (
-        <tr><td colSpan="5">Veri bulunamadı</td></tr>
-    )}
-</tbody>
-
+                                        {displayedData.length > 0 ? displayedData.map(item => (
+                                            <tr key={item.title}>
+                                                <td>{item.title}</td>
+                                                <td>{item.group}</td>
+                                                <td>{item.score}</td>
+                                                <td><a href={item.documentUrl}>Belge</a></td>
+                                                <td><button><FaPencilAlt /></button></td>
+                                            </tr>
+                                        )) : (
+                                            <tr><td colSpan="5">Veri bulunamadı</td></tr>
+                                        )}
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
@@ -143,6 +142,7 @@ function BasvuruDetay({ onSelect }) {
         )
     );
 }
+
 BasvuruDetay.propTypes = {
     onSelect: PropTypes.func.isRequired,
 };
