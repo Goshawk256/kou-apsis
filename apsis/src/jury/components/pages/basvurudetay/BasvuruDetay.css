@@ -63,11 +63,11 @@
 }
 
 .basvurudetay-inner {
+    position: relative;
     width: 96%;
     height: 92%;
     margin-left: 4%;
     margin-top: 1%;
-
 
 }
 
@@ -229,4 +229,100 @@
 .basvurudetay-main-row-2 .basvurudetay-pagination button:disabled {
     color: #d0d0d0;
     cursor: not-allowed;
+}
+
+.basvurudetay-buttons {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 30%;
+    
+}
+
+.basvurudetay-buttons button {
+  
+    border: none;
+  
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+  
+    padding: 10px;
+    width: 160px;
+    border-radius: 20px;
+}
+
+.basvurudetay-button-onayla {
+    background-color: #1FA54E;
+    color: #fff;
+    border-radius: 20px;
+    padding: 10px;
+    width: 160px;
+    cursor: pointer;
+}
+
+.basvurudetay-button-reddet {
+    background-color: #df6161;
+    color: #fff;
+    border-radius: 20px;
+    padding: 10px;
+    width: 160px;
+    cursor: pointer;
+}
+.basvurudetay-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.popup-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    width: 300px;
+}
+
+.popup-content textarea {
+    width: 100%;
+    height: 80px;
+    margin: 10px 0;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.popup-content button {
+    margin: 5px;
+    padding: 8px 12px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.popup-content button:first-child {
+    background-color: #28a745;
+    color: white;
+}
+
+.popup-content button:last-child {
+    background-color: #dc3545;
+    color: white;
+}
+
+.warning-message {
+    color: orange;
+    margin-top: 10px;
+    font-weight: bold;
 }

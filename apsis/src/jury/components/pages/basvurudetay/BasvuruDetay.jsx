@@ -13,7 +13,25 @@ function BasvuruDetay({ onSelect }) {
     const [selectedCategory, setSelectedCategory] = useState('publications');
     const [currentPage, setCurrentPage] = useState(1);
     const [searchTerm, setSearchTerm] = useState('');
+    const [popupVisible, setPopupVisible] = useState(false);
+    const [popupType, setPopupType] = useState('');
+    const [reason, setReason] = useState('');
+    const [warning, setWarning] = useState('');
     const itemsPerPage = 5;
+
+    const showPopup = (type) => {
+        setPopupType(type);
+        setPopupVisible(true);
+        setReason('');
+        setWarning('');
+    };
+
+    const handlePopupConfirm = () => {
+        setWarning(`${popupType === 'approve' ? 'Onaylama' : 'Reddetme'} işlemi simüle edildi.`);
+        setTimeout(() => {
+            setPopupVisible(false);
+        }, 2000);
+    };
 
     const transformData = (categoryData) => {
         return categoryData.map(item => ({
@@ -144,6 +162,25 @@ function BasvuruDetay({ onSelect }) {
                                     </tbody>
                                 </table>
                             </div>
+                            <div className='basvurudetay-buttons' >
+                            <button className='basvurudetay-button-onayla' onClick={() => showPopup('approve')}>Başvuruyu Onayla</button>
+                            <button className='basvurudetay-button-reddet' onClick={() => showPopup('reject')}>Başvuruyu Reddet</button>
+                            </div>
+                            {popupVisible && (
+                <div className='basvurudetay-popup'>
+                    <div className='popup-content'>
+                        <h3>{popupType === 'approve' ? 'Başvuruyu Onayla' : 'Başvuruyu Reddet'}</h3>
+                        <textarea 
+                            placeholder={popupType === 'approve' ? 'Onay açıklaması giriniz...' : 'Red açıklaması giriniz...'}
+                            value={reason}
+                            onChange={(e) => setReason(e.target.value)}
+                        ></textarea>
+                        <button onClick={handlePopupConfirm}>Tamamla</button>
+                        <button onClick={() => setPopupVisible(false)}>İptal</button>
+                        {warning && <p className='warning-message'>{warning}</p>}
+                    </div>
+                </div>
+            )}
                         </div>
                     </div>
                 </div>
