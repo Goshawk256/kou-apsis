@@ -47,7 +47,17 @@ function BasvuruDetay({ onSelect }) {
     const totalPages = Math.ceil(filteredData.length / itemsPerPage);
 
     return (
-        loading ? ('Yükleniyor...') : (
+        loading ?  <div className="hourglassBackground">
+            <div className="hourglassContainer">
+                <div className="hourglassCurves"></div>
+                <div className="hourglassCapTop"></div>
+                <div className="hourglassGlassTop"></div>
+                <div className="hourglassSand"></div>
+                <div className="hourglassSandStream"></div>
+                <div className="hourglassCapBottom"></div>
+                <div className="hourglassGlass"></div>
+            </div>
+        </div> : (
             !selectedApplication ? ('Başvuru bulunamadı') : (
                 <div className='main-basvurudetay'>
                     <button className='go-back-button' onClick={() => onSelect('Ana Sayfa')}>
