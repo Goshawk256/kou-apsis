@@ -14,7 +14,15 @@ function BasvuruDetay({ onSelect }) {
     const [currentPage, setCurrentPage] = useState(1);
     const [searchTerm, setSearchTerm] = useState('');
     const itemsPerPage = 5;
-
+    const transformData = (categoryData, category) => {
+        return categoryData.map(item => ({
+            title: item.title || item.projectName || '', // title veya projectName kullanılır
+            score: item.score || 0, // score, mevcut değilse 0
+            group: item.group || '', // group bilgisi
+            documentUrl: item.documentUrl || '#', // Belge bağlantısı
+        }));
+    };
+    
     useEffect(() => {
         const token = localStorage.getItem('accessToken');
         const fetchData = async () => {
@@ -25,6 +33,7 @@ function BasvuruDetay({ onSelect }) {
                 });
                 const applications = [...response.data.data.preliminaryApplications, ...response.data.data.scientificApplications];
                 const selectedApp = applications.find(app => app.applicationId === basvuruId);
+                
                 setSelectedApplication(selectedApp);
                 console.log(selectedApp);
             } catch (error) {
@@ -38,13 +47,23 @@ function BasvuruDetay({ onSelect }) {
 
     useEffect(() => {
         if (selectedApplication) {
-            setData(selectedApplication[selectedCategory] || []);
+            const transformed = [];
+    
+            // Her kategori için veri dönüştürme
+            ['publications', 'lessons', 'thesis', 'projects', 'awards', 'artworks'].forEach(category => {
+                if (selectedApplication[category]) {
+                    transformed.push(...transformData(selectedApplication[category], category));
+                }
+            });
+    
+            setData(transformed); // Veriyi güncelle
             setCurrentPage(1);
         }
-    }, [selectedApplication, selectedCategory]);
-
-    const filteredData = data.filter(item => (item.title?.toLowerCase()||item.projectName?.toLowerCase()).includes(searchTerm.toLowerCase()));
+    }, [selectedApplication]);
+    
+    const filteredData = data.filter(item => (item.title?.toLowerCase()).includes(searchTerm.toLowerCase()));
     const displayedData = filteredData.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+    
     const totalPages = Math.ceil(filteredData.length / itemsPerPage);
     return (
         loading ?  <div className="hourglassBackground">
@@ -102,18 +121,19 @@ function BasvuruDetay({ onSelect }) {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {displayedData.length > 0 ? displayedData.map(item => (
-                                            <tr key={item.id}>
-                                                <td>{item.title||item.projectName}</td>
-                                                <td>{item.group}</td>
-                                                <td>{item.score}</td>
-                                                <td><a href={item.documentUrl || '#'}>Belge</a></td>
-                                                <td><button><FaPencilAlt /></button></td>
-                                            </tr>
-                                        )) : (
-                                            <tr><td colSpan="5">Veri bulunamadı</td></tr>
-                                        )}
-                                    </tbody>
+    {displayedData.length > 0 ? displayedData.map(item => (
+        <tr key={item.title}>
+            <td>{item.title}</td>
+            <td>{item.group}</td>
+            <td>{item.score}</td>
+            <td><a href={item.documentUrl}>Belge</a></td>
+            <td><button><FaPencilAlt /></button></td>
+        </tr>
+    )) : (
+        <tr><td colSpan="5">Veri bulunamadı</td></tr>
+    )}
+</tbody>
+
                                 </table>
                             </div>
                         </div>
