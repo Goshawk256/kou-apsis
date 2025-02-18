@@ -57,7 +57,6 @@ function BasvuruDetay({ onSelect }) {
         fetchData();
     }, []);
     return (
-
         loading ? (
             'yükleniyor'
         ) : (
@@ -69,7 +68,6 @@ function BasvuruDetay({ onSelect }) {
                         <button className='go-back-button' onClick={() => onSelect('Ana Sayfa')} >
                             <img src={previous} alt="" />
                         </button>
-
                         <div className='basvurudetay-content' >
                             <div className='basvurudetay-header'>
                                 <span className='user-header'>{selectedApplication.userMail}</span>
@@ -88,13 +86,9 @@ function BasvuruDetay({ onSelect }) {
                                     <input
                                         style={{ color: 'gray' }}
                                         type="text"
-
-
                                         placeholder="Arama Sözcüğünüzü Giriniz..."
                                         className="basvurudetay-search-input"
                                     />
-
-
                                     <div className="basvurudetay-pagination">
                                         <button >
                                             ‹
@@ -117,7 +111,6 @@ function BasvuruDetay({ onSelect }) {
                                             </tr>
                                         </thead>
                                         <tbody>
-
                                             <tr>
                                                 <td>Başvuru İçeriği Adı</td>
                                                 <td>A5</td>
