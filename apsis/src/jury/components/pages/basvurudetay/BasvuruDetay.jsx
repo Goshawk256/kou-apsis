@@ -17,11 +17,20 @@ function BasvuruDetay({ onSelect }) {
 
     const transformData = (categoryData) => {
         return categoryData.map(item => ({
-            title: item.title || item.projectName || item.course_name || '', // title veya projectName kullanılır
-            score: item.score || 0, // score, mevcut değilse 0
-            group: item.group || '', // group bilgisi
-            documentUrl: item.documentUrl || '#', // Belge bağlantısı
+            title: item.title || item.projectName || item.course_name || '', 
+            score: item.score || 0, 
+            group: item.group || '', 
+            documentUrl: item.documentUrl || '#', 
         }));
+    };
+
+    const categoryMap = {
+        publications: 'Yayınlar',
+        lessons: 'Dersler',
+        advisingThesis: 'Tezler',
+        projects: 'Projeler',
+        awards: 'Ödüller',
+        artworks: 'Sanat Eserleri',
     };
 
     useEffect(() => {
@@ -85,13 +94,13 @@ function BasvuruDetay({ onSelect }) {
                         </div>
                         <div className='basvurudetay-inner'>
                             <div className='table-section'>
-                                {['publications', 'lessons', 'advisingThesis', 'projects', 'awards', 'artworks'].map(category => (
+                                {Object.keys(categoryMap).map(category => (
                                     <button
                                         key={category}
                                         onClick={() => setSelectedCategory(category)}
                                         className={selectedCategory === category ? 'active' : ''}
                                     >
-                                        {category.toUpperCase()}
+                                        {categoryMap[category]} {/* Türkçe kategori ismi */}
                                     </button>
                                 ))}
                             </div>
