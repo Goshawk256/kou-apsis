@@ -26,6 +26,7 @@ function BasvuruDetay({ onSelect }) {
                 const applications = [...response.data.data.preliminaryApplications, ...response.data.data.scientificApplications];
                 const selectedApp = applications.find(app => app.applicationId === basvuruId);
                 setSelectedApplication(selectedApp);
+                console.log(selectedApp);
             } catch (error) {
                 console.error("Hata oluştu:", error);
             } finally {
@@ -42,22 +43,21 @@ function BasvuruDetay({ onSelect }) {
         }
     }, [selectedApplication, selectedCategory]);
 
-    const filteredData = data.filter(item => item.title.toLowerCase().includes(searchTerm.toLowerCase()));
+    const filteredData = data.filter(item => (item.title?.toLowerCase()||item.projectName?.toLowerCase()).includes(searchTerm.toLowerCase()));
     const displayedData = filteredData.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
     const totalPages = Math.ceil(filteredData.length / itemsPerPage);
-
     return (
         loading ?  <div className="hourglassBackground">
-            <div className="hourglassContainer">
-                <div className="hourglassCurves"></div>
-                <div className="hourglassCapTop"></div>
-                <div className="hourglassGlassTop"></div>
-                <div className="hourglassSand"></div>
-                <div className="hourglassSandStream"></div>
-                <div className="hourglassCapBottom"></div>
-                <div className="hourglassGlass"></div>
-            </div>
-        </div> : (
+                        <div className="hourglassContainer">
+                            <div className="hourglassCurves"></div>
+                            <div className="hourglassCapTop"></div>
+                            <div className="hourglassGlassTop"></div>
+                            <div className="hourglassSand"></div>
+                            <div className="hourglassSandStream"></div>
+                            <div className="hourglassCapBottom"></div>
+                            <div className="hourglassGlass"></div>
+                        </div>
+                    </div> : (
             !selectedApplication ? ('Başvuru bulunamadı') : (
                 <div className='main-basvurudetay'>
                     <button className='go-back-button' onClick={() => onSelect('Ana Sayfa')}>
@@ -104,7 +104,7 @@ function BasvuruDetay({ onSelect }) {
                                     <tbody>
                                         {displayedData.length > 0 ? displayedData.map(item => (
                                             <tr key={item.id}>
-                                                <td>{item.title}</td>
+                                                <td>{item.title||item.projectName}</td>
                                                 <td>{item.group}</td>
                                                 <td>{item.score}</td>
                                                 <td><a href={item.documentUrl || '#'}>Belge</a></td>
