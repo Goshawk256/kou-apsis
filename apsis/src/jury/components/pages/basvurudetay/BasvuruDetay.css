@@ -183,8 +183,6 @@
     transition: all 0.3s ease;
 }
 
-
-
 .basvurudetay-main-row-2 .basvurudetay-filter-btn:hover {
     background-color: #eaeafa;
 }
@@ -216,9 +214,8 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    margin-left: 35%;
+    margin-left: 47%;
     margin-bottom: 12px;
-
 }
 
 .basvurudetay-main-row-2 .basvurudetay-pagination button {
@@ -228,16 +225,6 @@
     border: none;
     color: #1FA54E;
     cursor: pointer;
-}
-
-
-
-.dark .basvurudetay-pagination button {
-    background-color: #1c1c1c;
-}
-
-.dark .basvurudetay-pagination span {
-    color: rgb(103, 103, 103);
 }
 
 .basvurudetay-main-row-2 .basvurudetay-pagination button:disabled {
