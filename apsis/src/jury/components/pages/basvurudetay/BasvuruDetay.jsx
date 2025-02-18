@@ -19,7 +19,6 @@ function BasvuruDetay({ onSelect }) {
         const token = localStorage.getItem('accessToken');
         const fetchData = async () => {
             try {
-
                 const basvuruId = localStorage.getItem('selectedApplication');
 
                 const response = await axios.post(`${All_Url.api_base_url}/jury/get-applications`, {}, {
@@ -69,7 +68,7 @@ function BasvuruDetay({ onSelect }) {
                         <div className='basvurudetay-content' >
                             <div className='basvurudetay-header'>
                                 <span className='user-header'>{selectedApplication.userMail}</span>
-                                <span className='user-date'>Başvuru Tarihi: 12.05.2021</span>
+                                <span className='user-date'>{selectedApplication.type}</span>
                             </div>
                             <div className='basvurudetay-inner'>
                                 <div className='table-section' >
