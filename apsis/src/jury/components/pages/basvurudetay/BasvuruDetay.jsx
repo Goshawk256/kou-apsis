@@ -31,7 +31,6 @@ function BasvuruDetay({ onSelect }) {
 
                 const scientificApps = response.data.data.scientificApplications || [];
 
-
                 const selectedApplication = [...preliminaryApps, ...scientificApps].find(app => app.applicationId === basvuruId);
                 const publications = [...preliminaryApps, ...scientificApps].find(app => app.applicationId === basvuruId).publications;
                 const projects = [...preliminaryApps, ...scientificApps].find(app => app.applicationId === basvuruId).projects;
@@ -46,7 +45,6 @@ function BasvuruDetay({ onSelect }) {
                 setThesis(thesis);
                 setArtworks(artworks);
                 setSelectedApplication(selectedApplication);
-
             } catch (error) {
                 console.error("Hata oluştu:", error);
             }
@@ -125,10 +123,7 @@ function BasvuruDetay({ onSelect }) {
                         </div>
                     </div>
                 )
-
         )
-
-
     )
 }
 
