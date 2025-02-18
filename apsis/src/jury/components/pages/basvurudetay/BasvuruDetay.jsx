@@ -54,8 +54,8 @@ function BasvuruDetay({ onSelect }) {
                     </button>
                     <div className='basvurudetay-content'>
                         <div className='basvurudetay-header'>
-                            <span className='user-header'>{selectedApplication.userMail}</span>
-                            <span className='user-date'>{selectedApplication.type}</span>
+                            <span className='user-header'>{selectedApplication.applicantUsername}</span>
+                            <span className='user-date'>{selectedApplication.userMail}</span>
                         </div>
                         <div className='basvurudetay-inner'>
                             <div className='table-section'>
