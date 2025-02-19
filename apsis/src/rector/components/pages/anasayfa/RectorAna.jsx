@@ -1,7 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
+import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
+import swapIcon from "../../../../assets/swap.png";
 import "./RectorAna.css";
 
+const dataOptions = {
+  "Ön Değerlendirme Başvuruları": [
+    { name: "Bekleyen", value: 50 },
+    { name: "Onaylanan", value: 30 },
+    { name: "Reddedilen", value: 20 },
+  ],
+  "Kadro Başvuruları": [
+    { name: "Bekleyen", value: 10 },
+    { name: "Onaylanan", value: 8 },
+    { name: "Reddedilen", value: 5 },
+  ],
+};
+
+const COLORS = ["#FFBB28", "#00C49F", "#FF4848"];
+
 function RectorAna() {
+  const [selectedCategory, setSelectedCategory] = useState(
+    "Ön Değerlendirme Başvuruları"
+  );
+
+  const changeCategory = () => {
+    if (selectedCategory === "Ön Değerlendirme Başvuruları") {
+      setSelectedCategory("Kadro Başvuruları");
+    }
+    if (selectedCategory === "Kadro Başvuruları") {
+      setSelectedCategory("Ön Değerlendirme Başvuruları");
+    }
+  };
+
   return (
     <div className="main-rectorana">
       <div className="rectorana-content">
@@ -53,12 +83,60 @@ function RectorAna() {
             </div>
           </div>
           <div className="rectorana-column-1-row-3">
-            <div className="r-c-1-r-3-c"></div>
-            <div className="r-c-1-r-3-c"></div>
+            <div className="r-c-1-r-3-c">
+              <div className="r-c-header">
+                <span>Ön Değerlendirme Başvuruları</span>
+                <button
+                  onClick={() =>
+                    setSelectedCategory("Ön Değerlendirme Başvuruları")
+                  }
+                >
+                  ...
+                </button>
+              </div>
+            </div>
+            <div className="r-c-1-r-3-c">
+              <div className="r-c-header">
+                <span>Kadro Başvuruları</span>
+                <button
+                  onClick={() => setSelectedCategory("Kadro Başvuruları")}
+                >
+                  ...
+                </button>
+              </div>
+            </div>
           </div>
         </div>
         <div className="rectorana-column-2">
-          <div className="rectorana-column-2-row-1"></div>
+          <div className="rectorana-column-2-row-1">
+            <div className="chart-header">
+              <span>{selectedCategory}</span>
+              <button onClick={() => changeCategory()}>
+                <img src={swapIcon} alt="" />
+              </button>
+            </div>
+            <PieChart width={400} height={350}>
+              <Pie
+                data={dataOptions[selectedCategory]}
+                cx="50%"
+                cy="50%"
+                innerRadius={60}
+                outerRadius={130}
+                fill="#8884d8"
+                paddingAngle={3}
+                dataKey="value"
+              >
+                {dataOptions[selectedCategory].map((entry, index) => (
+                  <Cell
+                    key={`cell-${index}`}
+                    fill={COLORS[index % COLORS.length]}
+                  />
+                ))}
+              </Pie>
+              <Tooltip />
+              <Legend />
+            </PieChart>
+          </div>
           <div className="rectorana-column-2-row-2"></div>
         </div>
       </div>
