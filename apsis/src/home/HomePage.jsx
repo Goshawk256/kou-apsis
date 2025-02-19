@@ -131,10 +131,10 @@ function HomePage() {
                     </AnimatePresence>
                 </div>
             </div>
-        ) : role === 'Rector' ? (
+        ) : role === 'Jury' ? (
             <JuriHomepage />
         ) : (
-            role==='Jury' ?
+            role==='Rector' ?
            (
            <RectorHomePage />
         ) : (

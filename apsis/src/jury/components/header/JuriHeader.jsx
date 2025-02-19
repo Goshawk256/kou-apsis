@@ -71,7 +71,7 @@ function JuriHeader() {
                         <span className="msg-count">0</span>
                     </button>
                     <div className="username">
-                        <span>Jüri {username} </span>
+                        <span> {username} </span>
                     </div>
                    
                     <button onClick={handleLogout} className="logout-button">
