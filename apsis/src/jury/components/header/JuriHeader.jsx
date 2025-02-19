@@ -31,18 +31,10 @@ function JuriHeader() {
                 setIsLoading(true);
 
 
-                const response = await getUserInfoByUsername(username);
+                
 
-                const userInfoData = response?.data;
-
-                if (userInfoData) {
-                    setUserInfo(userInfoData);
-                } else {
-                    console.error('User data not found.');
-                }
             } catch (err) {
-                console.error('Error fetching data:', err);
-                console.error('Error fetching data');
+                
             } finally {
                 setIsLoading(false);
             }
@@ -81,26 +73,7 @@ function JuriHeader() {
                     <div className="username">
                         <span>Jüri {username} </span>
                     </div>
-                    <div className="checkbox-wrapper-35">
-
-                        {
-                            /*
-                            <label htmlFor="themeSwitch">
-                                <span className="switch-x-toggletext">
-                                    <span className="switch-x-unchecked">
-                                        <span className="switch-x-hiddenlabel">Unchecked: </span>
-                                        Aydınlık
-                                    </span>
-                                    <span className="switch-x-checked">
-                                        <span className="switch-x-hiddenlabel">Checked: </span>
-                                        Karanlık
-                                    </span>
-                                </span>
-                                <span className="switch-x-text">Tema </span>
-                            </label>
-                            */
-                        }
-                    </div>
+                   
                     <button onClick={handleLogout} className="logout-button">
                         <img src={logoutIcon} alt="Logout" />
                     </button>

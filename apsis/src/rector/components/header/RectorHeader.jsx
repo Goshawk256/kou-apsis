@@ -31,18 +31,9 @@ function RectorHeader() {
                 setIsLoading(true);
 
 
-                const response = await getUserInfoByUsername(username);
-
-                const userInfoData = response?.data;
-
-                if (userInfoData) {
-                    setUserInfo(userInfoData);
-                } else {
-                    console.error('User data not found.');
-                }
+              
             } catch (err) {
-                console.error('Error fetching data:', err);
-                console.error('Error fetching data');
+               
             } finally {
                 setIsLoading(false);
             }
