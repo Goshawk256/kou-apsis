@@ -17,6 +17,7 @@ import Basvurular from '../academic/components/pages/basvurular/Basvuru';
 import Finish from '../academic/components/pages/finish/Finish';
 import Help from '../academic/components/pages/help/Help';
 import JuriHomepage from '../jury/components/JuriHomepage';
+import RectorHomePage from '../rector/components/RectorHomePage';
 
 function HomePage() {
     const [selectedPage, setSelectedPage] = useState('Ana Sayfa');
@@ -130,10 +131,15 @@ function HomePage() {
                     </AnimatePresence>
                 </div>
             </div>
-        ) : role === 'Jury' ? (
+        ) : role === 'Rector' ? (
             <JuriHomepage />
         ) : (
-            <div>Role not found</div>
+            role==='Jury' ?
+           (
+           <RectorHomePage />
+        ) : (
+        <div>Yetkisiz erişim</div>
+           )
         )
     );
 }

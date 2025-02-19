@@ -68,7 +68,7 @@ function RectorHeader() {
                 <div className={`header-container`}>
                     <div className="site-name">
                         <img src={logoLight} alt="Logo" />
-                        <span className="shining-text">Kocaeli Üniversitesi Akademik Puan Sistemi(Jüri Portalı)</span>
+                        <span className="shining-text">Kocaeli Üniversitesi Akademik Puan Sistemi(Rektör Portalı)</span>
                     </div>
                     <button className="inbox-btn">
                         <svg viewBox="0 0 512 512" height="10" xmlns="http://www.w3.org/2000/svg">
@@ -79,28 +79,9 @@ function RectorHeader() {
                         <span className="msg-count">0</span>
                     </button>
                     <div className="username">
-                        <span>Jüri {username} </span>
+                        <span> {username} </span>
                     </div>
-                    <div className="checkbox-wrapper-35">
-
-                        {
-                            /*
-                            <label htmlFor="themeSwitch">
-                                <span className="switch-x-toggletext">
-                                    <span className="switch-x-unchecked">
-                                        <span className="switch-x-hiddenlabel">Unchecked: </span>
-                                        Aydınlık
-                                    </span>
-                                    <span className="switch-x-checked">
-                                        <span className="switch-x-hiddenlabel">Checked: </span>
-                                        Karanlık
-                                    </span>
-                                </span>
-                                <span className="switch-x-text">Tema </span>
-                            </label>
-                            */
-                        }
-                    </div>
+                   
                     <button onClick={handleLogout} className="logout-button">
                         <img src={logoutIcon} alt="Logout" />
                     </button>
