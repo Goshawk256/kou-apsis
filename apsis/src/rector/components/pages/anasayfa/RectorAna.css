@@ -1,0 +1,88 @@
+.main-rectorana{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 700px;
+    margin-left: 4%;
+    border-radius: 10px;
+    background-color: #fff;
+    margin-top: 3.4%;
+}
+.rectorana-content{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+    border: 1px solid #d5d3d3;
+    border-radius: 10px;
+}
+
+.rectorana-column-1{
+    display: flex;
+    flex-direction: column;
+    width: 65%;
+    height: 100%;
+    border-right: 1px solid #d5d3d3;
+    
+}
+
+.rectorana-column-1-row-1{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 100%;
+    height: 10%;
+    align-items: start;
+
+}
+.rector-header{
+    color: grey;
+    font-size: 20px;
+    margin-left: 2%;
+}
+.rector-desc{
+    color: grey;
+    font-size: 14px;
+    margin-left: 2%;
+}
+.rectorana-column-1-row-2{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 96%;
+    height: 20%;
+    padding: 2%;
+    align-items: start;
+    
+}
+
+.little-card{
+    display: flex;
+    flex-direction: column;
+    width: 32%;
+    height: 100%;
+    border-radius: 10px;
+    background-color: #fff;
+    border: 1px solid #d5d3d3;
+}
+.rectorana-column-1-row-3{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 96%;
+    padding: 2%;
+    height: 61%;
+    align-items: start;
+}
+
+.r-c-1-r-3-c{
+    display: flex;
+    flex-direction: column;
+    width: 48%;
+    height: 100%;
+    border-radius: 10px;
+    background-color: #fff;
+    border: 1px solid #d5d3d3;
+}

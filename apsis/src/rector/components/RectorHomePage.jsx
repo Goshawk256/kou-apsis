@@ -2,6 +2,7 @@ import  {  useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import RectorHeader from './header/RectorHeader'
 import RectorSidebar from './sidebar/RectorSidebar'
+import RectorAna from './pages/anasayfa/RectorAna';
 
 
 
@@ -15,7 +16,7 @@ function RectorHomePage() {
     const renderContent = () => {
         switch (selectedPage) {
             case 'Ana Sayfa':
-                return <div>rector ana sayfa</div>;
+                return <RectorAna />;
             case 'Mesajlar':
                 return <div>rector mesajlar</div>;
             case 'Jüriler':
@@ -23,7 +24,7 @@ function RectorHomePage() {
             case 'Fakülteler':
                 return <div>rector fakülteler</div>;
             default:
-                return <div>rector ana sayfa</div>;
+                return <RectorAna />;
         }
     };
 

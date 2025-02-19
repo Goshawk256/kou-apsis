@@ -116,7 +116,7 @@ function Login() {
                             <select className='' id='role' value={selectedRole} onChange={(e) => setSelectedRole(e.target.value)}>
                                 {roles.map((role, index) => (
                                     <option key={index} value={role} style={{ backgroundColor: 'green' }}>
-                                        {role === 'Academic' ? 'Akademik Personel' : 'Akademik Jüri'}
+                                        {role === 'Academic' ? 'Akademik Personel' : role==='Jury' ? 'Jüri' : role=='Rector' ? 'Rektörlük' : role='Dean' ? 'Dekanlık' : 'Admin'}
                                     </option>
                                 ))}
                             </select>
