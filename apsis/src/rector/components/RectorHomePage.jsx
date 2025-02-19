@@ -16,8 +16,12 @@ function RectorHomePage() {
         switch (selectedPage) {
             case 'Ana Sayfa':
                 return <div>rector ana sayfa</div>;
-            case 'Basvurudetay':
-                return <div>rector basvurudetay</div>;
+            case 'Mesajlar':
+                return <div>rector mesajlar</div>;
+            case 'Jüriler':
+                return <div>rector jüriler</div>;
+            case 'Fakülteler':
+                return <div>rector fakülteler</div>;
             default:
                 return <div>rector ana sayfa</div>;
         }

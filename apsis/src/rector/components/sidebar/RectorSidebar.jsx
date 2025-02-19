@@ -1,21 +1,17 @@
-
 import './RectorSidebar.css';
 import PropTypes from 'prop-types';
-
-
 import homeIcon from '../../../assets/home.svg'
-
-
-
+import yayinIcon from '../../../assets/yayinlar.svg'
+import juryIcon from '../../../assets/jury.png'
+import facultyIcon from '../../../assets/university.png'
 function RectorSidebar({ onSelect }) {
 
     const items = [
         { name: "Ana Sayfa", icon: <img src={homeIcon} alt="Home" /> },
-
-
+        { name: "Mesajlar", icon: <img src={yayinIcon} alt="Home" /> },
+        { name: "Jüriler", icon: <img src={juryIcon} alt="Home" /> },
+        { name: "Fakülteler", icon: <img src={facultyIcon} alt="Home" /> },
     ];
-
-
 
     return (
         <div className={`sidebar-container`}>
