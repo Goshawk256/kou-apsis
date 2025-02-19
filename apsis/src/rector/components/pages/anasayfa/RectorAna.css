@@ -47,11 +47,13 @@
   color: grey;
   font-size: 20px;
   margin-left: 2%;
+  font-weight: 600;
 }
 .rector-desc {
   color: grey;
   font-size: 14px;
   margin-left: 2%;
+  font-weight: 500;
 }
 .rectorana-column-1-row-2 {
   display: flex;
@@ -63,6 +65,10 @@
   align-items: start;
 }
 
+.rectorana-column-1-row-2:first-child {
+  background-color: green;
+}
+
 .little-card {
   display: flex;
   flex-direction: column;
@@ -70,6 +76,15 @@
   height: 100%;
   border-radius: 10px;
   background-color: #fff;
+  border: 1px solid #d5d3d3;
+}
+.little-card-first {
+  display: flex;
+  flex-direction: column;
+  width: 32%;
+  height: 100%;
+  border-radius: 10px;
+  background-color: #1fa54e;
   border: 1px solid #d5d3d3;
 }
 .rectorana-column-1-row-3 {
@@ -125,6 +140,7 @@
   margin-left: 5px;
   font-size: 14px;
   color: grey;
+  font-weight: 500;
 }
 .card-header button {
   background-color: transparent;
@@ -168,4 +184,70 @@
   font-size: 10px;
   margin-left: 2px;
   cursor: pointer;
+}
+.card-content button:hover {
+  color: #5d5d5d;
+}
+
+.card-header-first {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 96%;
+  height: 10%;
+  padding: 2%;
+  align-items: center;
+}
+.card-header-first span {
+  margin-top: 5px;
+  margin-left: 5px;
+  font-size: 14px;
+  color: white;
+  font-weight: 500;
+}
+.card-header-first button {
+  background-color: transparent;
+  border: none;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.card-content-first {
+  display: flex;
+  flex-direction: column;
+  margin-top: 7%;
+  width: 96%;
+  height: 60%;
+  padding: 2%;
+  align-items: start;
+  flex-direction: column;
+  align-items: start;
+  justify-content: space-between;
+  text-align: start;
+}
+.card-content-first span {
+  margin-left: 5px;
+  color: white;
+  font-size: 14px;
+}
+
+.card-content-first span span {
+  color: white;
+  padding: 0;
+  margin: 0;
+  font-size: 24px;
+}
+
+.card-content-first button {
+  background-color: transparent;
+  border: none;
+  color: #e3e3e3;
+  font-size: 10px;
+  margin-left: 2px;
+  cursor: pointer;
+}
+.card-content-first button:hover {
+  color: white;
 }
