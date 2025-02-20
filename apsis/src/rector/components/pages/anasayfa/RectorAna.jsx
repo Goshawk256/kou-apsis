@@ -137,7 +137,13 @@ function RectorAna() {
               <Legend />
             </PieChart>
           </div>
-          <div className="rectorana-column-2-row-2"></div>
+          <div className="rectorana-column-2-row-2">
+            <div className="ilan-header">
+              <span>Aktif İlanlar</span>
+              <button>+</button>
+            </div>
+            <div className="ilan-content"></div>
+          </div>
         </div>
       </div>
     </div>

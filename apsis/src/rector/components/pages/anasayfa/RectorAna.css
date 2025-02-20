@@ -310,3 +310,29 @@
   width: 30px;
   height: 30px;
 }
+
+.ilan-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 96%;
+  height: 10%;
+  padding: 2%;
+  align-items: center;
+}
+.ilan-header span {
+  color: grey;
+  font-size: 16px;
+  font-weight: 500;
+  margin-left: 5px;
+}
+
+.ilan-header button {
+  background-color: transparent;
+  border: none;
+  color: grey;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+}
