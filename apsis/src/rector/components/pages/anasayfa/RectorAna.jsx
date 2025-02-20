@@ -63,7 +63,7 @@ function RectorAna() {
               </div>
               <div className="card-content">
                 <span>
-                  Toplam Ön Değerlendirme Başvurusu sayısı <span>187</span>
+                  Toplam Ön Değerlendirme Başvuru sayısı <span>187</span>
                   'dir.
                 </span>
                 <button>Ayrıntıları Gör {">"}</button>
@@ -71,12 +71,12 @@ function RectorAna() {
             </div>
             <div className="little-card">
               <div className="card-header">
-                <span className="card-title">Kadro Başvurusu Sayısı</span>
+                <span className="card-title">Kadro Başvuru Sayısı</span>
                 <button>...</button>
               </div>
               <div className="card-content">
                 <span>
-                  Toplam Kadro Başvurusu <br /> sayısı <span>23</span>
+                  Toplam Kadro Başvuru <br /> sayısı <span>23</span>
                   'dir.
                 </span>
                 <button>Ayrıntıları Gör {">"}</button>
@@ -87,13 +87,7 @@ function RectorAna() {
             <div className="r-c-1-r-3-c">
               <div className="r-c-header">
                 <span>Ön Değerlendirme Başvuruları</span>
-                <button
-                  onClick={() =>
-                    setSelectedCategory("Ön Değerlendirme Başvuruları")
-                  }
-                >
-                  ...
-                </button>
+                <button>...</button>
               </div>
               <div className="r-c-content">
                 <li>
@@ -149,11 +143,7 @@ function RectorAna() {
             <div className="r-c-1-r-3-c">
               <div className="r-c-header">
                 <span>Kadro Başvuruları</span>
-                <button
-                  onClick={() => setSelectedCategory("Kadro Başvuruları")}
-                >
-                  ...
-                </button>
+                <button>...</button>
               </div>
               <div className="r-c-content">
                 <li>
