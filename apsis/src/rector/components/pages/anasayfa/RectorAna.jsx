@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
 import swapIcon from "../../../../assets/swap.png";
+import user from "../../../../assets/user.png";
+import checkout from "../../../../assets/checkout.png";
 import "./RectorAna.css";
-
 const dataOptions = {
   "Ön Değerlendirme Başvuruları": [
     { name: "Bekleyen", value: 50 },
@@ -94,6 +95,7 @@ function RectorAna() {
                   ...
                 </button>
               </div>
+              <div className="r-c-content"></div>
             </div>
             <div className="r-c-1-r-3-c">
               <div className="r-c-header">
@@ -103,6 +105,24 @@ function RectorAna() {
                 >
                   ...
                 </button>
+              </div>
+              <div className="r-c-content">
+                <li>
+                  <img src={user} alt="" />
+                  <span>Mustafa Peker</span>
+                  <span>Doç. Dr.</span>
+                  <button>
+                    <img src={checkout} alt="" />
+                  </button>
+                </li>
+                <li>
+                  <img src={user} alt="" />
+                  <span>Mustafa Peker</span>
+                  <span>Doç. Dr.</span>
+                  <button>
+                    <img src={checkout} alt="" />
+                  </button>
+                </li>
               </div>
             </div>
           </div>
