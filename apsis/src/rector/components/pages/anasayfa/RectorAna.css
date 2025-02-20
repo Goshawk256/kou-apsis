@@ -24,6 +24,7 @@
   flex-direction: column;
   width: 65%;
   height: 100%;
+  border-right: 1px solid #d5d3d3;
 }
 .rectorana-column-2 {
   display: flex;
