@@ -66,10 +66,6 @@
   align-items: start;
 }
 
-.rectorana-column-1-row-2:first-child {
-  background-color: green;
-}
-
 .little-card {
   display: flex;
   flex-direction: column;
