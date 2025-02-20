@@ -95,7 +95,56 @@ function RectorAna() {
                   ...
                 </button>
               </div>
-              <div className="r-c-content"></div>
+              <div className="r-c-content">
+                <li>
+                  <img src={user} alt="" />
+                  <span>Mustafa Peker</span>
+                  <span>Doç. Dr.</span>
+                  <button>
+                    <img src={checkout} alt="" />
+                  </button>
+                </li>
+                <li>
+                  <img src={user} alt="" />
+                  <span>Mustafa Peker</span>
+                  <span>Doç. Dr.</span>
+                  <button>
+                    <img src={checkout} alt="" />
+                  </button>
+                </li>
+                <li>
+                  <img src={user} alt="" />
+                  <span>Mustafa Peker</span>
+                  <span>Doç. Dr.</span>
+                  <button>
+                    <img src={checkout} alt="" />
+                  </button>
+                </li>
+                <li>
+                  <img src={user} alt="" />
+                  <span>Mustafa Peker</span>
+                  <span>Doç. Dr.</span>
+                  <button>
+                    <img src={checkout} alt="" />
+                  </button>
+                </li>
+                <li>
+                  <img src={user} alt="" />
+                  <span>Mustafa Peker</span>
+                  <span>Doç. Dr.</span>
+                  <button>
+                    <img src={checkout} alt="" />
+                  </button>
+                </li>
+                <li>
+                  <img src={user} alt="" />
+                  <span>Mustafa Peker</span>
+                  <span>Doç. Dr.</span>
+                  <button>
+                    <img src={checkout} alt="" />
+                  </button>
+                </li>
+              </div>
             </div>
             <div className="r-c-1-r-3-c">
               <div className="r-c-header">
@@ -107,6 +156,54 @@ function RectorAna() {
                 </button>
               </div>
               <div className="r-c-content">
+                <li>
+                  <img src={user} alt="" />
+                  <span>Mustafa Peker</span>
+                  <span>Doç. Dr.</span>
+                  <button>
+                    <img src={checkout} alt="" />
+                  </button>
+                </li>
+                <li>
+                  <img src={user} alt="" />
+                  <span>Mustafa Peker</span>
+                  <span>Doç. Dr.</span>
+                  <button>
+                    <img src={checkout} alt="" />
+                  </button>
+                </li>
+                <li>
+                  <img src={user} alt="" />
+                  <span>Mustafa Peker</span>
+                  <span>Doç. Dr.</span>
+                  <button>
+                    <img src={checkout} alt="" />
+                  </button>
+                </li>
+                <li>
+                  <img src={user} alt="" />
+                  <span>Mustafa Peker</span>
+                  <span>Doç. Dr.</span>
+                  <button>
+                    <img src={checkout} alt="" />
+                  </button>
+                </li>
+                <li>
+                  <img src={user} alt="" />
+                  <span>Mustafa Peker</span>
+                  <span>Doç. Dr.</span>
+                  <button>
+                    <img src={checkout} alt="" />
+                  </button>
+                </li>
+                <li>
+                  <img src={user} alt="" />
+                  <span>Mustafa Peker</span>
+                  <span>Doç. Dr.</span>
+                  <button>
+                    <img src={checkout} alt="" />
+                  </button>
+                </li>
                 <li>
                   <img src={user} alt="" />
                   <span>Mustafa Peker</span>
