@@ -5,6 +5,9 @@ function ApplicationDetail() {
   return (
     <div className="applicationdetail-main">
       <div className="detail-content">
+        <span className="detail-header">
+          Başvuran Kişi: suhapsahin@kocaeli.edu.tr
+        </span>
         <div className="detail-column-1">
           <span>
             <b>İlan Adı:</b> <br />
