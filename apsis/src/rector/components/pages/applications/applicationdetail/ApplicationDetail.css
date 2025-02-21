@@ -122,3 +122,21 @@
   overflow: auto;
   border: 1px solid #d5d3d3;
 }
+.header-content {
+  width: 87%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.detail-header-1 {
+  width: 65%;
+  text-align: start;
+  color: grey;
+  font-size: 12px;
+}
+.detail-header-2 {
+  width: 33%;
+  text-align: start;
+  color: grey;
+  font-size: 12px;
+}

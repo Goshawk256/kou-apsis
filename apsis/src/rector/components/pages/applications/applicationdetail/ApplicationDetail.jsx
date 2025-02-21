@@ -35,7 +35,10 @@ function ApplicationDetail() {
             obcaecati.
           </span>
         </div>
-        <span className="detail-header">Juri Bilgileri:</span>
+        <div className="header-content">
+          <span className="detail-header-1">Juri Bilgileri:</span>
+          <span className="detail-header-2">Juri Mesajı:</span>
+        </div>
         <div className="detail-colum-2">
           <div className="detail-column-2-r-1">
             <li>
