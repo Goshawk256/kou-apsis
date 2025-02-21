@@ -1,7 +1,10 @@
 import React from "react";
 import "./ApplicationDetail.css";
-
+import user from "../../../../../assets/user.png";
 function ApplicationDetail() {
+  const truncateText = (text) => {
+    return text.length > 25 ? text.substring(0, 22) + "..." : text;
+  };
   return (
     <div className="applicationdetail-main">
       <div className="detail-content">
@@ -32,7 +35,92 @@ function ApplicationDetail() {
             obcaecati.
           </span>
         </div>
-        <div className="detail-colum-2"></div>
+        <span className="detail-header">Juri Bilgileri:</span>
+        <div className="detail-colum-2">
+          <div className="detail-column-2-r-1">
+            <li>
+              <img src={user} alt="" />
+              <span>
+                Juri Adı: <br />
+                {truncateText("mustafaserhatpeker@kocaeli.edu.tr")}
+              </span>
+
+              <span>
+                Juri Değerlendirmesi: <br />
+                Reddedildi
+              </span>
+              <span>
+                Juri Değerlendirmesi: <br />
+                Ön Değerlendirme
+              </span>
+            </li>
+            <li>
+              <img src={user} alt="" />
+              <span>
+                Juri Adı: <br />
+                {truncateText("mustafaserhatpeker@kocaeli.edu.tr")}
+              </span>
+
+              <span>
+                Juri Değerlendirmesi: <br />
+                Reddedildi
+              </span>
+              <span>
+                Juri Değerlendirmesi: <br />
+                Ön Değerlendirme
+              </span>
+            </li>
+            <li>
+              <img src={user} alt="" />
+              <span>
+                Juri Adı: <br />
+                {truncateText("mustafaserhatpeker@kocaeli.edu.tr")}
+              </span>
+
+              <span>
+                Juri Değerlendirmesi: <br />
+                Reddedildi
+              </span>
+              <span>
+                Juri Değerlendirmesi: <br />
+                Ön Değerlendirme
+              </span>
+            </li>
+            <li>
+              <img src={user} alt="" />
+              <span>
+                Juri Adı: <br />
+                {truncateText("mustafaserhatpeker@kocaeli.edu.tr")}
+              </span>
+
+              <span>
+                Juri Değerlendirmesi: <br />
+                Reddedildi
+              </span>
+              <span>
+                Juri Değerlendirmesi: <br />
+                Ön Değerlendirme
+              </span>
+            </li>
+            <li>
+              <img src={user} alt="" />
+              <span>
+                Juri Adı: <br />
+                {truncateText("mustafaserhatpeker@kocaeli.edu.tr")}
+              </span>
+
+              <span>
+                Juri Değerlendirmesi: <br />
+                Reddedildi
+              </span>
+              <span>
+                Juri Değerlendirmesi: <br />
+                Ön Değerlendirme
+              </span>
+            </li>
+          </div>
+          <div className="detail-column-2-r-2"></div>
+        </div>
       </div>
     </div>
   );

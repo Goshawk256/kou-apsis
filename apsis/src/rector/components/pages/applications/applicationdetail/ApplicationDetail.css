@@ -54,12 +54,58 @@
   display: flex; /* Ekledim: İçerik hizalaması için */
   flex-direction: row;
   justify-content: space-between;
-  width: 85%;
+  width: 89%;
   height: 55%; /* Sabit yükseklik */
-  padding: 2%;
   align-items: start;
-  border: 1px solid #d5d3d3;
+
   border-radius: 10px;
   flex-shrink: 0; /* Ekledim: Elemanların küçülmesini önler */
   gap: 10px;
+}
+
+.detail-column-2-r-1 {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: start;
+  gap: 10px;
+  width: 60%;
+  height: 100%;
+  border-radius: 10px;
+
+  overflow: auto;
+}
+
+.detail-column-2-r-1 li {
+  display: flex; /* Ekledim: İçerik hizalaması için */
+  flex-direction: row;
+  justify-content: space-between;
+  width: 94%;
+  height: 51px; /* Sabit yükseklik */
+  padding: 2%;
+  align-items: center;
+  border: 1px solid #d5d3d3;
+  border-radius: 10px;
+  flex-shrink: 0; /* Ekledim: Elemanların küçülmesini önler */
+}
+
+.detail-column-2-r-1 li img {
+  width: 40px;
+  height: 40px;
+}
+.detail-column-2-r-1 li span {
+  color: grey;
+  font-size: 12px;
+}
+.detail-column-2-r-1 li button {
+  width: 30px;
+  height: 30px;
+  background-color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.detail-column-2-r-1 li button img {
+  width: 25px;
+  height: 25px;
 }
