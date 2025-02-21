@@ -4,6 +4,7 @@ import user from "../../../../assets/user.png";
 import check from "../../../../assets/check.png";
 import previous from "../../../../assets/previous.png";
 import { motion, AnimatePresence } from "framer-motion";
+import ApplicationDetail from "./applicationdetail/ApplicationDetail";
 
 function Applications() {
   const truncateText = (text) => {
@@ -35,6 +36,7 @@ function Applications() {
               >
                 <img src={previous} alt="geri" />
               </button>
+              <ApplicationDetail />
             </div>
           </motion.div>
         </AnimatePresence>
