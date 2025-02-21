@@ -49,12 +49,8 @@ function ApplicationDetail() {
               </span>
 
               <span>
-                Başvuru Durumu: <br />
+                Juri Onayı: <br />
                 Reddedildi
-              </span>
-              <span>
-                Başvuru Durumu: <br />
-                Ön Değerlendirme
               </span>
             </li>
             <li>
@@ -68,12 +64,8 @@ function ApplicationDetail() {
               </span>
 
               <span>
-                Başvuru Durumu: <br />
+                Juri Onayı: <br />
                 Reddedildi
-              </span>
-              <span>
-                Başvuru Durumu: <br />
-                Ön Değerlendirme
               </span>
             </li>
           </div>
