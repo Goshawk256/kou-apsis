@@ -15,9 +15,24 @@ function Juries() {
           <span>
             <b>Atandığı Fakülte:</b> <br /> Mühendislik Fakültesi
           </span>
+
+          <div className="jury-buttons">
+            <button className="edit-jury">
+              <FaPencilAlt />
+            </button>
+            <button className="delete-jury">
+              {" "}
+              <FaTrashAlt />{" "}
+            </button>
+          </div>
+        </li>
+        <li>
           <span>
-            <b>Bitiş Tarihi:</b> <br />
-            12.04.2025
+            <b>Jüri Adı:</b> <br />
+            suhapsahin@kocaeli.edu.tr
+          </span>
+          <span>
+            <b>Atandığı Fakülte:</b> <br /> Mühendislik Fakültesi
           </span>
 
           <div className="jury-buttons">
@@ -38,10 +53,6 @@ function Juries() {
           <span>
             <b>Atandığı Fakülte:</b> <br /> Mühendislik Fakültesi
           </span>
-          <span>
-            <b>Bitiş Tarihi:</b> <br />
-            12.04.2025
-          </span>
 
           <div className="jury-buttons">
             <button className="edit-jury">
@@ -60,33 +71,6 @@ function Juries() {
           </span>
           <span>
             <b>Atandığı Fakülte:</b> <br /> Mühendislik Fakültesi
-          </span>
-          <span>
-            <b>Bitiş Tarihi:</b> <br />
-            12.04.2025
-          </span>
-
-          <div className="jury-buttons">
-            <button className="edit-jury">
-              <FaPencilAlt />
-            </button>
-            <button className="delete-jury">
-              {" "}
-              <FaTrashAlt />{" "}
-            </button>
-          </div>
-        </li>
-        <li>
-          <span>
-            <b>Jüri Adı:</b> <br />
-            suhapsahin@kocaeli.edu.tr
-          </span>
-          <span>
-            <b>Atandığı Fakülte:</b> <br /> Mühendislik Fakültesi
-          </span>
-          <span>
-            <b>Bitiş Tarihi:</b> <br />
-            12.04.2025
           </span>
 
           <div className="jury-buttons">
