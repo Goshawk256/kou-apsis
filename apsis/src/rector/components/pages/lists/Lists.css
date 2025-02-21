@@ -38,7 +38,7 @@
   flex-direction: row;
   justify-content: space-between;
   width: 96%;
-  height: 150px; /* Sabit yükseklik */
+  height: 100px; /* Sabit yükseklik */
   padding: 2%;
   align-items: start;
   border: 1px solid #d5d3d3;
