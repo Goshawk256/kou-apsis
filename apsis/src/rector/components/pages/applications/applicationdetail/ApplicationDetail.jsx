@@ -44,8 +44,17 @@ function ApplicationDetail() {
                 Juri Adı: <br />
                 {truncateText("mustafaserhatpeker@kocaeli.edu.tr")}
               </span>
+
               <span>
-                Başvurulan Kadro: <br /> Doç. Dr.
+                Juri Onayı: <br />
+                Reddedildi
+              </span>
+            </li>
+            <li>
+              <img src={user} alt="" />
+              <span>
+                Juri Adı: <br />
+                {truncateText("mustafaserhatpeker@kocaeli.edu.tr")}
               </span>
 
               <span>
@@ -59,8 +68,17 @@ function ApplicationDetail() {
                 Juri Adı: <br />
                 {truncateText("mustafaserhatpeker@kocaeli.edu.tr")}
               </span>
+
               <span>
-                Başvurulan Kadro: <br /> Doç. Dr.
+                Juri Onayı: <br />
+                Reddedildi
+              </span>
+            </li>
+            <li>
+              <img src={user} alt="" />
+              <span>
+                Juri Adı: <br />
+                {truncateText("mustafaserhatpeker@kocaeli.edu.tr")}
               </span>
 
               <span>

@@ -109,3 +109,16 @@
   width: 25px;
   height: 25px;
 }
+
+.detail-column-2-r-2 {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: start;
+
+  width: 35%;
+  height: 97%;
+  border-radius: 10px;
+  overflow: auto;
+  border: 1px solid #d5d3d3;
+}
