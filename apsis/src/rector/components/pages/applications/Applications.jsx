@@ -55,7 +55,11 @@ function Applications() {
                   <span>Filtreleme:</span>
                 </div>
                 <div className="content-last">
-                  Görmek İçin Başvuruyu Seçiniz
+                  <button></button>
+                  <button></button>
+                  <button></button>
+                  <button></button>
+                  <button></button>
                 </div>
               </div>
               <div className="content-column-1">
