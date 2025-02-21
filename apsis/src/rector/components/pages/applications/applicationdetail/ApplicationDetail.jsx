@@ -1,6 +1,7 @@
 import React from "react";
 import "./ApplicationDetail.css";
 import user from "../../../../../assets/user.png";
+import { TfiCommentAlt } from "react-icons/tfi";
 function ApplicationDetail() {
   const truncateText = (text) => {
     return text.length > 25 ? text.substring(0, 22) + "..." : text;
@@ -52,6 +53,11 @@ function ApplicationDetail() {
                 Juri Onayı: <br />
                 Reddedildi
               </span>
+
+              <button>
+                {" "}
+                <TfiCommentAlt />
+              </button>
             </li>
             <li>
               <img src={user} alt="" />
@@ -64,6 +70,11 @@ function ApplicationDetail() {
                 Juri Onayı: <br />
                 Reddedildi
               </span>
+
+              <button>
+                {" "}
+                <TfiCommentAlt />
+              </button>
             </li>
             <li>
               <img src={user} alt="" />
@@ -76,6 +87,11 @@ function ApplicationDetail() {
                 Juri Onayı: <br />
                 Reddedildi
               </span>
+
+              <button>
+                {" "}
+                <TfiCommentAlt />
+              </button>
             </li>
             <li>
               <img src={user} alt="" />
@@ -88,6 +104,11 @@ function ApplicationDetail() {
                 Juri Onayı: <br />
                 Reddedildi
               </span>
+
+              <button>
+                {" "}
+                <TfiCommentAlt />
+              </button>
             </li>
           </div>
           <div className="detail-column-2-r-2"></div>

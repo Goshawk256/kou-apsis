@@ -98,16 +98,12 @@
   font-size: 12px;
 }
 .detail-column-2-r-1 li button {
-  width: 30px;
-  height: 30px;
-  background-color: #fff;
+  background-color: transparent;
   border: none;
-  border-radius: 5px;
+  color: #1fa54e;
+  font-size: 18px;
+  margin-top: 2%;
   cursor: pointer;
-}
-.detail-column-2-r-1 li button img {
-  width: 25px;
-  height: 25px;
 }
 
 .detail-column-2-r-2 {
