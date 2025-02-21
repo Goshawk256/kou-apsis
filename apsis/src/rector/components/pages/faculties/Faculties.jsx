@@ -12,7 +12,6 @@ function Faculties() {
             <b>Fakülte Adı:</b> <br />
             Mühendislik Fakültesi
           </span>
-
           <div className="faculty-buttons">
             <button className="edit-faculty">
               <FaPencilAlt />

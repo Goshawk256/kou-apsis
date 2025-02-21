@@ -15,6 +15,7 @@
 }
 
 .applications-content {
+  position: relative;
   display: flex;
   flex-direction: row;
   align-items: start;
@@ -132,4 +133,22 @@
 .content li button img {
   width: 25px;
   height: 25px;
+}
+
+.previous-button {
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  top: 0;
+  left: 10px;
+  display: flex;
+  background-color: transparent;
+  border: none;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.previous-button img {
+  width: 30px;
+  height: 30px;
 }
