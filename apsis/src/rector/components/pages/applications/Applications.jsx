@@ -78,7 +78,7 @@ function Applications() {
                       Onaylandı
                     </span>
                     <span>
-                      Başvuru Durumu: <br />
+                      Başvuru Türü: <br />
                       Ön Değerlendirme
                     </span>
                     <button
@@ -104,7 +104,7 @@ function Applications() {
                       Reddedildi
                     </span>
                     <span>
-                      Başvuru Durumu: <br />
+                      Başvuru Türü: <br />
                       Ön Değerlendirme
                     </span>
                     <button
@@ -130,7 +130,7 @@ function Applications() {
                       Onaylandı
                     </span>
                     <span>
-                      Başvuru Durumu: <br />
+                      Başvuru Türü: <br />
                       Ön Değerlendirme
                     </span>
                     <button
@@ -156,7 +156,7 @@ function Applications() {
                       Onaylandı
                     </span>
                     <span>
-                      Başvuru Durumu: <br />
+                      Başvuru Türü: <br />
                       Ön Değerlendirme
                     </span>
                     <button
@@ -182,7 +182,7 @@ function Applications() {
                       Onaylandı
                     </span>
                     <span>
-                      Başvuru Durumu: <br />
+                      Başvuru Türü: <br />
                       Ön Değerlendirme
                     </span>
                     <button
@@ -208,7 +208,7 @@ function Applications() {
                       Reddedildi
                     </span>
                     <span>
-                      Başvuru Durumu: <br />
+                      Başvuru Türü: <br />
                       Ön Değerlendirme
                     </span>
                     <button
@@ -234,7 +234,7 @@ function Applications() {
                       Onaylandı
                     </span>
                     <span>
-                      Başvuru Durumu: <br />
+                      Başvuru Türü: <br />
                       Ön Değerlendirme
                     </span>
                     <button
@@ -260,7 +260,7 @@ function Applications() {
                       Onaylandı
                     </span>
                     <span>
-                      Başvuru Durumu: <br />
+                      Başvuru Türü: <br />
                       Ön Değerlendirme
                     </span>
                     <button
@@ -286,7 +286,7 @@ function Applications() {
                       Onaylandı
                     </span>
                     <span>
-                      Başvuru Durumu: <br />
+                      Başvuru Türü: <br />
                       Ön Değerlendirme
                     </span>
                     <button
@@ -312,7 +312,7 @@ function Applications() {
                       Reddedildi
                     </span>
                     <span>
-                      Başvuru Durumu: <br />
+                      Başvuru Türü: <br />
                       Ön Değerlendirme
                     </span>
                     <button
@@ -338,7 +338,7 @@ function Applications() {
                       Onaylandı
                     </span>
                     <span>
-                      Başvuru Durumu: <br />
+                      Başvuru Türü: <br />
                       Ön Değerlendirme
                     </span>
                     <button
@@ -364,7 +364,7 @@ function Applications() {
                       Onaylandı
                     </span>
                     <span>
-                      Başvuru Durumu: <br />
+                      Başvuru Türü: <br />
                       Ön Değerlendirme
                     </span>
                     <button

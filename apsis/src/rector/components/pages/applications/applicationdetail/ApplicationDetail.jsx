@@ -44,13 +44,16 @@ function ApplicationDetail() {
                 Juri Adı: <br />
                 {truncateText("mustafaserhatpeker@kocaeli.edu.tr")}
               </span>
+              <span>
+                Başvurulan Kadro: <br /> Doç. Dr.
+              </span>
 
               <span>
-                Juri Değerlendirmesi: <br />
+                Başvuru Durumu: <br />
                 Reddedildi
               </span>
               <span>
-                Juri Değerlendirmesi: <br />
+                Başvuru Durumu: <br />
                 Ön Değerlendirme
               </span>
             </li>
@@ -60,61 +63,16 @@ function ApplicationDetail() {
                 Juri Adı: <br />
                 {truncateText("mustafaserhatpeker@kocaeli.edu.tr")}
               </span>
-
               <span>
-                Juri Değerlendirmesi: <br />
-                Reddedildi
-              </span>
-              <span>
-                Juri Değerlendirmesi: <br />
-                Ön Değerlendirme
-              </span>
-            </li>
-            <li>
-              <img src={user} alt="" />
-              <span>
-                Juri Adı: <br />
-                {truncateText("mustafaserhatpeker@kocaeli.edu.tr")}
+                Başvurulan Kadro: <br /> Doç. Dr.
               </span>
 
               <span>
-                Juri Değerlendirmesi: <br />
+                Başvuru Durumu: <br />
                 Reddedildi
               </span>
               <span>
-                Juri Değerlendirmesi: <br />
-                Ön Değerlendirme
-              </span>
-            </li>
-            <li>
-              <img src={user} alt="" />
-              <span>
-                Juri Adı: <br />
-                {truncateText("mustafaserhatpeker@kocaeli.edu.tr")}
-              </span>
-
-              <span>
-                Juri Değerlendirmesi: <br />
-                Reddedildi
-              </span>
-              <span>
-                Juri Değerlendirmesi: <br />
-                Ön Değerlendirme
-              </span>
-            </li>
-            <li>
-              <img src={user} alt="" />
-              <span>
-                Juri Adı: <br />
-                {truncateText("mustafaserhatpeker@kocaeli.edu.tr")}
-              </span>
-
-              <span>
-                Juri Değerlendirmesi: <br />
-                Reddedildi
-              </span>
-              <span>
-                Juri Değerlendirmesi: <br />
+                Başvuru Durumu: <br />
                 Ön Değerlendirme
               </span>
             </li>
