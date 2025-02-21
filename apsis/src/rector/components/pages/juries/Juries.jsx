@@ -15,24 +15,9 @@ function Juries() {
           <span>
             <b>Atandığı Fakülte:</b> <br /> Mühendislik Fakültesi
           </span>
-
-          <div className="jury-buttons">
-            <button className="edit-jury">
-              <FaPencilAlt />
-            </button>
-            <button className="delete-jury">
-              {" "}
-              <FaTrashAlt />{" "}
-            </button>
-          </div>
-        </li>
-        <li>
           <span>
-            <b>Jüri Adı:</b> <br />
-            suhapsahin@kocaeli.edu.tr
-          </span>
-          <span>
-            <b>Atandığı Fakülte:</b> <br /> Mühendislik Fakültesi
+            <b>Jüri Türü:</b> <br />
+            Ön Değerlendirme
           </span>
 
           <div className="jury-buttons">
@@ -53,6 +38,10 @@ function Juries() {
           <span>
             <b>Atandığı Fakülte:</b> <br /> Mühendislik Fakültesi
           </span>
+          <span>
+            <b>Jüri Türü:</b> <br />
+            Ön Değerlendirme
+          </span>
 
           <div className="jury-buttons">
             <button className="edit-jury">
@@ -71,6 +60,33 @@ function Juries() {
           </span>
           <span>
             <b>Atandığı Fakülte:</b> <br /> Mühendislik Fakültesi
+          </span>
+          <span>
+            <b>Jüri Türü:</b> <br />
+            Ön Değerlendirme
+          </span>
+
+          <div className="jury-buttons">
+            <button className="edit-jury">
+              <FaPencilAlt />
+            </button>
+            <button className="delete-jury">
+              {" "}
+              <FaTrashAlt />{" "}
+            </button>
+          </div>
+        </li>
+        <li>
+          <span>
+            <b>Jüri Adı:</b> <br />
+            suhapsahin@kocaeli.edu.tr
+          </span>
+          <span>
+            <b>Atandığı Fakülte:</b> <br /> Mühendislik Fakültesi
+          </span>
+          <span>
+            <b>Jüri Türü:</b> <br />
+            Ön Değerlendirme
           </span>
 
           <div className="jury-buttons">
