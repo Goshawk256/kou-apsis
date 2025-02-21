@@ -89,6 +89,11 @@
   width: 30px;
   height: 30px;
   background-color: transparent;
+  transition: all 0.3s ease;
+}
+.edit-list:hover {
+  background-color: #1fa54e;
+  color: white;
 }
 .delete-list {
   border: 1px solid #a53c1f;
@@ -102,4 +107,10 @@
   width: 30px;
   height: 30px;
   background-color: transparent;
+  transition: all 0.3s ease;
+}
+
+.delete-list:hover {
+  background-color: #a53c1f;
+  color: white;
 }

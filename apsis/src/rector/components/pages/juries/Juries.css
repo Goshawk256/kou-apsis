@@ -1,0 +1,116 @@
+.juries-main {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 700px;
+  margin-left: 4%;
+  border-radius: 10px;
+  background-color: #fff;
+  margin-top: 3.4%;
+}
+
+.juries-header {
+  color: grey;
+  font-size: 20px;
+}
+
+.juries-content {
+  display: flex;
+  flex-direction: column;
+  width: 93%;
+  height: 600px; /* Sabit yükseklik yerine max-height kullan */
+  gap: 5px;
+  align-items: center;
+  justify-content: start;
+  text-align: start;
+  overflow-y: auto; /* Scroll için gerekli */
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.juries-content li {
+  position: relative;
+  display: flex; /* Ekledim: İçerik hizalaması için */
+  flex-direction: row;
+  justify-content: space-between;
+  width: 96%;
+  height: 100px; /* Sabit yükseklik */
+  padding: 2%;
+  align-items: start;
+  border: 1px solid #d5d3d3;
+  border-radius: 10px;
+  flex-shrink: 0; /* Ekledim: Elemanların küçülmesini önler */
+  gap: 10px;
+}
+
+.juries-content li span {
+  color: grey;
+  font-size: 12px;
+  width: 25%;
+  height: 100%;
+}
+
+.add-jury-button {
+  position: absolute;
+  right: 40px;
+  font-size: 14px;
+  color: rgb(255, 255, 255);
+  border: none;
+  background-color: #1fa54e;
+  top: 13px;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.jury-buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 7%;
+  position: absolute;
+  left: 15px;
+  bottom: 10px;
+}
+.edit-jury {
+  border: 1px solid #1fa54e;
+  border-radius: 10px;
+  color: #1fa54e;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  background-color: transparent;
+  transition: all 0.3s ease;
+}
+.edit-jury:hover {
+  background-color: #1fa54e;
+  color: white;
+}
+.delete-jury {
+  border: 1px solid #a53c1f;
+  border-radius: 10px;
+  color: #a53c1f;
+  font-size: 17px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  background-color: transparent;
+  transition: all 0.3s ease;
+}
+
+.delete-jury:hover {
+  background-color: #a53c1f;
+  color: white;
+}
