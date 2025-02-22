@@ -154,7 +154,7 @@ function JuriAna({ onSelect }) {
                 <div className="application-type-success">
                   <span>Başvurular</span>
                   <div className="application-count">
-                    {isOndegerlendirme ? (
+                    {/* {isOndegerlendirme ? (
                       ""
                     ) : (
                       <button onClick={() => setIsFilterOpen(!isFilterOpen)}>
@@ -163,7 +163,7 @@ function JuriAna({ onSelect }) {
                     )}
                     {isFilterOpen && (
                       <div className="filter-dropdown">{renderedButtons()}</div>
-                    )}
+                    )} */}
                     <button>{categorizedApplications?.all?.length}</button>
                   </div>
                 </div>

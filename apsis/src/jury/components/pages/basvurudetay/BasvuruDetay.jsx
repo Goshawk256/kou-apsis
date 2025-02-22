@@ -29,11 +29,15 @@ function BasvuruDetay({ onSelect }) {
   const handlePopupConfirm = async () => {
     const token = localStorage.getItem("accessToken");
     const applicationId = selectedApplication?.applicationId;
-    const decision = popupType === "approve" ? "Applied" : "Rejected";
-
+    const decision = popupType === "approve" ? "accepted" : "rejected";
+    const isOndegerlendirme = localStorage.getItem("isOndegerlendirme");
     try {
       await axios.post(
-        `${All_Url.api_base_url}/jury/add-preliminary-evaluation`,
+        `${All_Url.api_base_url}/jury${
+          isOndegerlendirme === true
+            ? "/add-preliminary-evaluation"
+            : "/add-scientific-evaluation"
+        }`,
         {
           applicationId,
           comment: reason,
