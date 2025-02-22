@@ -62,23 +62,12 @@ function JuriAna({ onSelect }) {
   };
 
   const renderedButtons = () => {
-    if (isOndegerlendirme) {
-      return (
-        <>
-          <button>Onaylanan Başvurular</button>
-          <button>Bekleyen Başvurular</button>
-          <button>Reddedilen Başvurular</button>
-        </>
-      );
-    } else {
-      return (
-        <>
-          <button>Kadro Başvurular</button>
-          <button>Bekleyen Başvurular</button>
-          <button>Reddedilen Başvurular</button>
-        </>
-      );
-    }
+    return (
+      <>
+        <button>Ön Değerlendirmede</button>
+        <button>Bilimsel Değerlendirmede</button>
+      </>
+    );
   };
 
   const renderApplications = (applications) => {
@@ -152,9 +141,13 @@ function JuriAna({ onSelect }) {
                   <span>Başvurular</span>
                   <div className="application-count">
                     <button>{categorizedApplications?.all?.length}</button>
-                    <button onClick={() => setIsFilterOpen(!isFilterOpen)}>
-                      <IoFilterOutline />
-                    </button>
+                    {isOndegerlendirme ? (
+                      ""
+                    ) : (
+                      <button onClick={() => setIsFilterOpen(!isFilterOpen)}>
+                        <IoFilterOutline />
+                      </button>
+                    )}
                     {isFilterOpen && (
                       <div className="filter-dropdown">{renderedButtons()}</div>
                     )}
