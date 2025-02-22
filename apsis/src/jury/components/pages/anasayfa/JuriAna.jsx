@@ -4,6 +4,7 @@ import document from "../../../../assets/document.png";
 import check from "../../../../assets/check.png";
 import All_Url from "../../../../url.js";
 import { motion, AnimatePresence } from "framer-motion";
+import { CiEdit } from "react-icons/ci";
 import axios from "axios";
 import "./JuriAna.css";
 import PropTypes from "prop-types";
@@ -57,7 +58,7 @@ function JuriAna({ onSelect }) {
       (app) => app.applicationStatus === "applied"
     ),
     rejected: (selectedApplication || []).filter(
-      (app) => app.applicationStatus === "reject"
+      (app) => app.applicationStatus === "Ön değerlendirmede reddedildi"
     ),
   };
 
