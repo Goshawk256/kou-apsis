@@ -132,7 +132,7 @@ function JuriAna({ onSelect }) {
                   !isOndegerlendirme ? "active" : ""
                 }`}
               >
-                Kadro Başvuruları
+                Bilimsel Başvurular
               </button>
             </div>
             <div className="juriana-columns">
