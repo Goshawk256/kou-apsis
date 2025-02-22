@@ -4,7 +4,7 @@ import document from "../../../../assets/document.png";
 import check from "../../../../assets/check.png";
 import All_Url from "../../../../url.js";
 import { motion, AnimatePresence } from "framer-motion";
-import { CiEdit } from "react-icons/ci";
+import { IoFilterOutline } from "react-icons/io5";
 import axios from "axios";
 import "./JuriAna.css";
 import PropTypes from "prop-types";
@@ -14,6 +14,7 @@ function JuriAna({ onSelect }) {
   const [preliminaryApplications, setPreliminaryApplications] = useState([]);
   const [scientificApplications, setScientificApplications] = useState([]);
   const [selectedApplication, setSelectedApplication] = useState([]);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
@@ -51,21 +52,33 @@ function JuriAna({ onSelect }) {
   };
 
   const categorizedApplications = {
-    pending: (selectedApplication || []).filter(
-      (app) => app.applicationStatus === "pending"
-    ),
-    applied: (selectedApplication || []).filter(
-      (app) => app.applicationStatus === "applied"
-    ),
-    rejected: (selectedApplication || []).filter(
-      (app) => app.applicationStatus === "Ön değerlendirmede reddedildi"
-    ),
+    all: selectedApplication || [],
   };
 
   const handleSelectApplication = (appId) => {
     onSelect("Basvurudetay");
     localStorage.setItem("selectedApplication", appId);
     localStorage.setItem("isPreliminary", isOndegerlendirme);
+  };
+
+  const renderedButtons = () => {
+    if (isOndegerlendirme) {
+      return (
+        <>
+          <button>Onaylanan Başvurular</button>
+          <button>Bekleyen Başvurular</button>
+          <button>Reddedilen Başvurular</button>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <button>Kadro Başvurular</button>
+          <button>Bekleyen Başvurular</button>
+          <button>Reddedilen Başvurular</button>
+        </>
+      );
+    }
   };
 
   const renderApplications = (applications) => {
@@ -135,30 +148,20 @@ function JuriAna({ onSelect }) {
             </div>
             <div className="juriana-columns">
               <div className="juriana-column">
-                <div className="application-type-waiting">
-                  <span>BEKLEYEN</span>
-                  <button>{categorizedApplications?.pending?.length}</button>
-                </div>
-                <div className="application-content">
-                  {renderApplications(categorizedApplications?.pending)}
-                </div>
-              </div>
-              <div className="juriana-column">
                 <div className="application-type-success">
-                  <span>ONAYLANAN</span>
-                  <button>{categorizedApplications?.applied?.length}</button>
+                  <span>Başvurular</span>
+                  <div className="application-count">
+                    <button>{categorizedApplications?.all?.length}</button>
+                    <button onClick={() => setIsFilterOpen(!isFilterOpen)}>
+                      <IoFilterOutline />
+                    </button>
+                    {isFilterOpen && (
+                      <div className="filter-dropdown">{renderedButtons()}</div>
+                    )}
+                  </div>
                 </div>
                 <div className="application-content">
-                  {renderApplications(categorizedApplications?.applied)}
-                </div>
-              </div>
-              <div className="juriana-column">
-                <div className="application-type-reject">
-                  <span>REDDEDİLEN</span>
-                  <button>{categorizedApplications?.rejected?.length}</button>
-                </div>
-                <div className="application-content">
-                  {renderApplications(categorizedApplications?.rejected)}
+                  {renderApplications(categorizedApplications?.all)}
                 </div>
               </div>
             </div>
