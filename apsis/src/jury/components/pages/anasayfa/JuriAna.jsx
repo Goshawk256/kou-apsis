@@ -21,8 +21,8 @@ function JuriAna({ onSelect }) {
 
     const fetchData = async () => {
       try {
-        const response = await axios.post(
-          `${All_Url.api_base_url}/jury/get-applications`,
+        const responsePrimarly = await axios.post(
+          `${All_Url.api_base_url}/jury/get-applications?statusId=1`,
           {},
           {
             headers: {
@@ -30,12 +30,26 @@ function JuriAna({ onSelect }) {
             },
           }
         );
+        const responseScientific = await axios.post(
+          `${All_Url.api_base_url}/jury/get-applications?statusId=3`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        const dataScientific = responseScientific.data?.data;
 
-        const data = response.data?.data;
-        if (data) {
-          setPreliminaryApplications(data.preliminaryApplications || []);
-          setScientificApplications(data.scientificApplications || []);
-          setSelectedApplication(data.preliminaryApplications || []);
+        const dataPreliminary = responsePrimarly.data?.data;
+        if (dataPreliminary) {
+          setPreliminaryApplications(
+            dataPreliminary.preliminaryApplications || []
+          );
+          setScientificApplications(
+            dataScientific.scientificApplications || []
+          );
+          setSelectedApplication(dataPreliminary.preliminaryApplications || []);
         }
       } catch (error) {
         console.error("Hata oluştu:", error);
