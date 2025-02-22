@@ -9,9 +9,10 @@ import "./JuriAna.css";
 import PropTypes from "prop-types";
 
 function JuriAna({ onSelect }) {
-  const [isOndegerlendirme, setIsOndegerlendirme] = useState("ondegerlendirme");
+  const [isOndegerlendirme, setIsOndegerlendirme] = useState(true);
   const [preliminaryApplications, setPreliminaryApplications] = useState([]);
   const [scientificApplications, setScientificApplications] = useState([]);
+  const [selectedApplication, setSelectedApplication] = useState([]);
 
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
@@ -27,9 +28,13 @@ function JuriAna({ onSelect }) {
             },
           }
         );
-        console.log(response.data.data);
-        setPreliminaryApplications(response.data.data.preliminaryApplications);
-        setScientificApplications(response.data.data.scientificApplications);
+
+        const data = response.data?.data;
+        if (data) {
+          setPreliminaryApplications(data.preliminaryApplications || []);
+          setScientificApplications(data.scientificApplications || []);
+          setSelectedApplication(data.preliminaryApplications || []);
+        }
       } catch (error) {
         console.error("Hata oluştu:", error);
       }
@@ -37,24 +42,33 @@ function JuriAna({ onSelect }) {
     fetchData();
   }, []);
 
+  const handleOndegerlendirme = (isPreliminary) => {
+    setIsOndegerlendirme(isPreliminary);
+    setSelectedApplication(
+      isPreliminary ? preliminaryApplications : scientificApplications
+    );
+  };
+
   const categorizedApplications = {
-    pending: preliminaryApplications.filter(
+    pending: (selectedApplication || []).filter(
       (app) => app.applicationStatus === "pending"
     ),
-    applied: preliminaryApplications.filter(
+    applied: (selectedApplication || []).filter(
       (app) => app.applicationStatus === "applied"
     ),
-    rejected: preliminaryApplications.filter(
+    rejected: (selectedApplication || []).filter(
       (app) => app.applicationStatus === "reject"
     ),
   };
 
-  const handleOndegerlendirme = (text) => {
-    setIsOndegerlendirme(text);
+  const handleSelectApplication = (appId) => {
+    onSelect("Basvurudetay");
+    localStorage.setItem("selectedApplication", appId);
+    localStorage.setItem("isPreliminary", isOndegerlendirme);
   };
 
   const renderApplications = (applications) => {
-    return applications.map((app) => (
+    return applications?.map((app) => (
       <div key={app.applicationId} className="application-card">
         <div className="a-c-r-1">
           <div className="a-c-r-1-1">
@@ -78,13 +92,7 @@ function JuriAna({ onSelect }) {
                 <img src={document} alt="" />
               </button>
               <button
-                onClick={() => {
-                  onSelect("Basvurudetay");
-                  localStorage.setItem(
-                    "selectedApplication",
-                    app.applicationId
-                  );
-                }}
+                onClick={() => handleSelectApplication(app.applicationId)}
               >
                 <img src={check} alt="" />
               </button>
@@ -108,17 +116,17 @@ function JuriAna({ onSelect }) {
           <div className="juriana-content">
             <div className="basvurular-top-sections">
               <button
-                onClick={() => handleOndegerlendirme("ondegerlendirme")}
+                onClick={() => handleOndegerlendirme(true)}
                 className={`basvurular-degerlendirme-btn ${
-                  isOndegerlendirme === "ondegerlendirme" ? "active" : ""
+                  isOndegerlendirme ? "active" : ""
                 }`}
               >
                 Ön Değerlendirme Başvuruları
               </button>
               <button
-                onClick={() => handleOndegerlendirme("kadro")}
+                onClick={() => handleOndegerlendirme(false)}
                 className={`basvurular-degerlendirme-btn ${
-                  isOndegerlendirme === "kadro" ? "active" : ""
+                  !isOndegerlendirme ? "active" : ""
                 }`}
               >
                 Kadro Başvuruları
@@ -128,28 +136,28 @@ function JuriAna({ onSelect }) {
               <div className="juriana-column">
                 <div className="application-type-waiting">
                   <span>BEKLEYEN</span>
-                  <button>{categorizedApplications.pending.length}</button>
+                  <button>{categorizedApplications?.pending?.length}</button>
                 </div>
                 <div className="application-content">
-                  {renderApplications(categorizedApplications.pending)}
+                  {renderApplications(categorizedApplications?.pending)}
                 </div>
               </div>
               <div className="juriana-column">
                 <div className="application-type-success">
                   <span>ONAYLANAN</span>
-                  <button>{categorizedApplications.applied.length}</button>
+                  <button>{categorizedApplications?.applied?.length}</button>
                 </div>
                 <div className="application-content">
-                  {renderApplications(categorizedApplications.applied)}
+                  {renderApplications(categorizedApplications?.applied)}
                 </div>
               </div>
               <div className="juriana-column">
                 <div className="application-type-reject">
                   <span>REDDEDİLEN</span>
-                  <button>{categorizedApplications.rejected.length}</button>
+                  <button>{categorizedApplications?.rejected?.length}</button>
                 </div>
                 <div className="application-content">
-                  {renderApplications(categorizedApplications.rejected)}
+                  {renderApplications(categorizedApplications?.rejected)}
                 </div>
               </div>
             </div>
@@ -159,6 +167,7 @@ function JuriAna({ onSelect }) {
     </AnimatePresence>
   );
 }
+
 JuriAna.propTypes = {
   onSelect: PropTypes.func.isRequired,
 };
