@@ -58,7 +58,8 @@ const initialArticles = [
     type: "Araştırma",
   },
 ];
-
+const languages = ["Uluslararası", "Ulusal"];
+const articleTypes = ["Araştırma", "İnceleme", "Deneysel", "Teorik", "Derleme"];
 function Makale() {
   const [articles, setArticles] = useState(initialArticles);
   const [searchTerm, setSearchTerm] = useState("");
@@ -68,8 +69,8 @@ function Makale() {
     name: "",
     date: "",
     authors: "",
-    language: "",
-    type: "",
+    language: "Uluslararası",
+    type: "Araştırma",
   });
 
   const articlesPerPage = 5;
@@ -96,13 +97,7 @@ function Makale() {
   };
 
   const handleModalSubmit = () => {
-    if (
-      newArticle.name &&
-      newArticle.date &&
-      newArticle.authors &&
-      newArticle.language &&
-      newArticle.type
-    ) {
+    if (newArticle.name && newArticle.date && newArticle.authors) {
       setArticles((prev) => [
         ...prev,
         {
@@ -115,9 +110,10 @@ function Makale() {
         name: "",
         date: "",
         authors: "",
-        language: "",
-        type: "",
+        language: "Uluslararası",
+        type: "Araştırma",
       });
+      console.log(newArticle);
       setShowModal(false);
     }
   };
@@ -173,8 +169,9 @@ function Makale() {
               <td className="makale-cell">{article.language}</td>
               <td className="makale-cell">{article.type}</td>
               <td className="makale-cell">
-                <button></button>
-                <button></button>
+                <button>
+                  <FaRegSquare />{" "}
+                </button>
               </td>
             </tr>
           ))}
@@ -207,22 +204,30 @@ function Makale() {
                 setNewArticle({ ...newArticle, authors: e.target.value })
               }
             />
-            <input
-              type="text"
-              placeholder="Dil"
+            <select
               value={newArticle.language}
               onChange={(e) =>
                 setNewArticle({ ...newArticle, language: e.target.value })
               }
-            />
-            <input
-              type="text"
-              placeholder="Makale Tipi"
+            >
+              {languages.map((lang) => (
+                <option key={lang} value={lang}>
+                  {lang}
+                </option>
+              ))}
+            </select>
+            <select
               value={newArticle.type}
               onChange={(e) =>
                 setNewArticle({ ...newArticle, type: e.target.value })
               }
-            />
+            >
+              {articleTypes.map((type) => (
+                <option key={type} value={type}>
+                  {type}
+                </option>
+              ))}
+            </select>
             <button onClick={handleModalSubmit}>Ekle</button>
             <button onClick={() => setShowModal(false)}>İptal</button>
           </div>
