@@ -86,7 +86,7 @@
   overflow: auto;
 }
 .message-area {
-  width: 98%;
+  width: 98.3%;
   height: 50%;
   border-radius: 10px;
   overflow: auto;
@@ -102,7 +102,7 @@
   flex-direction: row;
   justify-content: space-between;
   width: 94%;
-  height: 15px; /* Sabit yükseklik */
+  height: 16px; /* Sabit yükseklik */
   padding: 2%;
   align-items: center;
   border: 1px solid #d5d3d3;
