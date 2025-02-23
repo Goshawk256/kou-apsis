@@ -293,11 +293,11 @@
 }
 
 .addjurypopup-input:focus {
-  border-color: #007bff;
+  border-color: #1fa54e;
 }
 
 .addjurypopup-button {
-  background: #007bff;
+  background: #1fa54e;
   color: white;
   padding: 10px;
   border: none;
@@ -308,5 +308,5 @@
 }
 
 .addjurypopup-button:hover {
-  background: #0056b3;
+  background: #1fb654;
 }

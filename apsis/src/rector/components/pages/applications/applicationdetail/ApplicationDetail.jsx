@@ -12,6 +12,7 @@ function ApplicationDetail({ applicationId }) {
   const [allJuries, setAllJuries] = useState([]);
   const [selectedJury, setSelectedJury] = useState(null);
   const [popup, setOpenPopup] = useState(false);
+  const [juryName, setJuryName] = useState("");
 
   useEffect(() => {
     const fetchApplications = async () => {
@@ -95,6 +96,40 @@ function ApplicationDetail({ applicationId }) {
         (se) => se.juryName === jury.juryName
       );
       setSelectedJury(ev);
+    }
+  };
+  const handleAssignJury = async () => {
+    const token = localStorage.getItem("accessToken");
+    if (!token) {
+      alert("Yetkilendirme hatası: Lütfen tekrar giriş yapın.");
+      return;
+    }
+
+    try {
+      const response = await axios.post(
+        "https://apsis.kocaeli.edu.tr/api/rector/add-scientific-jury",
+        {
+          juryName: juryName,
+          applicationId: applicationId,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.data.success) {
+        alert("Jüri başarıyla atandı.");
+        setOpenPopup(false);
+        setJuryName("");
+      } else {
+        alert("Jüri atama başarısız oldu.");
+      }
+    } catch (error) {
+      console.error("Jüri atama sırasında hata oluştu:", error);
+      alert("Jüri atama işlemi başarısız oldu.");
     }
   };
 
@@ -220,34 +255,33 @@ function ApplicationDetail({ applicationId }) {
           </div>
         </div>
       </div>
-      {popup ? (
+      {popup && (
         <div className="addjurypopup">
           <div className="addjurypopup-inner">
             <button
-              onClick={() => {
-                setOpenPopup(false);
-              }}
+              onClick={() => setOpenPopup(false)}
               className="close-button"
             >
               X
             </button>
             <div className="addjurypopup-content">
               <span className="addjurypopup-header">Juri Atama</span>
-              <div className="addjurypopup-content">
-                <span className="addjurypopup-span">Juri Adı:</span>
-                <input type="text" className="addjurypopup-input" />
-                <span className="addjurypopup-span">Juri Türü:</span>
-                <select className="addjurypopup-input">
-                  <option value="Preliminary">Ön Değerlendirme</option>
-                  <option value="Scientific">Bilimsel Değerlendirme</option>
-                </select>
-                <button className="addjurypopup-button">Juri Ata</button>
-              </div>
+              <span className="addjurypopup-span">Juri Adı:</span>
+              <input
+                type="text"
+                className="addjurypopup-input"
+                value={juryName}
+                onChange={(e) => setJuryName(e.target.value)}
+              />
+              <button
+                className="addjurypopup-button"
+                onClick={handleAssignJury}
+              >
+                Juri Ata
+              </button>
             </div>
           </div>
         </div>
-      ) : (
-        ""
       )}
     </div>
   );
