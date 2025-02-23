@@ -86,91 +86,94 @@ function ApplicationDetail({ applicationId }) {
         </div>
         <div className="detail-colum-2">
           <div className="detail-column-2-r-1">
-            <li>
-              <img src={user} alt="" />
-              <span>
-                Juri Adı: <br />
-                {truncateText("mustafaserhatpeker@kocaeli.edu.tr")}
-              </span>
+            <div className="li-area">
+              <li>
+                <img src={user} alt="" />
+                <span>
+                  Juri Adı: <br />
+                  {truncateText("mustafaserhatpeker@kocaeli.edu.tr")}
+                </span>
 
-              <span>
-                Juri Onayı: <br />
-                Reddedildi
-              </span>
+                <span>
+                  Juri Onayı: <br />
+                  Reddedildi
+                </span>
 
-              <button>
-                {" "}
-                <TfiCommentAlt />
-              </button>
-            </li>
-            <li>
-              <img src={user} alt="" />
-              <span>
-                Juri Adı: <br />
-                {truncateText("mustafaserhatpeker@kocaeli.edu.tr")}
-              </span>
+                <button>
+                  {" "}
+                  <TfiCommentAlt />
+                </button>
+              </li>
+              <li>
+                <img src={user} alt="" />
+                <span>
+                  Juri Adı: <br />
+                  {truncateText("mustafaserhatpeker@kocaeli.edu.tr")}
+                </span>
 
-              <span>
-                Juri Onayı: <br />
-                Reddedildi
-              </span>
+                <span>
+                  Juri Onayı: <br />
+                  Reddedildi
+                </span>
 
-              <button>
-                {" "}
-                <TfiCommentAlt />
-              </button>
-            </li>
-            <li>
-              <img src={user} alt="" />
-              <span>
-                Juri Adı: <br />
-                {truncateText("mustafaserhatpeker@kocaeli.edu.tr")}
-              </span>
+                <button>
+                  {" "}
+                  <TfiCommentAlt />
+                </button>
+              </li>
+              <li>
+                <img src={user} alt="" />
+                <span>
+                  Juri Adı: <br />
+                  {truncateText("mustafaserhatpeker@kocaeli.edu.tr")}
+                </span>
 
-              <span>
-                Juri Onayı: <br />
-                Reddedildi
-              </span>
+                <span>
+                  Juri Onayı: <br />
+                  Reddedildi
+                </span>
 
-              <button>
-                {" "}
-                <TfiCommentAlt />
-              </button>
-            </li>
-            <li>
-              <img src={user} alt="" />
-              <span>
-                Juri Adı: <br />
-                {truncateText("mustafaserhatpeker@kocaeli.edu.tr")}
-              </span>
+                <button>
+                  {" "}
+                  <TfiCommentAlt />
+                </button>
+              </li>
+              <li>
+                <img src={user} alt="" />
+                <span>
+                  Juri Adı: <br />
+                  {truncateText("mustafaserhatpeker@kocaeli.edu.tr")}
+                </span>
 
-              <span>
-                Juri Onayı: <br />
-                Reddedildi
-              </span>
+                <span>
+                  Juri Onayı: <br />
+                  Reddedildi
+                </span>
 
-              <button>
-                {" "}
-                <TfiCommentAlt />
-              </button>
-            </li>
-            <li>
-              <img src={user} alt="" />
-              <span>
-                Juri Adı: <br />
-                {truncateText("mustafaserhatpeker@kocaeli.edu.tr")}
-              </span>
+                <button>
+                  {" "}
+                  <TfiCommentAlt />
+                </button>
+              </li>
+              <li>
+                <img src={user} alt="" />
+                <span>
+                  Juri Adı: <br />
+                  {truncateText("mustafaserhatpeker@kocaeli.edu.tr")}
+                </span>
 
-              <span>
-                Juri Onayı: <br />
-                Reddedildi
-              </span>
+                <span>
+                  Juri Onayı: <br />
+                  Reddedildi
+                </span>
 
-              <button>
-                {" "}
-                <TfiCommentAlt />
-              </button>
-            </li>
+                <button>
+                  {" "}
+                  <TfiCommentAlt />
+                </button>
+              </li>
+            </div>
+            <div className="message-area"></div>
           </div>
           <div className="detail-column-2-r-2"></div>
         </div>

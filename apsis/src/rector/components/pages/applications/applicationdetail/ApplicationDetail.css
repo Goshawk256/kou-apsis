@@ -72,16 +72,26 @@
   width: 60%;
   height: 100%;
   border-radius: 10px;
-
+  overflow: auto;
+}
+.li-area {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: start;
+  gap: 10px;
+  width: 100%;
+  height: 50%;
+  border-radius: 10px;
   overflow: auto;
 }
 
-.detail-column-2-r-1 li {
+.li-area li {
   display: flex; /* Ekledim: İçerik hizalaması için */
   flex-direction: row;
   justify-content: space-between;
   width: 94%;
-  height: 51px; /* Sabit yükseklik */
+  height: 15px; /* Sabit yükseklik */
   padding: 2%;
   align-items: center;
   border: 1px solid #d5d3d3;
@@ -89,15 +99,15 @@
   flex-shrink: 0; /* Ekledim: Elemanların küçülmesini önler */
 }
 
-.detail-column-2-r-1 li img {
-  width: 40px;
-  height: 40px;
+.li-area li img {
+  width: 30px;
+  height: 30px;
 }
-.detail-column-2-r-1 li span {
+.li-area li span {
   color: grey;
   font-size: 12px;
 }
-.detail-column-2-r-1 li button {
+.li-area li button {
   background-color: transparent;
   border: none;
   color: #1fa54e;
