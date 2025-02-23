@@ -103,8 +103,11 @@
   right: 5px;
   top: 5px;
   font-size: 10px;
-  color: rgb(31, 98, 166);
+  color: #a61f2a;
   font-weight: bold;
+}
+.vote-span.accepted {
+  color: #1f62a6;
 }
 .message-span {
   color: grey;

@@ -11,6 +11,7 @@ function ApplicationDetail({ applicationId }) {
   const [loading, setLoading] = useState(true);
   const [allJuries, setAllJuries] = useState([]);
   const [selectedJury, setSelectedJury] = useState(null);
+  const [popup, setOpenPopup] = useState(false);
 
   useEffect(() => {
     const fetchApplications = async () => {
@@ -172,7 +173,11 @@ function ApplicationDetail({ applicationId }) {
                   <span className="message-span">
                     Mesaj: {selectedJury.comment}
                   </span>
-                  <span className="vote-span">
+                  <span
+                    className={`vote-span ${
+                      selectedJury.decision === "accepted" ? "accepted" : ""
+                    }`}
+                  >
                     {selectedJury.decision === "accepted"
                       ? "Juri tarafından kabul edildi."
                       : "Juri tarafından reddedildi."}
@@ -201,7 +206,14 @@ function ApplicationDetail({ applicationId }) {
               <span className="info-itself">{application.status.name}</span>
             </div>
             {application.applicationType === "Scientific" ? (
-              <button className="add-jury-button">Juri Ata</button>
+              <button
+                onClick={() => {
+                  setOpenPopup(true);
+                }}
+                className="add-jury-button"
+              >
+                Juri Ata
+              </button>
             ) : (
               ""
             )}
