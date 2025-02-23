@@ -3,9 +3,14 @@ import "./ApplicationDetail.css";
 import user from "../../../../../assets/user.png";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { TfiCommentAlt } from "react-icons/tfi";
+
+import { GiClick } from "react-icons/gi";
+
 function ApplicationDetail({ applicationId }) {
   const [application, setApplication] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [allJuries, setAllJuries] = useState([]);
+  const [selectedJury, setSelectedJury] = useState(null);
 
   useEffect(() => {
     const fetchApplications = async () => {
@@ -15,7 +20,7 @@ function ApplicationDetail({ applicationId }) {
       try {
         const response = await axios.post(
           "https://apsis.kocaeli.edu.tr/api/rector/get-applications",
-          {}, // Boş bir obje göndermek gerekiyor
+          {},
           {
             headers: {
               "Content-Type": "application/json",
@@ -30,17 +35,41 @@ function ApplicationDetail({ applicationId }) {
         );
 
         if (matchedApplication) {
-          setApplication(matchedApplication);
-          console.log("Başvuru bulundu:", matchedApplication);
+          const updatedPreliminaryJuries = (
+            matchedApplication.preliminaryJuries || []
+          ).map((jury) => ({
+            ...jury,
+            type: "Ön Değerlendirme",
+          }));
+
+          const updatedScientificJuries = (
+            matchedApplication.scientificJuries || []
+          ).map((jury) => ({
+            ...jury,
+            type: "Bilimsel Değerlendirme",
+          }));
+
+          setApplication({
+            ...matchedApplication,
+            preliminaryJuries: updatedPreliminaryJuries,
+            scientificJuries: updatedScientificJuries,
+          });
+
+          setAllJuries([
+            ...(updatedPreliminaryJuries || []),
+            ...(updatedScientificJuries || []),
+          ]);
+
+          console.log("app", application);
         } else {
           console.warn(
             "Belirtilen applicationId ile eşleşen başvuru bulunamadı."
           );
         }
-
-        console.log(response.data);
       } catch (error) {
         console.error("Başvuruları çekerken hata oluştu:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -50,34 +79,66 @@ function ApplicationDetail({ applicationId }) {
   const truncateText = (text) => {
     return text.length > 25 ? text.substring(0, 22) + "..." : text;
   };
-  return (
+
+  useEffect(() => {
+    console.log("selected Jury", selectedJury);
+  }, [selectedJury]);
+
+  const handleSelectJury = (jury) => {
+    if (jury.type === "Ön Değerlendirme") {
+      const ev = application.preliminaryEvaluations.find(
+        (pe) => pe.juryName === jury.juryName
+      );
+      setSelectedJury(ev);
+    } else {
+      const ev = application.scientificEvaluations.find(
+        (se) => se.juryName === jury.juryName
+      );
+      setSelectedJury(ev);
+    }
+  };
+
+  return loading ? (
+    <div>
+      <div className="hourglassBackground">
+        <div className="hourglassContainer">
+          <div className="hourglassCurves"></div>
+          <div className="hourglassCapTop"></div>
+          <div className="hourglassGlassTop"></div>
+          <div className="hourglassSand"></div>
+          <div className="hourglassSandStream"></div>
+          <div className="hourglassCapBottom"></div>
+          <div className="hourglassGlass"></div>
+        </div>
+      </div>
+    </div>
+  ) : (
     <div className="applicationdetail-main">
       <div className="detail-content">
         <span className="detail-header">
-          Başvuran Kişi: suhapsahin@kocaeli.edu.tr
+          Başvuran Kişi: {application.username} / Başvuru Türü:{" "}
+          {application.applicationType}
         </span>
         <div className="detail-column-1">
           <span>
             <b>İlan Adı:</b> <br />
-            Kocaeli Üniversitesi Doçentlik İlanı
+            {application.positionAnnouncement.title}
           </span>
           <span>
-            <b>İlan Kadrosu:</b> <br /> Doç. Dr.
+            <b>İlan Kadrosu:</b> <br />{" "}
+            {application.positionAnnouncement.position}
           </span>
           <span>
             <b>Fakülte:</b> <br />
-            Mühendislik Fakültesi
+            {application.positionAnnouncement.faculty}
           </span>
           <span>
             <b>Bitiş Tarihi:</b> <br />
-            12.04.2025
+            {application.positionAnnouncement.deadLine}
           </span>
           <span>
             <b>İlan Açıklaması:</b> <br />
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veritatis
-            laborum sunt nihil odio. Doloribus, tempora earum. Non debitis sit
-            atque, voluptas commodi incidunt placeat et quis fugiat maxime ex
-            obcaecati.
+            {application.positionAnnouncement.description}
           </span>
         </div>
         <div className="header-content">
@@ -87,94 +148,45 @@ function ApplicationDetail({ applicationId }) {
         <div className="detail-colum-2">
           <div className="detail-column-2-r-1">
             <div className="li-area">
-              <li>
-                <img src={user} alt="" />
-                <span>
-                  Juri Adı: <br />
-                  {truncateText("mustafaserhatpeker@kocaeli.edu.tr")}
-                </span>
+              {allJuries.map((jury, index) => (
+                <li key={index}>
+                  <img src={user} alt="" />
+                  <span>
+                    <b>Jüri Adı:</b> <br />
+                    {jury.juryName}
+                  </span>
+                  <span>
+                    <b>Jüri Türü:</b> <br />
+                    {jury.type}
+                  </span>
+                  <span>
+                    <b>Juri Durumu:</b> <br />
+                    {jury.status}
+                  </span>
 
-                <span>
-                  Juri Onayı: <br />
-                  Reddedildi
-                </span>
-
-                <button>
-                  {" "}
-                  <TfiCommentAlt />
-                </button>
-              </li>
-              <li>
-                <img src={user} alt="" />
-                <span>
-                  Juri Adı: <br />
-                  {truncateText("mustafaserhatpeker@kocaeli.edu.tr")}
-                </span>
-
-                <span>
-                  Juri Onayı: <br />
-                  Reddedildi
-                </span>
-
-                <button>
-                  {" "}
-                  <TfiCommentAlt />
-                </button>
-              </li>
-              <li>
-                <img src={user} alt="" />
-                <span>
-                  Juri Adı: <br />
-                  {truncateText("mustafaserhatpeker@kocaeli.edu.tr")}
-                </span>
-
-                <span>
-                  Juri Onayı: <br />
-                  Reddedildi
-                </span>
-
-                <button>
-                  {" "}
-                  <TfiCommentAlt />
-                </button>
-              </li>
-              <li>
-                <img src={user} alt="" />
-                <span>
-                  Juri Adı: <br />
-                  {truncateText("mustafaserhatpeker@kocaeli.edu.tr")}
-                </span>
-
-                <span>
-                  Juri Onayı: <br />
-                  Reddedildi
-                </span>
-
-                <button>
-                  {" "}
-                  <TfiCommentAlt />
-                </button>
-              </li>
-              <li>
-                <img src={user} alt="" />
-                <span>
-                  Juri Adı: <br />
-                  {truncateText("mustafaserhatpeker@kocaeli.edu.tr")}
-                </span>
-
-                <span>
-                  Juri Onayı: <br />
-                  Reddedildi
-                </span>
-
-                <button>
-                  {" "}
-                  <TfiCommentAlt />
-                </button>
-              </li>
+                  <button onClick={() => handleSelectJury(jury)}>
+                    <GiClick />
+                  </button>
+                </li>
+              ))}
             </div>
-            <span className="detail-header-2">Juri Mesajı:</span>
-            <div className="message-area"></div>
+            <span className="detail-header-2">Juri Kararı:</span>
+            <div className="message-area">
+              {selectedJury ? (
+                <>
+                  <span className="message-span">
+                    Mesaj: {selectedJury.comment}
+                  </span>
+                  <span className="vote-span">
+                    {selectedJury.decision === "accepted"
+                      ? "Juri tarafından kabul edildi."
+                      : "Juri tarafından reddedildi."}
+                  </span>
+                </>
+              ) : (
+                ""
+              )}
+            </div>
           </div>
           <div className="detail-column-2-r-2"></div>
         </div>

@@ -86,8 +86,10 @@
   overflow: auto;
 }
 .message-area {
-  width: 98.3%;
-  height: 50%;
+  padding: 2%;
+  position: relative;
+  width: 95%;
+  height: 30.4%;
   border-radius: 10px;
   overflow: auto;
   display: flex;
@@ -95,6 +97,13 @@
   align-items: start;
   justify-content: start;
   border: 1px solid #d5d3d3;
+}
+.vote-span {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  font-size: 10px;
+  color: grey;
 }
 
 .li-area li {
@@ -115,6 +124,7 @@
   height: 30px;
 }
 .li-area li span {
+  width: 25%;
   color: grey;
   font-size: 12px;
 }
@@ -122,8 +132,8 @@
   background-color: transparent;
   border: none;
   color: #1fa54e;
-  font-size: 18px;
-  margin-top: 2%;
+  font-size: 20px;
+
   cursor: pointer;
 }
 
