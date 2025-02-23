@@ -103,7 +103,12 @@
   right: 5px;
   top: 5px;
   font-size: 10px;
+  color: rgb(31, 98, 166);
+  font-weight: bold;
+}
+.message-span {
   color: grey;
+  font-size: 14px;
 }
 
 .li-area li {
@@ -142,13 +147,22 @@
   flex-direction: column;
   align-items: start;
   justify-content: start;
-
+  padding-left: 2%;
   width: 35%;
   height: 97%;
   border-radius: 10px;
   overflow: auto;
   border: 1px solid #d5d3d3;
 }
+.information-header {
+  margin-top: 10px;
+  color: grey;
+  font-size: 14px;
+  text-align: start;
+  font-weight: 500;
+  width: 100%;
+}
+
 .header-content {
   width: 87%;
   display: flex;
@@ -167,4 +181,27 @@
   text-align: start;
   color: grey;
   font-size: 12px;
+}
+
+.info-div {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 5px;
+  margin-left: 2%;
+  margin: 10px;
+}
+.info-header {
+  color: grey;
+  font-size: 12px;
+  text-align: start;
+  width: 100%;
+  font-weight: 500;
+}
+.info-itself {
+  color: grey;
+  font-size: 10px;
+  text-align: start;
+  width: 100%;
 }

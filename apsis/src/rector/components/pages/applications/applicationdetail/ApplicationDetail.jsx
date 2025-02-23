@@ -30,6 +30,7 @@ function ApplicationDetail({ applicationId }) {
         );
 
         const applications = response.data.data || [];
+
         const matchedApplication = applications.find(
           (app) => app._id === applicationId
         );
@@ -54,13 +55,11 @@ function ApplicationDetail({ applicationId }) {
             preliminaryJuries: updatedPreliminaryJuries,
             scientificJuries: updatedScientificJuries,
           });
-
+          console.log("application", application);
           setAllJuries([
             ...(updatedPreliminaryJuries || []),
             ...(updatedScientificJuries || []),
           ]);
-
-          console.log("app", application);
         } else {
           console.warn(
             "Belirtilen applicationId ile eşleşen başvuru bulunamadı."
@@ -115,10 +114,6 @@ function ApplicationDetail({ applicationId }) {
   ) : (
     <div className="applicationdetail-main">
       <div className="detail-content">
-        <span className="detail-header">
-          Başvuran Kişi: {application.username} / Başvuru Türü:{" "}
-          {application.applicationType}
-        </span>
         <div className="detail-column-1">
           <span>
             <b>İlan Adı:</b> <br />
@@ -143,7 +138,7 @@ function ApplicationDetail({ applicationId }) {
         </div>
         <div className="header-content">
           <span className="detail-header-1">Juri Bilgileri:</span>
-          <span className="detail-header-2">Başvuru İçeriği:</span>
+          <span className="detail-header-2">Başvuru Bilgileri:</span>
         </div>
         <div className="detail-colum-2">
           <div className="detail-column-2-r-1">
@@ -188,7 +183,24 @@ function ApplicationDetail({ applicationId }) {
               )}
             </div>
           </div>
-          <div className="detail-column-2-r-2"></div>
+          <div className="detail-column-2-r-2">
+            <span className="information-header">Kullanıcı Bilgileri: </span>
+            <div className="info-div">
+              <span className="info-header">Kullanıcı Adı:</span>
+              <span className="info-itself">{application.username}</span>
+              <span className="info-header">Mail:</span>
+              <span className="info-itself">
+                {application.username}@kocaeli.edu.tr
+              </span>
+            </div>
+            <span className="information-header">Başvuru Bilgileri:</span>
+            <div className="info-div">
+              <span className="info-header">Başvuru Türü:</span>
+              <span className="info-itself">{application.applicationType}</span>
+              <span className="info-header">Başvuru Durumu:</span>
+              <span className="info-itself">{application.status.name}</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
