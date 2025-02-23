@@ -121,6 +121,7 @@
 .content li span {
   color: grey;
   font-size: 12px;
+  width: 21%;
 }
 .content li button {
   width: 30px;

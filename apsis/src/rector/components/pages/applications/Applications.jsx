@@ -96,7 +96,9 @@ function Applications() {
                       </span>
                       <span>
                         Başvuru Türü: <br />
-                        {app.applicationType}
+                        {app.applicationType === "Preliminary"
+                          ? "Ön Değerlendirme"
+                          : "Bilimsel"}
                       </span>
                       <button onClick={selectApplication}>
                         <img src={check} alt="" />
