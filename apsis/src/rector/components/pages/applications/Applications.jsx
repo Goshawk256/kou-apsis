@@ -71,15 +71,8 @@ function Applications() {
             transition={{ duration: 0.3 }}
           >
             <div className="applications-content">
-              <div className="content-column-2">
-                <div className="content-header-last">
-                  <span>Filtreleme:</span>
-                </div>
-              </div>
               <div className="content-column-1">
-                <div className="content-header">
-                  <span>Başvurular:</span>
-                </div>
+                <div className="content-header"></div>
                 <div className="content">
                   {applications.map((app) => (
                     <li key={app._id}>
