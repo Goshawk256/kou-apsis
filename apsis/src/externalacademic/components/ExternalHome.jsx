@@ -5,7 +5,7 @@ import ExternalSidebar from "./sidebar/ExternalSidebar";
 import Makale from "./pages/makale/Makale";
 
 function ExternalHome() {
-  const [selectedPage, setSelectedPage] = useState("Ana Sayfa");
+  const [selectedPage, setSelectedPage] = useState("Makaleler");
 
   const renderContent = () => {
     switch (selectedPage) {
@@ -14,7 +14,7 @@ function ExternalHome() {
       case "Yönetilen Tezler":
         return <div>Yönetilen Tezler</div>;
       default:
-        return <div>Yayınlarım</div>;
+        return <Makale />;
     }
   };
 
