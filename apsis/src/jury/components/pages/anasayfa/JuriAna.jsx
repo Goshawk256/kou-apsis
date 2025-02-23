@@ -31,7 +31,7 @@ function JuriAna({ onSelect }) {
           }
         );
         const responseScientific = await axios.post(
-          `${All_Url.api_base_url}/jury/get-applications?statusId=3`,
+          `${All_Url.api_base_url}/jury/get-applications?statusId=4`,
           {},
           {
             headers: {
