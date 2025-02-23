@@ -85,6 +85,17 @@
   border-radius: 10px;
   overflow: auto;
 }
+.message-area {
+  width: 98%;
+  height: 50%;
+  border-radius: 10px;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: start;
+  border: 1px solid #d5d3d3;
+}
 
 .li-area li {
   display: flex; /* Ekledim: İçerik hizalaması için */
@@ -142,6 +153,7 @@
 }
 .detail-header-2 {
   width: 33%;
+  margin-left: 1%;
   text-align: start;
   color: grey;
   font-size: 12px;

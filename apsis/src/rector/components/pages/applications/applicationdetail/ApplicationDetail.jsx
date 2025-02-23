@@ -82,7 +82,7 @@ function ApplicationDetail({ applicationId }) {
         </div>
         <div className="header-content">
           <span className="detail-header-1">Juri Bilgileri:</span>
-          <span className="detail-header-2">Juri Mesajı:</span>
+          <span className="detail-header-2">Başvuru İçeriği:</span>
         </div>
         <div className="detail-colum-2">
           <div className="detail-column-2-r-1">
@@ -173,6 +173,7 @@ function ApplicationDetail({ applicationId }) {
                 </button>
               </li>
             </div>
+            <span className="detail-header-2">Juri Mesajı:</span>
             <div className="message-area"></div>
           </div>
           <div className="detail-column-2-r-2"></div>
