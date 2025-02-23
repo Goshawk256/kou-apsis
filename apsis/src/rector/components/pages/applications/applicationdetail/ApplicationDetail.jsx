@@ -220,6 +220,35 @@ function ApplicationDetail({ applicationId }) {
           </div>
         </div>
       </div>
+      {popup ? (
+        <div className="addjurypopup">
+          <div className="addjurypopup-inner">
+            <button
+              onClick={() => {
+                setOpenPopup(false);
+              }}
+              className="close-button"
+            >
+              X
+            </button>
+            <div className="addjurypopup-content">
+              <span className="addjurypopup-header">Juri Atama</span>
+              <div className="addjurypopup-content">
+                <span className="addjurypopup-span">Juri Adı:</span>
+                <input type="text" className="addjurypopup-input" />
+                <span className="addjurypopup-span">Juri Türü:</span>
+                <select className="addjurypopup-input">
+                  <option value="Preliminary">Ön Değerlendirme</option>
+                  <option value="Scientific">Bilimsel Değerlendirme</option>
+                </select>
+                <button className="addjurypopup-button">Juri Ata</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 }
