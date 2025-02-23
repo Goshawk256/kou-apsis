@@ -73,7 +73,7 @@ function ApplicationDetail({ applicationId }) {
     };
 
     fetchApplications();
-  }, [applicationId]); // applicationId değiştiğinde useEffect tetiklenecek
+  }, [applicationId]);
 
   const truncateText = (text) => {
     return text.length > 25 ? text.substring(0, 22) + "..." : text;
@@ -200,6 +200,11 @@ function ApplicationDetail({ applicationId }) {
               <span className="info-header">Başvuru Durumu:</span>
               <span className="info-itself">{application.status.name}</span>
             </div>
+            {application.applicationType === "Scientific" ? (
+              <button className="add-jury-button">Juri Ata</button>
+            ) : (
+              ""
+            )}
           </div>
         </div>
       </div>
