@@ -114,3 +114,75 @@
   background-color: #a53c1f;
   color: white;
 }
+
+.addpopup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.addpopup {
+  display: flex;
+  flex-direction: column;
+  text-align: start;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  text-align: center;
+}
+.addpopup h3 {
+  font-size: 14px;
+  color: gray;
+}
+
+.addpopup label {
+  display: flex;
+  flex-direction: column;
+  text-align: start;
+  width: 100%;
+  color: gray;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.addpopup input,
+.addpopup select {
+  width: 100%;
+  height: 35px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  color: grey;
+}
+
+.addpopup-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.addpopup-button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.addpopup-button.confirm {
+  background-color: #4caf50;
+  color: white;
+}
+
+.addpopup-button.cancel {
+  background-color: #f44336;
+  color: white;
+}
