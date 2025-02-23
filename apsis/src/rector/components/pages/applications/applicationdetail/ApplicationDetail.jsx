@@ -1,8 +1,52 @@
 import React from "react";
 import "./ApplicationDetail.css";
 import user from "../../../../../assets/user.png";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import { TfiCommentAlt } from "react-icons/tfi";
-function ApplicationDetail() {
+function ApplicationDetail({ applicationId }) {
+  const [application, setApplication] = useState([]);
+
+  useEffect(() => {
+    const fetchApplications = async () => {
+      const token = localStorage.getItem("accessToken");
+      if (!token) return;
+
+      try {
+        const response = await axios.post(
+          "https://apsis.kocaeli.edu.tr/api/rector/get-applications",
+          {}, // Boş bir obje göndermek gerekiyor
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        const applications = response.data.data || [];
+        const matchedApplication = applications.find(
+          (app) => app._id === applicationId
+        );
+
+        if (matchedApplication) {
+          setApplication(matchedApplication);
+          console.log("Başvuru bulundu:", matchedApplication);
+        } else {
+          console.warn(
+            "Belirtilen applicationId ile eşleşen başvuru bulunamadı."
+          );
+        }
+
+        console.log(response.data);
+      } catch (error) {
+        console.error("Başvuruları çekerken hata oluştu:", error);
+      }
+    };
+
+    fetchApplications();
+  }, [applicationId]); // applicationId değiştiğinde useEffect tetiklenecek
+
   const truncateText = (text) => {
     return text.length > 25 ? text.substring(0, 22) + "..." : text;
   };

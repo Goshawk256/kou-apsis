@@ -10,7 +10,7 @@ import axios from "axios";
 function Applications() {
   const [isSelected, setIsSelected] = useState(false);
   const [applications, setApplications] = useState([]);
-
+  const [selectedApplicationId, setSelectedApplicationId] = useState(null);
   useEffect(() => {
     const fetchApplications = async () => {
       const token = localStorage.getItem("accessToken");
@@ -36,7 +36,8 @@ function Applications() {
     fetchApplications();
   }, []);
 
-  const selectApplication = () => {
+  const selectApplication = (id) => {
+    setSelectedApplicationId(id);
     setIsSelected(!isSelected);
   };
 
@@ -56,7 +57,7 @@ function Applications() {
               <button onClick={selectApplication} className="previous-button">
                 <img src={previous} alt="geri" />
               </button>
-              <ApplicationDetail />
+              <ApplicationDetail applicationId={selectedApplicationId} />
             </div>
           </motion.div>
         </AnimatePresence>
@@ -100,7 +101,7 @@ function Applications() {
                           ? "Ön Değerlendirme"
                           : "Bilimsel"}
                       </span>
-                      <button onClick={selectApplication}>
+                      <button onClick={() => selectApplication(app._id)}>
                         <img src={check} alt="" />
                       </button>
                     </li>
