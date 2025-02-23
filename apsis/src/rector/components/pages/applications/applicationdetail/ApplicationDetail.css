@@ -72,16 +72,54 @@
   width: 60%;
   height: 100%;
   border-radius: 10px;
-
   overflow: auto;
 }
+.li-area {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: start;
+  gap: 10px;
+  width: 100%;
+  height: 50%;
+  border-radius: 10px;
+  overflow: auto;
+}
+.message-area {
+  padding: 2%;
+  position: relative;
+  width: 95%;
+  height: 30.4%;
+  border-radius: 10px;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: start;
+  border: 1px solid #d5d3d3;
+}
+.vote-span {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  font-size: 10px;
+  color: #a61f2a;
+  font-weight: bold;
+}
+.vote-span.accepted {
+  color: #1f62a6;
+}
+.message-span {
+  color: grey;
+  font-size: 14px;
+}
 
-.detail-column-2-r-1 li {
+.li-area li {
   display: flex; /* Ekledim: İçerik hizalaması için */
   flex-direction: row;
   justify-content: space-between;
   width: 94%;
-  height: 51px; /* Sabit yükseklik */
+  height: 16px; /* Sabit yükseklik */
   padding: 2%;
   align-items: center;
   border: 1px solid #d5d3d3;
@@ -89,20 +127,21 @@
   flex-shrink: 0; /* Ekledim: Elemanların küçülmesini önler */
 }
 
-.detail-column-2-r-1 li img {
-  width: 40px;
-  height: 40px;
+.li-area li img {
+  width: 30px;
+  height: 30px;
 }
-.detail-column-2-r-1 li span {
+.li-area li span {
+  width: 25%;
   color: grey;
   font-size: 12px;
 }
-.detail-column-2-r-1 li button {
+.li-area li button {
   background-color: transparent;
   border: none;
   color: #1fa54e;
-  font-size: 18px;
-  margin-top: 2%;
+  font-size: 20px;
+
   cursor: pointer;
 }
 
@@ -111,13 +150,23 @@
   flex-direction: column;
   align-items: start;
   justify-content: start;
-
+  padding-left: 2%;
   width: 35%;
   height: 97%;
   border-radius: 10px;
   overflow: auto;
   border: 1px solid #d5d3d3;
+  position: relative;
 }
+.information-header {
+  margin-top: 10px;
+  color: grey;
+  font-size: 14px;
+  text-align: start;
+  font-weight: 500;
+  width: 100%;
+}
+
 .header-content {
   width: 87%;
   display: flex;
@@ -132,7 +181,132 @@
 }
 .detail-header-2 {
   width: 33%;
+  margin-left: 1%;
   text-align: start;
   color: grey;
   font-size: 12px;
+}
+
+.info-div {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 5px;
+  margin-left: 2%;
+  margin: 10px;
+}
+.info-header {
+  color: grey;
+  font-size: 12px;
+  text-align: start;
+  width: 100%;
+  font-weight: 500;
+}
+.info-itself {
+  color: grey;
+  font-size: 10px;
+  text-align: start;
+  width: 100%;
+}
+
+.add-jury-button {
+  width: 80px;
+  height: 30px;
+  position: absolute;
+  right: 10px;
+  bottom: 0px;
+  background-color: #1fa54e;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 5px;
+  cursor: pointer;
+}
+.addjurypopup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.addjurypopup-inner {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  width: 350px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  position: relative;
+  text-align: center;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: #555;
+  transition: color 0.3s ease;
+}
+
+.close-button:hover {
+  color: #d9534f;
+}
+
+.addjurypopup-header {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 15px;
+  display: block;
+}
+
+.addjurypopup-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.addjurypopup-span {
+  font-size: 14px;
+  font-weight: 500;
+  color: #444;
+  text-align: left;
+}
+
+.addjurypopup-input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.addjurypopup-input:focus {
+  border-color: #1fa54e;
+}
+
+.addjurypopup-button {
+  background: #1fa54e;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.3s ease;
+}
+
+.addjurypopup-button:hover {
+  background: #1fb654;
 }

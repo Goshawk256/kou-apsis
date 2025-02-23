@@ -1,20 +1,46 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Applications.css";
 import user from "../../../../assets/user.png";
 import check from "../../../../assets/check.png";
 import previous from "../../../../assets/previous.png";
 import { motion, AnimatePresence } from "framer-motion";
 import ApplicationDetail from "./applicationdetail/ApplicationDetail";
+import axios from "axios";
 
 function Applications() {
-  const truncateText = (text) => {
-    return text.length > 25 ? text.substring(0, 22) + "..." : text;
-  };
   const [isSelected, setIsSelected] = useState(false);
+  const [applications, setApplications] = useState([]);
+  const [selectedApplicationId, setSelectedApplicationId] = useState(null);
+  useEffect(() => {
+    const fetchApplications = async () => {
+      const token = localStorage.getItem("accessToken");
+      if (!token) return;
 
-  const selectApplication = () => {
+      try {
+        const response = await axios.post(
+          "https://apsis.kocaeli.edu.tr/api/rector/get-applications",
+          {}, // Boş bir obje göndermek gerekiyor
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        setApplications(response.data.data || []);
+      } catch (error) {
+        console.error("Başvuruları çekerken hata oluştu:", error);
+      }
+    };
+
+    fetchApplications();
+  }, []);
+
+  const selectApplication = (id) => {
+    setSelectedApplicationId(id);
     setIsSelected(!isSelected);
   };
+
   return (
     <div className="applications-main">
       <h2 className="applications-header">Başvurular</h2>
@@ -28,15 +54,10 @@ function Applications() {
             transition={{ duration: 0.3 }}
           >
             <div className="applications-content">
-              <button
-                onClick={() => {
-                  selectApplication();
-                }}
-                className="previous-button"
-              >
+              <button onClick={selectApplication} className="previous-button">
                 <img src={previous} alt="geri" />
               </button>
-              <ApplicationDetail />
+              <ApplicationDetail applicationId={selectedApplicationId} />
             </div>
           </motion.div>
         </AnimatePresence>
@@ -50,335 +71,34 @@ function Applications() {
             transition={{ duration: 0.3 }}
           >
             <div className="applications-content">
-              <div className="content-column-2">
-                <div className="content-header-last">
-                  <span>Filtreleme:</span>
-                </div>
-                <div className="content-last">
-                  <button></button>
-                  <button></button>
-                  <button></button>
-                  <button></button>
-                  <button></button>
-                </div>
-              </div>
               <div className="content-column-1">
-                <div className="content-header">
-                  <span>Başvurular:</span>
-                </div>
+                <div className="content-header"></div>
                 <div className="content">
-                  <li>
-                    <img src={user} alt="" />
-                    <span>
-                      Başvuran Kişi: <br />
-                      {truncateText("suhapsahin@kocaeli.edu.tr")}
-                    </span>
-                    <span>
-                      Başvurulan Kadro: <br /> Doç. Dr.
-                    </span>
-
-                    <span>
-                      Başvuru Durumu: <br />
-                      Onaylandı
-                    </span>
-                    <span>
-                      Başvuru Türü: <br />
-                      Ön Değerlendirme
-                    </span>
-                    <button
-                      onClick={() => {
-                        selectApplication();
-                      }}
-                    >
-                      <img src={check} alt="" />
-                    </button>
-                  </li>
-                  <li>
-                    <img src={user} alt="" />
-                    <span>
-                      Başvuran Kişi: <br />
-                      {truncateText("mustafaserhatpeker@kocaeli.edu.tr")}
-                    </span>
-                    <span>
-                      Başvurulan Kadro: <br /> Doç. Dr.
-                    </span>
-
-                    <span>
-                      Başvuru Durumu: <br />
-                      Reddedildi
-                    </span>
-                    <span>
-                      Başvuru Türü: <br />
-                      Ön Değerlendirme
-                    </span>
-                    <button
-                      onClick={() => {
-                        selectApplication();
-                      }}
-                    >
-                      <img src={check} alt="" />
-                    </button>
-                  </li>
-                  <li>
-                    <img src={user} alt="" />
-                    <span>
-                      Başvuran Kişi: <br />
-                      {truncateText("suhapsahin@kocaeli.edu.tr")}
-                    </span>
-                    <span>
-                      Başvurulan Kadro: <br /> Doç. Dr.
-                    </span>
-
-                    <span>
-                      Başvuru Durumu: <br />
-                      Onaylandı
-                    </span>
-                    <span>
-                      Başvuru Türü: <br />
-                      Ön Değerlendirme
-                    </span>
-                    <button
-                      onClick={() => {
-                        selectApplication();
-                      }}
-                    >
-                      <img src={check} alt="" />
-                    </button>
-                  </li>
-                  <li>
-                    {" "}
-                    <img src={user} alt="" />
-                    <span>
-                      Başvuran Kişi: <br />
-                      {truncateText("suhapsahin@kocaeli.edu.tr")}
-                    </span>
-                    <span>
-                      Başvurulan Kadro: <br /> Doç. Dr.
-                    </span>
-                    <span>
-                      Başvuru Durumu: <br />
-                      Onaylandı
-                    </span>
-                    <span>
-                      Başvuru Türü: <br />
-                      Ön Değerlendirme
-                    </span>
-                    <button
-                      onClick={() => {
-                        selectApplication();
-                      }}
-                    >
-                      <img src={check} alt="" />
-                    </button>
-                  </li>
-                  <li>
-                    <img src={user} alt="" />
-                    <span>
-                      Başvuran Kişi: <br />
-                      {truncateText("suhapsahin@kocaeli.edu.tr")}
-                    </span>
-                    <span>
-                      Başvurulan Kadro: <br /> Doç. Dr.
-                    </span>
-
-                    <span>
-                      Başvuru Durumu: <br />
-                      Onaylandı
-                    </span>
-                    <span>
-                      Başvuru Türü: <br />
-                      Ön Değerlendirme
-                    </span>
-                    <button
-                      onClick={() => {
-                        selectApplication();
-                      }}
-                    >
-                      <img src={check} alt="" />
-                    </button>
-                  </li>
-                  <li>
-                    <img src={user} alt="" />
-                    <span>
-                      Başvuran Kişi: <br />
-                      {truncateText("mustafaserhatpeker@kocaeli.edu.tr")}
-                    </span>
-                    <span>
-                      Başvurulan Kadro: <br /> Doç. Dr.
-                    </span>
-
-                    <span>
-                      Başvuru Durumu: <br />
-                      Reddedildi
-                    </span>
-                    <span>
-                      Başvuru Türü: <br />
-                      Ön Değerlendirme
-                    </span>
-                    <button
-                      onClick={() => {
-                        selectApplication();
-                      }}
-                    >
-                      <img src={check} alt="" />
-                    </button>
-                  </li>
-                  <li>
-                    <img src={user} alt="" />
-                    <span>
-                      Başvuran Kişi: <br />
-                      {truncateText("suhapsahin@kocaeli.edu.tr")}
-                    </span>
-                    <span>
-                      Başvurulan Kadro: <br /> Doç. Dr.
-                    </span>
-
-                    <span>
-                      Başvuru Durumu: <br />
-                      Onaylandı
-                    </span>
-                    <span>
-                      Başvuru Türü: <br />
-                      Ön Değerlendirme
-                    </span>
-                    <button
-                      onClick={() => {
-                        selectApplication();
-                      }}
-                    >
-                      <img src={check} alt="" />
-                    </button>
-                  </li>
-                  <li>
-                    {" "}
-                    <img src={user} alt="" />
-                    <span>
-                      Başvuran Kişi: <br />
-                      {truncateText("suhapsahin@kocaeli.edu.tr")}
-                    </span>
-                    <span>
-                      Başvurulan Kadro: <br /> Doç. Dr.
-                    </span>
-                    <span>
-                      Başvuru Durumu: <br />
-                      Onaylandı
-                    </span>
-                    <span>
-                      Başvuru Türü: <br />
-                      Ön Değerlendirme
-                    </span>
-                    <button
-                      onClick={() => {
-                        selectApplication();
-                      }}
-                    >
-                      <img src={check} alt="" />
-                    </button>
-                  </li>
-                  <li>
-                    <img src={user} alt="" />
-                    <span>
-                      Başvuran Kişi: <br />
-                      {truncateText("suhapsahin@kocaeli.edu.tr")}
-                    </span>
-                    <span>
-                      Başvurulan Kadro: <br /> Doç. Dr.
-                    </span>
-
-                    <span>
-                      Başvuru Durumu: <br />
-                      Onaylandı
-                    </span>
-                    <span>
-                      Başvuru Türü: <br />
-                      Ön Değerlendirme
-                    </span>
-                    <button
-                      onClick={() => {
-                        selectApplication();
-                      }}
-                    >
-                      <img src={check} alt="" />
-                    </button>
-                  </li>
-                  <li>
-                    <img src={user} alt="" />
-                    <span>
-                      Başvuran Kişi: <br />
-                      {truncateText("mustafaserhatpeker@kocaeli.edu.tr")}
-                    </span>
-                    <span>
-                      Başvurulan Kadro: <br /> Doç. Dr.
-                    </span>
-
-                    <span>
-                      Başvuru Durumu: <br />
-                      Reddedildi
-                    </span>
-                    <span>
-                      Başvuru Türü: <br />
-                      Ön Değerlendirme
-                    </span>
-                    <button
-                      onClick={() => {
-                        selectApplication();
-                      }}
-                    >
-                      <img src={check} alt="" />
-                    </button>
-                  </li>
-                  <li>
-                    <img src={user} alt="" />
-                    <span>
-                      Başvuran Kişi: <br />
-                      {truncateText("suhapsahin@kocaeli.edu.tr")}
-                    </span>
-                    <span>
-                      Başvurulan Kadro: <br /> Doç. Dr.
-                    </span>
-
-                    <span>
-                      Başvuru Durumu: <br />
-                      Onaylandı
-                    </span>
-                    <span>
-                      Başvuru Türü: <br />
-                      Ön Değerlendirme
-                    </span>
-                    <button
-                      onClick={() => {
-                        selectApplication();
-                      }}
-                    >
-                      <img src={check} alt="" />
-                    </button>
-                  </li>
-                  <li>
-                    {" "}
-                    <img src={user} alt="" />
-                    <span>
-                      Başvuran Kişi: <br />
-                      {truncateText("suhapsahin@kocaeli.edu.tr")}
-                    </span>
-                    <span>
-                      Başvurulan Kadro: <br /> Doç. Dr.
-                    </span>
-                    <span>
-                      Başvuru Durumu: <br />
-                      Onaylandı
-                    </span>
-                    <span>
-                      Başvuru Türü: <br />
-                      Ön Değerlendirme
-                    </span>
-                    <button
-                      onClick={() => {
-                        selectApplication();
-                      }}
-                    >
-                      <img src={check} alt="" />
-                    </button>
-                  </li>
+                  {applications.map((app) => (
+                    <li key={app._id}>
+                      <img src={user} alt="" />
+                      <span>
+                        Başvuran Kişi: <br />
+                        {app.username}
+                      </span>
+                      <span>
+                        Başvurulan Kadro: <br /> {app.title}
+                      </span>
+                      <span>
+                        Başvuru Durumu: <br />
+                        {app.status.name}
+                      </span>
+                      <span>
+                        Başvuru Türü: <br />
+                        {app.applicationType === "Preliminary"
+                          ? "Ön Değerlendirme"
+                          : "Bilimsel"}
+                      </span>
+                      <button onClick={() => selectApplication(app._id)}>
+                        <img src={check} alt="" />
+                      </button>
+                    </li>
+                  ))}
                 </div>
               </div>
             </div>
