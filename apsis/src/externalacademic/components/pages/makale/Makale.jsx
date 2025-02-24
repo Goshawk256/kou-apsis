@@ -1,13 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import All_Url from "../../../../url";
+import axios from "axios";
 import "./Makale.css";
-import {
-  FaSync,
-  FaPencilAlt,
-  FaCheckSquare,
-  FaInfo,
-  FaRegSquare,
-  FaCheck,
-} from "react-icons/fa";
+import { FaRegSquare } from "react-icons/fa";
 const initialArticles = [
   {
     id: 1,
@@ -59,23 +54,25 @@ const initialArticles = [
   },
 ];
 const languages = ["Uluslararası", "Ulusal"];
-const articleTypes = ["Araştırma", "İnceleme", "Deneysel", "Teorik", "Derleme"];
+
 function Makale() {
   const [articles, setArticles] = useState(initialArticles);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [showModal, setShowModal] = useState(false);
+  const [typeId, setTypeId] = useState(0);
+  const [articleTypes, setArticleTypes] = useState({});
   const [newArticle, setNewArticle] = useState({
     name: "",
     date: "",
     authors: "",
-    language: "Uluslararası",
-    type: "Araştırma",
+    isInternational: false,
+    articleTypeId: 1,
   });
 
   const articlesPerPage = 5;
   const filteredArticles = articles.filter((article) =>
-    article.name.toLowerCase().includes(searchTerm.toLowerCase())
+    article?.name?.toLowerCase().includes(searchTerm.toLowerCase())
   );
   const indexOfLastArticle = currentPage * articlesPerPage;
   const indexOfFirstArticle = indexOfLastArticle - articlesPerPage;
@@ -96,15 +93,46 @@ function Makale() {
     setShowModal(true);
   };
 
-  const handleModalSubmit = () => {
+  useEffect(() => {
+    const fetchArticleTypes = async () => {
+      try {
+        const accessToken = localStorage.getItem("accessToken");
+        if (!accessToken) {
+          console.log("Yetkilendirme hatası: Token bulunamadı.", "error");
+          return;
+        }
+
+        const response = await axios.get(
+          `${All_Url.api_base_url}/lookUp/get-article-types`,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+
+        setArticleTypes(response.data.data);
+      } catch (error) {
+        console.log("Makaleler getirilirken bir hata oluştu.", "error");
+      }
+    };
+
+    fetchArticleTypes();
+  }, []);
+
+  const handleModalSubmit = async () => {
     if (newArticle.name && newArticle.date && newArticle.authors) {
+      const formattedArticle = {
+        title: newArticle.name,
+        publishDate: newArticle.date.split("-").reverse().join("/"), // "YYYY-MM-DD" → "DD/MM/YYYY"
+        authorCount: Number(newArticle.authors),
+        isInternatinal: newArticle.language === "Uluslararası", // "Uluslararası" → true, "Ulusal" → false
+        articleTypeId: newArticle.articleTypeId,
+      };
+
       setArticles((prev) => [
         ...prev,
-        {
-          id: prev.length + 1,
-          ...newArticle,
-          authors: Number(newArticle.authors),
-        },
+        { id: prev.length + 1, ...formattedArticle },
       ]);
       setNewArticle({
         name: "",
@@ -113,8 +141,30 @@ function Makale() {
         language: "Uluslararası",
         type: "Araştırma",
       });
-      console.log(newArticle);
-      setShowModal(false);
+
+      try {
+        const accessToken = localStorage.getItem("accessToken");
+        if (!accessToken) {
+          console.log("Yetkilendirme hatası: Token bulunamadı.", "error");
+          return;
+        }
+
+        console.log(formattedArticle);
+        const response = await axios.post(
+          `${All_Url.api_base_url}/external-academic/add-article`,
+          formattedArticle,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+      } catch (error) {
+        console.log("Makale eklerken bir hata oluştu.", error);
+      } finally {
+        setShowModal(false);
+      }
     }
   };
 
@@ -181,6 +231,7 @@ function Makale() {
         <div className="modal-overlay">
           <div className="modal">
             <h2>Yeni Makale Ekle</h2>
+
             <input
               type="text"
               placeholder="Makale Adı"
@@ -189,21 +240,27 @@ function Makale() {
                 setNewArticle({ ...newArticle, name: e.target.value })
               }
             />
+
             <input
               type="date"
-              value={newArticle.date}
+              value={newArticle.date || ""}
               onChange={(e) =>
                 setNewArticle({ ...newArticle, date: e.target.value })
               }
             />
+
             <input
               type="number"
               placeholder="Yazar Sayısı"
               value={newArticle.authors}
               onChange={(e) =>
-                setNewArticle({ ...newArticle, authors: e.target.value })
+                setNewArticle({
+                  ...newArticle,
+                  authors: Number(e.target.value),
+                })
               }
             />
+
             <select
               value={newArticle.language}
               onChange={(e) =>
@@ -216,18 +273,23 @@ function Makale() {
                 </option>
               ))}
             </select>
+
             <select
-              value={newArticle.type}
+              value={newArticle.articleTypeId}
               onChange={(e) =>
-                setNewArticle({ ...newArticle, type: e.target.value })
+                setNewArticle({
+                  ...newArticle,
+                  articleTypeId: Number(e.target.value),
+                })
               }
             >
-              {articleTypes.map((type) => (
-                <option key={type} value={type}>
+              {Object.entries(articleTypes).map(([id, type]) => (
+                <option key={id} value={id}>
                   {type}
                 </option>
               ))}
             </select>
+
             <button onClick={handleModalSubmit}>Ekle</button>
             <button onClick={() => setShowModal(false)}>İptal</button>
           </div>
