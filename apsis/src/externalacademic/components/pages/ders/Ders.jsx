@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import All_Url from "../../../../url";
 import axios from "axios";
-import "./Makale.css";
+import "./Ders.css";
 import { FaRegSquare } from "react-icons/fa";
 const languages = ["Uluslararası", "Ulusal"];
 
-function Makale() {
+function Ders() {
   const [articles, setArticles] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -180,7 +180,7 @@ function Makale() {
       <table className="makale-table">
         <thead>
           <tr>
-            <th className="makale-header">Makale Adı</th>
+            <th className="makale-header">Ders Adı</th>
             <th className="makale-header">Yayınlanma Tarihi</th>
 
             <th className="makale-header">Dil</th>
@@ -283,4 +283,4 @@ function Makale() {
   );
 }
 
-export default Makale;
+export default Ders;

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import All_Url from "../../../../url";
 import axios from "axios";
-import "./Makale.css";
+import "./Odul.css";
 import { FaRegSquare } from "react-icons/fa";
 const languages = ["Uluslararası", "Ulusal"];
 
