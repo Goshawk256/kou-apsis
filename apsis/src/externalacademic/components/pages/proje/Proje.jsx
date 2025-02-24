@@ -110,7 +110,6 @@ function Proje() {
         );
 
         setArticles(response.data.data);
-        console.log(articles);
       } catch (error) {
         console.log("Makaleler getirilirken bir hata oluştu.", error);
       } finally {
@@ -151,9 +150,8 @@ function Proje() {
           return;
         }
 
-        console.log(formattedArticle);
         const response = await axios.post(
-          `${All_Url.api_base_url}/external-academic/add-award`,
+          `${All_Url.api_base_url}/external-academic/add-project`,
           formattedArticle,
           {
             headers: {
@@ -171,7 +169,7 @@ function Proje() {
   };
 
   const sliceText = (text) => {
-    if (text.length > 40) {
+    if (text?.length > 40) {
       return text.slice(0, 40) + "...";
     }
     return text;
@@ -228,7 +226,7 @@ function Proje() {
               <td className="makale-cell">{article.beginDate}</td>
               <td className="makale-cell">{article.endDate}</td>
               <td className="makale-cell">{article.corparateName}</td>
-              <td className="makale-cell">{sliceText(article.projectType)}</td>
+              <td className="makale-cell">{sliceText(article?.projectType)}</td>
               <td className="makale-cell">{article.group}</td>
               <td className="makale-cell">{article.score}</td>
               <td className="makale-cell">
@@ -256,7 +254,7 @@ function Proje() {
             <span
               style={{ color: "gray", textAlign: "start", fontSize: "12px" }}
             >
-              Yayınlanma Tarihi:
+              Başlangıç Tarihi:
             </span>
             <input
               type="date"
@@ -268,7 +266,7 @@ function Proje() {
             <span
               style={{ color: "gray", textAlign: "start", fontSize: "12px" }}
             >
-              Yayınlanma Tarihi:
+              Bitiş Tarihi:
             </span>
             <input
               type="date"

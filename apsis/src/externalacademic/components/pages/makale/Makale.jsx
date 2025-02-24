@@ -86,7 +86,6 @@ function Makale() {
         );
 
         setArticles(response.data.data);
-        console.log(articles);
       } catch (error) {
         console.log("Makaleler getirilirken bir hata oluştu.", error);
       } finally {
