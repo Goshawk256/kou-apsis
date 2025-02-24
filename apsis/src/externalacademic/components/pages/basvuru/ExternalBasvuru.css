@@ -1,0 +1,11 @@
+.main-externalbasvuru {
+  width: 90%;
+  height: 600px;
+  margin: auto;
+  font-family: Arial, sans-serif;
+  margin-top: 40px;
+  padding: 20px;
+  border-radius: 10px;
+  margin-left: 90px;
+  background-color: white;
+}

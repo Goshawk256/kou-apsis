@@ -8,6 +8,7 @@ import Tezler from "./pages/tez/Tez";
 import Projeler from "./pages/proje/Proje";
 import Oduller from "./pages/odul/Odul";
 import SanatsalFaaliyetler from "./pages/sanatsal/SanatsalFaaliyetler";
+import ExternalBasvuru from "./pages/basvuru/ExternalBasvuru";
 
 function ExternalHome() {
   const [selectedPage, setSelectedPage] = useState("Makaleler");
@@ -26,6 +27,8 @@ function ExternalHome() {
         return <Oduller />;
       case "Sanatsal Faaliyetler":
         return <SanatsalFaaliyetler />;
+      case "Başvuru":
+        return <ExternalBasvuru />;
       default:
         return <Makale />;
     }
