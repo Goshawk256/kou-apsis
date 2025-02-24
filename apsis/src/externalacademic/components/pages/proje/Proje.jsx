@@ -5,7 +5,7 @@ import "./Proje.css";
 import { FaRegSquare } from "react-icons/fa";
 const languages = ["Uluslararası", "Ulusal"];
 
-function Makale() {
+function Proje() {
   const [articles, setArticles] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -14,11 +14,12 @@ function Makale() {
   const [loading, setLoading] = useState(true);
 
   const [newArticle, setNewArticle] = useState({
-    name: "",
-    date: "",
-    authors: "",
-    isInternational: false,
-    articleTypeId: 1,
+    title: "",
+    beginDate: "",
+    endDate: "",
+    corparateName: "",
+    projectTypeId: 1,
+    roleId: 1,
   });
 
   const articlesPerPage = 5;
@@ -54,7 +55,7 @@ function Makale() {
         }
 
         const response = await axios.get(
-          `${All_Url.api_base_url}/lookUp/get-article-types`,
+          `${All_Url.api_base_url}/lookUp/get-award-types`,
           {
             headers: {
               Authorization: `Bearer ${accessToken}`,
@@ -76,7 +77,7 @@ function Makale() {
         }
 
         const response = await axios.post(
-          `${All_Url.api_base_url}/external-academic/get-articles`,
+          `${All_Url.api_base_url}/external-academic/get-awards`,
           {}, // Body kısmı burada boş olabilir, çünkü sadece header gönderiyorsunuz.
           {
             headers: {
@@ -85,7 +86,7 @@ function Makale() {
           }
         );
 
-        setArticles(response.data.data);
+        setArticles(response.data.data.awards);
         console.log(articles);
       } catch (error) {
         console.log("Makaleler getirilirken bir hata oluştu.", error);
@@ -99,25 +100,23 @@ function Makale() {
   }, []);
 
   const handleModalSubmit = async () => {
-    if (newArticle.name && newArticle.date && newArticle.authors) {
+    if (newArticle.name && newArticle.date) {
       const formattedArticle = {
         title: newArticle.name,
-        publishDate: newArticle.date.split("-").reverse().join("/"), // "YYYY-MM-DD" → "DD/MM/YYYY"
-        authorCount: Number(newArticle.authors),
-        isInternational: newArticle.language === "Uluslararası", // "Uluslararası" → true, "Ulusal" → false
-        articleTypeId: newArticle.articleTypeId,
+        eventDate: newArticle.date.split("-").reverse().join("/"), // "YYYY-MM-DD" → "DD/MM/YYYY"
+        corparateName: newArticle.corparateName,
+        awardTypeId: newArticle.articleTypeId,
       };
-
+      console.log(formattedArticle);
       setArticles((prev) => [
         ...prev,
         { id: prev.length + 1, ...formattedArticle },
       ]);
       setNewArticle({
-        name: "",
-        date: "",
-        authors: "",
-        language: "Uluslararası",
-        type: "Araştırma",
+        title: "",
+        eventDate: "",
+        corparateName: "yok",
+        awardTypeId: 1,
       });
 
       try {
@@ -129,7 +128,7 @@ function Makale() {
 
         console.log(formattedArticle);
         const response = await axios.post(
-          `${All_Url.api_base_url}/external-academic/add-article`,
+          `${All_Url.api_base_url}/external-academic/add-award`,
           formattedArticle,
           {
             headers: {
@@ -146,18 +145,25 @@ function Makale() {
     }
   };
 
+  const sliceText = (text) => {
+    if (text.length > 50) {
+      return text.slice(0, 50) + "...";
+    }
+    return text;
+  };
+
   return (
     <div className="makale-container">
       <div className="makale-top-bar">
         <input
           type="text"
           className="makale-search"
-          placeholder="Makale Ara..."
+          placeholder="Proje Ara..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
         <button className="makale-add-button" onClick={handleAddArticle}>
-          Makale Ekle
+          Proje Ekle
         </button>
         <div className="makale-pagination">
           <button
@@ -180,11 +186,10 @@ function Makale() {
       <table className="makale-table">
         <thead>
           <tr>
-            <th className="makale-header">Makale Adı</th>
-            <th className="makale-header">Yayınlanma Tarihi</th>
-
-            <th className="makale-header">Dil</th>
-            <th className="makale-header">Makale Türü</th>
+            <th className="makale-header">Ödül Adı</th>
+            <th className="makale-header">Alınma Tarihi</th>
+            <th className="makale-header">Kurum Adı</th>
+            <th className="makale-header">Ödül Türü</th>
             <th className="makale-header">Grup</th>
             <th className="makale-header">Puan</th>
             <th className="makale-header">İşlem</th>
@@ -194,12 +199,11 @@ function Makale() {
           {currentArticles.map((article) => (
             <tr key={article.id} className="makale-row">
               <td className="makale-cell">{article.title}</td>
-              <td className="makale-cell">{article.publishDate}</td>
-
+              <td className="makale-cell">{article.eventDate}</td>
+              <td className="makale-cell">{article.corparateName}</td>
               <td className="makale-cell">
-                {article.isInternational ? "Uluslararası" : "Ulusal"}
+                {sliceText(article.awardTypeName)}
               </td>
-              <td className="makale-cell">{article.articleType}</td>
               <td className="makale-cell">{article.group}</td>
               <td className="makale-cell">{article.score}</td>
               <td className="makale-cell">
@@ -218,7 +222,7 @@ function Makale() {
 
             <input
               type="text"
-              placeholder="Makale Adı"
+              placeholder="Ödül Adı"
               value={newArticle.name}
               onChange={(e) =>
                 setNewArticle({ ...newArticle, name: e.target.value })
@@ -234,29 +238,13 @@ function Makale() {
             />
 
             <input
-              type="number"
-              placeholder="Yazar Sayısı"
-              value={newArticle.authors}
+              type="text"
+              placeholder="Kurum Adı"
+              value={newArticle.corparateName}
               onChange={(e) =>
-                setNewArticle({
-                  ...newArticle,
-                  authors: Number(e.target.value),
-                })
+                setNewArticle({ ...newArticle, corparateName: e.target.value })
               }
             />
-
-            <select
-              value={newArticle.language}
-              onChange={(e) =>
-                setNewArticle({ ...newArticle, language: e.target.value })
-              }
-            >
-              {languages.map((lang) => (
-                <option key={lang} value={lang}>
-                  {lang}
-                </option>
-              ))}
-            </select>
 
             <select
               value={newArticle.articleTypeId}
@@ -283,4 +271,4 @@ function Makale() {
   );
 }
 
-export default Makale;
+export default Proje;
