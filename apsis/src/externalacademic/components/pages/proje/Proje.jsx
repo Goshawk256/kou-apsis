@@ -11,6 +11,7 @@ function Proje() {
   const [currentPage, setCurrentPage] = useState(1);
   const [showModal, setShowModal] = useState(false);
   const [articleTypes, setArticleTypes] = useState({});
+  const [roleTypes, setRoleTypes] = useState({});
   const [loading, setLoading] = useState(true);
 
   const [newArticle, setNewArticle] = useState({
@@ -55,7 +56,7 @@ function Proje() {
         }
 
         const response = await axios.get(
-          `${All_Url.api_base_url}/lookUp/get-award-types`,
+          `${All_Url.api_base_url}/lookUp/get-project-types`,
           {
             headers: {
               Authorization: `Bearer ${accessToken}`,
@@ -64,6 +65,28 @@ function Proje() {
         );
 
         setArticleTypes(response.data.data);
+      } catch (error) {
+        console.log("Makaleler getirilirken bir hata oluştu.", "error");
+      }
+    };
+    const fetchRoleTypes = async () => {
+      try {
+        const accessToken = localStorage.getItem("accessToken");
+        if (!accessToken) {
+          console.log("Yetkilendirme hatası: Token bulunamadı.", "error");
+          return;
+        }
+
+        const response = await axios.get(
+          `${All_Url.api_base_url}/lookUp/get-project-role-types`,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+
+        setRoleTypes(response.data.data);
       } catch (error) {
         console.log("Makaleler getirilirken bir hata oluştu.", "error");
       }
@@ -77,7 +100,7 @@ function Proje() {
         }
 
         const response = await axios.post(
-          `${All_Url.api_base_url}/external-academic/get-awards`,
+          `${All_Url.api_base_url}/external-academic/get-projects`,
           {}, // Body kısmı burada boş olabilir, çünkü sadece header gönderiyorsunuz.
           {
             headers: {
@@ -86,7 +109,7 @@ function Proje() {
           }
         );
 
-        setArticles(response.data.data.awards);
+        setArticles(response.data.data);
         console.log(articles);
       } catch (error) {
         console.log("Makaleler getirilirken bir hata oluştu.", error);
@@ -95,17 +118,18 @@ function Proje() {
       }
     };
     fetchArticles();
-
+    fetchRoleTypes();
     fetchArticleTypes();
   }, []);
 
   const handleModalSubmit = async () => {
-    if (newArticle.name && newArticle.date) {
+    if (newArticle.title && newArticle.beginDate) {
       const formattedArticle = {
-        title: newArticle.name,
-        eventDate: newArticle.date.split("-").reverse().join("/"), // "YYYY-MM-DD" → "DD/MM/YYYY"
+        title: newArticle.title,
+        beginData: newArticle.beginDate.split("-").reverse().join("/"), // "YYYY-MM-DD" → "DD/MM/YYYY"
+        endDate: newArticle.endDate.split("-").reverse().join("/"), // "YYYY-MM-DD" → "DD/MM/YYYY"
         corparateName: newArticle.corparateName,
-        awardTypeId: newArticle.articleTypeId,
+        projectTypeId: newArticle.projectTypeId,
       };
       console.log(formattedArticle);
       setArticles((prev) => [
@@ -146,8 +170,8 @@ function Proje() {
   };
 
   const sliceText = (text) => {
-    if (text.length > 50) {
-      return text.slice(0, 50) + "...";
+    if (text.length > 40) {
+      return text.slice(0, 40) + "...";
     }
     return text;
   };
@@ -186,10 +210,11 @@ function Proje() {
       <table className="makale-table">
         <thead>
           <tr>
-            <th className="makale-header">Ödül Adı</th>
-            <th className="makale-header">Alınma Tarihi</th>
+            <th className="makale-header">Proje Adı</th>
+            <th className="makale-header">Başlangıç Tarihi</th>
+            <th className="makale-header">Bitiş Tarihi</th>
             <th className="makale-header">Kurum Adı</th>
-            <th className="makale-header">Ödül Türü</th>
+            <th className="makale-header">Proje Türü</th>
             <th className="makale-header">Grup</th>
             <th className="makale-header">Puan</th>
             <th className="makale-header">İşlem</th>
@@ -199,11 +224,10 @@ function Proje() {
           {currentArticles.map((article) => (
             <tr key={article.id} className="makale-row">
               <td className="makale-cell">{article.title}</td>
-              <td className="makale-cell">{article.eventDate}</td>
+              <td className="makale-cell">{article.beginDate}</td>
+              <td className="makale-cell">{article.endDate}</td>
               <td className="makale-cell">{article.corparateName}</td>
-              <td className="makale-cell">
-                {sliceText(article.awardTypeName)}
-              </td>
+              <td className="makale-cell">{sliceText(article.projectType)}</td>
               <td className="makale-cell">{article.group}</td>
               <td className="makale-cell">{article.score}</td>
               <td className="makale-cell">
@@ -222,21 +246,36 @@ function Proje() {
 
             <input
               type="text"
-              placeholder="Ödül Adı"
-              value={newArticle.name}
+              placeholder="Proje Adı"
+              value={newArticle.title}
               onChange={(e) =>
-                setNewArticle({ ...newArticle, name: e.target.value })
+                setNewArticle({ ...newArticle, title: e.target.value })
               }
             />
-
+            <span
+              style={{ color: "gray", textAlign: "start", fontSize: "12px" }}
+            >
+              Yayınlanma Tarihi:
+            </span>
             <input
               type="date"
-              value={newArticle.date || ""}
+              value={newArticle.beginDate || ""}
               onChange={(e) =>
-                setNewArticle({ ...newArticle, date: e.target.value })
+                setNewArticle({ ...newArticle, beginDate: e.target.value })
               }
             />
-
+            <span
+              style={{ color: "gray", textAlign: "start", fontSize: "12px" }}
+            >
+              Yayınlanma Tarihi:
+            </span>
+            <input
+              type="date"
+              value={newArticle.endDate || ""}
+              onChange={(e) =>
+                setNewArticle({ ...newArticle, endDate: e.target.value })
+              }
+            />
             <input
               type="text"
               placeholder="Kurum Adı"
@@ -247,7 +286,7 @@ function Proje() {
             />
 
             <select
-              value={newArticle.articleTypeId}
+              value={newArticle.roleId}
               onChange={(e) =>
                 setNewArticle({
                   ...newArticle,
@@ -255,7 +294,7 @@ function Proje() {
                 })
               }
             >
-              {Object.entries(articleTypes).map(([id, type]) => (
+              {Object.entries(roleTypes).map(([id, type]) => (
                 <option key={id} value={id}>
                   {type}
                 </option>

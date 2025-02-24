@@ -224,7 +224,11 @@ function Makale() {
                 setNewArticle({ ...newArticle, name: e.target.value })
               }
             />
-
+            <span
+              style={{ color: "gray", textAlign: "start", fontSize: "12px" }}
+            >
+              Yayınlanma Tarihi:
+            </span>
             <input
               type="date"
               value={newArticle.date || ""}
