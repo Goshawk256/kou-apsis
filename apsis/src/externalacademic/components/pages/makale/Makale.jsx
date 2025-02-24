@@ -3,65 +3,16 @@ import All_Url from "../../../../url";
 import axios from "axios";
 import "./Makale.css";
 import { FaRegSquare } from "react-icons/fa";
-const initialArticles = [
-  {
-    id: 1,
-    name: "Makale 1",
-    date: "2024-01-10",
-    authors: 2,
-    language: "Uluslararası",
-    type: "Araştırma",
-  },
-  {
-    id: 2,
-    name: "Makale 2",
-    date: "2023-12-05",
-    authors: 1,
-    language: "Ulusal",
-    type: "İnceleme",
-  },
-  {
-    id: 3,
-    name: "Makale 3",
-    date: "2022-06-15",
-    authors: 3,
-    language: "Uluslararası",
-    type: "Deneysel",
-  },
-  {
-    id: 4,
-    name: "Makale 4",
-    date: "2021-08-20",
-    authors: 4,
-    language: "Ulusal",
-    type: "Teorik",
-  },
-  {
-    id: 5,
-    name: "Makale 5",
-    date: "2020-02-11",
-    authors: 2,
-    language: "Uluslararası",
-    type: "Derleme",
-  },
-  {
-    id: 6,
-    name: "Makale 6",
-    date: "2019-09-30",
-    authors: 1,
-    language: "Ulusal",
-    type: "Araştırma",
-  },
-];
 const languages = ["Uluslararası", "Ulusal"];
 
 function Makale() {
-  const [articles, setArticles] = useState(initialArticles);
+  const [articles, setArticles] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [showModal, setShowModal] = useState(false);
-  const [typeId, setTypeId] = useState(0);
   const [articleTypes, setArticleTypes] = useState({});
+  const [loading, setLoading] = useState(true);
+
   const [newArticle, setNewArticle] = useState({
     name: "",
     date: "",
@@ -72,7 +23,7 @@ function Makale() {
 
   const articlesPerPage = 5;
   const filteredArticles = articles.filter((article) =>
-    article?.name?.toLowerCase().includes(searchTerm.toLowerCase())
+    article?.title?.toLowerCase().includes(searchTerm.toLowerCase())
   );
   const indexOfLastArticle = currentPage * articlesPerPage;
   const indexOfFirstArticle = indexOfLastArticle - articlesPerPage;
@@ -116,6 +67,33 @@ function Makale() {
         console.log("Makaleler getirilirken bir hata oluştu.", "error");
       }
     };
+    const fetchArticles = async () => {
+      try {
+        const accessToken = localStorage.getItem("accessToken");
+        if (!accessToken) {
+          console.log("Yetkilendirme hatası: Token bulunamadı.", "error");
+          return;
+        }
+
+        const response = await axios.post(
+          `${All_Url.api_base_url}/external-academic/get-articles`,
+          {}, // Body kısmı burada boş olabilir, çünkü sadece header gönderiyorsunuz.
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+
+        setArticles(response.data.data);
+        console.log(articles);
+      } catch (error) {
+        console.log("Makaleler getirilirken bir hata oluştu.", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchArticles();
 
     fetchArticleTypes();
   }, []);
@@ -126,7 +104,7 @@ function Makale() {
         title: newArticle.name,
         publishDate: newArticle.date.split("-").reverse().join("/"), // "YYYY-MM-DD" → "DD/MM/YYYY"
         authorCount: Number(newArticle.authors),
-        isInternatinal: newArticle.language === "Uluslararası", // "Uluslararası" → true, "Ulusal" → false
+        isInternational: newArticle.language === "Uluslararası", // "Uluslararası" → true, "Ulusal" → false
         articleTypeId: newArticle.articleTypeId,
       };
 
@@ -204,20 +182,26 @@ function Makale() {
           <tr>
             <th className="makale-header">Makale Adı</th>
             <th className="makale-header">Yayınlanma Tarihi</th>
-            <th className="makale-header">Yazar Sayısı</th>
+
             <th className="makale-header">Dil</th>
-            <th className="makale-header">Tip</th>
+            <th className="makale-header">Makale Türü</th>
+            <th className="makale-header">Grubu</th>
+            <th className="makale-header">Puanı</th>
             <th className="makale-header">İşlem</th>
           </tr>
         </thead>
         <tbody>
           {currentArticles.map((article) => (
             <tr key={article.id} className="makale-row">
-              <td className="makale-cell">{article.name}</td>
-              <td className="makale-cell">{article.date}</td>
-              <td className="makale-cell">{article.authors}</td>
-              <td className="makale-cell">{article.language}</td>
-              <td className="makale-cell">{article.type}</td>
+              <td className="makale-cell">{article.title}</td>
+              <td className="makale-cell">{article.publishDate}</td>
+
+              <td className="makale-cell">
+                {article.isInternational ? "Uluslararası" : "Ulusal"}
+              </td>
+              <td className="makale-cell">{article.articleType}</td>
+              <td className="makale-cell">{article.group}</td>
+              <td className="makale-cell">{article.score}</td>
               <td className="makale-cell">
                 <button>
                   <FaRegSquare />{" "}
