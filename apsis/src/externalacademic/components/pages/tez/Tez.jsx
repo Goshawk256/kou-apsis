@@ -121,7 +121,7 @@ function Tez() {
   }, []);
 
   const handleModalSubmit = async () => {
-    if (newArticle.title && newArticle.beginDate) {
+    if (newArticle.title && newArticle.approvalDate) {
       const formattedArticle = {
         title: newArticle.title,
         approvalDate: newArticle.approvalDate.split("-").reverse().join("/"), // "YYYY-MM-DD" → "DD/MM/YYYY"
