@@ -126,10 +126,11 @@ function Proje() {
     if (newArticle.title && newArticle.beginDate) {
       const formattedArticle = {
         title: newArticle.title,
-        beginData: newArticle.beginDate.split("-").reverse().join("/"), // "YYYY-MM-DD" → "DD/MM/YYYY"
+        beginDate: newArticle.beginDate.split("-").reverse().join("/"), // "YYYY-MM-DD" → "DD/MM/YYYY"
         endDate: newArticle.endDate.split("-").reverse().join("/"), // "YYYY-MM-DD" → "DD/MM/YYYY"
         corparateName: newArticle.corparateName,
         projectTypeId: newArticle.projectTypeId,
+        roleId: newArticle.roleId,
       };
       console.log(formattedArticle);
       setArticles((prev) => [
@@ -284,6 +285,21 @@ function Proje() {
                 setNewArticle({ ...newArticle, corparateName: e.target.value })
               }
             />
+            <select
+              value={newArticle.projectTypeId}
+              onChange={(e) =>
+                setNewArticle({
+                  ...newArticle,
+                  projectTypeId: Number(e.target.value),
+                })
+              }
+            >
+              {Object.entries(articleTypes).map(([id, type]) => (
+                <option key={id} value={id}>
+                  {type}
+                </option>
+              ))}
+            </select>
 
             <select
               value={newArticle.roleId}
