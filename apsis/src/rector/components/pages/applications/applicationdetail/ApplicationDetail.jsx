@@ -125,11 +125,11 @@ function ApplicationDetail({ applicationId }) {
         setOpenPopup(false);
         setJuryName("");
       } else {
-        alert("Jüri atama başarısız oldu.");
+        alert("Bu Başvuruya Juri Atanamaz.");
       }
     } catch (error) {
       console.error("Jüri atama sırasında hata oluştu:", error);
-      alert("Jüri atama işlemi başarısız oldu.");
+      alert("Bu Başvuruya Juri Atanamaz.");
     }
   };
 
