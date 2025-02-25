@@ -322,6 +322,7 @@ function Finish() {
     let data = {
       title: localStorage.getItem("selectedOption"),
       username: localStorage.getItem("username"),
+      applicationType: "Scientific",
       date: new Date().toISOString(),
     };
 
