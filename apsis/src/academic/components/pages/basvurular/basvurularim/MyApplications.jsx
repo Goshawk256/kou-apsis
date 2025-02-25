@@ -10,7 +10,9 @@ function MyApplications({ onSelect }) {
   const [loading, setLoading] = useState(false);
   const [applications, setApplications] = useState([]);
   const [selectedApplication, setSelectedApplication] = useState(null);
-
+  const setBavuru = (text) => {
+    localStorage.setItem("bavuruTipi", text);
+  };
   useEffect(() => {
     const fetchApplications = async () => {
       setLoading(true);
@@ -106,8 +108,22 @@ function MyApplications({ onSelect }) {
             </div>
           </div>
           <div className="myapplication-buttons">
-            <button onClick={onSelect}>Yeni Başvuru</button>
-            <button onClick={onSelect}>Yeni Kadro Başvurusu</button>
+            <button
+              onClick={() => {
+                onSelect();
+                setBavuru("Preliminary");
+              }}
+            >
+              Yeni Başvuru
+            </button>
+            <button
+              onClick={() => {
+                onSelect();
+                setBavuru("Preliminary");
+              }}
+            >
+              Yeni Kadro Başvurusu
+            </button>
           </div>
         </>
       )}
