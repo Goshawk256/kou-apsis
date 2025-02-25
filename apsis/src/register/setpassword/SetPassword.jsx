@@ -25,10 +25,13 @@ function SetPassword() {
     try {
       const response = await axios.post(
         `${All_Url.api_base_url}/auth/external-user-set-password`,
-        { token, password }
+        {
+          loginKey: token,
+          password: password,
+        }
       );
 
-      if (response.status === 200) {
+      if (response.status === 204) {
         setSuccess(
           "Şifreniz başarıyla oluşturuldu. Giriş sayfasına yönlendiriliyorsunuz..."
         );
