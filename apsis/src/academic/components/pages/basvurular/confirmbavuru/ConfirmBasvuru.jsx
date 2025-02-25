@@ -17,7 +17,7 @@ function ConfirmBasvuru({ setShowTable }) {
   const [formattedPublications, setFormattedPublications] = useState([]);
   const [isMyApplications, setIsMyApplications] = useState(true);
   const applicationType = localStorage.getItem("basvuruTipi");
-  const [selectedAnnouncement, setSelectedAnnouncement] = useState(null);
+  const [selectedAnnouncement, setSelectedAnnouncement] = useState("");
   const [announcements, setAnnouncements] = useState([]);
   const formatDate = (date) => {
     if (!date) return "";
@@ -78,13 +78,20 @@ function ConfirmBasvuru({ setShowTable }) {
   }, []);
 
   const handleSaveToLocalStorage = async () => {
-    if (!selected) {
-      alert("Lütfen bir birim seçin!");
-      return;
+    if (applicationType === "Scientific") {
+      if (selectedAnnouncement === "") {
+        alert("Lütfen bir İlan seçin!");
+        return;
+      }
+    } else if (applicationType === "Preliminary") {
+      if (selected === "") {
+        alert("Lütfen bir Birim seçin!");
+        return;
+      }
     }
 
     localStorage.setItem("selectedOption", selected);
-
+    localStorage.setItem("secilmisIlan", selectedAnnouncement);
     const isValid = await valideDatas();
     if (isValid) {
       setShowTable(true);
