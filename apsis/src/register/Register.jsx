@@ -42,7 +42,7 @@ function Login() {
         <form onSubmit={handleRegister}>
           <img style={{ width: "30%" }} src={Logo} alt="Logo" />
           <h2 style={{ color: "white" }}>Kou Apsıs</h2>
-          {message && <p style={{ color: "green" }}>{message}</p>}
+          {message && <p style={{ color: "white" }}>{message}</p>}
           {error && <p style={{ color: "red" }}>{error}</p>}
           <div className="form-group">
             <label htmlFor="username">Eposta</label>
