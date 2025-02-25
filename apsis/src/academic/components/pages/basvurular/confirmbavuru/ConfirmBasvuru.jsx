@@ -274,7 +274,12 @@ function ConfirmBasvuru({ setShowTable }) {
                   />
                 </LocalizationProvider>
               </div>
-              <button className="externalconfirm-ileri-button">İleri</button>
+              <button
+                onClick={handleSaveToLocalStorage}
+                className="externalconfirm-ileri-button"
+              >
+                İleri
+              </button>
             </div>
             <button
               onClick={() => {
