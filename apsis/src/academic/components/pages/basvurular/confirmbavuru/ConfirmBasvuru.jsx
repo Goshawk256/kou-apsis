@@ -82,6 +82,8 @@ function ConfirmBasvuru({ setShowTable }) {
       if (selectedAnnouncement === "") {
         alert("Lütfen bir İlan seçin!");
         return;
+      } else {
+        localStorage.setItem("secilmisIlan", selectedAnnouncement);
       }
     } else if (applicationType === "Preliminary") {
       if (selected === "") {
@@ -91,7 +93,7 @@ function ConfirmBasvuru({ setShowTable }) {
     }
 
     localStorage.setItem("selectedOption", selected);
-    localStorage.setItem("secilmisIlan", selectedAnnouncement);
+
     const isValid = await valideDatas();
     if (isValid) {
       setShowTable(true);
