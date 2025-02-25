@@ -56,7 +56,7 @@ function ConfirmBasvuru() {
   return (
     <div className="externalconfirm-basvuru">
       <div className="externalconfirm-content">
-        <span className="external-birim-title">Başvurulacak Birim:</span>
+        <span className="external-birim-title">Başvurulacak İlan:</span>
         <div className="external-radio-input">
           <div className="external-list-content">
             {announcements.map((item, index) => (
@@ -85,6 +85,7 @@ function ConfirmBasvuru() {
                   <b>İlan Açıklaması:</b> <br />
                   {item.description}
                 </span>
+                <button></button>
               </li>
             ))}
           </div>
