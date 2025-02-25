@@ -13,15 +13,15 @@ import tezIcon from "../../../assets/yonetilenTezler.svg";
 function ExternalSidebar({ onSelect }) {
   const items = [
     { name: "Makaleler", icon: <img src={yayinIcon} alt="Yayınlar" /> },
-    { name: "Derslerim", icon: <img src={dersIcon} alt="Dersler" /> },
+    { name: "Dersler", icon: <img src={dersIcon} alt="Dersler" /> },
     {
-      name: "Yönetilen Tezler",
+      name: "Tezler",
       icon: <img src={tezIcon} alt="Yönetilen Tezler" />,
     },
-    { name: "Proje Görevlerim", icon: <img src={gorevIcon} alt="Görevler" /> },
+    { name: "Projeler", icon: <img src={gorevIcon} alt="Görevler" /> },
     { name: "Ödüller", icon: <img src={odulIcon} alt="Ödüller" /> },
     {
-      name: "Sanatsal Faaliyet",
+      name: "Sanatsal Faaliyetler",
       icon: <img src={sanatIcon} alt="Sanatsal Faaliyet" />,
     },
     { name: "Başvuru", icon: <img src={basvuruIcon} alt="Başvurular" /> },

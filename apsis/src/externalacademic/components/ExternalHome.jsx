@@ -3,6 +3,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import ExternalHeader from "./header/ExternalHeader";
 import ExternalSidebar from "./sidebar/ExternalSidebar";
 import Makale from "./pages/makale/Makale";
+import Dersler from "./pages/ders/Ders";
+import Tezler from "./pages/tez/Tez";
+import Projeler from "./pages/proje/Proje";
+import Oduller from "./pages/odul/Odul";
+import SanatsalFaaliyetler from "./pages/sanatsal/SanatsalFaaliyetler";
+import ExternalBasvuru from "./pages/basvuru/ExternalBasvuru";
 
 function ExternalHome() {
   const [selectedPage, setSelectedPage] = useState("Makaleler");
@@ -11,8 +17,18 @@ function ExternalHome() {
     switch (selectedPage) {
       case "Makaleler":
         return <Makale />;
-      case "Yönetilen Tezler":
-        return <div>Yönetilen Tezler</div>;
+      case "Dersler":
+        return <Dersler />;
+      case "Tezler":
+        return <Tezler />;
+      case "Projeler":
+        return <Projeler />;
+      case "Ödüller":
+        return <Oduller />;
+      case "Sanatsal Faaliyetler":
+        return <SanatsalFaaliyetler />;
+      case "Başvuru":
+        return <ExternalBasvuru />;
       default:
         return <Makale />;
     }

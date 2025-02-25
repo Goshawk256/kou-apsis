@@ -1,24 +1,26 @@
 import React, { useEffect, useState } from "react";
 import All_Url from "../../../../url";
 import axios from "axios";
-import "./Makale.css";
+import "./Proje.css";
 import { FaRegSquare } from "react-icons/fa";
 const languages = ["Uluslararası", "Ulusal"];
 
-function Makale() {
+function Proje() {
   const [articles, setArticles] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [showModal, setShowModal] = useState(false);
   const [articleTypes, setArticleTypes] = useState({});
+  const [roleTypes, setRoleTypes] = useState({});
   const [loading, setLoading] = useState(true);
 
   const [newArticle, setNewArticle] = useState({
-    name: "",
-    date: "",
-    authors: "",
-    isInternational: false,
-    articleTypeId: 1,
+    title: "",
+    beginDate: "",
+    endDate: "",
+    corparateName: "",
+    projectTypeId: 1,
+    roleId: 1,
   });
 
   const articlesPerPage = 5;
@@ -54,7 +56,7 @@ function Makale() {
         }
 
         const response = await axios.get(
-          `${All_Url.api_base_url}/lookUp/get-article-types`,
+          `${All_Url.api_base_url}/lookUp/get-project-types`,
           {
             headers: {
               Authorization: `Bearer ${accessToken}`,
@@ -63,6 +65,28 @@ function Makale() {
         );
 
         setArticleTypes(response.data.data);
+      } catch (error) {
+        console.log("Makaleler getirilirken bir hata oluştu.", "error");
+      }
+    };
+    const fetchRoleTypes = async () => {
+      try {
+        const accessToken = localStorage.getItem("accessToken");
+        if (!accessToken) {
+          console.log("Yetkilendirme hatası: Token bulunamadı.", "error");
+          return;
+        }
+
+        const response = await axios.get(
+          `${All_Url.api_base_url}/lookUp/get-project-role-types`,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+
+        setRoleTypes(response.data.data);
       } catch (error) {
         console.log("Makaleler getirilirken bir hata oluştu.", "error");
       }
@@ -76,7 +100,7 @@ function Makale() {
         }
 
         const response = await axios.post(
-          `${All_Url.api_base_url}/external-academic/get-articles`,
+          `${All_Url.api_base_url}/external-academic/get-projects`,
           {}, // Body kısmı burada boş olabilir, çünkü sadece header gönderiyorsunuz.
           {
             headers: {
@@ -93,30 +117,30 @@ function Makale() {
       }
     };
     fetchArticles();
-
+    fetchRoleTypes();
     fetchArticleTypes();
   }, []);
 
   const handleModalSubmit = async () => {
-    if (newArticle.name && newArticle.date && newArticle.authors) {
+    if (newArticle.title && newArticle.beginDate) {
       const formattedArticle = {
-        title: newArticle.name,
-        publishDate: newArticle.date.split("-").reverse().join("/"), // "YYYY-MM-DD" → "DD/MM/YYYY"
-        authorCount: Number(newArticle.authors),
-        isInternational: newArticle.language === "Uluslararası", // "Uluslararası" → true, "Ulusal" → false
-        articleTypeId: newArticle.articleTypeId,
+        title: newArticle.title,
+        beginDate: newArticle.beginDate.split("-").reverse().join("/"), // "YYYY-MM-DD" → "DD/MM/YYYY"
+        endDate: newArticle.endDate.split("-").reverse().join("/"), // "YYYY-MM-DD" → "DD/MM/YYYY"
+        corparateName: newArticle.corparateName,
+        projectTypeId: newArticle.projectTypeId,
+        roleId: newArticle.roleId,
       };
-
+      console.log(formattedArticle);
       setArticles((prev) => [
         ...prev,
         { id: prev.length + 1, ...formattedArticle },
       ]);
       setNewArticle({
-        name: "",
-        date: "",
-        authors: "",
-        language: "Uluslararası",
-        type: "Araştırma",
+        title: "",
+        eventDate: "",
+        corparateName: "yok",
+        awardTypeId: 1,
       });
 
       try {
@@ -126,9 +150,8 @@ function Makale() {
           return;
         }
 
-        console.log(formattedArticle);
         const response = await axios.post(
-          `${All_Url.api_base_url}/external-academic/add-article`,
+          `${All_Url.api_base_url}/external-academic/add-project`,
           formattedArticle,
           {
             headers: {
@@ -145,18 +168,25 @@ function Makale() {
     }
   };
 
+  const sliceText = (text) => {
+    if (text?.length > 40) {
+      return text.slice(0, 40) + "...";
+    }
+    return text;
+  };
+
   return (
     <div className="makale-container">
       <div className="makale-top-bar">
         <input
           type="text"
           className="makale-search"
-          placeholder="Makale Ara..."
+          placeholder="Proje Ara..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
         <button className="makale-add-button" onClick={handleAddArticle}>
-          Makale Ekle
+          Proje Ekle
         </button>
         <div className="makale-pagination">
           <button
@@ -179,11 +209,11 @@ function Makale() {
       <table className="makale-table">
         <thead>
           <tr>
-            <th className="makale-header">Makale Adı</th>
-            <th className="makale-header">Yayınlanma Tarihi</th>
-
-            <th className="makale-header">Dil</th>
-            <th className="makale-header">Makale Türü</th>
+            <th className="makale-header">Proje Adı</th>
+            <th className="makale-header">Başlangıç Tarihi</th>
+            <th className="makale-header">Bitiş Tarihi</th>
+            <th className="makale-header">Kurum Adı</th>
+            <th className="makale-header">Proje Türü</th>
             <th className="makale-header">Grup</th>
             <th className="makale-header">Puan</th>
             <th className="makale-header">İşlem</th>
@@ -193,12 +223,10 @@ function Makale() {
           {currentArticles.map((article) => (
             <tr key={article.id} className="makale-row">
               <td className="makale-cell">{article.title}</td>
-              <td className="makale-cell">{article.publishDate}</td>
-
-              <td className="makale-cell">
-                {article.isInternational ? "Uluslararası" : "Ulusal"}
-              </td>
-              <td className="makale-cell">{article.articleType}</td>
+              <td className="makale-cell">{article.beginDate}</td>
+              <td className="makale-cell">{article.endDate}</td>
+              <td className="makale-cell">{article.corparateName}</td>
+              <td className="makale-cell">{sliceText(article?.projectType)}</td>
               <td className="makale-cell">{article.group}</td>
               <td className="makale-cell">{article.score}</td>
               <td className="makale-cell">
@@ -217,52 +245,62 @@ function Makale() {
 
             <input
               type="text"
-              placeholder="Makale Adı"
-              value={newArticle.name}
+              placeholder="Proje Adı"
+              value={newArticle.title}
               onChange={(e) =>
-                setNewArticle({ ...newArticle, name: e.target.value })
+                setNewArticle({ ...newArticle, title: e.target.value })
               }
             />
             <span
               style={{ color: "gray", textAlign: "start", fontSize: "12px" }}
             >
-              Yayınlanma Tarihi:
+              Başlangıç Tarihi:
             </span>
             <input
               type="date"
-              value={newArticle.date || ""}
+              value={newArticle.beginDate || ""}
               onChange={(e) =>
-                setNewArticle({ ...newArticle, date: e.target.value })
+                setNewArticle({ ...newArticle, beginDate: e.target.value })
               }
             />
-
+            <span
+              style={{ color: "gray", textAlign: "start", fontSize: "12px" }}
+            >
+              Bitiş Tarihi:
+            </span>
             <input
-              type="number"
-              placeholder="Yazar Sayısı"
-              value={newArticle.authors}
+              type="date"
+              value={newArticle.endDate || ""}
+              onChange={(e) =>
+                setNewArticle({ ...newArticle, endDate: e.target.value })
+              }
+            />
+            <input
+              type="text"
+              placeholder="Kurum Adı"
+              value={newArticle.corparateName}
+              onChange={(e) =>
+                setNewArticle({ ...newArticle, corparateName: e.target.value })
+              }
+            />
+            <select
+              value={newArticle.projectTypeId}
               onChange={(e) =>
                 setNewArticle({
                   ...newArticle,
-                  authors: Number(e.target.value),
+                  projectTypeId: Number(e.target.value),
                 })
               }
-            />
-
-            <select
-              value={newArticle.language}
-              onChange={(e) =>
-                setNewArticle({ ...newArticle, language: e.target.value })
-              }
             >
-              {languages.map((lang) => (
-                <option key={lang} value={lang}>
-                  {lang}
+              {Object.entries(articleTypes).map(([id, type]) => (
+                <option key={id} value={id}>
+                  {type}
                 </option>
               ))}
             </select>
 
             <select
-              value={newArticle.articleTypeId}
+              value={newArticle.roleId}
               onChange={(e) =>
                 setNewArticle({
                   ...newArticle,
@@ -270,7 +308,7 @@ function Makale() {
                 })
               }
             >
-              {Object.entries(articleTypes).map(([id, type]) => (
+              {Object.entries(roleTypes).map(([id, type]) => (
                 <option key={id} value={id}>
                   {type}
                 </option>
@@ -286,4 +324,4 @@ function Makale() {
   );
 }
 
-export default Makale;
+export default Proje;

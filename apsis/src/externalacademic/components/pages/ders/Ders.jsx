@@ -1,11 +1,28 @@
 import React, { useEffect, useState } from "react";
 import All_Url from "../../../../url";
 import axios from "axios";
-import "./Makale.css";
+import "./Ders.css";
 import { FaRegSquare } from "react-icons/fa";
-const languages = ["Uluslararası", "Ulusal"];
+const languages = [
+  "2223G",
+  "2223B",
+  "2324G",
+  "2324B",
+  "2425G",
+  "2425B",
+  "2526G",
+  "2526B",
+  "2627G",
+  "2627B",
+  "2728G",
+  "2728B",
+  "2829G",
+  "2829B",
+  "2930G",
+  "2930B",
+];
 
-function Makale() {
+function Ders() {
   const [articles, setArticles] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -15,16 +32,17 @@ function Makale() {
 
   const [newArticle, setNewArticle] = useState({
     name: "",
-    date: "",
-    authors: "",
-    isInternational: false,
-    articleTypeId: 1,
+    semester: "2324G",
+    lessonTypeId: 1,
   });
 
   const articlesPerPage = 5;
-  const filteredArticles = articles.filter((article) =>
-    article?.title?.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredArticles = Array.isArray(articles)
+    ? articles.filter((article) =>
+        article?.name?.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    : [];
+
   const indexOfLastArticle = currentPage * articlesPerPage;
   const indexOfFirstArticle = indexOfLastArticle - articlesPerPage;
   const currentArticles = filteredArticles.slice(
@@ -54,7 +72,7 @@ function Makale() {
         }
 
         const response = await axios.get(
-          `${All_Url.api_base_url}/lookUp/get-article-types`,
+          `${All_Url.api_base_url}/lookUp/get-lesson-types`,
           {
             headers: {
               Authorization: `Bearer ${accessToken}`,
@@ -76,7 +94,7 @@ function Makale() {
         }
 
         const response = await axios.post(
-          `${All_Url.api_base_url}/external-academic/get-articles`,
+          `${All_Url.api_base_url}//external-academic/get-lessons`,
           {}, // Body kısmı burada boş olabilir, çünkü sadece header gönderiyorsunuz.
           {
             headers: {
@@ -85,9 +103,11 @@ function Makale() {
           }
         );
 
-        setArticles(response.data.data);
+        setArticles(response.data.data.lessons);
+        console.log(articles);
       } catch (error) {
         console.log("Makaleler getirilirken bir hata oluştu.", error);
+        setArticles([]);
       } finally {
         setLoading(false);
       }
@@ -98,13 +118,11 @@ function Makale() {
   }, []);
 
   const handleModalSubmit = async () => {
-    if (newArticle.name && newArticle.date && newArticle.authors) {
+    if (newArticle.name && newArticle.semester && newArticle.lessonTypeId) {
       const formattedArticle = {
-        title: newArticle.name,
-        publishDate: newArticle.date.split("-").reverse().join("/"), // "YYYY-MM-DD" → "DD/MM/YYYY"
-        authorCount: Number(newArticle.authors),
-        isInternational: newArticle.language === "Uluslararası", // "Uluslararası" → true, "Ulusal" → false
-        articleTypeId: newArticle.articleTypeId,
+        name: newArticle.name,
+        semester: newArticle.language, // "Uluslararası" → true, "Ulusal" → false
+        lessonTypeId: newArticle.articleTypeId,
       };
 
       setArticles((prev) => [
@@ -113,10 +131,8 @@ function Makale() {
       ]);
       setNewArticle({
         name: "",
-        date: "",
-        authors: "",
-        language: "Uluslararası",
-        type: "Araştırma",
+        semester: "2425B",
+        lessonTypeId: 1,
       });
 
       try {
@@ -128,7 +144,7 @@ function Makale() {
 
         console.log(formattedArticle);
         const response = await axios.post(
-          `${All_Url.api_base_url}/external-academic/add-article`,
+          `${All_Url.api_base_url}/external-academic/add-lesson`,
           formattedArticle,
           {
             headers: {
@@ -151,12 +167,12 @@ function Makale() {
         <input
           type="text"
           className="makale-search"
-          placeholder="Makale Ara..."
+          placeholder="Ders Ara..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
         <button className="makale-add-button" onClick={handleAddArticle}>
-          Makale Ekle
+          Ders Ekle
         </button>
         <div className="makale-pagination">
           <button
@@ -179,11 +195,11 @@ function Makale() {
       <table className="makale-table">
         <thead>
           <tr>
-            <th className="makale-header">Makale Adı</th>
-            <th className="makale-header">Yayınlanma Tarihi</th>
+            <th className="makale-header">Ders Adı</th>
+            <th className="makale-header">Ders Dönemi</th>
 
             <th className="makale-header">Dil</th>
-            <th className="makale-header">Makale Türü</th>
+            <th className="makale-header">Ders Türü</th>
             <th className="makale-header">Grup</th>
             <th className="makale-header">Puan</th>
             <th className="makale-header">İşlem</th>
@@ -192,13 +208,13 @@ function Makale() {
         <tbody>
           {currentArticles.map((article) => (
             <tr key={article.id} className="makale-row">
-              <td className="makale-cell">{article.title}</td>
-              <td className="makale-cell">{article.publishDate}</td>
+              <td className="makale-cell">{article.name}</td>
+              <td className="makale-cell">{article.semester}</td>
 
               <td className="makale-cell">
                 {article.isInternational ? "Uluslararası" : "Ulusal"}
               </td>
-              <td className="makale-cell">{article.articleType}</td>
+              <td className="makale-cell">{article.lessonType}</td>
               <td className="makale-cell">{article.group}</td>
               <td className="makale-cell">{article.score}</td>
               <td className="makale-cell">
@@ -213,38 +229,14 @@ function Makale() {
       {showModal && (
         <div className="modal-overlay">
           <div className="modal">
-            <h2>Yeni Makale Ekle</h2>
+            <h2>Yeni Ders Ekle</h2>
 
             <input
               type="text"
-              placeholder="Makale Adı"
+              placeholder="Ders Adı"
               value={newArticle.name}
               onChange={(e) =>
                 setNewArticle({ ...newArticle, name: e.target.value })
-              }
-            />
-            <span
-              style={{ color: "gray", textAlign: "start", fontSize: "12px" }}
-            >
-              Yayınlanma Tarihi:
-            </span>
-            <input
-              type="date"
-              value={newArticle.date || ""}
-              onChange={(e) =>
-                setNewArticle({ ...newArticle, date: e.target.value })
-              }
-            />
-
-            <input
-              type="number"
-              placeholder="Yazar Sayısı"
-              value={newArticle.authors}
-              onChange={(e) =>
-                setNewArticle({
-                  ...newArticle,
-                  authors: Number(e.target.value),
-                })
               }
             />
 
@@ -286,4 +278,4 @@ function Makale() {
   );
 }
 
-export default Makale;
+export default Ders;
