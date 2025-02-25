@@ -27,7 +27,7 @@ function MyApplications() {
               <td className="basvuru-item-type">Uluslararası</td>
               <td className="basvuru-item-score">100.00</td>
               <td className="action-button-area">
-                <button className="action-button">Sil</button>
+                <button className="action-button">PDF Indir</button>
               </td>
             </tr>
             <tr>
@@ -40,7 +40,7 @@ function MyApplications() {
               <td className="basvuru-item-type">Uluslararası</td>
               <td className="basvuru-item-score">100.00</td>
               <td className="action-button-area">
-                <button className="action-button">Sil</button>
+                <button className="action-button">PDF Indir</button>
               </td>
             </tr>
             <tr>
@@ -53,7 +53,7 @@ function MyApplications() {
               <td className="basvuru-item-type">Uluslararası</td>
               <td className="basvuru-item-score">100.00</td>
               <td className="action-button-area">
-                <button className="action-button">Sil</button>
+                <button className="action-button">PDF Indir</button>
               </td>
             </tr>
           </tbody>

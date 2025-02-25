@@ -30,8 +30,9 @@ function BasvuruDetay({ onSelect }) {
     const token = localStorage.getItem("accessToken");
     const applicationId = selectedApplication?.applicationId;
     const decision = popupType === "approve" ? "accepted" : "rejected";
-    const isOndegerlendirme = localStorage.getItem("isOndegerlendirme");
+    const isOndegerlendirme = localStorage.getItem("isPreliminary");
     try {
+      console.log(isOndegerlendirme);
       await axios.post(
         `${All_Url.api_base_url}/jury${
           isOndegerlendirme === true
@@ -56,6 +57,7 @@ function BasvuruDetay({ onSelect }) {
     }
 
     setTimeout(() => {
+      onSelect("Ana Sayfa");
       setPopupVisible(false);
     }, 2000);
   };
@@ -70,7 +72,7 @@ function BasvuruDetay({ onSelect }) {
   };
 
   const categoryMap = {
-    publications: "Yayınlar",
+    articles: "Yayınlar",
     lessons: "Dersler",
     advisingThesis: "Tezler",
     projects: "Projeler",

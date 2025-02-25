@@ -310,3 +310,16 @@
 .addjurypopup-button:hover {
   background: #1fb654;
 }
+.finishapp-button {
+  width: 80px;
+  height: 30px;
+  position: absolute;
+  right: 300px;
+  top: 300px;
+  background-color: #3c5cad;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 5px;
+  cursor: pointer;
+}

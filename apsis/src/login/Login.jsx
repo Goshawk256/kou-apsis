@@ -56,7 +56,16 @@ function Login() {
 
   const fetchRoles = async (username) => {
     try {
-      const response = await axios.post("/api/auth/get-roles", { username });
+      const response = await axios.post(
+        "/api/auth/get-roles",
+        { username },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "x-forwarded-proto": "https",
+          },
+        }
+      );
       if (response.data.success) {
         setRoles(response.data.data);
         setSelectedRole(response.data.data[0] || "");
@@ -70,11 +79,20 @@ function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("/api/auth/login", {
-        username,
-        password,
-        role: selectedRole,
-      });
+      const response = await axios.post(
+        "/api/auth/login",
+        {
+          username,
+          password,
+          role: selectedRole,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "x-forwarded-proto": "https",
+          },
+        }
+      );
 
       if (response.data.success) {
         localStorage.setItem("accessToken", response.data.data.accessToken);
