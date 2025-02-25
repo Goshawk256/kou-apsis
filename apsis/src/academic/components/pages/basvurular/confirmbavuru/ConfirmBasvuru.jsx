@@ -219,6 +219,7 @@ function ConfirmBasvuru({ setShowTable }) {
               <div className="external-list-content">
                 {announcements.map((item, index) => (
                   <li
+                    onClick={() => setSelectedAnnouncement(item.id)}
                     key={index}
                     className={
                       selectedAnnouncement === item.id ? "selected-li" : ""
