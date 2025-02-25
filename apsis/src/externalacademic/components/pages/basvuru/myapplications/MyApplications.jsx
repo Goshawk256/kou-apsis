@@ -1,7 +1,11 @@
 import React from "react";
 import "./MyApplications.css";
 
-function MyApplications() {
+function MyApplications({ setComponent }) {
+  const handleBasvuruClick = () => {
+    console.log("Başvuru butonuna tıklandı");
+  };
+
   return (
     <div className="main-myapplications-external">
       <span className="external-header">Başvurularım</span>
@@ -11,7 +15,7 @@ function MyApplications() {
             <tr>
               <th>Başvuru Tarihi</th>
               <th>Başvurulan Kadro</th>
-              <th>Bşvuru Tipi</th>
+              <th>Başvuru Tipi</th>
               <th>Başvuru Durumu</th>
               <th>İşlemler</th>
             </tr>
@@ -59,6 +63,12 @@ function MyApplications() {
           </tbody>
         </table>
       </div>
+      <button
+        onClick={() => setComponent("confirmbasvuru")}
+        className="external-basvuruyap"
+      >
+        Yeni Başvuru
+      </button>
     </div>
   );
 }

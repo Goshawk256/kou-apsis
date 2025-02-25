@@ -45,7 +45,7 @@ select {
   border-radius: 10px;
   border: 2px solid rgb(41, 172, 41);
   height: 30px;
-  color: white;
+  color: white !important;
   outline: none;
 
   text-align: center;

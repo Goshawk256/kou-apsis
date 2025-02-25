@@ -141,15 +141,13 @@ function Finish() {
     const docDefinition = {
       pageSize: "A4",
       pageMargins: [30, 30, 30, 50],
-      footer: function (currentPage, pageCount) {
-        return {
-          text: `Sayfa ${currentPage} / ${pageCount}`,
-          alignment: "center",
-          margin: [0, 20],
-          fontSize: 9,
-          color: "#666",
-        };
-      },
+      footer: (currentPage, pageCount) => ({
+        text: `Sayfa ${currentPage} / ${pageCount}`,
+        alignment: "center",
+        margin: [0, 20],
+        fontSize: 9,
+        color: "#666",
+      }),
       compress: true,
       info: {
         title: "Başvuru Formu",
@@ -194,50 +192,27 @@ function Finish() {
             keepWithHeaderRows: 1,
           },
           layout: {
-            hLineWidth: function () {
-              return 0.5;
-            },
-            vLineWidth: function () {
-              return 0.5;
-            },
-            hLineColor: function () {
-              return "#aaa";
-            },
-            vLineColor: function () {
-              return "#aaa";
-            },
-            paddingLeft: function () {
-              return 4;
-            },
-            paddingRight: function () {
-              return 4;
-            },
-            paddingTop: function () {
-              return 3;
-            },
-            paddingBottom: function () {
-              return 3;
-            },
-            fillColor: function (rowIndex, node) {
-              return rowIndex === 0
+            hLineWidth: () => 0.5,
+            vLineWidth: () => 0.5,
+            hLineColor: () => "#aaa",
+            vLineColor: () => "#aaa",
+            paddingLeft: () => 4,
+            paddingRight: () => 4,
+            paddingTop: () => 3,
+            paddingBottom: () => 3,
+            fillColor: (rowIndex, node) =>
+              rowIndex === 0
                 ? "#f0f0f0"
                 : rowIndex === 1 && node.table.headerRows > 1
                 ? "#f7f7f7"
-                : null;
-            },
+                : null,
           },
           margin: [0, 0, 0, 20],
         })),
       ],
       styles: {
-        header: {
-          fontSize: 12,
-          bold: true,
-        },
-        userInfo: {
-          fontSize: 9,
-          margin: [0, 4],
-        },
+        header: { fontSize: 12, bold: true },
+        userInfo: { fontSize: 9, margin: [0, 4] },
         tableHeader: {
           fontSize: 10,
           bold: true,
@@ -256,36 +231,21 @@ function Finish() {
           fillColor: "#f5f5f5",
           margin: [0, 2],
         },
-        groupHeader: {
-          fontSize: 8,
-          bold: true,
-        },
-        emptyData: {
-          fontSize: 8,
-          italics: true,
-          color: "#666",
-        },
-        totalRow: {
-          fontSize: 9,
-          bold: true,
-          fillColor: "#f0f0f0",
-        },
+        groupHeader: { fontSize: 8, bold: true },
+        emptyData: { fontSize: 8, italics: true, color: "#666" },
+        totalRow: { fontSize: 9, bold: true, fillColor: "#f0f0f0" },
       },
-      defaultStyle: {
-        fontSize: 8,
-        lineHeight: 1.2,
-      },
+      defaultStyle: { fontSize: 8, lineHeight: 1.2 },
       pageOrientation: "portrait",
-      pageBreakBefore: function (currentNode) {
-        return (
-          currentNode.style &&
-          currentNode.style.indexOf("header") !== -1 &&
-          currentNode.pageNumbers.length > 1
-        );
-      },
+      pageBreakBefore: (currentNode) =>
+        currentNode.style &&
+        currentNode.style.indexOf("header") !== -1 &&
+        currentNode.pageNumbers.length > 1,
     };
-
     pdfMake.createPdf(docDefinition).download("basvuru-content.pdf");
+    pdfMake.createPdf(docDefinition).getBlob((blob) => {
+      handleApplication(blob); // 📌 PDF'yi backend'e gönder
+    });
   };
 
   useEffect(() => {
@@ -318,14 +278,21 @@ function Finish() {
     const savedArtworks =
       JSON.parse(localStorage.getItem("savedArtworks")) || [];
     const savedLessons = JSON.parse(localStorage.getItem("savedCourses")) || [];
+    let basvuruTipi = localStorage.getItem("basvuruTipi") || ""; // Null dönerse boş string kullan
+    let secilmisIlan = localStorage.getItem("secilmisIlan");
 
     let data = {
-      title: localStorage.getItem("selectedOption"),
-      username: localStorage.getItem("username"),
-      applicationType: "Scientific",
-      date: new Date().toISOString(),
-      positionAnnouncementId: "67ba4332e1b69edf17ac948a",
+      username: localStorage.getItem("username") || "Bilinmeyen Kullanıcı",
+      applicationType: basvuruTipi,
+      date: new Date().toISOString(), // Gerekirse toLocaleString() kullanabilirsin
     };
+
+    if (basvuruTipi === "Scientific" && secilmisIlan) {
+      data.positionAnnouncementId = secilmisIlan;
+    }
+    if (basvuruTipi === "Preliminary") {
+      data.title = localStorage.getItem("selectedOption");
+    }
 
     if (savedPublications.length >= 0) {
       data.articles =
@@ -352,31 +319,43 @@ function Finish() {
 
     setSendData(data);
   }, []);
-  const handleApplication = async () => {
+  const handleApplication = async (pdfBlob) => {
     const token = localStorage.getItem("accessToken");
     if (!token) {
       alert("Oturum açılmadı!");
       return;
     }
+
     try {
+      console.log("Gönderilecek veri:", sendData);
+      const formData = new FormData();
+
+      if (!sendData) {
+        console.error("Gönderilecek veri eksik!");
+        return;
+      }
+
+      formData.append("data", JSON.stringify(sendData));
+      formData.append("file", pdfBlob);
+      console.log("formData", formData);
       const response = await axios.post(
         `${All_Url.api_base_url}/academic/add-application`,
-        {
-          ...sendData,
-        },
+        formData,
         {
           headers: {
             Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data", // 🔹 ÖNEMLİ!
           },
         }
       );
-      alert("Başvuru tamamlandı!");
 
+      alert("Başvuru tamamlandı!");
       return response.data.success;
     } catch (error) {
       console.error("Hata oluştu:", error);
     }
   };
+
   const capitalizeName = (name) => {
     if (!name) return "";
     return (
@@ -566,14 +545,14 @@ function Finish() {
             )}
           />
         ))}
-        <button className="download-button" onClick={downloadPDF}>
+        <button className="download-button">
           <img src={file} alt="" />
         </button>
       </div>
       <div className="finish-buttons">
         <button
           onClick={() => {
-            handleApplication();
+            downloadPDF();
           }}
           className="finish-button"
         >

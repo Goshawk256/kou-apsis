@@ -62,7 +62,6 @@ function Login() {
         {
           headers: {
             "Content-Type": "application/json",
-            "x-forwarded-proto": "https",
           },
         }
       );
@@ -89,7 +88,6 @@ function Login() {
         {
           headers: {
             "Content-Type": "application/json",
-            "x-forwarded-proto": "https",
           },
         }
       );
