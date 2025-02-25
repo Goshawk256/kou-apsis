@@ -235,6 +235,7 @@
 }
 
 .external-list-content li {
+  cursor: pointer;
   position: relative;
   display: flex; /* Ekledim: İçerik hizalaması için */
   flex-direction: row;
