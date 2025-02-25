@@ -81,10 +81,6 @@ function ConfirmBasvuru() {
                   <b>Bitiş Tarihi:</b> <br />
                   {item.deadLine}
                 </span>
-                <span>
-                  <b>İlan Açıklaması:</b> <br />
-                  {item.description}
-                </span>
                 <button></button>
               </li>
             ))}

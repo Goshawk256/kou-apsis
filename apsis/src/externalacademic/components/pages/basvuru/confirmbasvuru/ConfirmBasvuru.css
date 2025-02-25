@@ -255,3 +255,18 @@
   width: 25%;
   height: 100%;
 }
+.external-list-content li button {
+  width: 30px;
+  height: 30px;
+  border: 1px solid #1fa54e;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.external-list-content li button img {
+  width: 30px;
+  height: 30px;
+}

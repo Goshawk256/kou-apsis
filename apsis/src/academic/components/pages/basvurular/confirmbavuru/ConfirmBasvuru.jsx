@@ -10,12 +10,14 @@ import axios from "axios";
 import All_Url from "../../../../../url";
 import MyApplications from "../basvurularim/MyApplications";
 import previous from "../../../../../assets/previous.png";
+import click from "../../../../../assets/click.png";
 
 function ConfirmBasvuru({ setShowTable }) {
   const [selected, setSelected] = useState("");
   const [formattedPublications, setFormattedPublications] = useState([]);
   const [isMyApplications, setIsMyApplications] = useState(true);
   const applicationType = localStorage.getItem("basvuruTipi");
+  const [selectedAnnouncement, setSelectedAnnouncement] = useState(null);
   const [announcements, setAnnouncements] = useState([]);
   const formatDate = (date) => {
     if (!date) return "";
@@ -209,7 +211,12 @@ function ConfirmBasvuru({ setShowTable }) {
             <div className="external-radio-input">
               <div className="external-list-content">
                 {announcements.map((item, index) => (
-                  <li key={index}>
+                  <li
+                    key={index}
+                    className={
+                      selectedAnnouncement === item.id ? "selected-li" : ""
+                    }
+                  >
                     <span>
                       <b>İlan Adı:</b> <br />
                       {item.title}
@@ -230,11 +237,9 @@ function ConfirmBasvuru({ setShowTable }) {
                       <b>Bitiş Tarihi:</b> <br />
                       {item.deadLine}
                     </span>
-                    <span>
-                      <b>İlan Açıklaması:</b> <br />
-                      {item.description}
-                    </span>
-                    <button></button>
+                    <button onClick={() => setSelectedAnnouncement(item.id)}>
+                      <img src={click} alt="" />
+                    </button>
                   </li>
                 ))}
               </div>
