@@ -9,6 +9,7 @@ import axios from "axios";
 import HomePage from "./home/HomePage";
 import Login from "./login/Login";
 import Finish from "./academic/components/pages/finish/Finish";
+import Register from "./register/Register";
 
 const AxiosInterceptor = () => {
   const navigate = useNavigate();
@@ -63,6 +64,7 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/finish" element={<Finish />} />
+        <Route path="/register" element={<Register />} />
       </Routes>
     </Router>
   );

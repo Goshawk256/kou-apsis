@@ -102,10 +102,8 @@ function Login() {
               type="text"
               id="username"
               value={username}
-              onChange={(e) => {
-                setUsername(e.target.value);
-                fetchRoles(e.target.value);
-              }}
+              onChange={(e) => setUsername(e.target.value)}
+              onBlur={() => fetchRoles(username)}
               required
             />
           </div>

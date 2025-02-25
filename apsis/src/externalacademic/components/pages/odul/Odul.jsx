@@ -42,7 +42,32 @@ function Makale() {
   const handleAddArticle = () => {
     setShowModal(true);
   };
+  const fetchArticles = async () => {
+    try {
+      const accessToken = localStorage.getItem("accessToken");
+      if (!accessToken) {
+        console.log("Yetkilendirme hatası: Token bulunamadı.", "error");
+        return;
+      }
 
+      const response = await axios.post(
+        `${All_Url.api_base_url}/external-academic/get-awards`,
+        {}, // Body kısmı burada boş olabilir, çünkü sadece header gönderiyorsunuz.
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+
+      setArticles(response.data.data.awards);
+      console.log(articles);
+    } catch (error) {
+      console.log("Makaleler getirilirken bir hata oluştu.", error);
+    } finally {
+      setLoading(false);
+    }
+  };
   useEffect(() => {
     const fetchArticleTypes = async () => {
       try {
@@ -66,36 +91,11 @@ function Makale() {
         console.log("Makaleler getirilirken bir hata oluştu.", "error");
       }
     };
-    const fetchArticles = async () => {
-      try {
-        const accessToken = localStorage.getItem("accessToken");
-        if (!accessToken) {
-          console.log("Yetkilendirme hatası: Token bulunamadı.", "error");
-          return;
-        }
 
-        const response = await axios.post(
-          `${All_Url.api_base_url}/external-academic/get-awards`,
-          {}, // Body kısmı burada boş olabilir, çünkü sadece header gönderiyorsunuz.
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
-        );
-
-        setArticles(response.data.data.awards);
-        console.log(articles);
-      } catch (error) {
-        console.log("Makaleler getirilirken bir hata oluştu.", error);
-      } finally {
-        setLoading(false);
-      }
-    };
     fetchArticles();
 
     fetchArticleTypes();
-  }, []);
+  }, [articles]);
 
   const handleModalSubmit = async () => {
     if (newArticle.name && newArticle.date) {
@@ -138,13 +138,14 @@ function Makale() {
       } catch (error) {
         console.log("Makale eklerken bir hata oluştu.", error);
       } finally {
+        fetchArticles();
         setShowModal(false);
       }
     }
   };
 
   const sliceText = (text) => {
-    if (text.length > 50) {
+    if (text?.length > 50) {
       return text.slice(0, 50) + "...";
     }
     return text;
