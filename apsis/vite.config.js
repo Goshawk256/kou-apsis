@@ -8,7 +8,7 @@ export default defineConfig({
       "/api": {
         target: "https://apsis.kocaeli.edu.tr",
         changeOrigin: true,
-        secure: true,
+        secure: false,
       },
     },
     port: 5000,
