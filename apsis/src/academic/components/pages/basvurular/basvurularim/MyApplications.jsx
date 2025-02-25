@@ -77,7 +77,7 @@ function MyApplications({ onSelect }) {
                     </tr>
                   </thead>
                   <tbody className="myapplications-table-body">
-                    {applications.length > 0 ? (
+                    {applications?.length > 0 ? (
                       applications.map((app) => (
                         <tr key={app.applicationId}>
                           <td>{new Date().toLocaleDateString()}</td>

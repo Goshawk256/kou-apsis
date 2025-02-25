@@ -285,8 +285,11 @@ function Finish() {
       },
     };
 
-    pdfMake.createPdf(docDefinition).download("basvuru-content.pdf");
+    pdfMake.createPdf(docDefinition).getBlob((blob) => {
+      handleApplication(blob);
+    });
   };
+  const [selectedFile, setSelectedFile] = useState(null);
 
   useEffect(() => {
     const loadData = () => {
@@ -318,14 +321,19 @@ function Finish() {
     const savedArtworks =
       JSON.parse(localStorage.getItem("savedArtworks")) || [];
     const savedLessons = JSON.parse(localStorage.getItem("savedCourses")) || [];
+    let basvuruTipi = localStorage.getItem("basvuruTipi") || ""; // Null dönerse boş string kullan
+    let secilmisIlan = localStorage.getItem("secilmisIlan");
 
     let data = {
-      title: localStorage.getItem("selectedOption"),
-      username: localStorage.getItem("username"),
-      applicationType: "Scientific",
-      date: new Date().toISOString(),
-      positionAnnouncementId: "67ba4332e1b69edf17ac948a",
+      title: localStorage.getItem("selectedOption") || "Bilinmeyen Başlık",
+      username: localStorage.getItem("username") || "Bilinmeyen Kullanıcı",
+      applicationType: basvuruTipi,
+      date: new Date().toISOString(), // Gerekirse toLocaleString() kullanabilirsin
     };
+
+    if (basvuruTipi === "Scientific" && secilmisIlan) {
+      data.positionAnnouncementId = secilmisIlan;
+    }
 
     if (savedPublications.length >= 0) {
       data.articles =
@@ -352,31 +360,46 @@ function Finish() {
 
     setSendData(data);
   }, []);
-  const handleApplication = async () => {
+  const handleApplication = async (pdfBlob) => {
     const token = localStorage.getItem("accessToken");
     if (!token) {
       alert("Oturum açılmadı!");
       return;
     }
+
     try {
+      const formData = new FormData();
+
+      if (!sendData) {
+        console.error("Gönderilecek veri eksik!");
+        return;
+      }
+
+      formData.append("data", JSON.stringify(sendData)); // JSON verisi
+      formData.append("pdf", pdfBlob, "basvuru-content.pdf"); // 📌 PDF dosyası
+
+      if (selectedFile) {
+        formData.append("file", selectedFile); // Kullanıcının yüklediği dosya
+      }
+
       const response = await axios.post(
         `${All_Url.api_base_url}/academic/add-application`,
-        {
-          ...sendData,
-        },
+        formData,
         {
           headers: {
             Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data", // 🔹 ÖNEMLİ!
           },
         }
       );
-      alert("Başvuru tamamlandı!");
 
+      alert("Başvuru tamamlandı!");
       return response.data.success;
     } catch (error) {
       console.error("Hata oluştu:", error);
     }
   };
+
   const capitalizeName = (name) => {
     if (!name) return "";
     return (
