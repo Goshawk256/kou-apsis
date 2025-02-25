@@ -11,7 +11,7 @@ function MyApplications({ onSelect }) {
   const [applications, setApplications] = useState([]);
   const [selectedApplication, setSelectedApplication] = useState(null);
   const setBavuru = (text) => {
-    localStorage.setItem("bavuruTipi", text);
+    localStorage.setItem("basvuruTipi", text);
   };
   useEffect(() => {
     const fetchApplications = async () => {
@@ -119,7 +119,7 @@ function MyApplications({ onSelect }) {
             <button
               onClick={() => {
                 onSelect();
-                setBavuru("Preliminary");
+                setBavuru("Scientific");
               }}
             >
               Yeni Kadro Başvurusu
