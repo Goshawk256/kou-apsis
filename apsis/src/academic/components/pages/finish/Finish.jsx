@@ -282,7 +282,6 @@ function Finish() {
     let secilmisIlan = localStorage.getItem("secilmisIlan");
 
     let data = {
-      title: localStorage.getItem("selectedOption") || "Bilinmeyen Başlık",
       username: localStorage.getItem("username") || "Bilinmeyen Kullanıcı",
       applicationType: basvuruTipi,
       date: new Date().toISOString(), // Gerekirse toLocaleString() kullanabilirsin
@@ -290,6 +289,9 @@ function Finish() {
 
     if (basvuruTipi === "Scientific" && secilmisIlan) {
       data.positionAnnouncementId = secilmisIlan;
+    }
+    if (basvuruTipi === "Preliminary") {
+      data.title = localStorage.getItem("selectedOption");
     }
 
     if (savedPublications.length >= 0) {
@@ -325,6 +327,7 @@ function Finish() {
     }
 
     try {
+      console.log("Gönderilecek veri:", sendData);
       const formData = new FormData();
 
       if (!sendData) {
@@ -334,7 +337,7 @@ function Finish() {
 
       formData.append("data", JSON.stringify(sendData));
       formData.append("file", pdfBlob);
-
+      console.log("formData", formData);
       const response = await axios.post(
         `${All_Url.api_base_url}/academic/add-application`,
         formData,
