@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import All_Url from "../../url";
+import "./SetPassword.css";
 
 function SetPassword() {
   const { token } = useParams(); // URL'den token'ı al
@@ -23,15 +24,18 @@ function SetPassword() {
 
     try {
       const response = await axios.post(
-        `${All_Url.api_base_url}/external-academic/set-password`,
-        { token, password }
+        `${All_Url.api_base_url}/auth/external-user-set-password`,
+        {
+          loginKey: token,
+          password: password,
+        }
       );
 
-      if (response.status === 200) {
+      if (response.status === 204) {
         setSuccess(
           "Şifreniz başarıyla oluşturuldu. Giriş sayfasına yönlendiriliyorsunuz..."
         );
-        setTimeout(() => navigate("/"), 3000);
+        setTimeout(() => navigate("/"), 2000);
       } else {
         setError("Şifre belirleme işlemi başarısız oldu.");
       }
@@ -46,7 +50,7 @@ function SetPassword() {
         <h2>Şifre Belirle</h2>
         {error && <p style={{ color: "red" }}>{error}</p>}
         {success && <p style={{ color: "green" }}>{success}</p>}
-        <div>
+        <div className="form-group">
           <label>Yeni Şifre</label>
           <input
             type="password"
@@ -55,7 +59,7 @@ function SetPassword() {
             required
           />
         </div>
-        <div>
+        <div className="form-group">
           <label>Şifreyi Onayla</label>
           <input
             type="password"
@@ -64,7 +68,9 @@ function SetPassword() {
             required
           />
         </div>
-        <button type="submit">Şifreyi Belirle</button>
+        <button className="submit-password" type="submit">
+          Şifreyi Belirle
+        </button>
       </form>
     </div>
   );
