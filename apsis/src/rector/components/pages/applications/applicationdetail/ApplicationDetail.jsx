@@ -11,6 +11,7 @@ function ApplicationDetail({ applicationId }) {
   const [loading, setLoading] = useState(true);
   const [allJuries, setAllJuries] = useState([]);
   const [selectedJury, setSelectedJury] = useState(null);
+  const [applicationStatus, setApplicationStatus] = useState(0);
   const [popup, setOpenPopup] = useState(false);
   const [juryName, setJuryName] = useState("");
 
@@ -36,8 +37,14 @@ function ApplicationDetail({ applicationId }) {
         const matchedApplication = applications.find(
           (app) => app._id === applicationId
         );
-
+        console.log("matchedApplication", matchedApplication);
         if (matchedApplication) {
+          console.log("status", applicationStatus);
+          if (matchedApplication.status.id === 3) {
+            setApplicationStatus(3);
+          } else if (matchedApplication.status.id === 4) {
+            setApplicationStatus(4);
+          }
           const updatedPreliminaryJuries = (
             matchedApplication.preliminaryJuries || []
           ).map((jury) => ({
@@ -81,10 +88,6 @@ function ApplicationDetail({ applicationId }) {
     return text.length > 25 ? text.substring(0, 22) + "..." : text;
   };
 
-  useEffect(() => {
-    console.log("selected Jury", selectedJury);
-  }, [selectedJury]);
-
   const handleSelectJury = (jury) => {
     if (jury.type === "Ön Değerlendirme") {
       const ev = application.preliminaryEvaluations.find(
@@ -119,17 +122,41 @@ function ApplicationDetail({ applicationId }) {
           },
         }
       );
-
-      if (response.data.success) {
-        alert("Jüri başarıyla atandı.");
-        setOpenPopup(false);
-        setJuryName("");
-      } else {
-        alert("Bu Başvuruya Juri Atanamaz.");
-      }
     } catch (error) {
       console.error("Jüri atama sırasında hata oluştu:", error);
       alert("Bu Başvuruya Juri Atanamaz.");
+    }
+  };
+
+  const finishApplication = async () => {
+    const token = localStorage.getItem("accessToken");
+    if (!token) {
+      alert("Yetkilendirme hatası: Lütfen tekrar giriş yapın.");
+
+      return;
+    }
+    try {
+      const response = await axios.put(
+        "https://apsis.kocaeli.edu.tr/api/rector/update-application",
+        {
+          applicationId,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.data.success) {
+        alert("Başvuru başarıyla tamamlandı.");
+      } else {
+        alert("Başvuru tamamlanırken bir hata oluştu.");
+      }
+    } catch (error) {
+      console.error("Başvuru tamamlanırken hata oluştu:", error);
+      alert("Başvuru tamamlanırken bir hata oluştu.");
     }
   };
 
@@ -248,6 +275,18 @@ function ApplicationDetail({ applicationId }) {
                 className="add-jury-button"
               >
                 Juri Ata
+              </button>
+            ) : (
+              ""
+            )}
+            {application.status.id === 3 ? (
+              <button
+                onClick={() => {
+                  finishApplication();
+                }}
+                className="finishapp-button"
+              >
+                Atama Bitir
               </button>
             ) : (
               ""

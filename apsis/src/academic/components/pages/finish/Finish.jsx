@@ -324,10 +324,11 @@ function Finish() {
       username: localStorage.getItem("username"),
       applicationType: "Scientific",
       date: new Date().toISOString(),
+      positionAnnouncementId: "67ba4332e1b69edf17ac948a",
     };
 
     if (savedPublications.length >= 0) {
-      data.publications =
+      data.articles =
         savedPublications.map((item) => ({ publicationId: item.id })) || [];
     }
     if (savedProjects.length >= 0) {
@@ -336,7 +337,7 @@ function Finish() {
     }
     if (savedThesis.length >= 0) {
       data.advisingThesis =
-        savedThesis.map((item) => ({ thesisId: item.id })) || [];
+        savedThesis.map((item) => ({ advisingThesisId: item.id })) || [];
     }
     if (savedLessons.length >= 0) {
       data.lessons = savedLessons.map((item) => ({ lessonId: item.id })) || [];
