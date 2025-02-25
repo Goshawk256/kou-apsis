@@ -242,13 +242,11 @@ function Finish() {
         currentNode.style.indexOf("header") !== -1 &&
         currentNode.pageNumbers.length > 1,
     };
-
+    pdfMake.createPdf(docDefinition).download("basvuru-content.pdf");
     pdfMake.createPdf(docDefinition).getBlob((blob) => {
       handleApplication(blob); // 📌 PDF'yi backend'e gönder
     });
   };
-
-  const [selectedFile, setSelectedFile] = useState(null);
 
   useEffect(() => {
     const loadData = () => {
@@ -334,12 +332,8 @@ function Finish() {
         return;
       }
 
-      formData.append("data", JSON.stringify(sendData)); // JSON verisi
-      formData.append("pdf", pdfBlob, "basvuru-content.pdf"); // 📌 PDF dosyası
-
-      if (selectedFile) {
-        formData.append("file", selectedFile); // Kullanıcının yüklediği dosya
-      }
+      formData.append("data", JSON.stringify(sendData));
+      formData.append("file", pdfBlob);
 
       const response = await axios.post(
         `${All_Url.api_base_url}/academic/add-application`,
@@ -548,14 +542,14 @@ function Finish() {
             )}
           />
         ))}
-        <button className="download-button" onClick={downloadPDF}>
+        <button className="download-button">
           <img src={file} alt="" />
         </button>
       </div>
       <div className="finish-buttons">
         <button
           onClick={() => {
-            handleApplication();
+            downloadPDF();
           }}
           className="finish-button"
         >
