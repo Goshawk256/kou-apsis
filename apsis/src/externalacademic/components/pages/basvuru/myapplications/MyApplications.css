@@ -1,6 +1,8 @@
 .main-myapplications-external {
+  position: relative;
   width: 100%;
   margin: 20px auto;
+  height: 600px;
   background: #fff;
   color: gray;
   border-radius: 10px;
@@ -64,4 +66,17 @@
 
 .action-button:hover {
   background: #c82333;
+}
+
+.external-basvuruyap {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background: #1fa54e;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background 0.3s ease;
 }
