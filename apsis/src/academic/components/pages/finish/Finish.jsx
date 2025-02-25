@@ -141,15 +141,13 @@ function Finish() {
     const docDefinition = {
       pageSize: "A4",
       pageMargins: [30, 30, 30, 50],
-      footer: function (currentPage, pageCount) {
-        return {
-          text: `Sayfa ${currentPage} / ${pageCount}`,
-          alignment: "center",
-          margin: [0, 20],
-          fontSize: 9,
-          color: "#666",
-        };
-      },
+      footer: (currentPage, pageCount) => ({
+        text: `Sayfa ${currentPage} / ${pageCount}`,
+        alignment: "center",
+        margin: [0, 20],
+        fontSize: 9,
+        color: "#666",
+      }),
       compress: true,
       info: {
         title: "Başvuru Formu",
@@ -194,50 +192,27 @@ function Finish() {
             keepWithHeaderRows: 1,
           },
           layout: {
-            hLineWidth: function () {
-              return 0.5;
-            },
-            vLineWidth: function () {
-              return 0.5;
-            },
-            hLineColor: function () {
-              return "#aaa";
-            },
-            vLineColor: function () {
-              return "#aaa";
-            },
-            paddingLeft: function () {
-              return 4;
-            },
-            paddingRight: function () {
-              return 4;
-            },
-            paddingTop: function () {
-              return 3;
-            },
-            paddingBottom: function () {
-              return 3;
-            },
-            fillColor: function (rowIndex, node) {
-              return rowIndex === 0
+            hLineWidth: () => 0.5,
+            vLineWidth: () => 0.5,
+            hLineColor: () => "#aaa",
+            vLineColor: () => "#aaa",
+            paddingLeft: () => 4,
+            paddingRight: () => 4,
+            paddingTop: () => 3,
+            paddingBottom: () => 3,
+            fillColor: (rowIndex, node) =>
+              rowIndex === 0
                 ? "#f0f0f0"
                 : rowIndex === 1 && node.table.headerRows > 1
                 ? "#f7f7f7"
-                : null;
-            },
+                : null,
           },
           margin: [0, 0, 0, 20],
         })),
       ],
       styles: {
-        header: {
-          fontSize: 12,
-          bold: true,
-        },
-        userInfo: {
-          fontSize: 9,
-          margin: [0, 4],
-        },
+        header: { fontSize: 12, bold: true },
+        userInfo: { fontSize: 9, margin: [0, 4] },
         tableHeader: {
           fontSize: 10,
           bold: true,
@@ -256,39 +231,23 @@ function Finish() {
           fillColor: "#f5f5f5",
           margin: [0, 2],
         },
-        groupHeader: {
-          fontSize: 8,
-          bold: true,
-        },
-        emptyData: {
-          fontSize: 8,
-          italics: true,
-          color: "#666",
-        },
-        totalRow: {
-          fontSize: 9,
-          bold: true,
-          fillColor: "#f0f0f0",
-        },
+        groupHeader: { fontSize: 8, bold: true },
+        emptyData: { fontSize: 8, italics: true, color: "#666" },
+        totalRow: { fontSize: 9, bold: true, fillColor: "#f0f0f0" },
       },
-      defaultStyle: {
-        fontSize: 8,
-        lineHeight: 1.2,
-      },
+      defaultStyle: { fontSize: 8, lineHeight: 1.2 },
       pageOrientation: "portrait",
-      pageBreakBefore: function (currentNode) {
-        return (
-          currentNode.style &&
-          currentNode.style.indexOf("header") !== -1 &&
-          currentNode.pageNumbers.length > 1
-        );
-      },
+      pageBreakBefore: (currentNode) =>
+        currentNode.style &&
+        currentNode.style.indexOf("header") !== -1 &&
+        currentNode.pageNumbers.length > 1,
     };
 
     pdfMake.createPdf(docDefinition).getBlob((blob) => {
-      handleApplication(blob);
+      handleApplication(blob); // 📌 PDF'yi backend'e gönder
     });
   };
+
   const [selectedFile, setSelectedFile] = useState(null);
 
   useEffect(() => {
