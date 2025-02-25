@@ -24,7 +24,6 @@
   gap: 10px;
   display: flex;
   align-items: center;
-
   justify-content: end;
 }
 
@@ -53,6 +52,16 @@
 .myapplications-table table thead th {
   padding: 10px;
   color: white;
+}
+
+.myapplications-button {
+  padding: 10px;
+  background-color: #1fa54e;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  width: 100%;
+  cursor: pointer;
 }
 
 .myapplication-buttons button {

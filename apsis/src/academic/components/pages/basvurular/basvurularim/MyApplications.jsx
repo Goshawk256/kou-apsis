@@ -107,7 +107,7 @@ function MyApplications({ onSelect }) {
           </div>
           <div className="myapplication-buttons">
             <button onClick={onSelect}>Yeni Başvuru</button>
-            <button onClick={onSelect}>Yeni Başvuru</button>
+            <button onClick={onSelect}>Yeni Kadro Başvurusu</button>
           </div>
         </>
       )}
