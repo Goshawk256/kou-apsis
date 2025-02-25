@@ -1,7 +1,7 @@
 import React from "react";
 import "./MyApplications.css";
 
-function MyApplications() {
+function MyApplications({ setComponent }) {
   const handleBasvuruClick = () => {
     console.log("Başvuru butonuna tıklandı");
   };
@@ -63,7 +63,12 @@ function MyApplications() {
           </tbody>
         </table>
       </div>
-      <button className="external-basvuruyap">Yeni Başvuru</button>
+      <button
+        onClick={() => setComponent("confirmbasvuru")}
+        className="external-basvuruyap"
+      >
+        Yeni Başvuru
+      </button>
     </div>
   );
 }
