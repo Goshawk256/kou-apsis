@@ -310,7 +310,7 @@ function Makale() {
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      {file.name}
+                      {file.fileName}
                     </a>
                   </li>
                 ))
