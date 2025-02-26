@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import All_Url from "../../../../url";
 import axios from "axios";
 import "./Makale.css";
-import { FaRegSquare } from "react-icons/fa";
+import { FaRegSquare, FaFileUpload } from "react-icons/fa";
 const languages = ["Uluslararası", "Ulusal"];
 
 function Makale() {
@@ -12,7 +12,31 @@ function Makale() {
   const [showModal, setShowModal] = useState(false);
   const [articleTypes, setArticleTypes] = useState({});
   const [loading, setLoading] = useState(true);
+  const [showPopup, setShowPopup] = useState(false);
+  const [pdfName, setPdfName] = useState("");
+  const [selectedFile, setSelectedFile] = useState(null);
 
+  const handleUploadClick = () => {
+    setShowPopup(true);
+  };
+
+  const handleClosePopup = () => {
+    setShowPopup(false);
+    setPdfName("");
+    setSelectedFile(null);
+  };
+
+  const handleFileChange = (event) => {
+    setSelectedFile(event.target.files[0]);
+  };
+  const handleUpload = () => {
+    if (!pdfName || !selectedFile) {
+      alert("Lütfen bir PDF adı girin ve bir dosya seçin.");
+      return;
+    }
+    console.log("PDF Yükleniyor:", pdfName, selectedFile);
+    handleClosePopup();
+  };
   const [newArticle, setNewArticle] = useState({
     name: "",
     date: "",
@@ -202,14 +226,37 @@ function Makale() {
               <td className="makale-cell">{article.group}</td>
               <td className="makale-cell">{article.score}</td>
               <td className="makale-cell">
-                <button>
-                  <FaRegSquare />{" "}
-                </button>
+                <div className="makale-buttons">
+                  {" "}
+                  <button>
+                    <FaRegSquare />{" "}
+                  </button>
+                  <button onClick={handleUploadClick}>
+                    <FaFileUpload />
+                  </button>
+                </div>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+
+      {showPopup && (
+        <div className="uploadfile-popup">
+          <div className="uploadfile-popup-content">
+            <h3>PDF Yükle</h3>
+            <input
+              type="text"
+              placeholder="PDF Adı"
+              value={pdfName}
+              onChange={(e) => setPdfName(e.target.value)}
+            />
+            <input type="file" accept=".pdf" onChange={handleFileChange} />
+            <button onClick={handleUpload}>Yükle</button>
+            <button onClick={handleClosePopup}>İptal</button>
+          </div>
+        </div>
+      )}
       {showModal && (
         <div className="modal-overlay">
           <div className="modal">

@@ -62,6 +62,10 @@
   text-align: left;
   color: gray;
 }
+.makale-cell .makale-buttons {
+  display: flex;
+  flex-direction: row;
+}
 .makale-cell button {
   background-color: transparent;
   color: white;
@@ -160,4 +164,32 @@ select {
 .modal button:last-of-type {
   background: rgb(154, 49, 49);
   color: white;
+}
+
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.popup-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+.popup-content input {
+  display: block;
+  margin: 10px auto;
+  padding: 8px;
+}
+.popup-content button {
+  margin: 5px;
+  padding: 8px 12px;
 }
