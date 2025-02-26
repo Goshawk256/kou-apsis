@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import All_Url from "../../../../url";
 import axios from "axios";
 import "./Ders.css";
-import { FaRegSquare } from "react-icons/fa";
+import { FaRegSquare, FaFileUpload } from "react-icons/fa";
 const languages = [
   "2223G",
   "2223B",
