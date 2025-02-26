@@ -341,6 +341,10 @@ function Finish() {
 
       formData.append("data", JSON.stringify(sendData));
       formData.append("file", pdfBlob, "basvuru.pdf");
+      for (let pair of formData.entries()) {
+        console.log(pair[0], pair[1]);
+      }
+
       const basvuruTipi = localStorage.getItem("basvuruTipi");
       let sendingData = sendData;
       if (basvuruTipi === "Scientific") {
