@@ -545,9 +545,6 @@ function Finish() {
             )}
           />
         ))}
-        <button className="download-button">
-          <img src={file} alt="" />
-        </button>
       </div>
       <div className="finish-buttons">
         <button
