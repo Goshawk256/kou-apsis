@@ -305,11 +305,11 @@ function Makale() {
                 articleFiles.map((file, index) => (
                   <li key={index}>
                     <a
-                      href={`https://apsis.kocaeli.edu.tr/api/file/${file.fileUrl}?downloadAs=${file.name}`}
+                      href={`https://apsis.kocaeli.edu.tr/api/file/${file.fileToken}?downloadAs=${file.fileName}`}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      {file.name}
+                      {file.fileName}
                     </a>
                   </li>
                 ))
