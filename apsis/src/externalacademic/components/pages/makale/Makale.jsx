@@ -148,7 +148,6 @@ function Makale() {
         );
 
         setArticles(response.data.data);
-        console.log(response.data.data);
       } catch (error) {
         console.log("Makaleler getirilirken bir hata oluştu.", error);
       } finally {
