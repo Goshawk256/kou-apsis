@@ -60,7 +60,7 @@ function Tez() {
 
     try {
       const response = await axios.post(
-        "https://apsis.kocaeli.edu.tr/api/external-academic/add-article-file",
+        "https://apsis.kocaeli.edu.tr/api/external-academic/add-advising-thesis-file",
         formData,
         {
           headers: {
