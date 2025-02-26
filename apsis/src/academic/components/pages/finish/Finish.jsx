@@ -4,7 +4,7 @@ import pdfMake from "pdfmake/build/pdfmake";
 import All_Url from "../../../../url";
 import axios from "axios";
 import "pdfmake/build/vfs_fonts";
-import file from "../../../../assets/file.png";
+
 import {
   tableHeaders,
   calculateSectionTotal,
@@ -242,8 +242,13 @@ function Finish() {
         currentNode.style.indexOf("header") !== -1 &&
         currentNode.pageNumbers.length > 1,
     };
-    pdfMake.createPdf(docDefinition).download("basvuru-content.pdf");
+    // pdfMake.createPdf(docDefinition).download("basvuru-content.pdf");
     pdfMake.createPdf(docDefinition).getBlob((blob) => {
+      if (!blob) {
+        console.error("PDF blob oluşturulamadı!");
+        return;
+      }
+      console.log("Oluşturulan PDF Blob:", blob);
       handleApplication(blob);
     });
   };
@@ -278,8 +283,8 @@ function Finish() {
     const savedArtworks =
       JSON.parse(localStorage.getItem("savedArtworks")) || [];
     const savedLessons = JSON.parse(localStorage.getItem("savedCourses")) || [];
-    let basvuruTipi = localStorage.getItem("basvuruTipi") || ""; // Null dönerse boş string kullan
-    let secilmisIlan = localStorage.getItem("secilmisIlan");
+    const basvuruTipi = localStorage.getItem("basvuruTipi") || ""; // Null dönerse boş string kullan
+    const secilmisIlan = localStorage.getItem("secilmisIlan");
 
     let data = {
       username: localStorage.getItem("username") || "Bilinmeyen Kullanıcı",
@@ -327,7 +332,6 @@ function Finish() {
     }
 
     try {
-      console.log("Gönderilecek veri:", sendData);
       const formData = new FormData();
 
       if (!sendData) {
@@ -336,11 +340,21 @@ function Finish() {
       }
 
       formData.append("data", JSON.stringify(sendData));
-      formData.append("file", pdfBlob);
-      console.log("formData", formData);
+      formData.append("file", pdfBlob, "basvuru.pdf");
+      for (let pair of formData.entries()) {
+        console.log(pair[0], pair[1]);
+      }
+
+      const basvuruTipi = localStorage.getItem("basvuruTipi");
+      let sendingData = sendData;
+      if (basvuruTipi === "Scientific") {
+        sendingData = formData;
+      }
+
+      console.log("Gönderilen Veri:", sendingData);
       const response = await axios.post(
         `${All_Url.api_base_url}/academic/add-application`,
-        formData,
+        sendingData,
         {
           headers: {
             Authorization: `Bearer ${token}`,
