@@ -62,6 +62,10 @@
   text-align: left;
   color: gray;
 }
+.makale-cell .makale-buttons {
+  display: flex;
+  flex-direction: row;
+}
 .makale-cell button {
   background-color: transparent;
   color: white;
@@ -160,4 +164,99 @@ select {
 .modal button:last-of-type {
   background: rgb(154, 49, 49);
   color: white;
+}
+
+.uploadfile-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.uploadfile-popup-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 600px;
+  height: 400px;
+}
+.upload-file-div {
+  display: flex;
+  width: 100%;
+  height: 20%;
+
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+.uploadfile-popup-content input {
+  display: block;
+  margin: 10px auto;
+  border-radius: 10px;
+  border: 1px solid #bababa;
+  padding: 8px;
+}
+.upload-file-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  width: 91%;
+  max-height: 60%;
+  margin-left: 5%;
+  overflow-y: auto;
+  border-radius: 10px;
+  border: 1px solid #bababa;
+  gap: 10px;
+}
+.upload-file-content li {
+  list-style-type: none;
+  width: 100%;
+  min-height: 50px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+
+  border-bottom: 1px solid #bababa;
+  font-size: 18px;
+}
+.apply-upload-file {
+  background-color: #1fa543;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+.cancel-upload-file {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+
+  color: rgb(76, 76, 76);
+  border: none;
+  padding: 10px 15px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+.cancel-upload-file:hover {
+  color: red;
 }
