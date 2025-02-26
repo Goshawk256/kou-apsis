@@ -171,7 +171,7 @@ function Ders() {
           }
         );
 
-        setArticles(response.data.data.lessons);
+        setArticles(response.data.data);
         console.log(articles);
       } catch (error) {
         console.log("Makaleler getirilirken bir hata oluştu.", error);
