@@ -60,7 +60,7 @@ function Yayinlar() {
   const fetchPublications = async () => {
     setLoading(true);
     try {
-      const accessToken = localStorage.getItem("accessToken"); // Token'ı localStorage'dan al
+      const accessToken = localStorage.getItem("accessToken");
 
       if (!accessToken) {
         showPopup("Yetkilendirme hatası: Token bulunamadı.", "error");
@@ -69,19 +69,16 @@ function Yayinlar() {
 
       const response = await axios.post(
         `${All_Url.api_base_url}/academic/get-publications`,
-        {
-          username,
-          publicationTypeId,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`, // Token'ı header'a ekle
-          },
-        }
+        { username, publicationTypeId },
+        { headers: { Authorization: `Bearer ${accessToken}` } }
       );
 
       if (response.data.success) {
-        setTableData(response.data.data);
+        setTableData(
+          response.data.data.sort(
+            (a, b) => new Date(b.publishDate) - new Date(a.publishDate)
+          )
+        );
       } else {
         showPopup(response.data.message || "Veri çekme başarısız.", "error");
       }
@@ -96,13 +93,15 @@ function Yayinlar() {
     try {
       const response = await axios.post(
         `${All_Url.api_base_url}/publication/get-citations-by-username`,
-        {
-          username,
-        }
+        { username }
       );
 
       if (response.data.success) {
-        setTableData(response.data.data);
+        setTableData(
+          response.data.data.sort(
+            (a, b) => new Date(b.publishDate) - new Date(a.publishDate)
+          )
+        );
       } else {
         showPopup("Atıf verileri çekilirken hata oluştu.", "error");
       }
@@ -230,7 +229,6 @@ function Yayinlar() {
         </button>
       </div>
 
-      {/* Row 2 - Arama, Filtreleme, Yenileme */}
       <div className="yayinlar-main-row-2">
         <input
           style={{ color: "gray" }}
