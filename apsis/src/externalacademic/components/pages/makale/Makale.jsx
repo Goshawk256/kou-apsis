@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import All_Url from "../../../../url";
-import axios from "axios";
 import "./Makale.css";
 import { FaRegSquare, FaFileUpload } from "react-icons/fa";
 const languages = ["Uluslararası", "Ulusal"];
-
+import axios from "axios";
 function Makale() {
   const [articles, setArticles] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -15,12 +14,15 @@ function Makale() {
   const [showPopup, setShowPopup] = useState(false);
   const [pdfName, setPdfName] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
+  const [id, setId] = useState("empty");
 
-  const handleUploadClick = () => {
+  const handleUploadClick = (articleId) => {
+    setId(articleId);
     setShowPopup(true);
   };
 
   const handleClosePopup = () => {
+    setId("empty");
     setShowPopup(false);
     setPdfName("");
     setSelectedFile(null);
@@ -29,13 +31,49 @@ function Makale() {
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
   };
-  const handleUpload = () => {
+  const handleUpload = async () => {
     if (!pdfName || !selectedFile) {
       alert("Lütfen bir PDF adı girin ve bir dosya seçin.");
       return;
     }
-    console.log("PDF Yükleniyor:", pdfName, selectedFile);
-    handleClosePopup();
+    if (id === "empty") {
+      alert("Lütfen bir makale seçin.");
+      return;
+    }
+
+    const accessToken = localStorage.getItem("accessToken");
+    if (!accessToken) {
+      alert("Giriş yapmalısınız!");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("file", selectedFile);
+    formData.append("articleId", id);
+    formData.append("name", pdfName);
+
+    try {
+      const response = await axios.post(
+        "https://apsis.kocaeli.edu.tr/api/external-academic/add-article-file",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      alert("PDF başarıyla yüklendi!");
+      console.log("Yanıt:", response.data);
+      handleClosePopup();
+    } catch (error) {
+      console.error("Hata oluştu:", error);
+      alert(
+        "Yükleme başarısız: " +
+          (error.response?.data?.message || "Bir hata oluştu, tekrar deneyin.")
+      );
+    }
   };
   const [newArticle, setNewArticle] = useState({
     name: "",
@@ -101,7 +139,7 @@ function Makale() {
 
         const response = await axios.post(
           `${All_Url.api_base_url}/external-academic/get-articles`,
-          {}, // Body kısmı burada boş olabilir, çünkü sadece header gönderiyorsunuz.
+          {},
           {
             headers: {
               Authorization: `Bearer ${accessToken}`,
@@ -110,6 +148,7 @@ function Makale() {
         );
 
         setArticles(response.data.data);
+        console.log(response.data.data);
       } catch (error) {
         console.log("Makaleler getirilirken bir hata oluştu.", error);
       } finally {
@@ -231,7 +270,7 @@ function Makale() {
                   <button>
                     <FaRegSquare />{" "}
                   </button>
-                  <button onClick={handleUploadClick}>
+                  <button onClick={() => handleUploadClick(article.id)}>
                     <FaFileUpload />
                   </button>
                 </div>

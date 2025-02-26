@@ -166,7 +166,7 @@ select {
   color: white;
 }
 
-.popup {
+.uploadfile-popup {
   position: fixed;
   top: 0;
   left: 0;
@@ -176,20 +176,21 @@ select {
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 1000;
 }
-.popup-content {
+.uploadfile-popup-content {
   background: white;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   text-align: center;
 }
-.popup-content input {
+.uploadfile-popup-content input {
   display: block;
   margin: 10px auto;
   padding: 8px;
 }
-.popup-content button {
+.uploadfile-popup-content button {
   margin: 5px;
   padding: 8px 12px;
 }
