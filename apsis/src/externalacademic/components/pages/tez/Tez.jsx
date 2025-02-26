@@ -328,10 +328,13 @@ function Tez() {
               {articleFiles.length > 0 ? (
                 articleFiles.map((file, index) => (
                   <li key={index}>
-                    {file.name}
-                    <button>
-                      <FaDownload />
-                    </button>
+                    <a
+                      href={`https://apsis.kocaeli.edu.tr/api/file/${file.fileToken}?downloadAs=${file.fileName}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {file.fileName}
+                    </a>
                   </li>
                 ))
               ) : (
