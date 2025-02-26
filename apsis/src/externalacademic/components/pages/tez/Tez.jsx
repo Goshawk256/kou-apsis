@@ -13,7 +13,74 @@ function Tez() {
   const [articleTypes, setArticleTypes] = useState({});
   const [roleTypes, setRoleTypes] = useState({});
   const [loading, setLoading] = useState(true);
+  const [showPopup, setShowPopup] = useState(false);
+  const [pdfName, setPdfName] = useState("");
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [id, setId] = useState("empty");
+  const [articleFiles, setArticleFiles] = useState([]);
+  const handleUploadClick = (articleId) => {
+    setId(articleId);
+    const selectedArticle = articles.find(
+      (article) => article.id === articleId
+    );
+    setArticleFiles(selectedArticle?.files || []); // Dosyaları state'e kaydet
+    setShowPopup(true);
+  };
 
+  const handleClosePopup = () => {
+    setId("empty");
+    setShowPopup(false);
+    setPdfName("");
+    setSelectedFile(null);
+  };
+
+  const handleFileChange = (event) => {
+    setSelectedFile(event.target.files[0]);
+  };
+  const handleUpload = async () => {
+    if (!pdfName || !selectedFile) {
+      alert("Lütfen bir PDF adı girin ve bir dosya seçin.");
+      return;
+    }
+    if (id === "empty") {
+      alert("Lütfen bir makale seçin.");
+      return;
+    }
+
+    const accessToken = localStorage.getItem("accessToken");
+    if (!accessToken) {
+      alert("Giriş yapmalısınız!");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("file", selectedFile);
+    formData.append("articleId", id);
+    formData.append("name", pdfName);
+
+    try {
+      const response = await axios.post(
+        "https://apsis.kocaeli.edu.tr/api/external-academic/add-article-file",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      alert("PDF başarıyla yüklendi!");
+      console.log("Yanıt:", response.data);
+      handleClosePopup();
+    } catch (error) {
+      console.error("Hata oluştu:", error);
+      alert(
+        "Yükleme başarısız: " +
+          (error.response?.data?.message || "Bir hata oluştu, tekrar deneyin.")
+      );
+    }
+  };
   const [newArticle, setNewArticle] = useState({
     title: "",
     approvalDate: "",
