@@ -29,7 +29,75 @@ function Ders() {
   const [showModal, setShowModal] = useState(false);
   const [articleTypes, setArticleTypes] = useState({});
   const [loading, setLoading] = useState(true);
+  const [showPopup, setShowPopup] = useState(false);
+  const [pdfName, setPdfName] = useState("");
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [id, setId] = useState("empty");
+  const [articleFiles, setArticleFiles] = useState([]);
 
+  const handleUploadClick = (articleId) => {
+    setId(articleId);
+    const selectedArticle = articles.find(
+      (article) => article.id === articleId
+    );
+    setArticleFiles(selectedArticle?.files || []); // Dosyaları state'e kaydet
+    setShowPopup(true);
+  };
+
+  const handleClosePopup = () => {
+    setId("empty");
+    setShowPopup(false);
+    setPdfName("");
+    setSelectedFile(null);
+  };
+
+  const handleFileChange = (event) => {
+    setSelectedFile(event.target.files[0]);
+  };
+  const handleUpload = async () => {
+    if (!pdfName || !selectedFile) {
+      alert("Lütfen bir PDF adı girin ve bir dosya seçin.");
+      return;
+    }
+    if (id === "empty") {
+      alert("Lütfen bir makale seçin.");
+      return;
+    }
+
+    const accessToken = localStorage.getItem("accessToken");
+    if (!accessToken) {
+      alert("Giriş yapmalısınız!");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("file", selectedFile);
+    formData.append("articleId", id);
+    formData.append("name", pdfName);
+
+    try {
+      const response = await axios.post(
+        "https://apsis.kocaeli.edu.tr/api/external-academic/add-article-file",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      alert("PDF başarıyla yüklendi!");
+      console.log("Yanıt:", response.data);
+      handleClosePopup();
+    } catch (error) {
+      console.error("Hata oluştu:", error);
+      alert(
+        "Yükleme başarısız: " +
+          (error.response?.data?.message || "Bir hata oluştu, tekrar deneyin.")
+      );
+    }
+  };
   const [newArticle, setNewArticle] = useState({
     name: "",
     semester: "2324G",
@@ -226,6 +294,46 @@ function Ders() {
           ))}
         </tbody>
       </table>
+      {showPopup && (
+        <div className="uploadfile-popup">
+          <div className="uploadfile-popup-content">
+            <h3>Dosya Yükle</h3>
+            <div className="upload-file-div">
+              <input
+                type="text"
+                placeholder="PDF Adı"
+                value={pdfName}
+                onChange={(e) => setPdfName(e.target.value)}
+              />
+              <input type="file" accept=".pdf" onChange={handleFileChange} />
+              <button className="apply-upload-file" onClick={handleUpload}>
+                Yükle
+              </button>
+            </div>
+            <div className="upload-file-content">
+              {articleFiles.length > 0 ? (
+                articleFiles.map((file, index) => (
+                  <li key={index}>
+                    <a
+                      href={`https://apsis.kocaeli.edu.tr/api/file/${file.fileUrl}?downloadAs=${file.name}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {file.name}
+                    </a>
+                  </li>
+                ))
+              ) : (
+                <li>Henüz dosya yüklenmemiş.</li>
+              )}
+            </div>
+
+            <button className="cancel-upload-file" onClick={handleClosePopup}>
+              X
+            </button>
+          </div>
+        </div>
+      )}
       {showModal && (
         <div className="modal-overlay">
           <div className="modal">

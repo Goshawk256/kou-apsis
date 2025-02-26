@@ -284,6 +284,46 @@ function Makale() {
           ))}
         </tbody>
       </table>
+      {showPopup && (
+        <div className="uploadfile-popup">
+          <div className="uploadfile-popup-content">
+            <h3>Dosya Yükle</h3>
+            <div className="upload-file-div">
+              <input
+                type="text"
+                placeholder="PDF Adı"
+                value={pdfName}
+                onChange={(e) => setPdfName(e.target.value)}
+              />
+              <input type="file" accept=".pdf" onChange={handleFileChange} />
+              <button className="apply-upload-file" onClick={handleUpload}>
+                Yükle
+              </button>
+            </div>
+            <div className="upload-file-content">
+              {articleFiles.length > 0 ? (
+                articleFiles.map((file, index) => (
+                  <li key={index}>
+                    <a
+                      href={`https://apsis.kocaeli.edu.tr/api/file/${file.fileUrl}?downloadAs=${file.name}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {file.name}
+                    </a>
+                  </li>
+                ))
+              ) : (
+                <li>Henüz dosya yüklenmemiş.</li>
+              )}
+            </div>
+
+            <button className="cancel-upload-file" onClick={handleClosePopup}>
+              X
+            </button>
+          </div>
+        </div>
+      )}
       {showModal && (
         <div className="modal-overlay">
           <div className="modal">
