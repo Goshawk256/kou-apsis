@@ -289,6 +289,9 @@ function Ders() {
                 <button>
                   <FaRegSquare />{" "}
                 </button>
+                <button onClick={() => handleUploadClick(article.id)}>
+                  <FaFileUpload />
+                </button>
               </td>
             </tr>
           ))}
