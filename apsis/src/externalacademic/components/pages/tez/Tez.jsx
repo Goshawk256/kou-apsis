@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import All_Url from "../../../../url";
 import axios from "axios";
 import "./Tez.css";
-import { FaRegSquare, FaFileUpload } from "react-icons/fa";
+import { FaRegSquare, FaFileUpload, FaDownload } from "react-icons/fa";
 const languages = ["Uluslararası", "Ulusal"];
 
 function Tez() {
@@ -327,7 +327,12 @@ function Tez() {
             <div className="upload-file-content">
               {articleFiles.length > 0 ? (
                 articleFiles.map((file, index) => (
-                  <li key={index}>{file.name}</li>
+                  <li key={index}>
+                    {file.name}
+                    <button>
+                      <FaDownload />
+                    </button>
+                  </li>
                 ))
               ) : (
                 <li>Henüz dosya yüklenmemiş.</li>
