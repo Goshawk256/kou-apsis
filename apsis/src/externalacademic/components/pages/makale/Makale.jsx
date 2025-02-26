@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import All_Url from "../../../../url";
 import "./Makale.css";
-import { FaRegSquare, FaFileUpload } from "react-icons/fa";
+import { FaRegSquare, FaFileUpload, FaDownload } from "react-icons/fa";
 const languages = ["Uluslararası", "Ulusal"];
 import axios from "axios";
 function Makale() {
@@ -305,13 +305,10 @@ function Makale() {
               {articleFiles.length > 0 ? (
                 articleFiles.map((file, index) => (
                   <li key={index}>
-                    <a
-                      href={`https://apsis.kocaeli.edu.tr/api/file/${file.fileUrl}?downloadAs=${file.name}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {file.name}
-                    </a>
+                    {file.name}
+                    <button>
+                      <FaDownload />
+                    </button>
                   </li>
                 ))
               ) : (
