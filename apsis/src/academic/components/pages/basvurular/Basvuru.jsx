@@ -89,14 +89,37 @@ function Basvuru({ onSelect }) {
     const sortedData = allData.sort((a, b) => {
       const priority = {
         Yayın: 1,
-        Proje: 4,
-        Tez: 3,
         Ders: 2,
+        Tez: 3,
+        Proje: 4,
         Ödül: 5,
         "Sanat Eseri": 6,
       };
 
-      return priority[a.type] - priority[b.type];
+      // Önce tür bazında sıralama
+      const typeOrder = priority[a.type] - priority[b.type];
+      if (typeOrder !== 0) return typeOrder;
+
+      // Eğer `group` bilgisi yoksa, default değer verelim
+      const safeGroupA = a.group || "Z999"; // Son sıralara atmak için
+      const safeGroupB = b.group || "Z999";
+
+      // Grup bilgisini harf ve sayıya ayıran fonksiyon
+      const parseGroup = (group) => {
+        const match = group.match(/^([A-Z]+)(\d+)$/i);
+        if (!match) return ["Z", 999]; // Hatalı grup varsa sona at
+        return [match[1], parseInt(match[2], 10)];
+      };
+
+      const [groupA_letter, groupA_number] = parseGroup(safeGroupA);
+      const [groupB_letter, groupB_number] = parseGroup(safeGroupB);
+
+      // Önce harfe göre sıralama (A, G vs.)
+      const letterOrder = groupA_letter.localeCompare(groupB_letter);
+      if (letterOrder !== 0) return letterOrder;
+
+      // Sonra numaraya göre sıralama (1, 2, 5 vs.)
+      return groupA_number - groupB_number;
     });
 
     setData(sortedData);

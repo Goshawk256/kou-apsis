@@ -244,7 +244,7 @@ function Finish() {
     };
     pdfMake.createPdf(docDefinition).download("basvuru-content.pdf");
     pdfMake.createPdf(docDefinition).getBlob((blob) => {
-      handleApplication(blob); // 📌 PDF'yi backend'e gönder
+      handleApplication(blob);
     });
   };
 
@@ -344,7 +344,7 @@ function Finish() {
         {
           headers: {
             Authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data", // 🔹 ÖNEMLİ!
+            "Content-Type": "multipart/form-data",
           },
         }
       );
@@ -545,9 +545,6 @@ function Finish() {
             )}
           />
         ))}
-        <button className="download-button">
-          <img src={file} alt="" />
-        </button>
       </div>
       <div className="finish-buttons">
         <button

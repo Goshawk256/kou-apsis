@@ -60,7 +60,7 @@ function Yayinlar() {
   const fetchPublications = async () => {
     setLoading(true);
     try {
-      const accessToken = localStorage.getItem("accessToken"); // Token'ı localStorage'dan al
+      const accessToken = localStorage.getItem("accessToken");
 
       if (!accessToken) {
         showPopup("Yetkilendirme hatası: Token bulunamadı.", "error");
@@ -69,19 +69,16 @@ function Yayinlar() {
 
       const response = await axios.post(
         `${All_Url.api_base_url}/academic/get-publications`,
-        {
-          username,
-          publicationTypeId,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`, // Token'ı header'a ekle
-          },
-        }
+        { username, publicationTypeId },
+        { headers: { Authorization: `Bearer ${accessToken}` } }
       );
 
       if (response.data.success) {
-        setTableData(response.data.data);
+        setTableData(
+          response.data.data.sort(
+            (a, b) => new Date(b.publishDate) - new Date(a.publishDate)
+          )
+        );
       } else {
         showPopup(response.data.message || "Veri çekme başarısız.", "error");
       }
@@ -96,13 +93,15 @@ function Yayinlar() {
     try {
       const response = await axios.post(
         `${All_Url.api_base_url}/publication/get-citations-by-username`,
-        {
-          username,
-        }
+        { username }
       );
 
       if (response.data.success) {
-        setTableData(response.data.data);
+        setTableData(
+          response.data.data.sort(
+            (a, b) => new Date(b.publishDate) - new Date(a.publishDate)
+          )
+        );
       } else {
         showPopup("Atıf verileri çekilirken hata oluştu.", "error");
       }
@@ -230,7 +229,6 @@ function Yayinlar() {
         </button>
       </div>
 
-      {/* Row 2 - Arama, Filtreleme, Yenileme */}
       <div className="yayinlar-main-row-2">
         <input
           style={{ color: "gray" }}
@@ -315,39 +313,40 @@ function Yayinlar() {
                     ); // Kontrol
 
                     return publicationTypeId === 2 ? (
-                      <tr
-                        key={item.id}
-                        className={isEditMode ? "edit-mode-row" : ""}
-                      >
-                        <td>
-                          {item.title.length > 50
-                            ? `${item.title.slice(0, 60)}...`
-                            : item.title}
-                          <br />
-                          <p style={{ color: "#5d8c6a", fontSize: "10px" }}>
-                            {item.authors ? item.authors.join(", ") : "-"}
-                          </p>
-                        </td>
-                        <td>{item.journalIndex || "-"}</td>
-                        <td className="item-group">{item.citationGroup}</td>
-                        <td>{item.citationScore}</td>
-                        <td>
-                          <button className="yayinlar-btn">
-                            <FaPencilAlt />
-                          </button>
-                          <button
-                            className="yayinlar-btn"
-                            onClick={
-                              publicationTypeId === 1
-                                ? () => openRightBar()
-                                : null
-                            }
-                          >
-                            {isSaved ? <FaInfo /> : <FaCheck />}
-                          </button>
-                        </td>
-                      </tr>
+                      ""
                     ) : (
+                      // <tr
+                      //   key={item.id}
+                      //   className={isEditMode ? "edit-mode-row" : ""}
+                      // >
+                      //   <td>
+                      //     {item.title.length > 50
+                      //       ? `${item.title.slice(0, 60)}...`
+                      //       : item.title}
+                      //     <br />
+                      //     <p style={{ color: "#5d8c6a", fontSize: "10px" }}>
+                      //       {item.authors ? item.authors.join(", ") : "-"}
+                      //     </p>
+                      //   </td>
+                      //   <td>{item.journalIndex || "-"}</td>
+                      //   <td className="item-group">{item.citationGroup}</td>
+                      //   <td>{item.citationScore}</td>
+                      //   <td>
+                      //     <button className="yayinlar-btn">
+                      //       <FaPencilAlt />
+                      //     </button>
+                      //     <button
+                      //       className="yayinlar-btn"
+                      //       onClick={
+                      //         publicationTypeId === 1
+                      //           ? () => openRightBar()
+                      //           : null
+                      //       }
+                      //     >
+                      //       {isSaved ? <FaInfo /> : <FaCheck />}
+                      //     </button>
+                      //   </td>
+                      // </tr>
                       <tr
                         key={item.id}
                         className={isEditMode ? "edit-mode-row" : ""}
