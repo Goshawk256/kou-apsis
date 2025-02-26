@@ -175,7 +175,7 @@ function Tez() {
           }
         );
 
-        setArticles(response.data.data.advisingThesis);
+        setArticles(response.data.data);
       } catch (error) {
         console.log("Makaleler getirilirken bir hata oluştu.", error);
       } finally {
