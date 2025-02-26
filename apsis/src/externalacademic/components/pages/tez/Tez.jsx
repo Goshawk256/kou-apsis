@@ -327,15 +327,7 @@ function Tez() {
             <div className="upload-file-content">
               {articleFiles.length > 0 ? (
                 articleFiles.map((file, index) => (
-                  <li key={index}>
-                    <a
-                      href={`https://apsis.kocaeli.edu.tr/api/file/${file.fileUrl}?downloadAs=${file.name}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {file.name}
-                    </a>
-                  </li>
+                  <li key={index}>{file.name}</li>
                 ))
               ) : (
                 <li>Henüz dosya yüklenmemiş.</li>
