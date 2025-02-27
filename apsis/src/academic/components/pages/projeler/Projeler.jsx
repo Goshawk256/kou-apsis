@@ -181,6 +181,7 @@ function Projeler() {
         givenGroup={givenGroup}
         givenId={givenId}
         from="projects"
+        refresh={fetchProjects}
       />
 
       {/* Row 2 - Arama, Filtreleme, Yenileme */}

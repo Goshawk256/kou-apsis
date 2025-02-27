@@ -222,6 +222,7 @@ function Yayinlar() {
         givenId={givenId}
         givenPublicationTypeId={givenPublicationTypeId}
         from="publications"
+        refresh={fetchPublications}
       />
 
       {popupMessage && (

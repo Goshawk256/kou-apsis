@@ -175,6 +175,7 @@ function YonetilenTezler() {
         givenGroup={givenGroup}
         givenId={givenId}
         from="thesis"
+        refresh={fetchData}
       />
       {popupMessage && (
         <div className={`already-popup ${popupMessage.type}`}>
