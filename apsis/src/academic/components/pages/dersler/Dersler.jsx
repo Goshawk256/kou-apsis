@@ -142,6 +142,28 @@ function Dersler() {
       );
     }
   };
+  const getPrerredScoreDisplay = (item) => {
+    if (item.groupJuryEdited !== "-") {
+      return (
+        <div className="preffered-group">
+          <s>{item.scoreAuto}</s> / <s>{item.scoreEdited}</s> /{" "}
+          <span>{item.scoreJuryEdited}</span>
+        </div>
+      );
+    } else if (item.groupEdited !== "-") {
+      return (
+        <div className="preffered-group">
+          <s>{item.scoreAuto}</s> / <span>{item.scoreEdited}</span>
+        </div>
+      );
+    } else {
+      return (
+        <div className="preffered-group">
+          <span>{item.scoreAuto}</span>
+        </div>
+      );
+    }
+  };
 
   useEffect(() => {
     // Arama ve filtreleme işlemi
@@ -296,7 +318,12 @@ function Dersler() {
                         <span>{item.groupAuto}</span>
                       </div>
                     </td>
-                    <td>{item.scoreAuto}</td>
+                    <td>
+                      <div className="group-show">
+                        {/* {getPreferredScoreDisplay(item)} */}
+                        <span>{item.scoreAuto}</span>
+                      </div>
+                    </td>
                     <td>
                       {isEditMode ? (
                         <div className="choose-publication">
