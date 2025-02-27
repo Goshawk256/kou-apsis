@@ -292,7 +292,8 @@ function Dersler() {
                     <td>{formatSemester(item.semester)}</td>
                     <td className="item-group">
                       <div className="group-show">
-                        {getPreferredGroupDisplay(item)}
+                        {/* {getPreferredGroupDisplay(item)} */}
+                        <span>{item.groupAuto}</span>
                       </div>
                     </td>
                     <td>{item.scoreAuto}</td>
