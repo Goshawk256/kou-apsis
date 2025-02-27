@@ -231,6 +231,7 @@ function Dersler() {
         givenGroup={givenGroup}
         givenId={givenId}
         from="lessons"
+        refresh={fetchData}
       />
 
       {/* Row 2 - Arama, Filtreleme, Yenileme */}

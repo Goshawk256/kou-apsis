@@ -188,6 +188,7 @@ function Oduller() {
         givenGroup={givenGroup}
         givenId={givenId}
         from="awards"
+        refresh={fetchData}
       />
 
       {/* Row 2 - Arama, Filtreleme, Yenileme */}
