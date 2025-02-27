@@ -21,6 +21,7 @@ function Yayinlar() {
   const [tableData, setTableData] = useState([]);
   const [publicationTypeId, setPublicationTypeId] = useState(1);
   const [popupMessage, setPopupMessage] = useState(null);
+  const [rightBarOpen, setRightBarOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [tempGroups, setTempGroups] = useState({});
   const [isEditMode] = useState(false);
@@ -47,6 +48,7 @@ function Yayinlar() {
   };
 
   const handleEditClick = (id, grup, publicationTypeId) => {
+    openRightBar();
     setgivenGroup(grup);
     setgivenId(id);
     setgivenPublicationTypeId(publicationTypeId);
@@ -164,14 +166,17 @@ function Yayinlar() {
     page * itemsPerPage
   );
   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
-
+  const openRightBar = () => setRightBarOpen(true);
+  const closeRightBar = () => setRightBarOpen(false);
   return (
     <div className={`yayinlar-main`}>
       <RightBar
+        isOpen={rightBarOpen}
+        onClose={closeRightBar}
         givenGroup={givenGroup}
         givenId={givenId}
         givenPublicationTypeId={givenPublicationTypeId}
-        from="yayinlar"
+        from="publications"
       />
 
       {popupMessage && (

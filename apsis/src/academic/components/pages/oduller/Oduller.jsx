@@ -31,6 +31,7 @@ function Oduller() {
   const handleEditClick = (givenId, givenGroup) => {
     setgivenId(givenId);
     setgivenGroup(givenGroup);
+    openRightBar();
     console.log(givenId, givenGroup);
   };
 
@@ -140,6 +141,7 @@ function Oduller() {
         onClose={closeRightBar}
         givenGroup={givenGroup}
         givenId={givenId}
+        from="awards"
       />
 
       {/* Row 2 - Arama, Filtreleme, Yenileme */}

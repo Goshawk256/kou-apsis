@@ -32,6 +32,7 @@ function Projeler() {
     setgivenId(givenId);
     setgivenGroup(givenGroup);
     console.log(givenId, givenGroup);
+    openRightBar();
   };
 
   const handleGroupChange = (id, newValue) => {
@@ -134,6 +135,7 @@ function Projeler() {
         onClose={closeRightBar}
         givenGroup={givenGroup}
         givenId={givenId}
+        from="projects"
       />
 
       {/* Row 2 - Arama, Filtreleme, Yenileme */}

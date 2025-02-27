@@ -33,6 +33,7 @@ function Dersler() {
     setgivenId(givenId);
     setgivenGroup(givenGroup);
     console.log(givenId, givenGroup);
+    openRightBar();
   };
 
   const handleGroupChange = (id, newValue) => {
@@ -184,6 +185,7 @@ function Dersler() {
         onClose={closeRightBar}
         givenGroup={givenGroup}
         givenId={givenId}
+        from="lessons"
       />
 
       {/* Row 2 - Arama, Filtreleme, Yenileme */}

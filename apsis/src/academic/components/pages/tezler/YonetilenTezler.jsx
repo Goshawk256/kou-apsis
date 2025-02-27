@@ -32,6 +32,7 @@ function YonetilenTezler() {
   const handleEditClick = (givenId, givenGroup) => {
     setgivenId(givenId);
     setgivenGroup(givenGroup);
+    openRightBar();
     console.log(givenId, givenGroup);
   };
 
@@ -128,6 +129,7 @@ function YonetilenTezler() {
         onClose={closeRightBar}
         givenGroup={givenGroup}
         givenId={givenId}
+        from="thesis"
       />
       {popupMessage && (
         <div className={`already-popup ${popupMessage.type}`}>
