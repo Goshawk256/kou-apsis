@@ -25,6 +25,8 @@ function Oduller() {
   const [tempGroups, setTempGroups] = useState({}); // Yalnızca eklenen kısmı saklayan nesne
   const [isEditMode] = useState(false);
   const [currentGroup, setCurrentGroup] = useState(null);
+  const [givenGroup, setgivenGroup] = useState("");
+  const [givenId, setgivenId] = useState("");
 
   const handleEditClick = (index, currentGroup) => {
     setCurrentGroup(currentGroup);

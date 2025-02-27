@@ -25,6 +25,8 @@ function Projeler() {
   const [tempGroups, setTempGroups] = useState({}); // Sadece eklenen kısmı tutan nesne
   const [isEditMode] = useState(false);
   const [currentGroup, setCurrentGroup] = useState(null);
+  const [givenGroup, setgivenGroup] = useState("");
+  const [givenId, setgivenId] = useState("");
 
   const handleEditClick = (index, currentGroup) => {
     setCurrentGroup(currentGroup);
