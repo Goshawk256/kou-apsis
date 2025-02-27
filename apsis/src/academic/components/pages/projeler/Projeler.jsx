@@ -132,6 +132,28 @@ function Projeler() {
       );
     }
   };
+  const getPrerredScoreDisplay = (item) => {
+    if (item.groupJuryEdited !== "-") {
+      return (
+        <div className="preffered-group">
+          <s>{item.scoreAuto}</s> / <s>{item.scoreEdited}</s> /{" "}
+          <span>{item.scoreJuryEdited}</span>
+        </div>
+      );
+    } else if (item.groupEdited !== "-") {
+      return (
+        <div className="preffered-group">
+          <s>{item.scoreAuto}</s> / <span>{item.scoreEdited}</span>
+        </div>
+      );
+    } else {
+      return (
+        <div className="preffered-group">
+          <span>{item.scoreAuto}</span>
+        </div>
+      );
+    }
+  };
 
   const itemsPerPage = 4; // Sayfa başına gösterilecek proje sayısı
   const paginatedData = filteredData.slice(
@@ -248,7 +270,11 @@ function Projeler() {
                     {item.status === "Devam Ediyor" ? (
                       <td>{0}</td>
                     ) : (
-                      <td>{item.scoreAuto}</td>
+                      <td>
+                        <div className="group-show">
+                          {getPrerredScoreDisplay(item)}
+                        </div>
+                      </td>
                     )}
                     <td>{item.status}</td>
                     <td>
