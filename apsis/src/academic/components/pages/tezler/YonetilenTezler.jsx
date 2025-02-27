@@ -126,11 +126,8 @@ function YonetilenTezler() {
       <RightBar
         isOpen={rightBarOpen}
         onClose={closeRightBar}
-        editingIndex={editingIndex}
-        tempGroups={tempGroups}
-        onGroupChange={handleGroupChange}
-        group={currentGroup}
-        name={"thesis"}
+        givenGroup={givenGroup}
+        givenId={givenId}
       />
       {popupMessage && (
         <div className={`already-popup ${popupMessage.type}`}>

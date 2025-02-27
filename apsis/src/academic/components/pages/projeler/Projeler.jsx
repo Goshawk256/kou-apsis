@@ -132,11 +132,8 @@ function Projeler() {
       <RightBar
         isOpen={rightBarOpen}
         onClose={closeRightBar}
-        editingIndex={editingIndex}
-        tempGroups={tempGroups}
-        onGroupChange={handleGroupChange}
-        group={currentGroup}
-        name={"project"}
+        givenGroup={givenGroup}
+        givenId={givenId}
       />
 
       {/* Row 2 - Arama, Filtreleme, Yenileme */}
