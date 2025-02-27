@@ -10,32 +10,29 @@ import {
 } from "react-icons/fa";
 import axios from "axios";
 import All_Url from "../../../../url";
-import RightBar from "../../rightbar/RightBar";
 import NotFound from "../../errorstacks/NotFound";
 import { refreshTheToken } from "../../../../middlewares/authMiddleware";
 import click from "../../../../assets/click.png";
 import { motion, AnimatePresence } from "framer-motion";
-
+import RightBar from "../../rightbar/RightBar";
 function Yayinlar() {
   const [searchQuery, setSearchQuery] = useState("");
   const [page, setPage] = useState(1);
   const [tableData, setTableData] = useState([]);
   const [publicationTypeId, setPublicationTypeId] = useState(1);
-  const [rightBarOpen, setRightBarOpen] = useState(false);
   const [popupMessage, setPopupMessage] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [editingIndex, setEditingIndex] = useState(null);
   const [tempGroups, setTempGroups] = useState({});
-  const [currentGroup, setCurrentGroup] = useState(null);
   const [isEditMode] = useState(false);
-  const [name, setName] = useState("makale");
   const [storageKey, setStorageKey] = useState("savedPublications");
-
   const [allPublications, setAllPublications] = useState({});
-
+  const [verilecekGrup, setVerilecekGrup] = useState("");
+  const [verilecekId, setVerilecekId] = useState("");
+  const [verilecekPublicationTypeId, setVerilecekPublicationTypeId] =
+    useState("");
   useEffect(() => {
     updateAllPublications();
-  }, []); // Sadece ilk yüklemede çalışır
+  }, []);
   const updateAllPublications = () => {
     const keys = ["savedArticles", "savedBooks", "savedConferencePapers"];
     let combinedPublications = {};
@@ -50,12 +47,13 @@ function Yayinlar() {
     setAllPublications(combinedPublications);
   };
 
-  const handleEditClick = (index, currentGroup) => {
-    setCurrentGroup(currentGroup);
-    setEditingIndex(index);
-    setTempGroups((prev) => ({ ...prev, [index]: tempGroups[index] || "" }));
-    openRightBar();
-    //setIsEditMode(!isEditMode); // Düzenleme modunu aç/kapat
+  const handleEditClick = (id, grup, publicationTypeId) => {
+    setVerilecekGrup(grup);
+    setVerilecekId(id);
+    setVerilecekPublicationTypeId(publicationTypeId);
+    console.log("id", id);
+    console.log("grup", grup);
+    console.log("publicationTypeId", publicationTypeId);
   };
 
   const username = localStorage.getItem("username");
@@ -161,13 +159,6 @@ function Yayinlar() {
     setTimeout(() => setPopupMessage(null), 1500);
   };
 
-  const handleGroupChange = (id, newValue) => {
-    setTempGroups((prev) => ({
-      ...prev,
-      [id]: newValue,
-    }));
-  };
-
   const itemsPerPage = 4;
   const paginatedData = filteredData.slice(
     (page - 1) * itemsPerPage,
@@ -175,20 +166,13 @@ function Yayinlar() {
   );
   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
 
-  const openRightBar = () => setRightBarOpen(true);
-  const closeRightBar = () => setRightBarOpen(false);
-
   return (
     <div className={`yayinlar-main`}>
       <RightBar
-        isOpen={rightBarOpen}
-        onClose={closeRightBar}
-        id="yayin"
-        editingIndex={editingIndex}
-        tempGroups={tempGroups}
-        onGroupChange={handleGroupChange}
-        group={currentGroup}
-        name={name}
+        verilecekGrup={verilecekGrup}
+        verilecekId={verilecekId}
+        verilecekPublicationTypeId={verilecekPublicationTypeId}
+        from="yayinlar"
       />
 
       {popupMessage && (
@@ -203,7 +187,6 @@ function Yayinlar() {
           className={`yayinlar-btn ${publicationTypeId === 1 ? "active" : ""}`}
           onClick={() => {
             setPublicationTypeId(1);
-            setName("publication");
           }}
         >
           Makaleler
@@ -212,7 +195,6 @@ function Yayinlar() {
           className={`yayinlar-btn ${publicationTypeId === 10 ? "active" : ""}`}
           onClick={() => {
             setPublicationTypeId(10);
-            setName("citation");
           }}
         >
           Atıflarım
@@ -221,7 +203,6 @@ function Yayinlar() {
           className={`yayinlar-btn ${publicationTypeId === 2 ? "active" : ""}`}
           onClick={() => {
             setPublicationTypeId(2);
-            setName("book");
           }}
         >
           Kitaplar
@@ -230,7 +211,6 @@ function Yayinlar() {
           className={`yayinlar-btn ${publicationTypeId === 4 ? "active" : ""}`}
           onClick={() => {
             setPublicationTypeId(4);
-            setName("declaration");
           }}
         >
           Bildiriler
@@ -365,11 +345,12 @@ function Yayinlar() {
                             <div>
                               <button
                                 className="yayinlar-btn"
-                                onClick={
-                                  publicationTypeId == 1
-                                    ? () =>
-                                        handleEditClick(item.id, item.groupAuto)
-                                    : null
+                                onClick={() =>
+                                  handleEditClick(
+                                    item.id,
+                                    item.groupAuto,
+                                    publicationTypeId
+                                  )
                                 }
                               >
                                 <FaPencilAlt />
