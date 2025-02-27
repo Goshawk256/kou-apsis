@@ -19,7 +19,7 @@ import {
 } from "./tableData";
 import TableSection from "./TableSection";
 
-function Finish() {
+function Finish({ onSelect }) {
   const [data, setData] = useState({
     projects: [],
     thesis: [],
@@ -554,6 +554,7 @@ function Finish() {
         <button
           onClick={() => {
             downloadPDF();
+            onSelect("Başvuru");
           }}
           className="finish-button"
         >
