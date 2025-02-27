@@ -29,11 +29,10 @@ function Dersler() {
   const [givenGroup, setgivenGroup] = useState("");
   const [givenId, setgivenId] = useState("");
 
-  const handleEditClick = (index, currentGroup) => {
-    setCurrentGroup(currentGroup);
-    setEditingIndex(index);
-    setTempGroups((prev) => ({ ...prev, [index]: tempGroups[index] || "" })); // Önceden girilmiş değer varsa onu kullan
-    openRightBar();
+  const handleEditClick = (givenId, givenGroup) => {
+    setgivenId(givenId);
+    setgivenGroup(givenGroup);
+    console.log(givenId, givenGroup);
   };
 
   const handleGroupChange = (id, newValue) => {
