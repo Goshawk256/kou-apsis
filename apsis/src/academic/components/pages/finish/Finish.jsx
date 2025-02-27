@@ -287,16 +287,13 @@ function Finish() {
     const secilmisIlan = localStorage.getItem("secilmisIlan");
 
     let data = {
-      username: localStorage.getItem("username") || "Bilinmeyen Kullanıcı",
       applicationType: basvuruTipi,
+      title: localStorage.getItem("selectedOption"),
       date: new Date().toISOString(), // Gerekirse toLocaleString() kullanabilirsin
     };
 
     if (basvuruTipi === "Scientific" && secilmisIlan) {
       data.positionAnnouncementId = secilmisIlan;
-    }
-    if (basvuruTipi === "Preliminary") {
-      data.title = localStorage.getItem("selectedOption");
     }
 
     if (savedPublications.length >= 0) {
@@ -340,21 +337,14 @@ function Finish() {
       }
 
       formData.append("data", JSON.stringify(sendData));
-      formData.append("file", pdfBlob, "basvuru.pdf");
+      formData.append("file", pdfBlob);
       for (let pair of formData.entries()) {
         console.log(pair[0], pair[1]);
       }
 
-      const basvuruTipi = localStorage.getItem("basvuruTipi");
-      let sendingData = sendData;
-      if (basvuruTipi === "Scientific") {
-        sendingData = formData;
-      }
-
-      console.log("Gönderilen Veri:", sendingData);
       const response = await axios.post(
         `${All_Url.api_base_url}/academic/add-application`,
-        sendingData,
+        formData,
         {
           headers: {
             Authorization: `Bearer ${token}`,
