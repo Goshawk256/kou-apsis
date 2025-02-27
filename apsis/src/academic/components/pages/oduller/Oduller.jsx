@@ -69,6 +69,28 @@ function Oduller() {
       setLoading(false);
     }
   };
+  const getPreferredGroupDisplay = (item) => {
+    if (item.groupJuryEdited !== "-") {
+      return (
+        <div className="preffered-group">
+          <s>{item.groupAuto}</s> / <s>{item.groupEdited}</s> /{" "}
+          <span>{item.groupJuryEdited}</span>
+        </div>
+      );
+    } else if (item.groupEdited !== "-") {
+      return (
+        <div className="preffered-group">
+          <s>{item.groupAuto}</s> / <span>{item.groupEdited}</span>
+        </div>
+      );
+    } else {
+      return (
+        <div className="preffered-group">
+          <span>{item.groupAuto}</span>
+        </div>
+      );
+    }
+  };
 
   useEffect(() => {
     fetchData();
@@ -219,16 +241,7 @@ function Oduller() {
                     <td>{item.title}</td>
                     <td className="item-group">
                       <div className="group-show">
-                        {tempGroups[item.id] ? (
-                          <div className="preffered-group">
-                            <s>{item.group}</s>/{" "}
-                            <span>{tempGroups[item.id]}</span>
-                          </div>
-                        ) : (
-                          <div className="preffered-group">
-                            <span>{item.groupAuto}</span>
-                          </div>
-                        )}
+                        {getPreferredGroupDisplay(item)}
                       </div>
                     </td>
                     <td>{item.scoreAuto}</td>
