@@ -242,7 +242,6 @@ function Dersler() {
               <tr>
                 <th>Kurs Adı</th>
                 <th>Dönem</th>
-
                 <th>Grup</th>
                 <th>Puan</th>
                 <th>İşlem</th>
@@ -268,7 +267,6 @@ function Dersler() {
                   >
                     <td>{item.course_name}</td>
                     <td>{formatSemester(item.semester)}</td>
-
                     <td className="item-group">
                       <div className="group-show">
                         {tempGroups[item.id] ? (
