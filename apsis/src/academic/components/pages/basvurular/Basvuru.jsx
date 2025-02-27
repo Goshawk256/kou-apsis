@@ -52,7 +52,6 @@ function Basvuru({ onSelect }) {
       return acc;
     }, {});
 
-    // Grupları sıralama (örneğin A1, A2, A3 şeklinde sıralı olacak)
     Object.keys(grouped).forEach((key) => {
       grouped[key].sort((a, b) => {
         const numA = parseInt(a.group.match(/\d+/)?.[0] || "999", 10);
