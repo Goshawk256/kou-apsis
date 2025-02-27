@@ -191,7 +191,6 @@ function YonetilenTezler() {
             <thead>
               <tr>
                 <th>Ad</th>
-                <th>Kurum</th>
                 <th>Grup</th>
                 <th>Puan</th>
                 <th>İşlem</th>
@@ -208,16 +207,8 @@ function YonetilenTezler() {
                     key={item.id}
                     className={isEditMode ? "edit-mode-row" : ""}
                   >
-                    <td>
-                      {item.title}
-                      {/*  <br />
-                                                <p >
+                    <td>{item.title}</td>
 
-                                                    <span style={{ color: '#eea95b' }}>Düzenlenmedi</span>
-                                                </p> */}
-                    </td>
-
-                    <td>{item.corporateName}</td>
                     <td className="item-group">
                       <div className="group-show">
                         {tempGroups[item.id] ? (
