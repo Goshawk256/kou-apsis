@@ -31,6 +31,25 @@ function Yayinlar() {
   const [name, setName] = useState("makale");
   const [storageKey, setStorageKey] = useState("savedPublications");
 
+  const [allPublications, setAllPublications] = useState({});
+
+  useEffect(() => {
+    updateAllPublications();
+  }, []); // Sadece ilk yüklemede çalışır
+  const updateAllPublications = () => {
+    const keys = ["savedArticles", "savedBooks", "savedConferencePapers"];
+    let combinedPublications = {};
+
+    keys.forEach((key) => {
+      const savedItems = JSON.parse(localStorage.getItem(key)) || [];
+      savedItems.forEach((item) => {
+        combinedPublications[item.id] = item;
+      });
+    });
+
+    setAllPublications(combinedPublications);
+  };
+
   const handleEditClick = (index, currentGroup) => {
     setCurrentGroup(currentGroup);
     setEditingIndex(index);
@@ -89,33 +108,11 @@ function Yayinlar() {
     }
   };
 
-  const fetchCitations = async () => {
-    try {
-      const response = await axios.post(
-        `${All_Url.api_base_url}/publication/get-citations-by-username`,
-        { username }
-      );
-
-      if (response.data.success) {
-        setTableData(
-          response.data.data.sort(
-            (a, b) => new Date(b.publishDate) - new Date(a.publishDate)
-          )
-        );
-      } else {
-        showPopup("Atıf verileri çekilirken hata oluştu.", "error");
-      }
-    } catch (error) {
-      showPopup("Veri çekerken bir hata oluştu.", error);
-    }
-  };
-
   const filteredData = tableData.filter((item) =>
     item.title.toLowerCase().includes(searchQuery.trim().toLowerCase())
   );
 
   const saveToLocalStorage = (publication) => {
-    console.log(publication);
     let key;
     switch (publication.publicationTypeId) {
       case 1:
@@ -132,7 +129,7 @@ function Yayinlar() {
         return;
     }
 
-    const savedPublications = JSON.parse(localStorage.getItem(key)) || [];
+    let savedPublications = JSON.parse(localStorage.getItem(key)) || [];
     const isAlreadySaved = savedPublications.some(
       (pub) => pub.id === publication.id
     );
@@ -142,18 +139,21 @@ function Yayinlar() {
         "Bu yayın zaten kaydedilmiş, kaldırmak ister misiniz?"
       );
       if (confirmDelete) {
-        const updatedPublications = savedPublications.filter(
+        savedPublications = savedPublications.filter(
           (pub) => pub.id !== publication.id
         );
-        localStorage.setItem(key, JSON.stringify(updatedPublications));
         showPopup("Yayın kaldırıldı.", "success");
       }
     } else {
       savedPublications.push(publication);
-      localStorage.setItem(key, JSON.stringify(savedPublications));
       showPopup("Yayın kaydedildi.", "success");
     }
-    setStorageKey(key);
+
+    // Güncellenmiş veriyi localStorage'a kaydet
+    localStorage.setItem(key, JSON.stringify(savedPublications));
+
+    // **allPublications state'ini güncelle**
+    updateAllPublications();
   };
 
   const showPopup = (message, type) => {
@@ -311,9 +311,7 @@ function Yayinlar() {
                   {paginatedData.map((item) => {
                     const savedPublications =
                       JSON.parse(localStorage.getItem(storageKey)) || [];
-                    const isSaved = savedPublications.some(
-                      (pub) => pub.id === item.id
-                    ); // Kontrol
+                    const isSaved = !!allPublications[item.id];
 
                     return publicationTypeId === 2 ? (
                       ""
@@ -381,7 +379,11 @@ function Yayinlar() {
                                 className="yayinlar-btn"
                                 onClick={() => saveToLocalStorage(item)}
                               >
-                                {isSaved ? <FaCheckSquare /> : <FaRegSquare />}
+                                {allPublications[item.id] ? (
+                                  <FaCheckSquare />
+                                ) : (
+                                  <FaRegSquare />
+                                )}
                               </button>
                             </div>
                           )}
