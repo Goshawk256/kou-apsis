@@ -2,7 +2,7 @@ import "./RightBar.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-function RightBar({ isOpen, onClose, givenGroup, givenId, from }) {
+function RightBar({ isOpen, onClose, givenGroup, givenId, from, refresh }) {
   const [requestUrl, setRequestUrl] = useState("");
   const [newGroup, setNewGroup] = useState("");
   const [idName, setIdName] = useState("");
@@ -67,6 +67,9 @@ function RightBar({ isOpen, onClose, givenGroup, givenId, from }) {
       console.log("Başarıyla güncellendi:", response.data);
     } catch (error) {
       console.error("Rank update error:", error);
+    } finally {
+      refresh();
+      onClose();
     }
   };
 
