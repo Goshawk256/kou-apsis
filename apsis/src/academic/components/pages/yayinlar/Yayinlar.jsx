@@ -165,6 +165,30 @@ function Yayinlar() {
     (page - 1) * itemsPerPage,
     page * itemsPerPage
   );
+  const getPreferredGroupDisplay = (item) => {
+    if (item.groupJuryEdited !== "-") {
+      return (
+        <div className="preffered-group">
+          <s>{item.groupAuto}</s> / <s>{item.groupEdited}</s> /{" "}
+          <span>{item.groupJuryEdited}</span>
+        </div>
+      );
+    } else if (item.groupEdited !== "-") {
+      return (
+        <div className="preffered-group">
+          <s>{item.groupAuto}</s> / <span>{item.groupEdited}</span>
+        </div>
+      );
+    } else {
+      return (
+        <div className="preffered-group">
+          <span>{item.groupAuto}</span>
+        </div>
+      );
+    }
+  };
+
+  console.log("filteredData", filteredData);
   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
   const openRightBar = () => setRightBarOpen(true);
   const closeRightBar = () => setRightBarOpen(false);
@@ -327,16 +351,7 @@ function Yayinlar() {
 
                         <td className="item-group">
                           <div className="group-show">
-                            {tempGroups[item.id] ? (
-                              <div className="preffered-group">
-                                <s>{item.groupAuto}</s>/{" "}
-                                <span>{tempGroups[item.id]}</span>
-                              </div>
-                            ) : (
-                              <div className="preffered-group">
-                                <span>{item.groupAuto}</span>
-                              </div>
-                            )}
+                            {getPreferredGroupDisplay(item)}
                           </div>
                         </td>
                         <td>{(item.scoreAuto || 0).toFixed(2)}</td>
