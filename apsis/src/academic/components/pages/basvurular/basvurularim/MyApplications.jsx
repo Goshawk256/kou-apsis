@@ -93,7 +93,7 @@ function MyApplications({ onSelect }) {
                               className="myapplications-button"
                               onClick={() =>
                                 window.open(
-                                  `https://apsis.kocaeli.edu.tr/api/file/${app.pdfToken.fileToken}?downloadAs=${app.pdfToken.fileName}`,
+                                  `https://apsis.kocaeli.edu.tr/api/file/${app.pdfToken.fileToken}`,
                                   "_blank"
                                 )
                               }
