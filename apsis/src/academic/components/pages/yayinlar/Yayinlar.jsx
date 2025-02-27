@@ -22,13 +22,14 @@ function Yayinlar() {
   const [tableData, setTableData] = useState([]);
   const [publicationTypeId, setPublicationTypeId] = useState(1);
   const [rightBarOpen, setRightBarOpen] = useState(false);
-  const [popupMessage, setPopupMessage] = useState(null); // Pop-up mesajı
+  const [popupMessage, setPopupMessage] = useState(null);
   const [loading, setLoading] = useState(false);
   const [editingIndex, setEditingIndex] = useState(null);
-  const [tempGroups, setTempGroups] = useState({}); // Sadece eklenen kısmı tutan nesne
+  const [tempGroups, setTempGroups] = useState({});
   const [currentGroup, setCurrentGroup] = useState(null);
   const [isEditMode] = useState(false);
   const [name, setName] = useState("makale");
+  const [storageKey, setStorageKey] = useState("savedPublications");
 
   const handleEditClick = (index, currentGroup) => {
     setCurrentGroup(currentGroup);
@@ -72,7 +73,6 @@ function Yayinlar() {
         { username, publicationTypeId },
         { headers: { Authorization: `Bearer ${accessToken}` } }
       );
-
       if (response.data.success) {
         setTableData(
           response.data.data.sort(
@@ -115,37 +115,47 @@ function Yayinlar() {
   );
 
   const saveToLocalStorage = (publication) => {
-    const savedPublications =
-      JSON.parse(localStorage.getItem("savedPublications")) || [];
+    let key;
+    switch (publication.publicationTypeId) {
+      case 1:
+        key = "savedArticle";
+        break;
+      case 2:
+        key = "savedCitation";
+        break;
+      case 3:
+        key = "savedBook";
+        break;
+      case 4:
+        key = "savedConferencePaper";
+        break;
+      default:
+        showPopup("Geçersiz yayın türü!", "error");
+        return;
+    }
 
-    const existingPublication = savedPublications.find(
+    const savedPublications = JSON.parse(localStorage.getItem(key)) || [];
+    const isAlreadySaved = savedPublications.some(
       (pub) => pub.id === publication.id
     );
 
-    if (!existingPublication) {
-      savedPublications.push(publication);
-      localStorage.setItem(
-        "savedPublications",
-        JSON.stringify(savedPublications)
+    if (isAlreadySaved) {
+      const confirmDelete = window.confirm(
+        "Bu yayın zaten kaydedilmiş, kaldırmak ister misiniz?"
       );
-      showPopup("Yayın başarıyla kaydedildi!", "success");
-    } else {
-      const userConfirmed = confirm(
-        "Bu yayın zaten kaydedilmiş. Silmek ister misiniz?"
-      );
-      if (userConfirmed) {
+      if (confirmDelete) {
         const updatedPublications = savedPublications.filter(
           (pub) => pub.id !== publication.id
         );
-        localStorage.setItem(
-          "savedPublications",
-          JSON.stringify(updatedPublications)
-        );
-        showPopup("Yayın başarıyla silindi!", "success");
-      } else {
-        showPopup("Yayın silinmedi.", "info");
+        localStorage.setItem(key, JSON.stringify(updatedPublications));
+        showPopup("Yayın kaldırıldı.", "success");
       }
+    } else {
+      savedPublications.push(publication);
+      localStorage.setItem(key, JSON.stringify(savedPublications));
+      showPopup("Yayın kaydedildi.", "success");
     }
+    setStorageKey(key);
   };
 
   const showPopup = (message, type) => {
@@ -305,8 +315,7 @@ function Yayinlar() {
                 <tbody>
                   {paginatedData.map((item) => {
                     const savedPublications =
-                      JSON.parse(localStorage.getItem("savedPublications")) ||
-                      [];
+                      JSON.parse(localStorage.getItem(storageKey)) || [];
                     const isSaved = savedPublications.some(
                       (pub) => pub.id === item.id
                     ); // Kontrol
@@ -314,38 +323,6 @@ function Yayinlar() {
                     return publicationTypeId === 2 ? (
                       ""
                     ) : (
-                      // <tr
-                      //   key={item.id}
-                      //   className={isEditMode ? "edit-mode-row" : ""}
-                      // >
-                      //   <td>
-                      //     {item.title.length > 50
-                      //       ? `${item.title.slice(0, 60)}...`
-                      //       : item.title}
-                      //     <br />
-                      //     <p style={{ color: "#5d8c6a", fontSize: "10px" }}>
-                      //       {item.authors ? item.authors.join(", ") : "-"}
-                      //     </p>
-                      //   </td>
-                      //   <td>{item.journalIndex || "-"}</td>
-                      //   <td className="item-group">{item.citationGroup}</td>
-                      //   <td>{item.citationScore}</td>
-                      //   <td>
-                      //     <button className="yayinlar-btn">
-                      //       <FaPencilAlt />
-                      //     </button>
-                      //     <button
-                      //       className="yayinlar-btn"
-                      //       onClick={
-                      //         publicationTypeId === 1
-                      //           ? () => openRightBar()
-                      //           : null
-                      //       }
-                      //     >
-                      //       {isSaved ? <FaInfo /> : <FaCheck />}
-                      //     </button>
-                      //   </td>
-                      // </tr>
                       <tr
                         key={item.id}
                         className={isEditMode ? "edit-mode-row" : ""}
