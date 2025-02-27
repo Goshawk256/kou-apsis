@@ -231,7 +231,6 @@ function Dersler() {
         givenGroup={givenGroup}
         givenId={givenId}
         from="lessons"
-        refresh={fetchData}
       />
 
       {/* Row 2 - Arama, Filtreleme, Yenileme */}
@@ -334,9 +333,9 @@ function Dersler() {
                         <div>
                           <button
                             className="yayinlar-btn"
-                            onClick={() =>
-                              handleEditClick(item.id, item.groupAuto)
-                            }
+                            // onClick={() =>
+                            //   handleEditClick(item.id, item.groupAuto)
+                            // }
                           >
                             <FaPencilAlt />
                           </button>
