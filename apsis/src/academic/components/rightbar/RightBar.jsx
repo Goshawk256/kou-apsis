@@ -1,6 +1,6 @@
 import "./RightBar.css";
 
-function RightBar({ isOpen, onClose, givenGroup, givenId }) {
+function RightBar({ isOpen, onClose, givenGroup, givenId, from }) {
   return (
     <>
       <>
@@ -20,6 +20,9 @@ function RightBar({ isOpen, onClose, givenGroup, givenId }) {
             </div>
             <div className="right-bar-content-body">
               <p>{givenId}</p>
+            </div>
+            <div className="right-bar-content-body">
+              <p>{from}</p>
             </div>
           </div>
         </div>
