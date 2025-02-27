@@ -56,7 +56,9 @@ function Makale() {
     formData.append("file", selectedFile);
     formData.append("articleId", id);
     formData.append("name", pdfName);
-
+    for (let pair of formData.entries()) {
+      console.log(pair[0], pair[1]);
+    }
     try {
       const response = await axios.post(
         "https://apsis.kocaeli.edu.tr/api/external-academic/add-article-file",

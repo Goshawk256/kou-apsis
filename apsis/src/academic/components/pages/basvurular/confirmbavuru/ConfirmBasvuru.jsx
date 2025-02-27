@@ -221,7 +221,10 @@ function ConfirmBasvuru({ setShowTable }) {
               <div className="external-list-content">
                 {announcements.map((item, index) => (
                   <li
-                    onClick={() => setSelectedAnnouncement(item.id)}
+                    onClick={() => {
+                      setSelectedAnnouncement(item.id);
+                      setSelected(item.position);
+                    }}
                     key={index}
                     className={
                       selectedAnnouncement === item.id ? "selected-li" : ""
@@ -247,7 +250,12 @@ function ConfirmBasvuru({ setShowTable }) {
                       <b>Bitiş Tarihi:</b> <br />
                       {item.deadLine}
                     </span>
-                    <button onClick={() => setSelectedAnnouncement(item.id)}>
+                    <button
+                      onClick={() => {
+                        setSelectedAnnouncement(item.id);
+                        setSelected(item.position);
+                      }}
+                    >
                       <img src={click} alt="" />
                     </button>
                   </li>
