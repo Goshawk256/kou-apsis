@@ -191,7 +191,6 @@ function Projeler() {
             <thead>
               <tr>
                 <th>Proje Adı</th>
-                <th>Proje Türü</th>
                 <th>Grup</th>
                 <th>Puan</th>
                 <th>Durum</th>
@@ -215,13 +214,8 @@ function Projeler() {
                       {item.projectName.length > 50
                         ? `${item.projectName.slice(0, 60)}...`
                         : item.projectName}
-                      {/*  <br />
-                                                <p >
-
-                                                    <span style={{ color: '#eea95b' }}>Düzenlenmedi</span>
-                                                </p> */}
                     </td>
-                    <td>{item.projectTypeName}</td>
+
                     <td className="item-group">
                       <div className="group-show">
                         {tempGroups[item.id] ? (

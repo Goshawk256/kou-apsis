@@ -242,9 +242,7 @@ function Dersler() {
               <tr>
                 <th>Kurs Adı</th>
                 <th>Dönem</th>
-                <th>Kontenjan</th>
-                <th>Dil</th>
-                <th>Diploma Türü</th>
+
                 <th>Grup</th>
                 <th>Puan</th>
                 <th>İşlem</th>
@@ -268,19 +266,9 @@ function Dersler() {
                       }
                     }}
                   >
-                    <td>
-                      {item.course_name}
-                      {/*  <br />
-                                                <p >
-
-                                                    <span style={{ color: '#eea95b' }}>Düzenlenmedi</span>
-                                                </p> */}
-                    </td>
+                    <td>{item.course_name}</td>
                     <td>{formatSemester(item.semester)}</td>
 
-                    <td>{item.course_count}</td>
-                    <td>{item.ders_dil_adi}</td>
-                    <td>{item.dip_tur}</td>
                     <td className="item-group">
                       <div className="group-show">
                         {tempGroups[item.id] ? (
