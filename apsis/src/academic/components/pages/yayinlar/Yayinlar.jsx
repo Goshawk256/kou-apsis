@@ -45,7 +45,7 @@ function Yayinlar() {
     refreshTheToken();
     if (username) {
       if (publicationTypeId === 2) {
-        fetchCitations();
+        fetchPublications();
       } else {
         fetchPublications();
       }
@@ -115,19 +115,17 @@ function Yayinlar() {
   );
 
   const saveToLocalStorage = (publication) => {
+    console.log(publication);
     let key;
     switch (publication.publicationTypeId) {
       case 1:
-        key = "savedArticle";
+        key = "savedArticles";
         break;
       case 2:
-        key = "savedCitation";
-        break;
-      case 3:
-        key = "savedBook";
+        key = "savedBooks";
         break;
       case 4:
-        key = "savedConferencePaper";
+        key = "savedConferencePapers";
         break;
       default:
         showPopup("Geçersiz yayın türü!", "error");
@@ -211,18 +209,18 @@ function Yayinlar() {
           Makaleler
         </button>
         <button
-          className={`yayinlar-btn ${publicationTypeId === 2 ? "active" : ""}`}
+          className={`yayinlar-btn ${publicationTypeId === 10 ? "active" : ""}`}
           onClick={() => {
-            setPublicationTypeId(2);
+            setPublicationTypeId(10);
             setName("citation");
           }}
         >
           Atıflarım
         </button>
         <button
-          className={`yayinlar-btn ${publicationTypeId === 3 ? "active" : ""}`}
+          className={`yayinlar-btn ${publicationTypeId === 2 ? "active" : ""}`}
           onClick={() => {
-            setPublicationTypeId(3);
+            setPublicationTypeId(2);
             setName("book");
           }}
         >
@@ -248,10 +246,7 @@ function Yayinlar() {
           placeholder="Arama Sözcüğünüzü Giriniz..."
           className="yayinlar-search-input"
         />
-        <button
-          className="yayinlar-refresh-btn"
-          onClick={publicationTypeId === 2 ? fetchCitations : fetchPublications}
-        >
+        <button className="yayinlar-refresh-btn" onClick={fetchPublications}>
           <FaSync />
         </button>
 

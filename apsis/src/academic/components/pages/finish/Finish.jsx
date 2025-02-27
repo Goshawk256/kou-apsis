@@ -70,11 +70,11 @@ function Finish({ onSelect }) {
 
     // Her grup için veri satırları
     section.groups.forEach((expectedGroup) => {
-      const matchingItems = section.data.filter(
+      const matchingItems = section?.data?.filter(
         (item) => (item.groupAuto || item.group) === expectedGroup
       );
 
-      if (matchingItems.length === 0) {
+      if (matchingItems?.length === 0) {
         // Eğer bu grup için veri yoksa boş satır ekle
         rows.push([
           {
@@ -85,7 +85,7 @@ function Finish({ onSelect }) {
           { text: "0", alignment: "center" },
         ]);
       } else {
-        matchingItems.forEach((item, index) => {
+        matchingItems?.forEach((item, index) => {
           if (index === 0) {
             rows.push([
               {
@@ -258,8 +258,10 @@ function Finish({ onSelect }) {
       setData({
         projects: JSON.parse(localStorage.getItem("savedProjects")) || [],
         thesis: JSON.parse(localStorage.getItem("savedThesis")) || [],
-        publications:
-          JSON.parse(localStorage.getItem("savedPublications")) || [],
+        articles: JSON.parse(localStorage.getItem("savedArticles")) || [],
+        books: JSON.parse(localStorage.getItem("savedBooks")) || [],
+        conferencepaper:
+          JSON.parse(localStorage.getItem("savedConferencePapers")) || [],
         artworks: JSON.parse(localStorage.getItem("savedArtworks")) || [],
         awards: JSON.parse(localStorage.getItem("savedAwards")) || [],
         courses: JSON.parse(localStorage.getItem("savedCourses")) || [],
@@ -277,8 +279,12 @@ function Finish({ onSelect }) {
     const savedProjects =
       JSON.parse(localStorage.getItem("savedProjects")) || [];
     const savedThesis = JSON.parse(localStorage.getItem("savedThesis")) || [];
-    const savedPublications =
-      JSON.parse(localStorage.getItem("savedPublications")) || [];
+    const savedArticles =
+      JSON.parse(localStorage.getItem("savedArticles")) || [];
+    const savedBooks = JSON.parse(localStorage.getItem("savedBooks")) || [];
+    const savedConferencePapers =
+      JSON.parse(localStorage.getItem("savedConferencePapers")) || [];
+
     const savedAwards = JSON.parse(localStorage.getItem("savedAwards")) || [];
     const savedArtworks =
       JSON.parse(localStorage.getItem("savedArtworks")) || [];
@@ -296,9 +302,16 @@ function Finish({ onSelect }) {
       data.positionAnnouncementId = secilmisIlan;
     }
 
-    if (savedPublications.length >= 0) {
+    if (savedArticles.length >= 0) {
       data.articles =
-        savedPublications.map((item) => ({ publicationId: item.id })) || [];
+        savedArticles.map((item) => ({ publicationId: item.id })) || [];
+    }
+    if (savedBooks.length >= 0) {
+      data.books = savedBooks.map((item) => ({ publicationId: item.id })) || [];
+    }
+    if (savedConferencePapers.length >= 0) {
+      data.conferencePapers =
+        savedConferencePapers.map((item) => ({ publicationId: item.id })) || [];
     }
     if (savedProjects.length >= 0) {
       data.projects =

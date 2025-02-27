@@ -15,8 +15,12 @@ function Basvuru({ onSelect }) {
     const savedProjects =
       JSON.parse(localStorage.getItem("savedProjects")) || [];
     const savedThesis = JSON.parse(localStorage.getItem("savedThesis")) || [];
-    const savedPublications =
-      JSON.parse(localStorage.getItem("savedPublications")) || [];
+    const savedArticles =
+      JSON.parse(localStorage.getItem("savedArticles")) || [];
+    const savedBooks = JSON.parse(localStorage.getItem("savedBooks")) || [];
+    const savedConferencePapers =
+      JSON.parse(localStorage.getItem("savedConferencePapers")) || [];
+
     const savedAwards = JSON.parse(localStorage.getItem("savedAwards")) || [];
     const savedArtworks =
       JSON.parse(localStorage.getItem("savedArtworks")) || [];
@@ -25,7 +29,9 @@ function Basvuru({ onSelect }) {
     const formattedData = [
       ...savedProjects,
       ...savedThesis,
-      ...savedPublications,
+      ...savedArticles,
+      ...savedBooks,
+      ...savedConferencePapers,
       ...savedLessons,
       ...savedAwards,
       ...savedArtworks,
@@ -33,7 +39,6 @@ function Basvuru({ onSelect }) {
       id: item.id,
       title: item.title || item.projectName || item.course_name,
       group: item.group || item.groupAuto || "Z999",
-      type: item.type || "Belirtilmemiş",
       score: item.score || item.scoreAuto || 0,
       authors: item.authors || [],
     }));
@@ -96,7 +101,7 @@ function Basvuru({ onSelect }) {
               <tr className="basvuru-table-header">
                 <th>Başlık</th>
                 <th>Grup</th>
-                <th>Tür</th>
+
                 <th>Puan</th>
               </tr>
             </thead>
@@ -106,7 +111,7 @@ function Basvuru({ onSelect }) {
                   <tr key={item.id}>
                     <td>{item.title}</td>
                     <td>{item.group}</td>
-                    <td>{item.type}</td>
+
                     <td>{item.score?.toFixed(2)}</td>
                   </tr>
                 ))}
