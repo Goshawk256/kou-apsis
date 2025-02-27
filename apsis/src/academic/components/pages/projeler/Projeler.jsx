@@ -28,11 +28,10 @@ function Projeler() {
   const [givenGroup, setgivenGroup] = useState("");
   const [givenId, setgivenId] = useState("");
 
-  const handleEditClick = (index, currentGroup) => {
-    setCurrentGroup(currentGroup);
-    setEditingIndex(index);
-    setTempGroups((prev) => ({ ...prev, [index]: tempGroups[index] || "" })); // Önceden girilmiş değer varsa onu kullan
-    openRightBar();
+  const handleEditClick = (givenId, givenGroup) => {
+    setgivenId(givenId);
+    setgivenGroup(givenGroup);
+    console.log(givenId, givenGroup);
   };
 
   const handleGroupChange = (id, newValue) => {
@@ -222,12 +221,12 @@ function Projeler() {
                       <div className="group-show">
                         {tempGroups[item.id] ? (
                           <div className="preffered-group">
-                            <s>{item.group}</s>/{" "}
+                            <s>{item.groupAuto}</s>/{" "}
                             <span>{tempGroups[item.id]}</span>
                           </div>
                         ) : (
                           <div className="preffered-group">
-                            <span> {item.group}</span>
+                            <span> {item.groupAuto}</span>
                           </div>
                         )}
                       </div>
@@ -236,7 +235,7 @@ function Projeler() {
                     {item.status === "Devam Ediyor" ? (
                       <td>{0}</td>
                     ) : (
-                      <td>{item.score}</td>
+                      <td>{item.scoreAuto}</td>
                     )}
                     <td>{item.status}</td>
                     <td>
@@ -248,7 +247,9 @@ function Projeler() {
                         <div>
                           <button
                             className="yayinlar-btn"
-                            onClick={() => handleEditClick(item.id, item.group)}
+                            onClick={() =>
+                              handleEditClick(item.id, item.groupAuto)
+                            }
                           >
                             <FaPencilAlt />
                           </button>

@@ -28,11 +28,10 @@ function Oduller() {
   const [givenGroup, setgivenGroup] = useState("");
   const [givenId, setgivenId] = useState("");
 
-  const handleEditClick = (index, currentGroup) => {
-    setCurrentGroup(currentGroup);
-    setEditingIndex(index);
-    setTempGroups((prev) => ({ ...prev, [index]: tempGroups[index] || "" })); // Önceden bir değer varsa onu kullan
-    openRightBar();
+  const handleEditClick = (givenId, givenGroup) => {
+    setgivenId(givenId);
+    setgivenGroup(givenGroup);
+    console.log(givenId, givenGroup);
   };
 
   const handleGroupChange = (id, newValue) => {
@@ -228,12 +227,12 @@ function Oduller() {
                           </div>
                         ) : (
                           <div className="preffered-group">
-                            <span>{item.group}</span>
+                            <span>{item.groupAuto}</span>
                           </div>
                         )}
                       </div>
                     </td>
-                    <td>{item.score}</td>
+                    <td>{item.scoreAuto}</td>
                     <td>
                       {isEditMode ? (
                         <div className="choose-publication">
@@ -243,7 +242,9 @@ function Oduller() {
                         <div>
                           <button
                             className="yayinlar-btn"
-                            onClick={() => handleEditClick(item.id, item.group)}
+                            onClick={() =>
+                              handleEditClick(item.id, item.groupAuto)
+                            }
                           >
                             <FaPencilAlt />
                           </button>
