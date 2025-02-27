@@ -297,7 +297,6 @@ function Yayinlar() {
                 <thead>
                   <tr>
                     <th>Yayın Adı</th>
-                    <th>Endeks Türü</th>
                     <th>Grup</th>
                     <th>Puan</th>
                     <th>İşlem</th>
@@ -371,7 +370,7 @@ function Yayinlar() {
                             )}
                           </p>
                         </td>
-                        <td>{item.journalIndex || "-"}</td>
+
                         <td className="item-group">
                           <div className="group-show">
                             {tempGroups[item.id] ? (

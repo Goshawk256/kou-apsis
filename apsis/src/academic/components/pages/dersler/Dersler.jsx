@@ -81,18 +81,28 @@ function Dersler() {
           }
         );
 
-        // Gelen verinin doğru olup olmadığını kontrol et
         if (
           response.data &&
           response.data.success &&
           Array.isArray(response.data.data)
         ) {
           const courses = response.data.data.map((item) => ({
-            // Her bir öğe üzerinde işlem yap
-            ...item, // item'daki tüm alanları al
-            // Ekstra bir işlem yapacaksanız, örneğin 'semester' kullanmak
+            ...item,
             semester: item.semester,
           }));
+
+          // En yeni yıla göre sırala (Büyük yıl -> Küçük yıl, Güz (G) -> Bahar (B))
+          courses.sort((a, b) => {
+            const yearA = parseInt(a.semester.slice(0, 4)); // Yıl kodunu al
+            const yearB = parseInt(b.semester.slice(0, 4));
+            const termA = a.semester.slice(4); // Dönem kodunu al (G/B)
+            const termB = b.semester.slice(4);
+
+            if (yearA !== yearB) {
+              return yearB - yearA; // Büyük yıl önce gelsin
+            }
+            return termA === "G" ? -1 : 1; // Güz önce gelsin
+          });
 
           setTableData(courses);
           setFilteredData(courses);
