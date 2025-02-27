@@ -354,6 +354,7 @@ function Finish({ onSelect }) {
       );
 
       alert("Başvuru tamamlandı!");
+      onSelect("Başvuru");
       return response.data.success;
     } catch (error) {
       console.error("Hata oluştu:", error);
@@ -554,7 +555,6 @@ function Finish({ onSelect }) {
         <button
           onClick={() => {
             downloadPDF();
-            onSelect("Başvuru");
           }}
           className="finish-button"
         >
