@@ -17,7 +17,7 @@ function RightBar({ isOpen, onClose, givenGroup, givenId, from, refresh }) {
           "https://apsis.kocaeli.edu.tr/api/academic/update-project-rank"
         );
         setUploadFileUrl(
-          "https://apsis.kocaeli.edu.tr/api/external-academic/add-project-file"
+          "https://apsis.kocaeli.edu.tr/api/academic/add-project-file"
         );
         setIdName("projectId");
         setName("Proje Düzenleme");
@@ -27,7 +27,7 @@ function RightBar({ isOpen, onClose, givenGroup, givenId, from, refresh }) {
           "https://apsis.kocaeli.edu.tr/api/academic/update-publication-rank"
         );
         setUploadFileUrl(
-          "https://apsis.kocaeli.edu.tr/api/external-academic/add-publication-file"
+          "https://apsis.kocaeli.edu.tr/api/academic/add-publication-file"
         );
         setIdName("publicationId");
         setName("Yayın Düzenleme");
@@ -37,7 +37,7 @@ function RightBar({ isOpen, onClose, givenGroup, givenId, from, refresh }) {
           "https://apsis.kocaeli.edu.tr/api/academic/update-lesson-ranks"
         );
         setUploadFileUrl(
-          "https://apsis.kocaeli.edu.tr/api/external-academic/add-lesson-file"
+          "https://apsis.kocaeli.edu.tr/api/academic/add-lesson-file"
         );
         setIdName("lessonId");
         setName("Ders Düzenleme");
@@ -47,7 +47,7 @@ function RightBar({ isOpen, onClose, givenGroup, givenId, from, refresh }) {
           "https://apsis.kocaeli.edu.tr/api/academic/update-award-rank"
         );
         setUploadFileUrl(
-          "https://apsis.kocaeli.edu.tr/api/external-academic/add-award-file"
+          "https://apsis.kocaeli.edu.tr/api/academic/add-award-file"
         );
         setIdName("awardId");
         setName("Ödül Düzenleme");
@@ -57,7 +57,7 @@ function RightBar({ isOpen, onClose, givenGroup, givenId, from, refresh }) {
           "https://apsis.kocaeli.edu.tr/api/academic/update-advising-thesis-rank"
         );
         setUploadFileUrl(
-          "https://apsis.kocaeli.edu.tr/api/external-academic/add-advising-thesis-file"
+          "https://apsis.kocaeli.edu.tr/api/academic/add-advising-thesis-file"
         );
         setIdName("advisingThesisId");
         setName("Tez Düzenleme");
@@ -75,7 +75,7 @@ function RightBar({ isOpen, onClose, givenGroup, givenId, from, refresh }) {
       alert("Lütfen bir PDF adı girin ve bir dosya seçin.");
       return;
     }
-    if (id === "empty") {
+    if (!givenId) {
       alert("Lütfen bir makale seçin.");
       return;
     }
@@ -88,24 +88,19 @@ function RightBar({ isOpen, onClose, givenGroup, givenId, from, refresh }) {
 
     const formData = new FormData();
     formData.append("file", selectedFile);
-    formData.append("articleId", id);
+    formData.append([idName], givenId);
     formData.append("name", pdfName);
 
     try {
-      const response = await axios.post(
-        "https://apsis.kocaeli.edu.tr/api/external-academic/add-advising-thesis-file",
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      const response = await axios.post(uploadFileUrl, formData, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
       alert("PDF başarıyla yüklendi!");
       console.log("Yanıt:", response.data);
-      handleClosePopup();
     } catch (error) {
       console.error("Hata oluştu:", error);
       alert(
