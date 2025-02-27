@@ -1,6 +1,7 @@
 import "./RightBar.css";
-
+import { useState } from "react";
 function RightBar({ isOpen, onClose, givenGroup, givenId, from }) {
+  const [requestUrl, setRequestUrl] = useState("");
   return (
     <>
       <>
