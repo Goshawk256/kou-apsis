@@ -41,31 +41,30 @@ function Projeler() {
       [id]: newValue,
     }));
   };
-
+  const fetchProjects = async () => {
+    setLoading(true);
+    const username = localStorage.getItem("username");
+    try {
+      const response = await axios.post(
+        `${All_Url.api_base_url}/academic/get-projects`,
+        { username: username },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }
+      );
+      setTableData(response.data.data || []);
+      setFilteredData(response.data.data || []);
+    } catch (error) {
+      console.error("Projeler alınırken bir hata oluştu:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
   useEffect(() => {
     refreshTheToken();
-    const fetchProjects = async () => {
-      setLoading(true);
-      const username = localStorage.getItem("username");
-      try {
-        const response = await axios.post(
-          `${All_Url.api_base_url}/academic/get-projects`,
-          { username: username },
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-            },
-          }
-        );
-        setTableData(response.data.data || []);
-        setFilteredData(response.data.data || []);
-      } catch (error) {
-        console.error("Projeler alınırken bir hata oluştu:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
 
     fetchProjects();
   }, []);
