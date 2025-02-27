@@ -120,6 +120,28 @@ function Dersler() {
 
     fetchData();
   }, []);
+  const getPreferredGroupDisplay = (item) => {
+    if (item.groupJuryEdited !== "-") {
+      return (
+        <div className="preffered-group">
+          <s>{item.groupAuto}</s> / <s>{item.groupEdited}</s> /{" "}
+          <span>{item.groupJuryEdited}</span>
+        </div>
+      );
+    } else if (item.groupEdited !== "-") {
+      return (
+        <div className="preffered-group">
+          <s>{item.groupAuto}</s> / <span>{item.groupEdited}</span>
+        </div>
+      );
+    } else {
+      return (
+        <div className="preffered-group">
+          <span>{item.groupAuto}</span>
+        </div>
+      );
+    }
+  };
 
   useEffect(() => {
     // Arama ve filtreleme işlemi
@@ -166,6 +188,7 @@ function Dersler() {
     (page - 1) * itemsPerPage,
     page * itemsPerPage
   );
+  console.log(filteredData);
   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
   const openRightBar = () => setRightBarOpen(true);
   const closeRightBar = () => setRightBarOpen(false);
@@ -269,16 +292,7 @@ function Dersler() {
                     <td>{formatSemester(item.semester)}</td>
                     <td className="item-group">
                       <div className="group-show">
-                        {tempGroups[item.id] ? (
-                          <div className="preffered-group">
-                            <s>{item.groupAuto}</s>/{" "}
-                            <span>{tempGroups[item.id]}</span>
-                          </div>
-                        ) : (
-                          <div className="preffered-group">
-                            <span>{item.groupAuto}</span>
-                          </div>
-                        )}
+                        {getPreferredGroupDisplay(item)}
                       </div>
                     </td>
                     <td>{item.scoreAuto}</td>
