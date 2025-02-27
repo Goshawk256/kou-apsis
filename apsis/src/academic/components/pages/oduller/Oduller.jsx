@@ -92,6 +92,29 @@ function Oduller() {
     }
   };
 
+  const getPrerredScoreDisplay = (item) => {
+    if (item.groupJuryEdited !== "-") {
+      return (
+        <div className="preffered-group">
+          <s>{item.scoreAuto}</s> / <s>{item.scoreEdited}</s> /{" "}
+          <span>{item.scoreJuryEdited}</span>
+        </div>
+      );
+    } else if (item.groupEdited !== "-") {
+      return (
+        <div className="preffered-group">
+          <s>{item.scoreAuto}</s> / <span>{item.scoreEdited}</span>
+        </div>
+      );
+    } else {
+      return (
+        <div className="preffered-group">
+          <span>{item.scoreAuto}</span>
+        </div>
+      );
+    }
+  };
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -245,7 +268,11 @@ function Oduller() {
                         {getPreferredGroupDisplay(item)}
                       </div>
                     </td>
-                    <td>{item.scoreAuto}</td>
+                    <td>
+                      <div className="group-show">
+                        {getPrerredScoreDisplay(item)}
+                      </div>
+                    </td>
                     <td>
                       {isEditMode ? (
                         <div className="choose-publication">
