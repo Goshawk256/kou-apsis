@@ -287,7 +287,6 @@ function Finish() {
     const secilmisIlan = localStorage.getItem("secilmisIlan");
 
     let data = {
-      username: localStorage.getItem("username") || "Bilinmeyen Kullanıcı",
       applicationType: basvuruTipi,
       title: localStorage.getItem("selectedOption"),
       date: new Date().toISOString(), // Gerekirse toLocaleString() kullanabilirsin
@@ -343,7 +342,6 @@ function Finish() {
         console.log(pair[0], pair[1]);
       }
 
-      console.log("Gönderilen Veri:", sendingData);
       const response = await axios.post(
         `${All_Url.api_base_url}/academic/add-application`,
         formData,
