@@ -26,10 +26,9 @@ function Yayinlar() {
   const [isEditMode] = useState(false);
   const [storageKey, setStorageKey] = useState("savedPublications");
   const [allPublications, setAllPublications] = useState({});
-  const [verilecekGrup, setVerilecekGrup] = useState("");
-  const [verilecekId, setVerilecekId] = useState("");
-  const [verilecekPublicationTypeId, setVerilecekPublicationTypeId] =
-    useState("");
+  const [givenGroup, setgivenGroup] = useState("");
+  const [givenId, setgivenId] = useState("");
+  const [givenPublicationTypeId, setgivenPublicationTypeId] = useState("");
   useEffect(() => {
     updateAllPublications();
   }, []);
@@ -48,9 +47,9 @@ function Yayinlar() {
   };
 
   const handleEditClick = (id, grup, publicationTypeId) => {
-    setVerilecekGrup(grup);
-    setVerilecekId(id);
-    setVerilecekPublicationTypeId(publicationTypeId);
+    setgivenGroup(grup);
+    setgivenId(id);
+    setgivenPublicationTypeId(publicationTypeId);
     console.log("id", id);
     console.log("grup", grup);
     console.log("publicationTypeId", publicationTypeId);
@@ -169,9 +168,9 @@ function Yayinlar() {
   return (
     <div className={`yayinlar-main`}>
       <RightBar
-        verilecekGrup={verilecekGrup}
-        verilecekId={verilecekId}
-        verilecekPublicationTypeId={verilecekPublicationTypeId}
+        givenGroup={givenGroup}
+        givenId={givenId}
+        givenPublicationTypeId={givenPublicationTypeId}
         from="yayinlar"
       />
 

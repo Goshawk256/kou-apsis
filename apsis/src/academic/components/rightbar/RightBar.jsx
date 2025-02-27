@@ -4,7 +4,7 @@ import { useEffect } from "react";
 
 import "./RightBar.css";
 
-function RightBar({ verileceId, verilecekGrup, verilecekPublicationTypeId }) {
+function RightBar({ givenId, givenGrup, givenPublicationTypeId }) {
   return <></>;
 }
 
