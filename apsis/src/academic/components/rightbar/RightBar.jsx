@@ -90,7 +90,6 @@ function RightBar({ isOpen, onClose, givenGroup, givenId, from, refresh }) {
             <h1>{givenGroup}</h1>
           </div>
           <div className="right-bar-content-body">
-            <p>ID: {givenId}</p>
             <p>Kategori: {from}</p>
           </div>
           <div className="right-bar-content-body">
