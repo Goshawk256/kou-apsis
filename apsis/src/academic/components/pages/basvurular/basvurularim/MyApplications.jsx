@@ -26,9 +26,9 @@ function MyApplications({ onSelect }) {
             },
           }
         );
-
+        console.log(response.data);
         if (response.data.success) {
-          setApplications(response.data.data.applications);
+          setApplications(response.data.data);
         }
       } catch (error) {
         console.error("Veri çekme hatası:", error);
