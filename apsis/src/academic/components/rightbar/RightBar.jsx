@@ -172,7 +172,7 @@ function RightBar({ isOpen, onClose, givenGroup, givenId, from, refresh }) {
           </div>
           <div className="content-r-2">
             <h3>Dosya Yükle</h3>
-            <div className="upload-file-div">
+            <div className="upload-content-div">
               <input
                 type="text"
                 placeholder="PDF Adı"
