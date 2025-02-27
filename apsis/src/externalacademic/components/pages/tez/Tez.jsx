@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import All_Url from "../../../../url";
 import axios from "axios";
 import "./Tez.css";
-import { FaRegSquare, FaFileUpload, FaDownload } from "react-icons/fa";
-const languages = ["Uluslararası", "Ulusal"];
+import { FaRegSquare, FaFileUpload } from "react-icons/fa";
 
 function Tez() {
   const [articles, setArticles] = useState([]);
@@ -23,7 +22,7 @@ function Tez() {
     const selectedArticle = articles.find(
       (article) => article.id === articleId
     );
-    setArticleFiles(selectedArticle?.files || []); // Dosyaları state'e kaydet
+    setArticleFiles(selectedArticle?.files || []);
     setShowPopup(true);
   };
 

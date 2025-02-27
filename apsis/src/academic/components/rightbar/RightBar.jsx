@@ -104,7 +104,7 @@ function RightBar({ isOpen, onClose, givenGroup, givenId, from, refresh }) {
                   type="text"
                   value={newGroup}
                   onChange={(e) => setNewGroup(e.target.value)}
-                  placeholder="Yeni grup giriniz"
+                  placeholder="Grup"
                 />
               </div>
               <button className="update-btn" onClick={updateRank}>
