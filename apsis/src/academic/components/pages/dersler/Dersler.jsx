@@ -65,58 +65,57 @@ function Dersler() {
 
     return `${year} ${term}`;
   };
+  const fetchData = async () => {
+    const username = localStorage.getItem("username");
+    try {
+      const response = await axios.post(
+        `${All_Url.api_base_url}/academic/get-lessons`,
+        { username },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }
+      );
 
+      if (
+        response.data &&
+        response.data.success &&
+        Array.isArray(response.data.data)
+      ) {
+        const courses = response.data.data.map((item) => ({
+          ...item,
+          semester: item.semester,
+        }));
+
+        // En yeni yıla göre sırala (Büyük yıl -> Küçük yıl, Güz (G) -> Bahar (B))
+        courses.sort((a, b) => {
+          const yearA = parseInt(a.semester.slice(0, 4)); // Yıl kodunu al
+          const yearB = parseInt(b.semester.slice(0, 4));
+          const termA = a.semester.slice(4); // Dönem kodunu al (G/B)
+          const termB = b.semester.slice(4);
+
+          if (yearA !== yearB) {
+            return yearB - yearA; // Büyük yıl önce gelsin
+          }
+          return termA === "G" ? -1 : 1; // Güz önce gelsin
+        });
+
+        setTableData(courses);
+        setFilteredData(courses);
+      } else {
+        console.error("Beklenen veri formatı alınamadı:", response.data);
+      }
+    } catch (error) {
+      console.error("Veriler alınırken bir hata oluştu:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
   useEffect(() => {
     setLoading(true);
     refreshTheToken();
-    const fetchData = async () => {
-      const username = localStorage.getItem("username");
-      try {
-        const response = await axios.post(
-          `${All_Url.api_base_url}/academic/get-lessons`,
-          { username },
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-            },
-          }
-        );
-
-        if (
-          response.data &&
-          response.data.success &&
-          Array.isArray(response.data.data)
-        ) {
-          const courses = response.data.data.map((item) => ({
-            ...item,
-            semester: item.semester,
-          }));
-
-          // En yeni yıla göre sırala (Büyük yıl -> Küçük yıl, Güz (G) -> Bahar (B))
-          courses.sort((a, b) => {
-            const yearA = parseInt(a.semester.slice(0, 4)); // Yıl kodunu al
-            const yearB = parseInt(b.semester.slice(0, 4));
-            const termA = a.semester.slice(4); // Dönem kodunu al (G/B)
-            const termB = b.semester.slice(4);
-
-            if (yearA !== yearB) {
-              return yearB - yearA; // Büyük yıl önce gelsin
-            }
-            return termA === "G" ? -1 : 1; // Güz önce gelsin
-          });
-
-          setTableData(courses);
-          setFilteredData(courses);
-        } else {
-          console.error("Beklenen veri formatı alınamadı:", response.data);
-        }
-      } catch (error) {
-        console.error("Veriler alınırken bir hata oluştu:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
 
     fetchData();
   }, []);
@@ -231,6 +230,7 @@ function Dersler() {
         givenGroup={givenGroup}
         givenId={givenId}
         from="lessons"
+        refresh={fetchData}
       />
 
       {/* Row 2 - Arama, Filtreleme, Yenileme */}
