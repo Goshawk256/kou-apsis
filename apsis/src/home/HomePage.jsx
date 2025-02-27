@@ -103,7 +103,7 @@ function HomePage() {
       case "Başvuru":
         return <Basvurular onSelect={setSelectedPage} />;
       case "Finish":
-        return <Finish />;
+        return <Finish onSelect={setSelectedPage} />;
       case "Yardım":
         return <Help />;
       default:

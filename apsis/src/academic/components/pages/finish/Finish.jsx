@@ -19,7 +19,7 @@ import {
 } from "./tableData";
 import TableSection from "./TableSection";
 
-function Finish() {
+function Finish({ onSelect }) {
   const [data, setData] = useState({
     projects: [],
     thesis: [],
@@ -354,6 +354,7 @@ function Finish() {
       );
 
       alert("Başvuru tamamlandı!");
+      onSelect("Başvuru");
       return response.data.success;
     } catch (error) {
       console.error("Hata oluştu:", error);
