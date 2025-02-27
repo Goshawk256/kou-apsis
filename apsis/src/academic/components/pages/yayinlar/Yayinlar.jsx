@@ -187,7 +187,28 @@ function Yayinlar() {
       );
     }
   };
-
+  const getPrerredScoreDisplay = (item) => {
+    if (item.groupJuryEdited !== "-") {
+      return (
+        <div className="preffered-group">
+          <s>{item.scoreAuto}</s> / <s>{item.scoreEdited}</s> /{" "}
+          <span>{item.scoreJuryEdited}</span>
+        </div>
+      );
+    } else if (item.groupEdited !== "-") {
+      return (
+        <div className="preffered-group">
+          <s>{item.scoreAuto}</s> / <span>{item.scoreEdited}</span>
+        </div>
+      );
+    } else {
+      return (
+        <div className="preffered-group">
+          <span>{item.scoreAuto}</span>
+        </div>
+      );
+    }
+  };
   console.log("filteredData", filteredData);
   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
   const openRightBar = () => setRightBarOpen(true);
@@ -354,7 +375,11 @@ function Yayinlar() {
                             {getPreferredGroupDisplay(item)}
                           </div>
                         </td>
-                        <td>{(item.scoreAuto || 0).toFixed(2)}</td>
+                        <td>
+                          <div className="group-show">
+                            {getPrerredScoreDisplay(item)}
+                          </div>
+                        </td>
                         <td>
                           {isEditMode ? (
                             <div className="choose-publication">
