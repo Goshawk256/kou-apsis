@@ -22,37 +22,44 @@ function Basvuru({ onSelect }) {
       JSON.parse(localStorage.getItem("savedArtworks")) || [];
     const savedLessons = JSON.parse(localStorage.getItem("savedCourses")) || [];
 
-    console.log(savedProjects);
-
     const formattedData = [
-      ...savedProjects.map((item) => ({ ...item, type: "Proje" })),
-      ...savedThesis.map((item) => ({ ...item, type: "Tez" })),
-      ...savedPublications.map((item) => ({ ...item, type: "Yayın" })),
-      ...savedLessons.map((item) => ({ ...item, type: "Ders" })),
-      ...savedAwards.map((item) => ({ ...item, type: "Ödül" })),
-      ...savedArtworks.map((item) => ({ ...item, type: "Sanat Eseri" })),
+      ...savedProjects,
+      ...savedThesis,
+      ...savedPublications,
+      ...savedLessons,
+      ...savedAwards,
+      ...savedArtworks,
     ].map((item) => ({
       id: item.id,
       title: item.title || item.projectName || item.course_name,
       group: item.group || item.groupAuto || "Z999",
-      type: item.type, // Elle belirlenen type artık burada kullanılabilir
+      type: item.type || "Belirtilmemiş",
       score: item.score || item.scoreAuto || 0,
       authors: item.authors || [],
     }));
 
-    // Gruplama işlemi (harf bazlı gruplama)
+    // Gruplama işlemi (harf ve sayıya göre sıralama)
     const grouped = formattedData.reduce((acc, item) => {
-      const groupKey = item.group.match(/^([A-Z]+)/)?.[1] || "Z"; // Sadece harf kısmını al
+      const match = item.group.match(/^([A-Z]+)(\d+)$/);
+      const groupKey = match ? match[1] : "Z";
       if (!acc[groupKey]) acc[groupKey] = [];
       acc[groupKey].push(item);
       return acc;
     }, {});
 
+    // Grupları sıralama (örneğin A1, A2, A3 şeklinde sıralı olacak)
+    Object.keys(grouped).forEach((key) => {
+      grouped[key].sort((a, b) => {
+        const numA = parseInt(a.group.match(/\d+/)?.[0] || "999", 10);
+        const numB = parseInt(b.group.match(/\d+/)?.[0] || "999", 10);
+        return numA - numB;
+      });
+    });
+
     const sortedGroupKeys = Object.keys(grouped).sort((a, b) =>
       a.localeCompare(b)
     );
     setGroupedData(grouped);
-    console.log(groupedData);
     setGroupKeys(sortedGroupKeys);
 
     const total = formattedData.reduce(
