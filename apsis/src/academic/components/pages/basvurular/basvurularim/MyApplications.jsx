@@ -89,7 +89,15 @@ function MyApplications({ onSelect }) {
                           </td>
                           <td>{app.applicationStatus}</td>
                           <td>
-                            <button className="myapplications-button">
+                            <button
+                              className="myapplications-button"
+                              onClick={() =>
+                                window.open(
+                                  `https://apsis.kocaeli.edu.tr/api/file/${app.pdfToken.fileToken}?downloadAs=${app.pdfToken.fileName}`,
+                                  "_blank"
+                                )
+                              }
+                            >
                               PDF indir
                             </button>
                           </td>
