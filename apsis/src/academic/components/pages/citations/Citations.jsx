@@ -63,7 +63,6 @@ function Citations() {
   }, []);
 
   useEffect(() => {
-    // Arama ve filtreleme işlemi
     const filtered = tableData.filter((item) =>
       item.title.toLowerCase().includes(searchQuery.toLowerCase())
     );
@@ -231,7 +230,8 @@ function Citations() {
           <table>
             <thead>
               <tr>
-                <th>Yayının Adı</th>
+                <th>Adı</th>
+                <th>Türü</th>
                 <th>Atıf Bilgileri</th>
                 <th>Puan</th>
                 <th>İşlem</th>
@@ -254,7 +254,23 @@ function Citations() {
                       {item.title.length > 50
                         ? `${item.title.slice(0, 60)}...`
                         : item.title}
+                      <br />
+                      <p style={{ color: "#5d8c6a", fontSize: "10px" }}>
+                        {" "}
+                        {item.authors ? item.authors.join(", ") : "-"}
+                      </p>
+                      <p style={{ color: "#5d8c6a", fontSize: "10px" }}>
+                        {new Date(item.publishDate).toLocaleDateString(
+                          "tr-TR",
+                          {
+                            day: "numeric",
+                            month: "long",
+                            year: "numeric",
+                          }
+                        )}
+                      </p>
                     </td>
+                    <td> {item.publicationType} </td>
                     <td>
                       {item.citations.d1Cnt > 0 &&
                         `${item.citations.d1Cnt}xD1 /`}{" "}
