@@ -77,6 +77,27 @@ function RightBar({ isOpen, onClose, givenGroup, givenId, from, refresh }) {
         setIdName("unknownId");
     }
   }, [from]);
+
+  const RenderedComponent = ({ from }) => {
+    switch (from) {
+      case "projects":
+        return <div className="right-bar-content">projeler</div>;
+      case "publications":
+        return <div className="right-bar-content">yayınlar</div>;
+      case "books":
+        return <div className="right-bar-content">kitaplar</div>;
+      case "lessons":
+        return <div className="right-bar-content">dersler</div>;
+      case "awards":
+        return <div className="right-bar-content">ödüller</div>;
+      case "thesis":
+        return <div className="right-bar-content">tezler</div>;
+      default:
+        return null;
+    }
+  };
+
+  useEffect(() => {}, []);
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
   };
@@ -194,6 +215,9 @@ function RightBar({ isOpen, onClose, givenGroup, givenId, from, refresh }) {
                 Yükle
               </button>
             </div>
+          </div>
+          <div className="content-r-3">
+            <RenderedComponent from={from} />
           </div>
         </div>
       </div>
