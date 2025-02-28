@@ -32,6 +32,16 @@ function RightBar({ isOpen, onClose, givenGroup, givenId, from, refresh }) {
         setIdName("publicationId");
         setName("Yayın Düzenleme");
         break;
+      case "books":
+        setRequestUrl(
+          "https://apsis.kocaeli.edu.tr/api/academic/update-publication-rank"
+        );
+        setUploadFileUrl(
+          "https://apsis.kocaeli.edu.tr/api/academic/add-publication-file"
+        );
+        setIdName("publicationId");
+        setName("Kitap Düzenleme");
+        break;
       case "lessons":
         setRequestUrl(
           "https://apsis.kocaeli.edu.tr/api/academic/update-lesson-ranks"
