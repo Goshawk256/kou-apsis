@@ -11,6 +11,7 @@ function RightBar({ isOpen, onClose, givenGroup, givenId, from, refresh }) {
   const [pdfName, setPdfName] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
   const [projectTypes, setProjectTypes] = useState([]);
+  const [projectRoleTypes, setProjectRoleTypes] = useState([]);
   useEffect(() => {
     switch (from) {
       case "projects":
@@ -123,10 +124,12 @@ function RightBar({ isOpen, onClose, givenGroup, givenId, from, refresh }) {
       }
     );
     console.log("responseProjectTypes:", responseProjectTypes.data.data);
+    setProjectTypes(responseProjectTypes.data.data);
     console.log(
       "responseProjectRoleTypes:",
       responseProjectRoleTypes.data.data
     );
+    setProjectRoleTypes(responseProjectRoleTypes.data.data);
   };
 
   useEffect(() => {
