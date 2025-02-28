@@ -26,7 +26,7 @@ function Basvuru({ onSelect }) {
     const savedArtworks =
       JSON.parse(localStorage.getItem("savedArtworks")) || [];
     const savedLessons = JSON.parse(localStorage.getItem("savedCourses")) || [];
-
+    console.log(savedCitations);
     const formattedData = [
       ...savedProjects,
       ...savedThesis,
@@ -40,8 +40,8 @@ function Basvuru({ onSelect }) {
     ].map((item) => ({
       id: item.id,
       title: item.title || item.projectName || item.course_name,
-      group: item.group || item.groupAuto || "Z999",
-      score: item.score || item.scoreAuto || 0,
+      group: item.group || item.groupAuto || "-",
+      score: item.score || item.scoreAuto || item?.citations?.score || 0,
       authors: item.authors || [],
     }));
 
@@ -101,7 +101,6 @@ function Basvuru({ onSelect }) {
               <tr className="basvuru-table-header">
                 <th>Başlık</th>
                 <th>Grup</th>
-
                 <th>Puan</th>
               </tr>
             </thead>
