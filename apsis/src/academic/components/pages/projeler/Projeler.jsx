@@ -34,12 +34,6 @@ function Projeler() {
     openRightBar();
   };
 
-  const handleGroupChange = (id, newValue) => {
-    setTempGroups((prev) => ({
-      ...prev,
-      [id]: newValue,
-    }));
-  };
   const fetchProjects = async () => {
     setLoading(true);
 
