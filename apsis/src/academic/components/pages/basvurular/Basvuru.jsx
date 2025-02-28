@@ -43,7 +43,6 @@ function Basvuru({ onSelect }) {
       authors: item.authors || [],
     }));
 
-    // Gruplama işlemi (harf ve sayıya göre sıralama)
     const grouped = formattedData.reduce((acc, item) => {
       const match = item.group.match(/^([A-Z]+)(\d+)$/);
       const groupKey = match ? match[1] : "Z";

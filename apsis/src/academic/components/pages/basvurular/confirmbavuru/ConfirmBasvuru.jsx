@@ -1,7 +1,7 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
 import "./ConfirmBasvuru.css";
-import "dayjs/locale/tr"; // Türkçe dil dosyasını içe aktarıyoruz
+import "dayjs/locale/tr";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { StaticDatePicker } from "@mui/x-date-pickers/StaticDatePicker";

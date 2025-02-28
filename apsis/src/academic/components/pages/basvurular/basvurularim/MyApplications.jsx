@@ -9,7 +9,6 @@ import { motion, AnimatePresence } from "framer-motion";
 function MyApplications({ onSelect }) {
   const [loading, setLoading] = useState(false);
   const [applications, setApplications] = useState([]);
-  const [selectedApplication, setSelectedApplication] = useState(null);
   const setBavuru = (text) => {
     localStorage.setItem("basvuruTipi", text);
   };
@@ -134,57 +133,6 @@ function MyApplications({ onSelect }) {
             </button>
           </div>
         </>
-      )}
-      {selectedApplication && (
-        <div className="popup">
-          <div className="popup-inner">
-            <h2>Başvuru Detayları</h2>
-            <div className="first-row">
-              <p>
-                <strong>Başvurulan Kadro:</strong> {selectedApplication.title}
-              </p>
-              <p>
-                <strong>Başvuru Tipi:</strong>{" "}
-                {selectedApplication.userType === "Academic"
-                  ? "Kurum İçi"
-                  : "Kurum Dışı"}
-              </p>
-            </div>
-            {[
-              "publications",
-              "projects",
-              "thesis",
-              "books",
-              "awards",
-              "lessons",
-              "citations",
-              "artworks",
-              "",
-            ].map(
-              (category) =>
-                selectedApplication[category] &&
-                selectedApplication[category].length > 0 && (
-                  <div key={category}>
-                    <h3>
-                      {category.charAt(0).toUpperCase() + category.slice(1)}
-                    </h3>
-                    <ul>
-                      {selectedApplication[category].map((item) => (
-                        <li key={item.id}>
-                          {item.title ||
-                            item.projectName ||
-                            item.bookName ||
-                            item.awardName ||
-                            item.thesisTitle}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )
-            )}
-            <button onClick={() => setSelectedApplication(null)}>Kapat</button>
-          </div>
-        </div>
       )}
     </div>
   );
