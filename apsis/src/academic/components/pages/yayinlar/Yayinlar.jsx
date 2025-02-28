@@ -51,9 +51,6 @@ function Yayinlar() {
     setgivenGroup(grup);
     setgivenId(id);
     setgivenPublicationTypeId(publicationTypeId);
-    console.log("id", id);
-    console.log("grup", grup);
-    console.log("publicationTypeId", publicationTypeId);
   };
 
   const username = localStorage.getItem("username");
@@ -206,7 +203,7 @@ function Yayinlar() {
       );
     }
   };
-  console.log("filteredData", filteredData);
+
   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
   const openRightBar = () => setRightBarOpen(true);
   const closeRightBar = () => setRightBarOpen(false);

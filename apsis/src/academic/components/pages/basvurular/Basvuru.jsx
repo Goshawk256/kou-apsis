@@ -26,7 +26,7 @@ function Basvuru({ onSelect }) {
     const savedArtworks =
       JSON.parse(localStorage.getItem("savedArtworks")) || [];
     const savedLessons = JSON.parse(localStorage.getItem("savedCourses")) || [];
-    console.log(savedCitations);
+
     const formattedData = [
       ...savedProjects,
       ...savedThesis,

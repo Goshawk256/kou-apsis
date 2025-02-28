@@ -154,7 +154,7 @@ function Citations() {
     (page - 1) * itemsPerPage,
     page * itemsPerPage
   );
-  console.log(filteredData);
+
   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
   const openRightBar = () => setRightBarOpen(true);
   const closeRightBar = () => setRightBarOpen(false);

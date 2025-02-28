@@ -98,13 +98,13 @@ function RightBar({ isOpen, onClose, givenGroup, givenId, from, refresh }) {
     }
   };
 
-  useEffect(() => {
+  const getProjectInfo = async () => {
     const accessToken = localStorage.getItem("accessToken");
     if (!accessToken) {
       alert("Giriş yapmalısınız!");
       return;
     }
-    const responseProjectTypes = axios.get(
+    const responseProjectTypes = await axios.get(
       "https://apsis.kocaeli.edu.tr/api//lookUp/get-project-types",
       {},
       {
@@ -113,7 +113,7 @@ function RightBar({ isOpen, onClose, givenGroup, givenId, from, refresh }) {
         },
       }
     );
-    const responseProjectRoleTypes = axios.get(
+    const responseProjectRoleTypes = await axios.get(
       "https://apsis.kocaeli.edu.tr/api//lookUp/get-project-role-types",
       {},
       {
@@ -127,6 +127,14 @@ function RightBar({ isOpen, onClose, givenGroup, givenId, from, refresh }) {
       "responseProjectRoleTypes:",
       responseProjectRoleTypes.data.data
     );
+  };
+
+  useEffect(() => {
+    switch (from) {
+      case "projects":
+        getProjectInfo();
+        break;
+    }
   }, [from]);
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
