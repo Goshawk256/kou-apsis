@@ -22,7 +22,7 @@ function Oduller() {
   const [rightBarOpen, setRightBarOpen] = useState(false); // Sağ panelin açık/kapalı durumu
   const [popupMessage, setPopupMessage] = useState(null); // Pop-up mesajı
   const [editingIndex, setEditingIndex] = useState(null);
-  const [tempGroups, setTempGroups] = useState({}); // Yalnızca eklenen kısmı saklayan nesne
+
   const [isEditMode] = useState(false);
   const [currentGroup, setCurrentGroup] = useState(null);
   const [givenGroup, setgivenGroup] = useState("");
@@ -35,14 +35,6 @@ function Oduller() {
     console.log(givenId, givenGroup);
   };
 
-  const handleGroupChange = (id, newValue) => {
-    setTempGroups((prev) => ({
-      ...prev,
-      [id]: newValue,
-    }));
-  };
-  const username = localStorage.getItem("username");
-
   const fetchData = async () => {
     setLoading(true);
     await refreshTheToken();
@@ -50,9 +42,7 @@ function Oduller() {
     try {
       const response = await axios.post(
         `${All_Url.api_base_url}/academic/get-awards`,
-        {
-          username: username,
-        },
+        {},
         {
           headers: {
             "Content-Type": "application/json",

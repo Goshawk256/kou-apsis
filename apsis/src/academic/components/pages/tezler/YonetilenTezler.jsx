@@ -21,7 +21,7 @@ function YonetilenTezler() {
   const [loading, setLoading] = useState(false);
   const [rightBarOpen, setRightBarOpen] = useState(false);
   const [popupMessage, setPopupMessage] = useState(null); // Pop-up mesajı
-  const username = localStorage.getItem("username");
+
   const [editingIndex, setEditingIndex] = useState(null);
   const [tempGroups, setTempGroups] = useState({}); // Yalnızca eklenen kısmı saklayan nesne
   const [isEditMode] = useState(false);
@@ -50,9 +50,7 @@ function YonetilenTezler() {
     try {
       const response = await axios.post(
         `${All_Url.api_base_url}/academic/get-advising-thesis`,
-        {
-          username: username,
-        },
+        {},
         {
           headers: {
             "Content-Type": "application/json",

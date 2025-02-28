@@ -37,11 +37,11 @@ function Citations() {
 
   const fetchCitations = async () => {
     setLoading(true);
-    const username = localStorage.getItem("username");
+
     try {
       const response = await axios.post(
-        `${All_Url.api_base_url}/academic/get-projects`,
-        { username: username },
+        `${All_Url.api_base_url}/academic/get-citations`,
+        {},
         {
           headers: {
             "Content-Type": "application/json",
@@ -66,7 +66,7 @@ function Citations() {
   useEffect(() => {
     // Arama ve filtreleme işlemi
     const filtered = tableData.filter((item) =>
-      item.projectName.toLowerCase().includes(searchQuery.toLowerCase())
+      item.title.toLowerCase().includes(searchQuery.toLowerCase())
     );
     setFilteredData(filtered);
   }, [searchQuery, tableData]);
@@ -229,10 +229,8 @@ function Citations() {
           <table>
             <thead>
               <tr>
-                <th>Proje Adı</th>
-                <th>Grup</th>
+                <th>Yayının Adı</th>
                 <th>Puan</th>
-                <th>Durum</th>
                 <th>İşlem</th>
               </tr>
             </thead>
@@ -250,27 +248,13 @@ function Citations() {
                     className={isEditMode ? "edit-mode-row" : ""}
                   >
                     <td>
-                      {item.projectName.length > 50
-                        ? `${item.projectName.slice(0, 60)}...`
-                        : item.projectName}
+                      {item.title.length > 50
+                        ? `${item.title.slice(0, 60)}...`
+                        : item.title}
                     </td>
 
-                    <td className="item-group">
-                      <div className="group-show">
-                        {getPreferredGroupDisplay(item)}
-                      </div>
-                    </td>
+                    <td>{item.citations.d1Cnt}</td>
 
-                    {item.status === "Devam Ediyor" ? (
-                      <td>{0}</td>
-                    ) : (
-                      <td>
-                        <div className="group-show">
-                          {getPrerredScoreDisplay(item)}
-                        </div>
-                      </td>
-                    )}
-                    <td>{item.status}</td>
                     <td>
                       {isEditMode ? (
                         <div className="choose-publication">
@@ -280,9 +264,9 @@ function Citations() {
                         <div>
                           <button
                             className="yayinlar-btn"
-                            onClick={() =>
-                              handleEditClick(item.id, item.groupAuto)
-                            }
+                            // onClick={() =>
+                            //   handleEditClick(item.id, item.groupAuto)
+                            // }
                           >
                             <FaPencilAlt />
                           </button>

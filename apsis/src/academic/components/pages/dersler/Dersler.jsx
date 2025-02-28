@@ -66,11 +66,10 @@ function Dersler() {
     return `${year} ${term}`;
   };
   const fetchData = async () => {
-    const username = localStorage.getItem("username");
     try {
       const response = await axios.post(
         `${All_Url.api_base_url}/academic/get-lessons`,
-        { username },
+        {},
         {
           headers: {
             "Content-Type": "application/json",

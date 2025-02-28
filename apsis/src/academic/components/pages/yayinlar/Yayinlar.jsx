@@ -23,7 +23,7 @@ function Yayinlar() {
   const [popupMessage, setPopupMessage] = useState(null);
   const [rightBarOpen, setRightBarOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [tempGroups, setTempGroups] = useState({});
+
   const [isEditMode] = useState(false);
   const [storageKey, setStorageKey] = useState("savedPublications");
   const [allPublications, setAllPublications] = useState({});
@@ -88,7 +88,7 @@ function Yayinlar() {
 
       const response = await axios.post(
         `${All_Url.api_base_url}/academic/get-publications`,
-        { username, publicationTypeId },
+        { publicationTypeId },
         { headers: { Authorization: `Bearer ${accessToken}` } }
       );
       if (response.data.success) {

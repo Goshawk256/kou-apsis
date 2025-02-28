@@ -43,11 +43,11 @@ function Projeler() {
   };
   const fetchProjects = async () => {
     setLoading(true);
-    const username = localStorage.getItem("username");
+
     try {
       const response = await axios.post(
         `${All_Url.api_base_url}/academic/get-projects`,
-        { username: username },
+        {},
         {
           headers: {
             "Content-Type": "application/json",
