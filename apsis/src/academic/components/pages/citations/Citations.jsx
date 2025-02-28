@@ -35,7 +35,7 @@ function Citations() {
     openRightBar();
   };
 
-  const fetchProjects = async () => {
+  const fetchCitations = async () => {
     setLoading(true);
     const username = localStorage.getItem("username");
     try {
@@ -60,7 +60,7 @@ function Citations() {
   useEffect(() => {
     refreshTheToken();
 
-    fetchProjects();
+    fetchCitations();
   }, []);
 
   useEffect(() => {
@@ -174,7 +174,7 @@ function Citations() {
         givenGroup={givenGroup}
         givenId={givenId}
         from="projects"
-        refresh={fetchProjects}
+        refresh={fetchCitations}
       />
 
       {/* Row 2 - Arama, Filtreleme, Yenileme */}
