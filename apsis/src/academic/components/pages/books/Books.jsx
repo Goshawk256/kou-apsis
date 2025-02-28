@@ -32,7 +32,6 @@ function Books() {
     setgivenId(givenId);
     setgivenGroup(givenGroup);
     openRightBar();
-    console.log(givenId, givenGroup);
   };
 
   const fetchData = async () => {
@@ -57,7 +56,7 @@ function Books() {
 
       const responses = await Promise.all(requests);
       const mergedData = responses.flatMap((res) => res.data.data);
-      console.log(mergedData);
+
       setTableData(mergedData);
       setFilteredData(mergedData);
     } catch (error) {
