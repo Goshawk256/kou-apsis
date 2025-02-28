@@ -13,7 +13,9 @@
   overflow: auto;
   scrollbar-width: none;
 }
-
+.right-bar-container select {
+  color: #1fa54e !important;
+}
 .overlay {
   position: fixed;
   top: 0;

@@ -270,7 +270,7 @@ function RightBar({ isOpen, onClose, givenGroup, givenId, from, refresh }) {
   };
 
   return (
-    <>
+    <div className="right-bar-container">
       <div
         className={`overlay ${isOpen ? "open" : ""}`}
         onClick={onClose}
@@ -322,7 +322,7 @@ function RightBar({ isOpen, onClose, givenGroup, givenId, from, refresh }) {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
