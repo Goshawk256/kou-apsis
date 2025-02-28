@@ -20,6 +20,7 @@ import JuriHomepage from "../jury/components/JuriHomepage";
 import RectorHomePage from "../rector/components/RectorHomePage";
 import ExternalHome from "../externalacademic/components/ExternalHome";
 import Citations from "../academic/components/pages/citations/Citations";
+import Books from "../academic/components/pages/books/Books";
 
 function HomePage() {
   const [selectedPage, setSelectedPage] = useState("Ana Sayfa");
@@ -103,6 +104,8 @@ function HomePage() {
         return <SanatsalFaaliyetler />;
       case "Atıflarım":
         return <Citations />;
+      case "Kitaplarım":
+        return <Books />;
       case "Başvuru":
         return <Basvurular onSelect={setSelectedPage} />;
       case "Finish":
