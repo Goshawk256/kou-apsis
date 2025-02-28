@@ -19,6 +19,7 @@ import Help from "../academic/components/pages/help/Help";
 import JuriHomepage from "../jury/components/JuriHomepage";
 import RectorHomePage from "../rector/components/RectorHomePage";
 import ExternalHome from "../externalacademic/components/ExternalHome";
+import Citations from "../academic/components/pages/citations/Citations";
 
 function HomePage() {
   const [selectedPage, setSelectedPage] = useState("Ana Sayfa");
@@ -100,12 +101,15 @@ function HomePage() {
         return <Oduller />;
       case "Sanatsal Faaliyet":
         return <SanatsalFaaliyetler />;
+      case "Atıflarım":
+        return <Citations />;
       case "Başvuru":
         return <Basvurular onSelect={setSelectedPage} />;
       case "Finish":
         return <Finish onSelect={setSelectedPage} />;
       case "Yardım":
         return <Help />;
+
       default:
         return <AnaSayfa />;
     }
