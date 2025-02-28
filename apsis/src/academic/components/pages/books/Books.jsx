@@ -19,8 +19,8 @@ function Books() {
   const [tableData, setTableData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [rightBarOpen, setRightBarOpen] = useState(false); // Sağ panelin açık/kapalı durumu
-  const [popupMessage, setPopupMessage] = useState(null); // Pop-up mesajı
+  const [rightBarOpen, setRightBarOpen] = useState(false);
+  const [popupMessage, setPopupMessage] = useState(null);
   const [editingIndex, setEditingIndex] = useState(null);
 
   const [isEditMode] = useState(false);
@@ -128,29 +128,27 @@ function Books() {
     setFilteredData(filtered);
   };
 
-  const saveToLocalStorage = (award) => {
-    const savedAwards = JSON.parse(localStorage.getItem("savedAwards")) || [];
+  const saveToLocalStorage = (book) => {
+    const savedBooks = JSON.parse(localStorage.getItem("savedBooks")) || [];
 
-    const existingAward = savedAwards.find(
-      (awardItem) => awardItem.id === award.id
-    );
+    const existingBook = savedBooks.find((bookItem) => bookItem.id === book.id);
 
-    if (!existingAward) {
-      savedAwards.push(award);
-      localStorage.setItem("savedAwards", JSON.stringify(savedAwards));
+    if (!existingBook) {
+      savedBooks.push(book);
+      localStorage.setItem("savedBooks", JSON.stringify(savedBooks));
       showPopup("Ödül başarıyla kaydedildi!", "success");
     } else {
       const userConfirmed = confirm(
-        "Bu ödül zaten kaydedilmiş. Silmek ister misiniz?"
+        "Bu kitap zaten kaydedilmiş. Silmek ister misiniz?"
       );
       if (userConfirmed) {
-        const updatedAwards = savedAwards.filter(
-          (awardItem) => awardItem.id !== award.id
+        const updateBooks = savedBooks.filter(
+          (bookItem) => bookItem.id !== book.id
         );
-        localStorage.setItem("savedAwards", JSON.stringify(updatedAwards));
-        showPopup("Ödül başarıyla silindi!", "success");
+        localStorage.setItem("savedBooks", JSON.stringify(updateBooks));
+        showPopup("Kitap başarıyla silindi!", "success");
       } else {
-        showPopup("Ödül silinmedi.", "info");
+        showPopup("Kitap silinmedi.", "info");
       }
     }
   };
@@ -185,7 +183,7 @@ function Books() {
         onClose={closeRightBar}
         givenGroup={givenGroup}
         givenId={givenId}
-        from="awards"
+        from="books"
         refresh={fetchData}
       />
 
@@ -250,11 +248,9 @@ function Books() {
             </thead>
             <tbody>
               {paginatedData.map((item) => {
-                const savedAwards =
-                  JSON.parse(localStorage.getItem("savedAwards")) || [];
-                const isSaved = savedAwards.some(
-                  (award) => award.id === item.id
-                ); // Kaydedildi mi kontrolü
+                const savedBooks =
+                  JSON.parse(localStorage.getItem("savedBooks")) || [];
+                const isSaved = savedBooks.some((book) => book.id === item.id); // Kaydedildi mi kontrolü
 
                 return (
                   <tr

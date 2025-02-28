@@ -275,7 +275,6 @@ function Finish({ onSelect }) {
     } catch (err) {
       console.error("Error loading data:", err);
     }
-
     const savedProjects =
       JSON.parse(localStorage.getItem("savedProjects")) || [];
     const savedThesis = JSON.parse(localStorage.getItem("savedThesis")) || [];
@@ -284,7 +283,6 @@ function Finish({ onSelect }) {
     const savedBooks = JSON.parse(localStorage.getItem("savedBooks")) || [];
     const savedConferencePapers =
       JSON.parse(localStorage.getItem("savedConferencePapers")) || [];
-
     const savedAwards = JSON.parse(localStorage.getItem("savedAwards")) || [];
     const savedArtworks =
       JSON.parse(localStorage.getItem("savedArtworks")) || [];
