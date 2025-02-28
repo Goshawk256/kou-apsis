@@ -71,27 +71,30 @@ function Citations() {
     setFilteredData(filtered);
   }, [searchQuery, tableData]);
 
-  const saveToLocalStorage = (project) => {
-    const savedProjects =
-      JSON.parse(localStorage.getItem("savedProjects")) || [];
+  const saveToLocalStorage = (citation) => {
+    const savedCitations =
+      JSON.parse(localStorage.getItem("savedCitations")) || [];
 
-    const existingProject = savedProjects.find(
-      (proj) => proj.id === project.id
+    const existingCitation = savedCitations.find(
+      (proj) => proj.id === citation.id
     );
 
-    if (!existingProject) {
-      savedProjects.push(project);
-      localStorage.setItem("savedProjects", JSON.stringify(savedProjects));
+    if (!existingCitation) {
+      savedCitations.push(citation);
+      localStorage.setItem("savedCitations", JSON.stringify(savedCitations));
       showPopup("Proje başarıyla kaydedildi!", "success");
     } else {
       const userConfirmed = confirm(
         "Bu proje zaten kaydedilmiş. Silmek ister misiniz?"
       );
       if (userConfirmed) {
-        const updatedProjects = savedProjects.filter(
-          (proj) => proj.id !== project.id
+        const updatedCitations = savedCitations.filter(
+          (proj) => proj.id !== citation.id
         );
-        localStorage.setItem("savedProjects", JSON.stringify(updatedProjects));
+        localStorage.setItem(
+          "savedCitations",
+          JSON.stringify(updatedCitations)
+        );
         showPopup("Proje başarıyla silindi!", "success");
       } else {
         showPopup("Proje silinmedi.", "info");
@@ -173,7 +176,7 @@ function Citations() {
         onClose={closeRightBar}
         givenGroup={givenGroup}
         givenId={givenId}
-        from="projects"
+        from="citations"
         refresh={fetchCitations}
       />
 
@@ -237,10 +240,10 @@ function Citations() {
             </thead>
             <tbody>
               {paginatedData.map((item) => {
-                const savedProjects =
-                  JSON.parse(localStorage.getItem("savedProjects")) || [];
-                const isSaved = savedProjects.some(
-                  (proj) => proj.id === item.id
+                const savedCitations =
+                  JSON.parse(localStorage.getItem("savedCitations")) || [];
+                const isSaved = savedCitations.some(
+                  (atif) => atif.id === item.id
                 ); // Kaydedildi mi kontrolü
 
                 return (
