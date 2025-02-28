@@ -137,8 +137,12 @@ function RightBar({ isOpen, onClose, givenGroup, givenId, from, refresh }) {
       case "projects":
         getProjectInfo();
         break;
+      case "publications":
+        getProjectInfo();
+        break;
     }
   }, [from]);
+
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
   };
