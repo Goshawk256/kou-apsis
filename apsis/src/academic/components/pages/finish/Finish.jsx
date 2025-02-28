@@ -287,6 +287,8 @@ function Finish({ onSelect }) {
     const savedArtworks =
       JSON.parse(localStorage.getItem("savedArtworks")) || [];
     const savedLessons = JSON.parse(localStorage.getItem("savedCourses")) || [];
+    const savedCitations =
+      JSON.parse(localStorage.getItem("savedCitations")) || [];
     const basvuruTipi = localStorage.getItem("basvuruTipi") || ""; // Null dönerse boş string kullan
     const secilmisIlan = localStorage.getItem("secilmisIlan");
 
@@ -303,6 +305,10 @@ function Finish({ onSelect }) {
     if (savedArticles.length >= 0) {
       data.articles =
         savedArticles.map((item) => ({ publicationId: item.id })) || [];
+    }
+    if (savedCitations.length >= 0) {
+      data.citations =
+        savedCitations.map((item) => ({ publicationId: item.id })) || [];
     }
     if (savedBooks.length >= 0) {
       data.books = savedBooks.map((item) => ({ publicationId: item.id })) || [];

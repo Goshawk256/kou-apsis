@@ -20,7 +20,8 @@ function Basvuru({ onSelect }) {
     const savedBooks = JSON.parse(localStorage.getItem("savedBooks")) || [];
     const savedConferencePapers =
       JSON.parse(localStorage.getItem("savedConferencePapers")) || [];
-
+    const savedCitations =
+      JSON.parse(localStorage.getItem("savedCitations")) || [];
     const savedAwards = JSON.parse(localStorage.getItem("savedAwards")) || [];
     const savedArtworks =
       JSON.parse(localStorage.getItem("savedArtworks")) || [];
@@ -35,6 +36,7 @@ function Basvuru({ onSelect }) {
       ...savedLessons,
       ...savedAwards,
       ...savedArtworks,
+      ...savedCitations,
     ].map((item) => ({
       id: item.id,
       title: item.title || item.projectName || item.course_name,
