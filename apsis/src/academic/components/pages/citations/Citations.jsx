@@ -230,6 +230,7 @@ function Citations() {
             <thead>
               <tr>
                 <th>Yayının Adı</th>
+                <th>Atıf Bilgileri</th>
                 <th>Puan</th>
                 <th>İşlem</th>
               </tr>
@@ -252,8 +253,14 @@ function Citations() {
                         ? `${item.title.slice(0, 60)}...`
                         : item.title}
                     </td>
+                    <td>
+                      {item.citations.d1Cnt > 0 && `${item.citations.d1Cnt}xD1`}{" "}
+                      {item.citations.d2Cnt > 0 && `${item.citations.d2Cnt}xD2`}{" "}
+                      {item.citations.d3Cnt > 0 && `${item.citations.d3Cnt}xD3`}{" "}
+                      {item.citations.d4Cnt > 0 && `${item.citations.d4Cnt}xD4`}
+                    </td>
 
-                    <td>{item.citations.d1Cnt}</td>
+                    <td>{item.citations.score}</td>
 
                     <td>
                       {isEditMode ? (
