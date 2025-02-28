@@ -10,6 +10,7 @@ function RightBar({ isOpen, onClose, givenGroup, givenId, from, refresh }) {
   const [name, setName] = useState("");
   const [pdfName, setPdfName] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
+  const [projectTypes, setProjectTypes] = useState([]);
   useEffect(() => {
     switch (from) {
       case "projects":
@@ -97,7 +98,36 @@ function RightBar({ isOpen, onClose, givenGroup, givenId, from, refresh }) {
     }
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (!accessToken) {
+      alert("Giriş yapmalısınız!");
+      return;
+    }
+    const responseProjectTypes = axios.get(
+      "https://apsis.kocaeli.edu.tr/api//lookUp/get-project-types",
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+    const responseProjectRoleTypes = axios.get(
+      "https://apsis.kocaeli.edu.tr/api//lookUp/get-project-role-types",
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+    console.log("responseProjectTypes:", responseProjectTypes.data.data);
+    console.log(
+      "responseProjectRoleTypes:",
+      responseProjectRoleTypes.data.data
+    );
+  }, [from]);
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
   };
