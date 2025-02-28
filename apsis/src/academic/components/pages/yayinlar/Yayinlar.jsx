@@ -240,14 +240,6 @@ function Yayinlar() {
         </button>
 
         <button
-          className={`yayinlar-btn ${publicationTypeId === 2 ? "active" : ""}`}
-          onClick={() => {
-            setPublicationTypeId(2);
-          }}
-        >
-          Kitaplar
-        </button>
-        <button
           className={`yayinlar-btn ${publicationTypeId === 4 ? "active" : ""}`}
           onClick={() => {
             setPublicationTypeId(4);
