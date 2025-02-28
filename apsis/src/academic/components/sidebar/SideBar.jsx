@@ -9,6 +9,7 @@ import homeIcon from "../../../assets/home.svg";
 import odulIcon from "../../../assets/odul.svg";
 import yayinIcon from "../../../assets/yayinlar.svg";
 import tezIcon from "../../../assets/yonetilenTezler.svg";
+import atifIcon from "../../../assets/quote.png";
 
 function SideBar({ onSelect }) {
   const items = [
@@ -19,7 +20,7 @@ function SideBar({ onSelect }) {
       name: "Yönetilen Tezler",
       icon: <img src={tezIcon} alt="Yönetilen Tezler" />,
     },
-    { name: "Atıflarım", icon: <img src={homeIcon} alt="Home" /> },
+    { name: "Atıflarım", icon: <img src={atifIcon} alt="Home" /> },
     { name: "Proje Görevlerim", icon: <img src={gorevIcon} alt="Görevler" /> },
     { name: "Ödüller", icon: <img src={odulIcon} alt="Ödüller" /> },
     {
