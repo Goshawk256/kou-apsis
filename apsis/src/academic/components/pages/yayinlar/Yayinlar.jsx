@@ -23,7 +23,6 @@ function Yayinlar() {
   const [popupMessage, setPopupMessage] = useState(null);
   const [rightBarOpen, setRightBarOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-
   const [isEditMode] = useState(false);
   const [storageKey, setStorageKey] = useState("savedPublications");
   const [allPublications, setAllPublications] = useState({});
@@ -148,10 +147,8 @@ function Yayinlar() {
       showPopup("Yayın kaydedildi.", "success");
     }
 
-    // Güncellenmiş veriyi localStorage'a kaydet
     localStorage.setItem(key, JSON.stringify(savedPublications));
 
-    // **allPublications state'ini güncelle**
     updateAllPublications();
   };
 
