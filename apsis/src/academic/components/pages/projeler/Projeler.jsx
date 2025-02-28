@@ -31,7 +31,6 @@ function Projeler() {
   const handleEditClick = (givenId, givenGroup) => {
     setgivenId(givenId);
     setgivenGroup(givenGroup);
-    console.log(givenId, givenGroup);
     openRightBar();
   };
 
