@@ -21,10 +21,9 @@ function Citations() {
   const [rightBarOpen, setRightBarOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [popupMessage, setPopupMessage] = useState(null);
-  const [editingIndex, setEditingIndex] = useState(null);
-  const [tempGroups, setTempGroups] = useState({});
+
   const [isEditMode] = useState(false);
-  const [currentGroup, setCurrentGroup] = useState(null);
+
   const [givenGroup, setgivenGroup] = useState("");
   const [givenId, setgivenId] = useState("");
 
