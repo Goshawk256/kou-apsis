@@ -2,16 +2,16 @@ import { useEffect, useState } from "react";
 import "./Citations.css";
 import {
   FaSync,
+  FaPencilAlt,
   FaCheckSquare,
   FaRegSquare,
-  FaPencilAlt,
 } from "react-icons/fa";
 import axios from "axios";
 import RightBar from "../../rightbar/RightBar";
+import All_Url from "../../../../url";
 import NotFound from "../../errorstacks/NotFound";
 import { refreshTheToken } from "../../../../middlewares/authMiddleware";
 import click from "../../../../assets/click.png";
-import All_Url from "../../../../url";
 
 function Citations() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -19,10 +19,10 @@ function Citations() {
   const [tableData, setTableData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [rightBarOpen, setRightBarOpen] = useState(false);
-  const [popupMessage, setPopupMessage] = useState(null); // Pop-up mesajı
   const [loading, setLoading] = useState(false);
+  const [popupMessage, setPopupMessage] = useState(null);
   const [editingIndex, setEditingIndex] = useState(null);
-  const [tempGroups, setTempGroups] = useState({}); // Sadece eklenen kısmı tutan nesne
+  const [tempGroups, setTempGroups] = useState({});
   const [isEditMode] = useState(false);
   const [currentGroup, setCurrentGroup] = useState(null);
   const [givenGroup, setgivenGroup] = useState("");
@@ -35,41 +35,13 @@ function Citations() {
     openRightBar();
   };
 
-  const handleGroupChange = (id, newValue) => {
-    setTempGroups((prev) => ({
-      ...prev,
-      [id]: newValue,
-    }));
-  };
-  const formatSemester = (semester) => {
-    const yearMapping = {
-      2122: "2021-2022",
-      2223: "2022-2023",
-      2324: "2023-2024",
-      2425: "2024-2025",
-      2526: "2025-2026",
-      2627: "2026-2027",
-      2728: "2027-2028",
-    };
-    const termMapping = {
-      G: "Güz",
-      B: "Bahar",
-    };
-
-    const yearCode = semester.slice(0, 4); // İlk 4 karakter yıl kodu
-    const termCode = semester.slice(4); // Son karakter dönem kodu
-
-    const year = yearMapping[yearCode] || "Bilinmeyen Yıl"; // Eşleme yoksa "Bilinmeyen Yıl"
-    const term = termMapping[termCode] || "Bilinmeyen Dönem"; // Eşleme yoksa "Bilinmeyen Dönem"
-
-    return `${year} ${term}`;
-  };
-  const fetchData = async () => {
+  const fetchProjects = async () => {
+    setLoading(true);
     const username = localStorage.getItem("username");
     try {
       const response = await axios.post(
-        `${All_Url.api_base_url}/academic/get-lessons`,
-        { username },
+        `${All_Url.api_base_url}/academic/get-projects`,
+        { username: username },
         {
           headers: {
             "Content-Type": "application/json",
@@ -77,47 +49,60 @@ function Citations() {
           },
         }
       );
-
-      if (
-        response.data &&
-        response.data.success &&
-        Array.isArray(response.data.data)
-      ) {
-        const courses = response.data.data.map((item) => ({
-          ...item,
-          semester: item.semester,
-        }));
-
-        // En yeni yıla göre sırala (Büyük yıl -> Küçük yıl, Güz (G) -> Bahar (B))
-        courses.sort((a, b) => {
-          const yearA = parseInt(a.semester.slice(0, 4)); // Yıl kodunu al
-          const yearB = parseInt(b.semester.slice(0, 4));
-          const termA = a.semester.slice(4); // Dönem kodunu al (G/B)
-          const termB = b.semester.slice(4);
-
-          if (yearA !== yearB) {
-            return yearB - yearA; // Büyük yıl önce gelsin
-          }
-          return termA === "G" ? -1 : 1; // Güz önce gelsin
-        });
-
-        setTableData(courses);
-        setFilteredData(courses);
-      } else {
-        console.error("Beklenen veri formatı alınamadı:", response.data);
-      }
+      setTableData(response.data.data || []);
+      setFilteredData(response.data.data || []);
     } catch (error) {
-      console.error("Veriler alınırken bir hata oluştu:", error);
+      console.error("Projeler alınırken bir hata oluştu:", error);
     } finally {
       setLoading(false);
     }
   };
   useEffect(() => {
-    setLoading(true);
     refreshTheToken();
 
-    fetchData();
+    fetchProjects();
   }, []);
+
+  useEffect(() => {
+    // Arama ve filtreleme işlemi
+    const filtered = tableData.filter((item) =>
+      item.projectName.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    setFilteredData(filtered);
+  }, [searchQuery, tableData]);
+
+  const saveToLocalStorage = (project) => {
+    const savedProjects =
+      JSON.parse(localStorage.getItem("savedProjects")) || [];
+
+    const existingProject = savedProjects.find(
+      (proj) => proj.id === project.id
+    );
+
+    if (!existingProject) {
+      savedProjects.push(project);
+      localStorage.setItem("savedProjects", JSON.stringify(savedProjects));
+      showPopup("Proje başarıyla kaydedildi!", "success");
+    } else {
+      const userConfirmed = confirm(
+        "Bu proje zaten kaydedilmiş. Silmek ister misiniz?"
+      );
+      if (userConfirmed) {
+        const updatedProjects = savedProjects.filter(
+          (proj) => proj.id !== project.id
+        );
+        localStorage.setItem("savedProjects", JSON.stringify(updatedProjects));
+        showPopup("Proje başarıyla silindi!", "success");
+      } else {
+        showPopup("Proje silinmedi.", "info");
+      }
+    }
+  };
+
+  const showPopup = (message, type) => {
+    setPopupMessage({ message, type });
+    setTimeout(() => setPopupMessage(null), 1500);
+  };
   const getPreferredGroupDisplay = (item) => {
     if (item.groupJuryEdited !== "-") {
       return (
@@ -163,47 +148,7 @@ function Citations() {
     }
   };
 
-  useEffect(() => {
-    // Arama ve filtreleme işlemi
-    const filtered = tableData.filter((item) =>
-      item.course_name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-    setFilteredData(filtered);
-  }, [searchQuery, tableData]);
-
-  const saveToLocalStorage = (course) => {
-    const savedCourses = JSON.parse(localStorage.getItem("savedCourses")) || [];
-
-    const existingCourse = savedCourses.find(
-      (savedCourse) => savedCourse.id === course.id
-    );
-
-    if (!existingCourse) {
-      savedCourses.push(course);
-      localStorage.setItem("savedCourses", JSON.stringify(savedCourses));
-      showPopup("Ders başarıyla kaydedildi!", "success");
-    } else {
-      const userConfirmed = confirm(
-        "Bu ders zaten kaydedilmiş. Silmek ister misiniz?"
-      );
-      if (userConfirmed) {
-        const updatedCourses = savedCourses.filter(
-          (savedCourse) => savedCourse.id !== course.id
-        );
-        localStorage.setItem("savedCourses", JSON.stringify(updatedCourses));
-        showPopup("Ders başarıyla silindi!", "success");
-      } else {
-        showPopup("Ders silinmedi.", "info");
-      }
-    }
-  };
-
-  const showPopup = (message, type) => {
-    setPopupMessage({ message, type });
-    setTimeout(() => setPopupMessage(null), 1500); // Pop-up mesajını birkaç saniye sonra kapatıyoruz
-  };
-
-  const itemsPerPage = 4; // Sayfa başına gösterilecek öğe sayısı
+  const itemsPerPage = 4; // Sayfa başına gösterilecek proje sayısı
   const paginatedData = filteredData.slice(
     (page - 1) * itemsPerPage,
     page * itemsPerPage
@@ -228,14 +173,13 @@ function Citations() {
         onClose={closeRightBar}
         givenGroup={givenGroup}
         givenId={givenId}
-        from="lessons"
-        refresh={fetchData}
+        from="projects"
+        refresh={fetchProjects}
       />
 
       {/* Row 2 - Arama, Filtreleme, Yenileme */}
       <div className="yayinlar-main-row-2">
         <input
-          style={{ color: "grey" }}
           type="text"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
@@ -254,7 +198,7 @@ function Citations() {
             ‹
           </button>
           <span>
-            {page}/{totalPages}
+            {page}/ {totalPages}{" "}
           </span>
           <button
             onClick={() => setPage(page + 1)}
@@ -265,6 +209,7 @@ function Citations() {
         </div>
       </div>
 
+      {/* Row 3 - Tablo */}
       <div className="yayinlar-main-row-3">
         {loading ? (
           <div className="hourglassBackground">
@@ -284,45 +229,48 @@ function Citations() {
           <table>
             <thead>
               <tr>
-                <th>Kurs Adı</th>
-                <th>Dönem</th>
+                <th>Proje Adı</th>
                 <th>Grup</th>
                 <th>Puan</th>
+                <th>Durum</th>
                 <th>İşlem</th>
               </tr>
             </thead>
             <tbody>
               {paginatedData.map((item) => {
-                const savedCourses =
-                  JSON.parse(localStorage.getItem("savedCourses")) || [];
-                const isSaved = savedCourses.some(
-                  (savedCourse) => savedCourse.id === item.id
-                );
+                const savedProjects =
+                  JSON.parse(localStorage.getItem("savedProjects")) || [];
+                const isSaved = savedProjects.some(
+                  (proj) => proj.id === item.id
+                ); // Kaydedildi mi kontrolü
 
                 return (
                   <tr
                     key={item.id}
                     className={isEditMode ? "edit-mode-row" : ""}
-                    onClick={() => {
-                      if (isEditMode) {
-                        openRightBar();
-                      }
-                    }}
                   >
-                    <td>{item.course_name}</td>
-                    <td>{formatSemester(item.semester)}</td>
+                    <td>
+                      {item.projectName.length > 50
+                        ? `${item.projectName.slice(0, 60)}...`
+                        : item.projectName}
+                    </td>
+
                     <td className="item-group">
                       <div className="group-show">
-                        {/* {getPreferredGroupDisplay(item)} */}
-                        <span>{item.groupAuto}</span>
+                        {getPreferredGroupDisplay(item)}
                       </div>
                     </td>
-                    <td>
-                      <div className="group-show">
-                        {/* {getPreferredScoreDisplay(item)} */}
-                        <span>{item.scoreAuto}</span>
-                      </div>
-                    </td>
+
+                    {item.status === "Devam Ediyor" ? (
+                      <td>{0}</td>
+                    ) : (
+                      <td>
+                        <div className="group-show">
+                          {getPrerredScoreDisplay(item)}
+                        </div>
+                      </td>
+                    )}
+                    <td>{item.status}</td>
                     <td>
                       {isEditMode ? (
                         <div className="choose-publication">
@@ -332,9 +280,9 @@ function Citations() {
                         <div>
                           <button
                             className="yayinlar-btn"
-                            // onClick={() =>
-                            //   handleEditClick(item.id, item.groupAuto)
-                            // }
+                            onClick={() =>
+                              handleEditClick(item.id, item.groupAuto)
+                            }
                           >
                             <FaPencilAlt />
                           </button>
