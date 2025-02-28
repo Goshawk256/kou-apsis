@@ -40,25 +40,33 @@ function Books() {
     await refreshTheToken();
 
     try {
-      const response = await axios.post(
-        `${All_Url.api_base_url}/academic/get-awards`,
-        {},
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-          },
-        }
-      );
-      setTableData(response.data.data);
+      const publicationTypeIds = [2, 3, 5];
 
-      setFilteredData(response.data.data);
+      const requests = publicationTypeIds.map((id) =>
+        axios.post(
+          `${All_Url.api_base_url}/academic/get-publications`,
+          { publicationTypeId: id },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+          }
+        )
+      );
+
+      const responses = await Promise.all(requests);
+      const mergedData = responses.flatMap((res) => res.data.data);
+      console.log(mergedData);
+      setTableData(mergedData);
+      setFilteredData(mergedData);
     } catch (error) {
       console.error("Veri çekme hatası:", error);
     } finally {
       setLoading(false);
     }
   };
+
   const getPreferredGroupDisplay = (item) => {
     if (item.groupJuryEdited !== "-") {
       return (
