@@ -209,8 +209,6 @@ function Citations() {
           </button>
         </div>
       </div>
-
-      {/* Row 3 - Tablo */}
       <div className="yayinlar-main-row-3">
         {loading ? (
           <div className="hourglassBackground">
@@ -243,7 +241,7 @@ function Citations() {
                   JSON.parse(localStorage.getItem("savedCitations")) || [];
                 const isSaved = savedCitations.some(
                   (atif) => atif.id === item.id
-                ); // Kaydedildi mi kontrolü
+                );
 
                 return (
                   <tr
