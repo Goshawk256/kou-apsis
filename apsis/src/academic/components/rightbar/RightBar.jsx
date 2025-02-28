@@ -12,6 +12,7 @@ function RightBar({ isOpen, onClose, givenGroup, givenId, from, refresh }) {
   const [selectedFile, setSelectedFile] = useState(null);
   const [projectTypes, setProjectTypes] = useState([]);
   const [projectRoleTypes, setProjectRoleTypes] = useState([]);
+  const [selectedRoleId, setSelectedRoleId] = useState("");
   useEffect(() => {
     switch (from) {
       case "projects":
@@ -80,10 +81,61 @@ function RightBar({ isOpen, onClose, givenGroup, givenId, from, refresh }) {
     }
   }, [from]);
 
+  const updateProjectRole = async () => {
+    if (!givenId || !selectedRoleId) {
+      alert("Lütfen bir proje seçin ve rol belirleyin!");
+      return;
+    }
+
+    try {
+      const response = await axios.put(
+        "https://apsis.kocaeli.edu.tr/api/academic/update-project-rank-by-type",
+        {
+          projectId: givenId,
+          projectTypeId: selectedRoleId,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }
+      );
+
+      alert("Proje rolü başarıyla güncellendi!");
+      console.log("Başarıyla güncellendi:", response.data);
+    } catch (error) {
+      console.error("Proje rol güncelleme hatası:", error);
+      alert(
+        "Güncelleme başarısız: " +
+          (error.response?.data?.message || "Tekrar deneyin.")
+      );
+    } finally {
+      refresh();
+      onClose();
+    }
+  };
   const RenderedComponent = ({ from }) => {
     switch (from) {
       case "projects":
-        return <div className="right-bar-content">projeler</div>;
+        return (
+          <div className="right-bar-content">
+            <h3>Proje Rolü Güncelle</h3>
+            <label>Proje Rolü Seç:</label>
+            <select
+              value={selectedRoleId}
+              onChange={(e) => setSelectedRoleId(e.target.value)}
+            >
+              <option value="">Seçiniz</option>
+              {Object.entries(projectRoleTypes).map(([id, roleName]) => (
+                <option key={id} value={id}>
+                  {roleName}
+                </option>
+              ))}
+            </select>
+            <button onClick={() => updateProjectRole()}>Güncelle</button>
+          </div>
+        );
       case "publications":
         return <div className="right-bar-content">yayınlar</div>;
       case "books":
@@ -105,41 +157,45 @@ function RightBar({ isOpen, onClose, givenGroup, givenId, from, refresh }) {
       alert("Giriş yapmalısınız!");
       return;
     }
-    const responseProjectTypes = await axios.get(
-      "https://apsis.kocaeli.edu.tr/api//lookUp/get-project-types",
-      {},
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-    );
-    const responseProjectRoleTypes = await axios.get(
-      "https://apsis.kocaeli.edu.tr/api//lookUp/get-project-role-types",
-      {},
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-    );
-    console.log("responseProjectTypes:", responseProjectTypes.data.data);
-    setProjectTypes(responseProjectTypes.data.data);
-    console.log(
-      "responseProjectRoleTypes:",
-      responseProjectRoleTypes.data.data
-    );
-    setProjectRoleTypes(responseProjectRoleTypes.data.data);
+
+    try {
+      console.log("API isteği başlatılıyor...");
+
+      const responseProjectTypes = await axios.get(
+        "https://apsis.kocaeli.edu.tr/api/lookUp/get-project-types", // Fazladan '/' vardı, düzelttim.
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+
+      const responseProjectRoleTypes = await axios.get(
+        "https://apsis.kocaeli.edu.tr/api/lookUp/get-project-role-types",
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+
+      console.log("API Yanıtı - Proje Türleri:", responseProjectTypes.data);
+      console.log(
+        "API Yanıtı - Proje Rol Türleri:",
+        responseProjectRoleTypes.data
+      );
+
+      setProjectTypes(responseProjectTypes.data.data || []);
+      setProjectRoleTypes(responseProjectRoleTypes.data.data || []);
+    } catch (error) {
+      console.error("API Hatası:", error);
+    }
   };
 
   useEffect(() => {
-    switch (from) {
-      case "projects":
-        getProjectInfo();
-        break;
-      case "publications":
-        getProjectInfo();
-        break;
+    console.log("useEffect Çalıştı! from:", from);
+    if (from === "projects") {
+      getProjectInfo();
     }
   }, [from]);
 
