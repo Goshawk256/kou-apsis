@@ -53,6 +53,15 @@ function Login() {
       }
     }
   }, [navigate]);
+  
+  useEffect(() => {
+    if (roles.length === 1 && roles[0] === "Academic") {
+      setSelectedRole("Academic");
+    } else if (roles.length > 0) {
+      setSelectedRole(roles[0]); 
+    }
+  }, [roles]);
+  
 
   const fetchRoles = async (username) => {
     try {
@@ -65,25 +74,39 @@ function Login() {
           },
         }
       );
+      
+      console.log("Gelen roller:", response.data); 
+  
       if (response.data.success) {
         setRoles(response.data.data);
-        setSelectedRole(response.data.data[0] || "");
+        console.log("Gelen roller listesi:", response.data.data);
+    
+        if (response.data.data.length === 1 && response.data.data[0] === "Academic") {
+          setSelectedRole("Academic");
+        } else {
+          setSelectedRole(response.data.data[0] || "Academic"); 
+        }
       }
     } catch (error) {
       setError(error);
       console.error("Rol getirme hatası:", error);
     }
   };
+  
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    const finalRole = selectedRole || "Academic";
+    
+    console.log("Gönderilen veriler:", { username, password, role: finalRole });
+  
     try {
       const response = await axios.post(
         "/api/auth/login",
         {
           username,
           password,
-          role: selectedRole,
+          role: finalRole,
         },
         {
           headers: {
@@ -91,26 +114,27 @@ function Login() {
           },
         }
       );
-
+  
       if (response.data.success) {
         localStorage.setItem("accessToken", response.data.data.accessToken);
         localStorage.setItem("refreshToken", response.data.data.refreshToken);
-        localStorage.setItem("role", selectedRole);
+        localStorage.setItem("role", finalRole);
         localStorage.setItem("username", username);
-        navigate("/home"); // Başarılı giriş sonrası yönlendirme
+        navigate("/home");
       }
     } catch (error) {
       setError(error);
-      console.error("Giriş hatası:", error);
+      console.error("Giriş hatası:", error.response?.data || error.message);
     }
   };
-
+  
+  
   return (
     <div className="main-login">
       <div className="login-form">
         <form onSubmit={handleLogin}>
           <img style={{ width: "30%" }} src={Logo} alt="" />
-          <h2 style={{ color: "white" }}>Kou Apsıs</h2>
+          <h2 style={{ color: "white" }}>Kou Apsis</h2>
           <div className="form-group">
             <label htmlFor="username">Kullanıcı Adı</label>
             <input
@@ -123,7 +147,8 @@ function Login() {
               required
             />
           </div>
-          {roles.length > 0 && (
+          
+          {roles.length > 1 || (roles.length === 1 && roles[0] !== "Academic") ? (
             <div className="form-group">
               <label htmlFor="role">Kullanıcı Rolü</label>
               <select
@@ -142,7 +167,7 @@ function Login() {
                       ? "Akademik Personel"
                       : role === "Jury"
                       ? "Jüri"
-                      : role == "Rector"
+                      : role === "Rector"
                       ? "Rektörlük"
                       : role === "ExternalAcademic"
                       ? "Dışarıdan Akademisyen"
@@ -155,7 +180,8 @@ function Login() {
                 ))}
               </select>
             </div>
-          )}
+          ) : console.log("Bu üyede sadece akademik personel rolü bulunmaktadır.")}
+          
           <div className="form-group">
             <label className="password-label" htmlFor="password">
               Şifre
