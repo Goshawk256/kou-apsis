@@ -48,7 +48,7 @@ function RightBar({ isOpen, onClose, givenGroup, givenId, from, refresh }) {
     setSelectedConditionId(e.target.value);
   };
 
-  const handleUpdateCondition = () => {
+  const handleUpdateCondition = async () => {
     const selected = conditions.find(
       (cond) => cond.id === Number(selectedConditionId)
     );
@@ -77,9 +77,10 @@ function RightBar({ isOpen, onClose, givenGroup, givenId, from, refresh }) {
         console.log("Başarıyla güncellendi:", response.data);
       } catch (error) {
         console.error("Condition update error:", error);
+      } finally {
+        refresh();
+        onClose();
       }
-      refresh();
-      onClose();
     }
   };
   useEffect(() => {
@@ -189,14 +190,14 @@ function RightBar({ isOpen, onClose, givenGroup, givenId, from, refresh }) {
       case "projects":
         return (
           <div className="right-bar-content">
-            <h3>Proje Rolü Güncelle</h3>
-            <label>Proje Rolü Seç:</label>
+            <h3>Proje Güncelle</h3>
+            <label>Proje Türü Seç:</label>
             <select
               value={selectedRoleId}
               onChange={(e) => setSelectedRoleId(e.target.value)}
             >
               <option value="">Seçiniz</option>
-              {Object.entries(projectRoleTypes).map(([id, roleName]) => (
+              {Object.entries(projectTypes).map(([id, roleName]) => (
                 <option key={id} value={id}>
                   {roleName}
                 </option>
