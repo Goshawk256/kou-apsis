@@ -208,8 +208,8 @@ function RightBar({ isOpen, onClose, givenGroup, givenId, from, refresh }) {
       case "publications":
         return (
           <div className="right-bar-content">
-            <h3>Condition Güncelle</h3>
-            <label>Condition Seç:</label>
+            <h3>Özel Durum Güncelle</h3>
+            <label>Özel Durum Seç:</label>
             <select value={selectedConditionId} onChange={handleSelectChange}>
               <option value="">Seçiniz</option>
               {conditions.map((condition) => (
