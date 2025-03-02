@@ -56,8 +56,28 @@ function RightBar({ isOpen, onClose, givenGroup, givenId, from, refresh }) {
       alert("Lütfen Condition Seçiniz");
       console.log("Seçilen Condition Bulunamadi");
     } else {
-      alert("Condition Başariyla Seçildi");
-      console.log("Seçilen Condition:", selected);
+      const condition = {
+        number: selectedConditionId,
+        value: 1,
+      };
+      try {
+        response = axios.put(
+          "https://apsis.kocaeli.edu.tr/api/academic/update-publication-special-case",
+          {
+            publicationId: givenId,
+            condition: condition,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+          }
+        );
+        console.log("Başarıyla güncellendi:", response.data);
+      } catch (error) {
+        console.error("Condition update error:", error);
+      }
       refresh();
       onClose();
     }
