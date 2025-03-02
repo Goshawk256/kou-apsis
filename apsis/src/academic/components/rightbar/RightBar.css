@@ -56,6 +56,7 @@
   border: none;
   padding: 5px 10px;
   cursor: pointer;
+  margin-left: auto;
 }
 
 .close-btn {
@@ -80,24 +81,23 @@
 .content-r-1 {
   display: flex;
   flex-direction: column;
-  align-items: start;
-  justify-content: space-around;
-  margin-top: 20px;
-  text-align: start;
-  padding: 10px;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
   width: 100%;
   height: 10%;
   border-bottom: 1px solid #e6e6e6;
 }
 .right-bar-content-body {
-  width: 48%;
+  width: 50%;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
 }
+
 .right-bar-content-body input {
-  width: 20%;
+  width: 25%;
   height: 100%;
   padding: 10px;
   margin: 10px;
@@ -118,9 +118,9 @@
 .content-r-2 {
   display: flex;
   flex-direction: column;
-  align-items: start;
+  align-items: center;
   justify-content: start;
-  margin-top: 20px;
+  margin-top: 10px;
   text-align: start;
   width: 100%;
   height: 30%;
@@ -131,10 +131,20 @@
 .upload-content-div {
   display: flex;
   flex-direction: column;
-  align-items: start;
-  justify-content: space-around;
-  margin-top: 20px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 3px;
   text-align: start;
   width: 100%;
-  height: 10%;
+  height: 20%;
+}
+.upload-content-div input[type="text"],
+.upload-content-div input[type="file"] {
+    width: 50%; 
+    max-width: 300px;
+    padding: 3px;
+    margin: 4px ; 
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
 }

@@ -166,7 +166,7 @@ function RightBar({ isOpen, onClose, givenGroup, givenId, from, refresh }) {
                 </option>
               ))}
             </select>
-            <button onClick={() => updateProjectRole()}>Güncelle</button>
+            <button className="update-btn" onClick={() => updateProjectRole()}>Güncelle</button>
           </div>
         );
       case "publications":
@@ -183,7 +183,7 @@ function RightBar({ isOpen, onClose, givenGroup, givenId, from, refresh }) {
             ))}
           </select>
     
-          <button onClick={handleUpdateCondition}>Güncelle</button>
+          <button className="update-btn" onClick={handleUpdateCondition}>Güncelle</button>
         </div>
         );
       case "books":
@@ -351,7 +351,7 @@ function RightBar({ isOpen, onClose, givenGroup, givenId, from, refresh }) {
             </div>
           </div>
           <div className="content-r-2">
-            <h3>Dosya Yükle</h3>
+            <h3 className="content-r-2-header">Dosya Yükle</h3>
             <div className="upload-content-div">
               <input
                 type="text"
