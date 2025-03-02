@@ -14,16 +14,35 @@ function RightBar({ isOpen, onClose, givenGroup, givenId, from, refresh }) {
   const [projectRoleTypes, setProjectRoleTypes] = useState([]);
   const [selectedRoleId, setSelectedRoleId] = useState("");
   const [selectedConditionId, setSelectedConditionId] = useState(null);
-  const conditions =
-  [
-    {id:1, title: "1.Condition"},
-    {id:2, title: "2.Condition"},
-    {id:3, title: "3.Condition"},
-    {id:4, title: "4.Condition"},
-    {id:5, title: "5.Condition"},
-    {id:6, title: "6.Condition"},
-    {id:7, title: "7.Condition"}
-  ]
+  const conditions = [
+    {
+      id: 1,
+      title:
+        "Sadece akademik danışman ve danışmanlığındaki lisansüstü öğrencinin çalışmalar.",
+    },
+    {
+      id: 2,
+      title:
+        "Sadece akademik danışman, eş danışman ve akademik danışmanın lisansüstüöğrencisinin yer aldığı çalışmalar.",
+    },
+    {
+      id: 3,
+      title:
+        "Akademik danışman ve akademik danışmanın iki lisansüstü öğrencisinin yer aldığı çalışmalar.",
+    },
+    {
+      id: 4,
+      title:
+        "Üniversite-Başka bir yurtiçi Üniversite veya Üniversite-Yurtdışı Üniversite/Kurum veya Üniversite-Sanayi Üniversite İşbirliği içeren çalışmalar.",
+    },
+    { id: 5, title: "Derleme Makalesi Olan çalışmalar" },
+    { id: 6, title: "Beş ve üzeri kişi sayısı içeren çalışmalar." },
+    {
+      id: 7,
+      title:
+        "Yukarıdaki durumların dışında, beş ve üzeri kişi sayısı içeren çalışmalar.",
+    },
+  ];
 
   const handleSelectChange = (e) => {
     setSelectedConditionId(e.target.value);
@@ -33,17 +52,15 @@ function RightBar({ isOpen, onClose, givenGroup, givenId, from, refresh }) {
     const selected = conditions.find(
       (cond) => cond.id === Number(selectedConditionId)
     );
-    if(!selected){
+    if (!selected) {
       alert("Lütfen Condition Seçiniz");
       console.log("Seçilen Condition Bulunamadi");
-
-    }else{
+    } else {
       alert("Condition Başariyla Seçildi");
       console.log("Seçilen Condition:", selected);
       refresh();
       onClose();
     }
-    
   };
   useEffect(() => {
     switch (from) {
@@ -113,7 +130,6 @@ function RightBar({ isOpen, onClose, givenGroup, givenId, from, refresh }) {
     }
   }, [from]);
 
-
   const updateProjectRole = async () => {
     if (!givenId || !selectedRoleId) {
       alert("Lütfen bir proje seçin ve rol belirleyin!");
@@ -170,21 +186,21 @@ function RightBar({ isOpen, onClose, givenGroup, givenId, from, refresh }) {
           </div>
         );
       case "publications":
-        return(  
-        <div className="right-bar-content">
-          <h3>Condition Güncelle</h3>
-          <label>Condition Seç:</label>
-          <select value={selectedConditionId} onChange={handleSelectChange}>
-            <option value="">Seçiniz</option>
-            {conditions.map((condition) => (
-              <option key={condition.id} value={condition.id}>
-                {condition.title}
-              </option>
-            ))}
-          </select>
-    
-          <button onClick={handleUpdateCondition}>Güncelle</button>
-        </div>
+        return (
+          <div className="right-bar-content">
+            <h3>Condition Güncelle</h3>
+            <label>Condition Seç:</label>
+            <select value={selectedConditionId} onChange={handleSelectChange}>
+              <option value="">Seçiniz</option>
+              {conditions.map((condition) => (
+                <option key={condition.id} value={condition.id}>
+                  {condition.title}
+                </option>
+              ))}
+            </select>
+
+            <button onClick={handleUpdateCondition}>Güncelle</button>
+          </div>
         );
       case "books":
         return <div className="right-bar-content">kitaplar</div>;
