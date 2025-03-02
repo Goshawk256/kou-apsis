@@ -1,21 +1,44 @@
+/* Right Bar Container */
 .right-bar {
   position: fixed;
   top: 0;
-  right: -700px;
+  right: -600px;
   width: 400px;
-  height: 95%;
-  background-color: #f0f0f0;
-  color: rgb(67, 67, 67);
+  height: 100%;
+  background-color: #ffffff;
+  color: #333;
   padding: 20px;
-  transition: right 0.3s ease-in-out;
-
+  transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: -5px 0px 15px rgba(0, 0, 0, 0.2);
   z-index: 1000;
-  overflow: auto;
-  scrollbar-width: none;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+  border-left: 1px solid #ddd;
 }
-.right-bar-container select {
-  color: #1fa54e !important;
+
+/* Açılma efekti */
+.right-bar.open {
+  right: 0;
 }
+
+/* Kapanma butonu */
+.close-btn {
+  background-color: #e22c2c;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+.close-btn:hover {
+  background-color: red;
+}
+
+/* Arka plan overlay */
 .overlay {
   position: fixed;
   top: 0;
@@ -23,49 +46,22 @@
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
-  /* Yarı saydam siyah */
   z-index: 999;
-  /* RightBar'dan bir alt z-index kullanın */
   display: none;
-  /* Başlangıçta gizli */
 }
 
 .overlay.open {
   display: block;
 }
 
+/* Light Mode */
 .light .right-bar {
   color: #4b4b4b;
   background-color: #f7f9fc;
-  border: 1px solid #e6e6e6;
+  border-left: 1px solid #e6e6e6;
 }
 
-.right-bar.open {
-  right: 0;
-}
-
-.right-bar-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.close-btn {
-  background-color: #212121;
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  cursor: pointer;
-}
-
-.close-btn {
-  background-color: #e22c2c;
-}
-
-.close-btn:hover {
-  background-color: red;
-}
-
+/* Right Bar İçerik */
 .right-bar-content {
   display: flex;
   flex-direction: column;
@@ -75,66 +71,120 @@
   gap: 20px;
   text-align: start;
   width: 100%;
-  height: 80%;
 }
+
+/* Kategori bilgisi */
+.right-bar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e6e6e6;
+}
+
+/* Grup düzenleme bölümü */
 .content-r-1 {
   display: flex;
   flex-direction: column;
   align-items: start;
-  justify-content: space-around;
-  margin-top: 20px;
-  text-align: start;
-  padding: 10px;
+  justify-content: start;
+  padding: 15px;
   width: 100%;
-  height: 10%;
   border-bottom: 1px solid #e6e6e6;
+  background: #f9f9f9;
+  border-radius: 8px;
 }
+
 .right-bar-content-body {
-  width: 48%;
   display: flex;
-  flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  width: 100%;
 }
+
 .right-bar-content-body input {
-  width: 20%;
-  height: 100%;
-  padding: 10px;
-  margin: 10px;
-  border: 1px solid #e6e6e6;
+  width: 70%;
+  padding: 8px;
+  border: 1px solid #ddd;
   border-radius: 5px;
+  transition: border 0.3s ease;
 }
+
+.right-bar-content-body input:focus {
+  border: 1px solid #1fa54e;
+  outline: none;
+}
+
+/* Güncelleme butonu */
 .update-btn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   background-color: #1fa54e;
   color: white;
   border: none;
-  border-radius: 10px;
-  padding: 11px 11px;
+  border-radius: 8px;
+  padding: 10px;
   cursor: pointer;
+  transition: background 0.3s ease;
 }
+
+.update-btn:hover {
+  background-color: #168a3b;
+}
+
+/* Dosya yükleme bölümü */
 .content-r-2 {
   display: flex;
   flex-direction: column;
   align-items: start;
-  justify-content: start;
-  margin-top: 20px;
-  text-align: start;
   width: 100%;
-  height: 30%;
+  padding: 15px;
+  background: #f9f9f9;
+  border-radius: 8px;
   border-bottom: 1px solid #e6e6e6;
-  gap: 20px;
 }
 
 .upload-content-div {
   display: flex;
   flex-direction: column;
-  align-items: start;
-  justify-content: space-around;
-  margin-top: 20px;
-  text-align: start;
+  gap: 10px;
   width: 100%;
-  height: 10%;
+}
+
+.upload-content-div input {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.apply-upload-file {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.apply-upload-file:hover {
+  background-color: #0056b3;
+}
+
+/* Select Kutuları */
+.right-bar-container select {
+  color: #1fa54e !important;
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+/* Mobil Uyumluluk */
+@media (max-width: 768px) {
+  .right-bar {
+    width: 100%;
+    right: -100%;
+  }
+
+  .right-bar.open {
+    right: 0;
+  }
 }
