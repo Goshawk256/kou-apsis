@@ -53,15 +53,14 @@ function Login() {
       }
     }
   }, [navigate]);
-  
+
   useEffect(() => {
     if (roles.length === 1 && roles[0] === "Academic") {
       setSelectedRole("Academic");
     } else if (roles.length > 0) {
-      setSelectedRole(roles[0]); 
+      setSelectedRole(roles[0]);
     }
   }, [roles]);
-  
 
   const fetchRoles = async (username) => {
     try {
@@ -74,17 +73,21 @@ function Login() {
           },
         }
       );
-      
-      console.log("Gelen roller:", response.data); 
-  
+
+      console.log("Gelen roller:", response.data);
+
       if (response.data.success) {
         setRoles(response.data.data);
         console.log("Gelen roller listesi:", response.data.data);
-    
-        if (response.data.data.length === 1 && response.data.data[0] === "Academic") {
+
+        if (
+          response.data.data.length === 1 &&
+          (response.data.data[0] === "Academic" ||
+            response.data.data[0] === "ExternalAcademic")
+        ) {
           setSelectedRole("Academic");
         } else {
-          setSelectedRole(response.data.data[0] || "Academic"); 
+          setSelectedRole(response.data.data[0] || "Academic");
         }
       }
     } catch (error) {
@@ -92,14 +95,13 @@ function Login() {
       console.error("Rol getirme hatası:", error);
     }
   };
-  
 
   const handleLogin = async (e) => {
     e.preventDefault();
     const finalRole = selectedRole || "Academic";
-    
+
     console.log("Gönderilen veriler:", { username, password, role: finalRole });
-  
+
     try {
       const response = await axios.post(
         "/api/auth/login",
@@ -114,7 +116,7 @@ function Login() {
           },
         }
       );
-  
+
       if (response.data.success) {
         localStorage.setItem("accessToken", response.data.data.accessToken);
         localStorage.setItem("refreshToken", response.data.data.refreshToken);
@@ -127,8 +129,7 @@ function Login() {
       console.error("Giriş hatası:", error.response?.data || error.message);
     }
   };
-  
-  
+
   return (
     <div className="main-login">
       <div className="login-form">
@@ -147,8 +148,9 @@ function Login() {
               required
             />
           </div>
-          
-          {roles.length > 1 || (roles.length === 1 && roles[0] !== "Academic") ? (
+
+          {roles.length > 1 ||
+          (roles.length === 1 && roles[0] !== "Academic") ? (
             <div className="form-group">
               <label htmlFor="role">Kullanıcı Rolü</label>
               <select
@@ -180,8 +182,10 @@ function Login() {
                 ))}
               </select>
             </div>
-          ) : console.log("Bu üyede sadece akademik personel rolü bulunmaktadır.")}
-          
+          ) : (
+            console.log("Bu üyede sadece akademik personel rolü bulunmaktadır.")
+          )}
+
           <div className="form-group">
             <label className="password-label" htmlFor="password">
               Şifre
