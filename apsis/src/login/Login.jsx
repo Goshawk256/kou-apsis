@@ -82,8 +82,7 @@ function Login() {
 
         if (
           response.data.data.length === 1 &&
-          (response.data.data[0] === "Academic" ||
-            response.data.data[0] === "ExternalAcademic")
+          response.data.data[0] === "Academic"
         ) {
           setSelectedRole("Academic");
         } else {
