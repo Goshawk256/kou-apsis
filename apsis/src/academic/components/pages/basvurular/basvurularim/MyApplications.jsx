@@ -25,9 +25,11 @@ function MyApplications({ onSelect }) {
             },
           }
         );
-        console.log(response.data);
+        console.log("Gelen başvurular:", response.data.data);
+
         if (response.data.success) {
           setApplications(response.data.data);
+          console.log("Gelen başvurular:", response.data.data);
         }
       } catch (error) {
         console.error("Veri çekme hatası:", error);
