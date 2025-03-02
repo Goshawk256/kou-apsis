@@ -25,7 +25,6 @@ function MyApplications({ onSelect }) {
             },
           }
         );
-        console.log("Gelen başvurular:", response.data.data);
 
         if (response.data.success) {
           setApplications(response.data.data);
