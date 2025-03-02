@@ -324,15 +324,17 @@ function RightBar({ isOpen, onClose, givenGroup, givenId, from, refresh }) {
         onClick={onClose}
       ></div>
       <div className={`right-bar ${isOpen ? "open" : ""} `}>
-        <div className="right-bar-header">
-          <button className="close-btn" onClick={onClose}>
-            X
-          </button>
-        </div>
-        <p>Kategori: {name}</p>
+          <div className="right-bar-header">
+      <div className="category-header">
+        Kategori: {name}
+      </div>
+      <button className="close-btn" onClick={onClose}>X</button>
+    </div>
         <div className="right-bar-content">
           <div className="content-r-1">
+            
             <div className="right-bar-content-header">
+            <h3 className="group-update-header">Grup Güncelle</h3>
               <span>Sistemin Atadığı Grup: {givenGroup}</span>
             </div>
             <div className="right-bar-content-body">
