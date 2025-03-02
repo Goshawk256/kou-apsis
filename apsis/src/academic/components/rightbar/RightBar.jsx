@@ -61,7 +61,7 @@ function RightBar({ isOpen, onClose, givenGroup, givenId, from, refresh }) {
         value: 1,
       };
       try {
-        response = axios.put(
+        const response = axios.put(
           "https://apsis.kocaeli.edu.tr/api/academic/update-publication-special-case",
           {
             publicationId: givenId,
