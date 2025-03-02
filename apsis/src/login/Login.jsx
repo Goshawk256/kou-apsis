@@ -29,7 +29,6 @@ function Login() {
     const refreshAccessToken = async () => {
       try {
         const response = await axios.post("/api/auth/refresh", {
-          refreshToken,
           username: localStorage.getItem("username"),
           role: localStorage.getItem("role"),
         });
@@ -118,7 +117,6 @@ function Login() {
 
       if (response.data.success) {
         localStorage.setItem("accessToken", response.data.data.accessToken);
-        localStorage.setItem("refreshToken", response.data.data.refreshToken);
         localStorage.setItem("role", finalRole);
         localStorage.setItem("username", username);
         navigate("/home");
