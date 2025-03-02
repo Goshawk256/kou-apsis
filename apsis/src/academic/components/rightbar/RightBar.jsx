@@ -57,7 +57,7 @@ function RightBar({ isOpen, onClose, givenGroup, givenId, from, refresh }) {
       console.log("Seçilen Condition Bulunamadi");
     } else {
       const condition = {
-        number: selectedConditionId,
+        number: Number(selectedConditionId),
         value: 1,
       };
       try {
