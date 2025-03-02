@@ -13,6 +13,38 @@ function RightBar({ isOpen, onClose, givenGroup, givenId, from, refresh }) {
   const [projectTypes, setProjectTypes] = useState([]);
   const [projectRoleTypes, setProjectRoleTypes] = useState([]);
   const [selectedRoleId, setSelectedRoleId] = useState("");
+  const [selectedConditionId, setSelectedConditionId] = useState(null);
+  const conditions =
+  [
+    {id:1, title: "1.Condition"},
+    {id:2, title: "2.Condition"},
+    {id:3, title: "3.Condition"},
+    {id:4, title: "4.Condition"},
+    {id:5, title: "5.Condition"},
+    {id:6, title: "6.Condition"},
+    {id:7, title: "7.Condition"}
+  ]
+
+  const handleSelectChange = (e) => {
+    setSelectedConditionId(e.target.value);
+  };
+
+  const handleUpdateCondition = () => {
+    const selected = conditions.find(
+      (cond) => cond.id === Number(selectedConditionId)
+    );
+    if(!selected){
+      alert("Lütfen Condition Seçiniz");
+      console.log("Seçilen Condition Bulunamadi");
+
+    }else{
+      alert("Condition Başariyla Seçildi");
+      console.log("Seçilen Condition:", selected);
+      refresh();
+      onClose();
+    }
+    
+  };
   useEffect(() => {
     switch (from) {
       case "projects":
@@ -81,6 +113,7 @@ function RightBar({ isOpen, onClose, givenGroup, givenId, from, refresh }) {
     }
   }, [from]);
 
+
   const updateProjectRole = async () => {
     if (!givenId || !selectedRoleId) {
       alert("Lütfen bir proje seçin ve rol belirleyin!");
@@ -137,7 +170,22 @@ function RightBar({ isOpen, onClose, givenGroup, givenId, from, refresh }) {
           </div>
         );
       case "publications":
-        return <div className="right-bar-content">yayınlar</div>;
+        return(  
+        <div className="right-bar-content">
+          <h3>Condition Güncelle</h3>
+          <label>Condition Seç:</label>
+          <select value={selectedConditionId} onChange={handleSelectChange}>
+            <option value="">Seçiniz</option>
+            {conditions.map((condition) => (
+              <option key={condition.id} value={condition.id}>
+                {condition.title}
+              </option>
+            ))}
+          </select>
+    
+          <button onClick={handleUpdateCondition}>Güncelle</button>
+        </div>
+        );
       case "books":
         return <div className="right-bar-content">kitaplar</div>;
       case "lessons":
