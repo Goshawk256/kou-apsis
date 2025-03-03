@@ -16,6 +16,7 @@ function Juries() {
   const [juryName, setJuryName] = useState("");
   const [facultyName, setFacultyName] = useState(facultyOptions[0]);
   const [juries, setJuries] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchJuries = async () => {
@@ -41,6 +42,8 @@ function Juries() {
       } catch (error) {
         alert("Jüriler getirilirken hata oluştu!");
         console.error(error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -127,26 +130,40 @@ function Juries() {
           </div>
         </div>
       )}
-      <div className="juries-content">
-        {juries.map((jury) => (
-          <li key={jury._id}>
-            <span>
-              <b>Jüri Adı:</b> <br /> {jury.juryName}
-            </span>
-            <span>
-              <b>Atandığı Fakülte:</b> <br /> {jury.facultyName.toUpperCase()}
-            </span>
-            <div className="jury-buttons">
-              <button className="edit-jury">
-                <FaPencilAlt />
-              </button>
-              <button className="delete-jury">
-                <FaTrashAlt />
-              </button>
-            </div>
-          </li>
-        ))}
-      </div>
+      {loading ? (
+        <div className="hourglassBackground">
+          <div className="hourglassContainer">
+            <div className="hourglassCurves"></div>
+            <div className="hourglassCapTop"></div>
+            <div className="hourglassGlassTop"></div>
+            <div className="hourglassSand"></div>
+            <div className="hourglassSandStream"></div>
+            <div className="hourglassCapBottom"></div>
+            <div className="hourglassGlass"></div>
+          </div>
+        </div>
+      ) : (
+        <div className="juries-content">
+          {juries.map((jury) => (
+            <li key={jury._id}>
+              <span>
+                <b>Jüri Adı:</b> <br /> {jury.juryName}
+              </span>
+              <span>
+                <b>Atandığı Fakülte:</b> <br /> {jury.facultyName.toUpperCase()}
+              </span>
+              <div className="jury-buttons">
+                <button className="edit-jury">
+                  <FaPencilAlt />
+                </button>
+                <button className="delete-jury">
+                  <FaTrashAlt />
+                </button>
+              </div>
+            </li>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
