@@ -330,14 +330,14 @@ function Dersler() {
                         </div>
                       ) : (
                         <div>
-                          <button
+                          {/* <button
                             className="yayinlar-btn"
                             // onClick={() =>
                             //   handleEditClick(item.id, item.groupAuto)
                             // }
                           >
                             <FaPencilAlt />
-                          </button>
+                          </button> */}
 
                           <button
                             className="yayinlar-btn"

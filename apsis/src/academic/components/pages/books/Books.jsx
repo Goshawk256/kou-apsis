@@ -256,7 +256,26 @@ function Books() {
                     key={item.id}
                     className={isEditMode ? "edit-mode-row" : ""}
                   >
-                    <td>{item.title}</td>
+                    <td>
+                      {item.title.length > 50
+                        ? `${item.title.slice(0, 60)}...`
+                        : item.title}
+                      <br />
+                      <p style={{ color: "#5d8c6a", fontSize: "10px" }}>
+                        {" "}
+                        {item.authors ? item.authors.join(", ") : "-"}
+                      </p>
+                      <p style={{ color: "#5d8c6a", fontSize: "10px" }}>
+                        {new Date(item.publishDate).toLocaleDateString(
+                          "tr-TR",
+                          {
+                            day: "numeric",
+                            month: "long",
+                            year: "numeric",
+                          }
+                        )}
+                      </p>
+                    </td>
                     <td className="item-group">
                       <div className="group-show">
                         {getPreferredGroupDisplay(item)}
