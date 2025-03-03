@@ -214,11 +214,11 @@ function ConfirmBasvuru({ setShowTable }) {
           </button>
         </div>
       ) : (
-        <div className="externalconfirm-basvuru">
-          <div className="externalconfirm-content">
-            <span className="external-birim-title">Başvurulacak İlan:</span>
-            <div className="external-radio-input">
-              <div className="external-list-content">
+        <div className="academicconfirm-basvuru">
+          <div className="academicconfirm-content">
+            <span className="academic-birim-title">Başvurulacak İlan:</span>
+            <div className="academic-radio-input">
+              <div className="academic-list-content">
                 {announcements.map((item, index) => (
                   <li
                     onClick={() => {
@@ -262,9 +262,9 @@ function ConfirmBasvuru({ setShowTable }) {
                 ))}
               </div>
             </div>
-            <h5 className="external-atama-title">Son Atama Tarihi:</h5>
-            <div className="externalconfirm-bottom-content">
-              <div className="external-date-picker">
+            <h5 className="academic-atama-title">Son Atama Tarihi:</h5>
+            <div className="academicconfirm-bottom-content">
+              <div className="academic-date-picker">
                 <LocalizationProvider
                   dateAdapter={AdapterDayjs}
                   adapterLocale="tr"
@@ -294,7 +294,7 @@ function ConfirmBasvuru({ setShowTable }) {
               </div>
               <button
                 onClick={handleSaveToLocalStorage}
-                className="externalconfirm-ileri-button"
+                className="academicconfirm-ileri-button"
               >
                 İleri
               </button>
@@ -303,7 +303,7 @@ function ConfirmBasvuru({ setShowTable }) {
               onClick={() => {
                 setIsMyApplications(true);
               }}
-              className="externalconfirm-geri-button"
+              className="academicconfirm-geri-button"
             >
               <img src={previous} alt="" />
             </button>
