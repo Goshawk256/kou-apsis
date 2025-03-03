@@ -338,11 +338,12 @@ function Ders() {
         </div>
       )}
       {showModal && (
-        <div className="modal-overlay">
-          <div className="modal">
+        <div className="dersmodal-overlay">
+          <div className="dersmodal">
             <h2>Yeni Ders Ekle</h2>
 
             <input
+              className="dersmodal-input"
               type="text"
               placeholder="Ders Adı"
               value={newArticle.name}
@@ -352,6 +353,7 @@ function Ders() {
             />
 
             <select
+              className="ders-select"
               value={newArticle.language}
               onChange={(e) =>
                 setNewArticle({ ...newArticle, language: e.target.value })
@@ -365,6 +367,7 @@ function Ders() {
             </select>
 
             <select
+              className="ders-select"
               value={newArticle.articleTypeId}
               onChange={(e) =>
                 setNewArticle({

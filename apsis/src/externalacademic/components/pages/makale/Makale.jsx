@@ -366,6 +366,7 @@ function Makale() {
             />
 
             <select
+              className="ders-select"
               value={newArticle.language}
               onChange={(e) =>
                 setNewArticle({ ...newArticle, language: e.target.value })
@@ -379,6 +380,7 @@ function Makale() {
             </select>
 
             <select
+              className="ders-select"
               value={newArticle.articleTypeId}
               onChange={(e) =>
                 setNewArticle({

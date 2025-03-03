@@ -382,6 +382,7 @@ function Tez() {
               }
             />
             <select
+              className="ders-select"
               value={newArticle.educationDegreeId}
               onChange={(e) =>
                 setNewArticle({
@@ -398,6 +399,7 @@ function Tez() {
             </select>
 
             <select
+              className="ders-select"
               value={newArticle.roleId}
               onChange={(e) =>
                 setNewArticle({

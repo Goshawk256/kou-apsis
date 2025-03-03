@@ -356,6 +356,7 @@ function Makale() {
             />
 
             <select
+              className="ders-select"
               value={newArticle.articleTypeId}
               onChange={(e) =>
                 setNewArticle({

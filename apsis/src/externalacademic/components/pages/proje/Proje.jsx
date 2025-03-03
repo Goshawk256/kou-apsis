@@ -395,6 +395,7 @@ function Proje() {
               }
             />
             <select
+              className="ders-select"
               value={newArticle.projectTypeId}
               onChange={(e) =>
                 setNewArticle({
@@ -411,6 +412,7 @@ function Proje() {
             </select>
 
             <select
+              className="ders-select"
               value={newArticle.roleId}
               onChange={(e) =>
                 setNewArticle({
