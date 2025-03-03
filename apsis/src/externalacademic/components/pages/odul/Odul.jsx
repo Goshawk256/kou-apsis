@@ -162,7 +162,7 @@ function Makale() {
     fetchArticles();
 
     fetchArticleTypes();
-  }, [articles]);
+  }, []);
 
   const handleModalSubmit = async () => {
     if (newArticle.name && newArticle.date) {
