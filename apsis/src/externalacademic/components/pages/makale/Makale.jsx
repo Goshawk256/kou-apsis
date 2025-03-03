@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import All_Url from "../../../../url";
 import "./Makale.css";
-import { FaRegSquare, FaFileUpload } from "react-icons/fa";
+import { FaRegSquare, FaFileUpload, FaCheckSquare } from "react-icons/fa";
 const languages = ["Uluslararası", "Ulusal"];
 import axios from "axios";
 function Makale() {
@@ -9,6 +9,7 @@ function Makale() {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [showModal, setShowModal] = useState(false);
+  const [isSaved, setSaved] = useState(false);
   const [articleTypes, setArticleTypes] = useState({});
   const [loading, setLoading] = useState(true);
   const [showPopup, setShowPopup] = useState(false);
