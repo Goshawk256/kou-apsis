@@ -274,7 +274,7 @@ function ApplicationDetail({ applicationId }) {
                 }}
                 className="add-jury-button"
               >
-                Juri Ata
+                Bilimsel Juri Ata
               </button>
             ) : (
               ""

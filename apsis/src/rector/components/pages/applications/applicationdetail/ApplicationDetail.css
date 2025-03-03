@@ -211,11 +211,11 @@
 }
 
 .add-jury-button {
-  width: 80px;
+  width: 120px;
   height: 30px;
   position: absolute;
   right: 10px;
-  bottom: 0px;
+  top: 10px;
   background-color: #1fa54e;
   color: white;
   border: none;
