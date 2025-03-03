@@ -9,23 +9,32 @@ import Projeler from "./pages/proje/Proje";
 import Oduller from "./pages/odul/Odul";
 import SanatsalFaaliyetler from "./pages/sanatsal/SanatsalFaaliyetler";
 import ExternalBasvuru from "./pages/basvuru/ExternalBasvuru";
+import Kitaplar from "./pages/kitap/Kitaplar";
+import Atiflar from "./pages/atif/Atiflar";
+import Bildiriler from "./pages/bildiri/Bildiriler";
 
 function ExternalHome() {
   const [selectedPage, setSelectedPage] = useState("Makaleler");
 
   const renderContent = () => {
     switch (selectedPage) {
-      case "Makaleler":
+      case "Makalelerim(A)":
         return <Makale />;
-      case "Dersler":
+      case "Bildirilerim(B)":
+        return <Bildiriler />;
+      case "Kitaplarım(C)":
+        return <Kitaplar />;
+      case "Atıflarım(D)":
+        return <Atiflar />;
+      case "Derslerim(E)":
         return <Dersler />;
-      case "Tezler":
+      case "Tezlerim(F)":
         return <Tezler />;
-      case "Projeler":
+      case "Projelerim(H)":
         return <Projeler />;
-      case "Ödüller":
+      case "Ödüllerim(J)":
         return <Oduller />;
-      case "Sanatsal Faaliyetler":
+      case "Sanatsal Faaliyetlerim(M)":
         return <SanatsalFaaliyetler />;
       case "Başvuru":
         return <ExternalBasvuru />;

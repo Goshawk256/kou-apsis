@@ -9,19 +9,32 @@ import homeIcon from "../../../assets/home.svg";
 import odulIcon from "../../../assets/odul.svg";
 import yayinIcon from "../../../assets/yayinlar.svg";
 import tezIcon from "../../../assets/yonetilenTezler.svg";
+import atifIcon from "../../../assets/quote.png";
+import bookIcon from "../../../assets/books.png";
 
 function ExternalSidebar({ onSelect }) {
   const items = [
-    { name: "Makaleler", icon: <img src={yayinIcon} alt="Yayınlar" /> },
-    { name: "Dersler", icon: <img src={dersIcon} alt="Dersler" /> },
+    { name: "Ana Sayfa", icon: <img src={homeIcon} alt="Home" /> },
+    { name: "Makalelerim(A)", icon: <img src={yayinIcon} alt="Yayınlar" /> },
+    { name: "Bildirilerim(B)", icon: <img src={yayinIcon} alt="Yayınlar" /> },
     {
-      name: "Tezler",
+      name: "Kitaplarım(C)",
+      icon: <img src={bookIcon} alt="Yönetilen Tezler" />,
+    },
+    { name: "Atıflarım(D)", icon: <img src={atifIcon} alt="Home" /> },
+    { name: "Derslerim(E)", icon: <img src={dersIcon} alt="Dersler" /> },
+    {
+      name: "Yönetilen Tezlerim(F)",
       icon: <img src={tezIcon} alt="Yönetilen Tezler" />,
     },
-    { name: "Projeler", icon: <img src={gorevIcon} alt="Görevler" /> },
-    { name: "Ödüller", icon: <img src={odulIcon} alt="Ödüller" /> },
+
     {
-      name: "Sanatsal Faaliyetler",
+      name: "Proje Görevlerim(H)",
+      icon: <img src={gorevIcon} alt="Görevler" />,
+    },
+    { name: "Ödüllerim(J)", icon: <img src={odulIcon} alt="Ödüller" /> },
+    {
+      name: "Sanatsal Faaliyetlerim(M)",
       icon: <img src={sanatIcon} alt="Sanatsal Faaliyet" />,
     },
     { name: "Başvuru", icon: <img src={basvuruIcon} alt="Başvurular" /> },
