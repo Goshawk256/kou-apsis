@@ -224,13 +224,13 @@ function RightBar({ isOpen, onClose, givenGroup, givenId, from, refresh }) {
           </div>
         );
       case "books":
-        return <div className="right-bar-content">kitaplar</div>;
+        return <div className="right-bar-content"></div>;
       case "lessons":
-        return <div className="right-bar-content">dersler</div>;
+        return <div className="right-bar-content"></div>;
       case "awards":
-        return <div className="right-bar-content">ödüller</div>;
+        return <div className="right-bar-content"></div>;
       case "thesis":
-        return <div className="right-bar-content">tezler</div>;
+        return <div className="right-bar-content"></div>;
       default:
         return null;
     }
