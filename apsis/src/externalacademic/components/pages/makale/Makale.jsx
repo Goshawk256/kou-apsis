@@ -251,7 +251,6 @@ function Makale() {
           <tr>
             <th className="makale-header">Makale Adı</th>
             <th className="makale-header">Yayınlanma Tarihi</th>
-
             <th className="makale-header">Dil</th>
             <th className="makale-header">Makale Türü</th>
             <th className="makale-header">Grup</th>

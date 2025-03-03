@@ -241,8 +241,7 @@ function Projeler() {
                   JSON.parse(localStorage.getItem("savedProjects")) || [];
                 const isSaved = savedProjects.some(
                   (proj) => proj.id === item.id
-                ); // Kaydedildi mi kontrolü
-
+                );
                 return (
                   <tr
                     key={item.id}
