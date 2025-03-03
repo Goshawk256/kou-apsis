@@ -54,7 +54,7 @@
   height: 100%;
 }
 
-.add-jury-button {
+.juries-add-jury-button {
   position: absolute;
   right: 40px;
   font-size: 14px;
@@ -62,6 +62,7 @@
   border: none;
   background-color: #1fa54e;
   top: 13px;
+  right: 40px;
   cursor: pointer;
   padding: 10px;
   border-radius: 10px;
@@ -161,7 +162,7 @@
   margin-top: 5px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  color: grey;
+  color: grey !important;
 }
 
 .addpopup-buttons {

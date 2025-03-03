@@ -78,8 +78,11 @@ function Juries() {
 
   return (
     <div className="juries-main">
-      <h2 className="juries-header">Juriler</h2>
-      <button className="add-jury-button" onClick={() => setShowPopup(true)}>
+      <h2 className="juries-header">Ön Değerlendirme Jürileri</h2>
+      <button
+        className="juries-add-jury-button"
+        onClick={() => setShowPopup(true)}
+      >
         Jüri Ekle
       </button>
       {showPopup && (

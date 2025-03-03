@@ -17,7 +17,7 @@ function RectorHomePage() {
         return <RectorAna />;
       case "Başvurular":
         return <Applications />;
-      case "Jüriler":
+      case "Ön Değerlendirme Jürileri":
         return <Juries />;
       case "Fakülteler":
         return <Faculties />;

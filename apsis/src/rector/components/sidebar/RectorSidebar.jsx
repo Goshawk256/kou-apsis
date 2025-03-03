@@ -10,7 +10,10 @@ function RectorSidebar({ onSelect }) {
     { name: "Ana Sayfa", icon: <img src={homeIcon} alt="Home" /> },
     { name: "Başvurular", icon: <img src={yayinIcon} alt="Home" /> },
     { name: "İlanlar", icon: <img src={listIcon} alt="Home" /> },
-    { name: "Jüriler", icon: <img src={juryIcon} alt="Home" /> },
+    {
+      name: "Ön Değerlendirme Jürileri",
+      icon: <img src={juryIcon} alt="Home" />,
+    },
     { name: "Fakülteler", icon: <img src={facultyIcon} alt="Home" /> },
   ];
 
