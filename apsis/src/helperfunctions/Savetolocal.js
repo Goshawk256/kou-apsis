@@ -1,12 +1,22 @@
-// saveToLocalStorage.js
-export const saveToLocalStorage = (publication, storageKey) => {
-    const savedPublications = JSON.parse(localStorage.getItem(storageKey)) || [];
+export const saveToLocalStorage = (item, name) => {
+  const savedItem = JSON.parse(localStorage.getItem(name)) || [];
 
-    if (!savedPublications.some((pub) => pub.id === publication.id)) {
-        savedPublications.push(publication);
-        localStorage.setItem(storageKey, JSON.stringify(savedPublications));
-        return { success: true, message: 'Yayın başarıyla kaydedildi!' };
+  const existingItem = savedItem.find((term) => term.id === item.id);
+
+  if (!existingItem) {
+    savedItem.push(item);
+    localStorage.setItem(name, JSON.stringify(savedItem));
+    showPopup("yayın başarıyla kaydedildi!", "success");
+  } else {
+    const userConfirmed = confirm(
+      "Bu yayın zaten kaydedilmiş. Silmek ister misiniz?"
+    );
+    if (userConfirmed) {
+      const updatedItem = savedItem.filter((term) => term.id !== item.id);
+      localStorage.setItem(name, JSON.stringify(updatedItem));
+      showPopup("Yayın başarıyla silindi!", "success");
     } else {
-        return { success: false, message: 'Bu yayın zaten kaydedilmiş!' };
+      showPopup("Yayın silinmedi.", "info");
     }
+  }
 };
