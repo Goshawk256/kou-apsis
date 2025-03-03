@@ -72,6 +72,17 @@
   text-align: start;
   width: 100%;
 }
+.right-bar-content select {
+  width: 100%;
+}
+.right-bar-content button {
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background-color: #00b324;
+  color: white;
+}
 
 /* Kategori bilgisi */
 .right-bar-header {
@@ -131,6 +142,17 @@
 
 /* Dosya yükleme bölümü */
 .content-r-2 {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  width: 100%;
+  padding: 15px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  border-bottom: 1px solid #e6e6e6;
+}
+
+.content-r-3 {
   display: flex;
   flex-direction: column;
   align-items: start;
