@@ -216,7 +216,6 @@ function ConfirmBasvuru({ setShowTable }) {
       ) : (
         <div className="academicconfirm-basvuru">
           <div className="academicconfirm-content">
-            <span className="academic-birim-title">Başvurulacak İlan:</span>
             <div className="academic-radio-input">
               <div className="academic-list-content">
                 {announcements.map((item, index) => (
@@ -262,7 +261,7 @@ function ConfirmBasvuru({ setShowTable }) {
                 ))}
               </div>
             </div>
-            <h5 className="academic-atama-title">Son Atama Tarihi:</h5>
+
             <div className="academicconfirm-bottom-content">
               <div className="academic-date-picker">
                 <LocalizationProvider

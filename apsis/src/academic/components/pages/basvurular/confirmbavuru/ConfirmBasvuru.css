@@ -420,6 +420,8 @@
 
 .academicconfirm-content {
   position: relative;
+  display: flex;
+  flex-direction: row;
 }
 
 .academicconfirm-geri-button {
