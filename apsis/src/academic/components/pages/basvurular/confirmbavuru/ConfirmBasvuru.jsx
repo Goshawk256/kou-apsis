@@ -241,10 +241,7 @@ function ConfirmBasvuru({ setShowTable }) {
                       <b>Fakülte:</b> <br />
                       {item.faculty}
                     </span>
-                    <span>
-                      <b>İlan Tarihi:</b> <br />
-                      {item.postingDate}
-                    </span>
+
                     <span>
                       <b>Bitiş Tarihi:</b> <br />
                       {item.deadLine}
@@ -263,6 +260,18 @@ function ConfirmBasvuru({ setShowTable }) {
             </div>
 
             <div className="academicconfirm-bottom-content">
+              <div className="academicconfirm-bottom-description">
+                <span style={{ fontWeight: "bold", fontSize: "1rem" }}>
+                  Önceki Atama Tarihini Seçin:
+                </span>
+                <br />
+                <span>
+                  Bir Önceki atama tarihinizden önce kullandığınız yayınlarınızı
+                  kullandığınız takdirde başvurunuz onaylanmayacaktır.
+                  Başvurunuzun onaylanması için seçtiğiniz yayınlarınızın son
+                  atama tarihinizden sonra yayınlanmış olması gerekmektedir.
+                </span>
+              </div>
               <div className="academic-date-picker">
                 <LocalizationProvider
                   dateAdapter={AdapterDayjs}
@@ -271,6 +280,11 @@ function ConfirmBasvuru({ setShowTable }) {
                   <StaticDatePicker
                     orientation="landscape"
                     sx={{
+                      maxWidth: "300px",
+                      maxHeight: "300px",
+                      "& .MuiPickersToolbar-root": {
+                        display: "none", // Toolbar tamamen gizlenir
+                      },
                       "& .Mui-selected": {
                         backgroundColor: "#1FA54E !important",
                         color: "#fff !important",
@@ -278,14 +292,11 @@ function ConfirmBasvuru({ setShowTable }) {
                       "& .MuiPickersDay-root": {
                         borderRadius: "10px",
                         transition: "background-color 0.5s ease",
+                        fontSize: "0.75rem",
                       },
                       "& .MuiPickersDay-root:hover": {
                         backgroundColor: "#40be4b",
                         color: "#fff",
-                      },
-                      "& .MuiDatePickerToolbar-title": {
-                        color: "#1FA54E !important",
-                        fontWeight: "bold",
                       },
                     }}
                   />

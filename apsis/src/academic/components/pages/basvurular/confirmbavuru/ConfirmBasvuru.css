@@ -6,6 +6,7 @@
   border-radius: 10px;
   background-color: #ffffff;
   width: 100%;
+  min-height: 565px;
   height: 100%;
   margin-top: 2.5%;
 }
@@ -224,17 +225,21 @@
 .academicconfirm-basvuru {
   display: flex;
   flex-direction: column;
-  padding: 20px;
+
   border-radius: 10px;
   width: 100%;
   height: 100%;
+  min-height: 500px;
 }
 
 .academic-radio-input {
+  margin-top: 4%;
+  margin-left: 4%;
   display: flex;
   flex-direction: row;
+  width: 100%;
   gap: 10px;
-  align-items: center;
+  align-items: start;
   justify-content: center;
 }
 
@@ -384,12 +389,12 @@
 }
 
 .academic-date-picker {
-  margin-top: 4%;
   display: flex;
   flex-direction: column;
   align-items: space-between;
-  width: 100%;
-  margin-right: 15%;
+
+  width: 70%;
+
   height: 290px;
   border: 1px solid #b1b1b1;
   border-radius: 10px;
@@ -398,15 +403,24 @@
 
 .academicconfirm-bottom-content {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
   align-items: end;
-  width: 90%;
-
-  margin-left: 6%;
-  height: 65%;
+  width: 70%;
+  margin-top: 4.7%;
+  margin-right: 4%;
+  height: 500px;
 }
-
+.academicconfirm-bottom-description {
+  width: 80%;
+  height: 100px;
+  text-align: start;
+}
+.academicconfirm-bottom-description span {
+  color: grey;
+  font-size: 12px;
+  margin: 0;
+}
 .academicconfirm-ileri-button {
   width: 80px;
   height: 50px;
@@ -414,7 +428,7 @@
   color: white;
   border: none;
   border-radius: 10px;
-  margin-right: 5%;
+  margin-right: 2%;
   cursor: pointer;
 }
 
@@ -422,6 +436,10 @@
   position: relative;
   display: flex;
   flex-direction: row;
+  height: 100%;
+  width: 100%;
+  min-height: 500px;
+  justify-content: space-between;
 }
 
 .academicconfirm-geri-button {
@@ -446,7 +464,8 @@
   display: flex;
   flex-direction: column;
   width: 93%;
-  height: 120px; /* Sabit yükseklik yerine max-height kullan */
+  height: 515px;
+
   gap: 5px;
   align-items: center;
   justify-content: start;
@@ -468,7 +487,7 @@
   width: 96%;
   height: 100px; /* Sabit yükseklik */
   padding: 2%;
-  align-items: start;
+  align-items: center;
   border: 1px solid #d5d3d3;
   border-radius: 10px;
   flex-shrink: 0; /* Ekledim: Elemanların küçülmesini önler */
@@ -479,7 +498,7 @@
   color: grey;
   font-size: 12px;
   width: 25%;
-  height: 100%;
+  height: 50%;
 }
 .academic-list-content li button {
   width: 30px;
