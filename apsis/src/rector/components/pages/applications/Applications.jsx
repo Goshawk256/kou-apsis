@@ -10,6 +10,7 @@ import axios from "axios";
 function Applications() {
   const [isSelected, setIsSelected] = useState(false);
   const [applications, setApplications] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [selectedApplicationId, setSelectedApplicationId] = useState(null);
   useEffect(() => {
     const fetchApplications = async () => {
@@ -30,6 +31,8 @@ function Applications() {
         setApplications(response.data.data || []);
       } catch (error) {
         console.error("Başvuruları çekerken hata oluştu:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -70,38 +73,52 @@ function Applications() {
             exit={{ opacity: 0, x: 50 }}
             transition={{ duration: 0.3 }}
           >
-            <div className="applications-content">
-              <div className="content-column-1">
-                <div className="content-header"></div>
-                <div className="content">
-                  {applications.map((app) => (
-                    <li key={app._id}>
-                      <img src={user} alt="" />
-                      <span>
-                        Başvuran Kişi: <br />
-                        {app.username}
-                      </span>
-                      <span>
-                        Başvurulan Kadro: <br /> {app.title}
-                      </span>
-                      <span>
-                        Başvuru Durumu: <br />
-                        {app.status.name}
-                      </span>
-                      <span>
-                        Başvuru Türü: <br />
-                        {app.applicationType === "Preliminary"
-                          ? "Ön Değerlendirme"
-                          : "Bilimsel"}
-                      </span>
-                      <button onClick={() => selectApplication(app._id)}>
-                        <img src={check} alt="" />
-                      </button>
-                    </li>
-                  ))}
+            {loading ? (
+              <div className="hourglassBackground">
+                <div className="hourglassContainer">
+                  <div className="hourglassCurves"></div>
+                  <div className="hourglassCapTop"></div>
+                  <div className="hourglassGlassTop"></div>
+                  <div className="hourglassSand"></div>
+                  <div className="hourglassSandStream"></div>
+                  <div className="hourglassCapBottom"></div>
+                  <div className="hourglassGlass"></div>
                 </div>
               </div>
-            </div>
+            ) : (
+              <div className="applications-content">
+                <div className="content-column-1">
+                  <div className="content-header"></div>
+                  <div className="content">
+                    {applications.map((app) => (
+                      <li key={app._id}>
+                        <img src={user} alt="" />
+                        <span>
+                          Başvuran Kişi: <br />
+                          {app.username}
+                        </span>
+                        <span>
+                          Başvurulan Kadro: <br /> {app.title}
+                        </span>
+                        <span>
+                          Başvuru Durumu: <br />
+                          {app.status.name}
+                        </span>
+                        <span>
+                          Başvuru Türü: <br />
+                          {app.applicationType === "Preliminary"
+                            ? "Ön Değerlendirme"
+                            : "Bilimsel"}
+                        </span>
+                        <button onClick={() => selectApplication(app._id)}>
+                          <img src={check} alt="" />
+                        </button>
+                      </li>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
           </motion.div>
         </AnimatePresence>
       )}

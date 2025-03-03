@@ -17,6 +17,7 @@ const formatDate = (date) => {
 function Lists() {
   const [announcements, setAnnouncements] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [newAnnouncement, setNewAnnouncement] = useState({
     title: "",
     description: "",
@@ -58,6 +59,8 @@ function Lists() {
       setAnnouncements(formattedData || []);
     } catch (error) {
       console.error("İlanları çekerken hata oluştu:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -93,44 +96,58 @@ function Lists() {
       <button className="add-list-button" onClick={() => setShowPopup(true)}>
         Yeni İlan
       </button>
-      <div className="lists-content">
-        {announcements.map((item, index) => (
-          <li key={index}>
-            <span>
-              <b>İlan Adı:</b> <br />
-              {item.title}
-            </span>
-            <span>
-              <b>İlan Kadrosu:</b> <br />
-              {item.position}
-            </span>
-            <span>
-              <b>Fakülte:</b> <br />
-              {item.faculty}
-            </span>
-            <span>
-              <b>İlan Tarihi:</b> <br />
-              {item.postingDate}
-            </span>
-            <span>
-              <b>Bitiş Tarihi:</b> <br />
-              {item.deadLine}
-            </span>
-            <span>
-              <b>İlan Açıklaması:</b> <br />
-              {item.description}
-            </span>
-            <div className="list-buttons">
-              <button className="edit-list">
-                <FaPencilAlt />
-              </button>
-              <button className="delete-list">
-                <FaTrashAlt />
-              </button>
-            </div>
-          </li>
-        ))}
-      </div>
+      {loading ? (
+        <div className="hourglassBackground">
+          <div className="hourglassContainer">
+            <div className="hourglassCurves"></div>
+            <div className="hourglassCapTop"></div>
+            <div className="hourglassGlassTop"></div>
+            <div className="hourglassSand"></div>
+            <div className="hourglassSandStream"></div>
+            <div className="hourglassCapBottom"></div>
+            <div className="hourglassGlass"></div>
+          </div>
+        </div>
+      ) : (
+        <div className="lists-content">
+          {announcements.map((item, index) => (
+            <li key={index}>
+              <span>
+                <b>İlan Adı:</b> <br />
+                {item.title}
+              </span>
+              <span>
+                <b>İlan Kadrosu:</b> <br />
+                {item.position}
+              </span>
+              <span>
+                <b>Fakülte:</b> <br />
+                {item.faculty}
+              </span>
+              <span>
+                <b>İlan Tarihi:</b> <br />
+                {item.postingDate}
+              </span>
+              <span>
+                <b>Bitiş Tarihi:</b> <br />
+                {item.deadLine}
+              </span>
+              <span>
+                <b>İlan Açıklaması:</b> <br />
+                {item.description}
+              </span>
+              <div className="list-buttons">
+                <button className="edit-list">
+                  <FaPencilAlt />
+                </button>
+                <button className="delete-list">
+                  <FaTrashAlt />
+                </button>
+              </div>
+            </li>
+          ))}
+        </div>
+      )}
 
       {showPopup && (
         <div className="listpopup-overlay" onClick={() => setShowPopup(false)}>
