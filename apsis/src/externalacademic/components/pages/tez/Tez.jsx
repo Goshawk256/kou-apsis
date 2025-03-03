@@ -166,7 +166,7 @@ function Tez() {
 
         const response = await axios.post(
           `${All_Url.api_base_url}/external-academic/get-advising-thesis`,
-          {}, // Body kısmı burada boş olabilir, çünkü sadece header gönderiyorsunuz.
+          {},
           {
             headers: {
               Authorization: `Bearer ${accessToken}`,

@@ -28,7 +28,7 @@ function ExternalHome() {
         return <Atiflar />;
       case "Derslerim(E)":
         return <Dersler />;
-      case "Tezlerim(F)":
+      case "Yönetilen Tezlerim(F)":
         return <Tezler />;
       case "Projelerim(H)":
         return <Projeler />;
