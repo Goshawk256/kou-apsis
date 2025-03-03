@@ -3,9 +3,9 @@ import All_Url from "../../../../url";
 import axios from "axios";
 import "./Odul.css";
 import { FaRegSquare, FaFileUpload } from "react-icons/fa";
-const languages = ["Uluslararası", "Ulusal"];
+import saveToLocalStorage from "../../../../helperfunctions/Savetolocal.js";
 
-function Makale() {
+function Odul() {
   const [articles, setArticles] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -17,6 +17,22 @@ function Makale() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [id, setId] = useState("empty");
   const [articleFiles, setArticleFiles] = useState([]);
+  const [savedArticles, setSavedArticles] = useState(
+    JSON.parse(localStorage.getItem("externalAwards")) || []
+  );
+
+  const isSaved = (articleId) => {
+    return savedArticles.some((item) => item.id === articleId);
+  };
+
+  const handleSave = (article) => {
+    saveToLocalStorage(article, "externalAwards");
+
+    const updatedSavedArticles =
+      JSON.parse(localStorage.getItem("externalAwards")) || [];
+    setSavedArticles(updatedSavedArticles);
+  };
+
   const handleUploadClick = (articleId) => {
     setId(articleId);
     const selectedArticle = articles.find(
@@ -273,8 +289,8 @@ function Makale() {
               <td className="makale-cell">{article.group}</td>
               <td className="makale-cell">{article.score}</td>
               <td className="makale-cell">
-                <button>
-                  <FaRegSquare />{" "}
+                <button onClick={() => handleSave(article)}>
+                  {isSaved(article.id) ? <FaCheckSquare /> : <FaRegSquare />}
                 </button>
                 <button onClick={() => handleUploadClick(article.id)}>
                   <FaFileUpload />
@@ -381,4 +397,4 @@ function Makale() {
   );
 }
 
-export default Makale;
+export default Odul;

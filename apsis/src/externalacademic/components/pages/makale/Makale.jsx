@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import All_Url from "../../../../url";
 import "./Makale.css";
 import { FaRegSquare, FaFileUpload, FaCheckSquare } from "react-icons/fa";
+import saveToLocalStorage from "../../../../helperfunctions/Savetolocal.js";
 const languages = ["Uluslararası", "Ulusal"];
 import axios from "axios";
 function Makale() {
@@ -9,7 +10,6 @@ function Makale() {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [showModal, setShowModal] = useState(false);
-  const [isSaved, setSaved] = useState(false);
   const [articleTypes, setArticleTypes] = useState({});
   const [loading, setLoading] = useState(true);
   const [showPopup, setShowPopup] = useState(false);
@@ -18,12 +18,28 @@ function Makale() {
   const [id, setId] = useState("empty");
   const [articleFiles, setArticleFiles] = useState([]);
 
+  const [savedArticles, setSavedArticles] = useState(
+    JSON.parse(localStorage.getItem("externalArticles")) || []
+  );
+
+  const isSaved = (articleId) => {
+    return savedArticles.some((item) => item.id === articleId);
+  };
+
+  const handleSave = (article) => {
+    saveToLocalStorage(article, "externalArticles");
+
+    const updatedSavedArticles =
+      JSON.parse(localStorage.getItem("externalArticles")) || [];
+    setSavedArticles(updatedSavedArticles);
+  };
+
   const handleUploadClick = (articleId) => {
     setId(articleId);
     const selectedArticle = articles.find(
       (article) => article.id === articleId
     );
-    setArticleFiles(selectedArticle?.files || []); // Dosyaları state'e kaydet
+    setArticleFiles(selectedArticle?.files || []);
     setShowPopup(true);
   };
 
@@ -260,30 +276,34 @@ function Makale() {
           </tr>
         </thead>
         <tbody>
-          {currentArticles.map((article) => (
-            <tr key={article.id} className="makale-row">
-              <td className="makale-cell">{article.title}</td>
-              <td className="makale-cell">{article.publishDate}</td>
-
-              <td className="makale-cell">
-                {article.isInternational ? "Uluslararası" : "Ulusal"}
-              </td>
-              <td className="makale-cell">{article.articleType}</td>
-              <td className="makale-cell">{article.group}</td>
-              <td className="makale-cell">{article.score}</td>
-              <td className="makale-cell">
-                <div className="makale-buttons">
-                  {" "}
-                  <button>
-                    <FaRegSquare />{" "}
-                  </button>
-                  <button onClick={() => handleUploadClick(article.id)}>
-                    <FaFileUpload />
-                  </button>
-                </div>
-              </td>
-            </tr>
-          ))}
+          {currentArticles.map((article) => {
+            return (
+              <tr key={article.id} className="makale-row">
+                <td className="makale-cell">{article.title}</td>
+                <td className="makale-cell">{article.publishDate}</td>
+                <td className="makale-cell">
+                  {article.isInternational ? "Uluslararası" : "Ulusal"}
+                </td>
+                <td className="makale-cell">{article.articleType}</td>
+                <td className="makale-cell">{article.group}</td>
+                <td className="makale-cell">{article.score}</td>
+                <td className="makale-cell">
+                  <div className="makale-buttons">
+                    <button onClick={() => handleSave(article)}>
+                      {isSaved(article.id) ? (
+                        <FaCheckSquare />
+                      ) : (
+                        <FaRegSquare />
+                      )}
+                    </button>
+                    <button onClick={() => handleUploadClick(article.id)}>
+                      <FaFileUpload />
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
 
