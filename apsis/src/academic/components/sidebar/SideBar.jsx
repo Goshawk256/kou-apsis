@@ -15,21 +15,25 @@ import bookIcon from "../../../assets/books.png";
 function SideBar({ onSelect }) {
   const items = [
     { name: "Ana Sayfa", icon: <img src={homeIcon} alt="Home" /> },
-    { name: "Yayınlarım", icon: <img src={yayinIcon} alt="Yayınlar" /> },
-    { name: "Derslerim", icon: <img src={dersIcon} alt="Dersler" /> },
+    { name: "Yayınlarım(A-B)", icon: <img src={yayinIcon} alt="Yayınlar" /> },
     {
-      name: "Yönetilen Tezler",
-      icon: <img src={tezIcon} alt="Yönetilen Tezler" />,
-    },
-    {
-      name: "Kitaplarım",
+      name: "Kitaplarım(C)",
       icon: <img src={bookIcon} alt="Yönetilen Tezler" />,
     },
-    { name: "Atıflarım", icon: <img src={atifIcon} alt="Home" /> },
-    { name: "Proje Görevlerim", icon: <img src={gorevIcon} alt="Görevler" /> },
-    { name: "Ödüller", icon: <img src={odulIcon} alt="Ödüller" /> },
+    { name: "Atıflarım(D)", icon: <img src={atifIcon} alt="Home" /> },
+    { name: "Derslerim(E)", icon: <img src={dersIcon} alt="Dersler" /> },
     {
-      name: "Sanatsal Faaliyet",
+      name: "Yönetilen Tezler(F)",
+      icon: <img src={tezIcon} alt="Yönetilen Tezler" />,
+    },
+
+    {
+      name: "Proje Görevlerim(H)",
+      icon: <img src={gorevIcon} alt="Görevler" />,
+    },
+    { name: "Ödüller(J)", icon: <img src={odulIcon} alt="Ödüller" /> },
+    {
+      name: "Sanatsal Faaliyet(M)",
       icon: <img src={sanatIcon} alt="Sanatsal Faaliyet" />,
     },
     { name: "Başvuru", icon: <img src={basvuruIcon} alt="Başvurular" /> },

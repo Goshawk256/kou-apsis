@@ -90,21 +90,21 @@ function HomePage() {
     switch (selectedPage) {
       case "Ana Sayfa":
         return <AnaSayfa />;
-      case "Yayınlarım":
+      case "Yayınlarım(A-B)":
         return <Yayinlar />;
-      case "Derslerim":
+      case "Derslerim(E)":
         return <Dersler />;
-      case "Yönetilen Tezler":
+      case "Yönetilen Tezler(F)":
         return <YonetilenTezler />;
-      case "Proje Görevlerim":
+      case "Proje Görevlerim(H)":
         return <Projeler />;
-      case "Ödüller":
+      case "Ödüller(J)":
         return <Oduller />;
-      case "Sanatsal Faaliyet":
+      case "Sanatsal Faaliyet(M)":
         return <SanatsalFaaliyetler />;
-      case "Atıflarım":
+      case "Atıflarım(D)":
         return <Citations />;
-      case "Kitaplarım":
+      case "Kitaplarım(C)":
         return <Books />;
       case "Başvuru":
         return <Basvurular onSelect={setSelectedPage} />;
