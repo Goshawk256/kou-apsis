@@ -45,6 +45,7 @@ function Projeler() {
           },
         }
       );
+      console.log(response.data.data);
       setTableData(response.data.data || []);
       setFilteredData(response.data.data || []);
     } catch (error) {
@@ -263,6 +264,18 @@ function Projeler() {
                       {item.projectName.length > 50
                         ? `${item.projectName.slice(0, 60)}...`
                         : item.projectName}
+                      <br />
+                      <p style={{ color: "#5d8c6a", fontSize: "10px" }}>
+                        {" "}
+                        {item.corporateName}
+                      </p>
+                      <p style={{ color: "#5d8c6a", fontSize: "10px" }}>
+                        {new Date(item.begin).toLocaleDateString("tr-TR", {
+                          day: "numeric",
+                          month: "long",
+                          year: "numeric",
+                        })}
+                      </p>
                     </td>
 
                     <td className="item-group">
