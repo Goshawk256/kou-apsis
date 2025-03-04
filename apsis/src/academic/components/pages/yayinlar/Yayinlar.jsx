@@ -28,6 +28,7 @@ function Yayinlar() {
   const [allPublications, setAllPublications] = useState({});
   const [givenGroup, setgivenGroup] = useState("");
   const [givenId, setgivenId] = useState("");
+  const [previousCondition, setPreviousCondition] = useState(-1);
   const [givenPublicationTypeId, setgivenPublicationTypeId] = useState("");
   useEffect(() => {
     updateAllPublications();

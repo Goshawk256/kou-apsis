@@ -24,10 +24,12 @@ function Projeler() {
   const [isEditMode] = useState(false);
   const [givenGroup, setgivenGroup] = useState("");
   const [givenId, setgivenId] = useState("");
+  const [previousCondition, setPreviousCondition] = useState(-1);
 
-  const handleEditClick = (givenId, givenGroup) => {
+  const handleEditClick = (givenId, givenGroup, lastSelectedCondition) => {
     setgivenId(givenId);
     setgivenGroup(givenGroup);
+    setPreviousCondition(lastSelectedCondition);
     openRightBar();
   };
 
@@ -187,6 +189,7 @@ function Projeler() {
         givenId={givenId}
         from="projects"
         refresh={fetchProjects}
+        previousCondition={previousCondition}
       />
 
       {/* Row 2 - Arama, Filtreleme, Yenileme */}
@@ -306,7 +309,8 @@ function Projeler() {
                             onClick={() =>
                               handleEditClick(
                                 item.id,
-                                item.groupScoreInfo.groups.auto
+                                item.groupScoreInfo.groups.auto,
+                                item.userEdits?.lastSelectedProjectId
                               )
                             }
                           >
