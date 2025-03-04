@@ -14,7 +14,6 @@ import click from "../../../../../assets/click.png";
 
 function ConfirmBasvuru({ setShowTable }) {
   const [selected, setSelected] = useState("");
-  const [formattedPublications, setFormattedPublications] = useState([]);
   const [isMyApplications, setIsMyApplications] = useState(true);
   const applicationType = localStorage.getItem("basvuruTipi");
   const [selectedAnnouncement, setSelectedAnnouncement] = useState("");
@@ -62,20 +61,6 @@ function ConfirmBasvuru({ setShowTable }) {
       console.error("İlanları çekerken hata oluştu:", error);
     }
   };
-  useEffect(() => {
-    const savedPublications =
-      JSON.parse(localStorage.getItem("savedPublications")) || [];
-    const formattedPubs = savedPublications.map((item) => ({
-      id: item.id,
-      title: item.title,
-      group: item.groupAuto,
-      type: "Yayın",
-      score: item.scoreAuto,
-      authors: item.authors || [],
-    }));
-
-    setFormattedPublications(formattedPubs);
-  }, []);
 
   const handleSaveToLocalStorage = async () => {
     if (applicationType === "Scientific") {
@@ -94,46 +79,7 @@ function ConfirmBasvuru({ setShowTable }) {
 
     localStorage.setItem("selectedOption", selected);
 
-    const isValid = await valideDatas();
-    if (isValid) {
-      setShowTable(true);
-    } else {
-      alert("Başvuru kaydı oluşturulamadı. Yeterli puana sahip değilsiniz!");
-    }
-  };
-
-  const valideDatas = async () => {
-    const token = localStorage.getItem("accessToken");
-    const title = localStorage.getItem("selectedOption");
-
-    if (!formattedPublications || formattedPublications.length === 0) {
-      console.error("Hata: Yayın bilgileri eksik!");
-      return true;
-    }
-
-    const publicationIds = formattedPublications.map((item) => item.id);
-
-    try {
-      console.log(publicationIds);
-      console.log(title);
-      const response = await axios.post(
-        `${All_Url.api_base_url}/academic/validate-application`,
-        {
-          publicationIds: publicationIds,
-          title: title,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      return response.data.success;
-    } catch (error) {
-      console.error("Hata oluştu:", error);
-      return true;
-    }
+    setShowTable(true);
   };
 
   return (
