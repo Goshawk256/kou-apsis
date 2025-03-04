@@ -116,15 +116,17 @@ function Basvuru({ onSelect }) {
               <tbody className="basvuru-table-body">
                 <tr className="group-total">
                   <td colSpan="1">
-                    <strong>
+                    <strong style={{ color: "#1fa54e" }}>
                       {groupKeys[currentGroupIndex]} grubu Toplam Puanı
                     </strong>
                   </td>
                   <td>
-                    <strong>{groupKeys[currentGroupIndex]}</strong>
+                    <strong style={{ color: "#1fa54e" }}>
+                      {groupKeys[currentGroupIndex]}
+                    </strong>
                   </td>
                   <td>
-                    <strong>
+                    <strong style={{ color: "#1fa54e" }}>
                       {groupScores[groupKeys[currentGroupIndex]]?.toFixed(2)}
                     </strong>
                   </td>

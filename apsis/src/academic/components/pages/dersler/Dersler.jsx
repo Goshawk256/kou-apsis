@@ -124,25 +124,25 @@ function Dersler() {
     if (jury) {
       return (
         <div className="preferred-group">
-          <s>{auto}</s> / <span>{jury}</span>
+          <s>{auto}</s> / <span className="showed">{jury}</span>
         </div>
       );
     } else if (appeal && auto && !manual) {
       return (
         <div className="preferred-group">
-          <s>{auto}</s> / <span>{appeal}</span>
+          <s>{auto}</s> / <span className="showed">{appeal}</span>
         </div>
       );
     } else if (auto && appeal && manual) {
       return (
         <div className="preferred-group">
-          <s>{auto}</s> / <span>{manual}</span>
+          <s>{auto}</s> / <span className="showed">{manual}</span>
         </div>
       );
     } else {
       return (
         <div className="preferred-group">
-          <span>{auto}</span>
+          <span className="showed">{auto}</span>
         </div>
       );
     }
@@ -154,25 +154,25 @@ function Dersler() {
     if (jury) {
       return (
         <div className="preferred-group">
-          <s>{auto}</s> / <span>{jury}</span>
+          <s>{auto}</s> / <span className="showed">{jury}</span>
         </div>
       );
     } else if (appeal && auto && !manual) {
       return (
         <div className="preferred-group">
-          <s>{auto}</s> / <span>{appeal}</span>
+          <s>{auto}</s> / <span className="showed">{appeal}</span>
         </div>
       );
     } else if (auto && appeal && manual) {
       return (
         <div className="preferred-group">
-          <s>{auto}</s> / <span>{manual}</span>
+          <s>{auto}</s> / <span className="showed">{manual}</span>
         </div>
       );
     } else {
       return (
         <div className="preferred-group">
-          <span>{auto}</span>
+          <span className="showed">{auto}</span>
         </div>
       );
     }

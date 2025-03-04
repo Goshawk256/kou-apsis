@@ -350,7 +350,6 @@ function RightBar({ isOpen, onClose, givenGroup, givenId, from, refresh }) {
       console.error("Rank update error:", error);
     } finally {
       refresh();
-      onClose();
     }
   };
 
@@ -370,11 +369,23 @@ function RightBar({ isOpen, onClose, givenGroup, givenId, from, refresh }) {
         <div className="right-bar-content">
           <div className="content-r-1">
             <div className="right-bar-content-header">
-              <span>Sistemin Atadığı Grup: {givenGroup}</span>
+              <span
+                style={{ color: "gray", fontWeight: "500", fontSize: "14px" }}
+              >
+                Sistemin Atadığı Grup: {givenGroup}
+              </span>
             </div>
             <div className="right-bar-content-body">
               <div>
-                <label>Yeni Grup:</label>
+                <label
+                  style={{
+                    color: "gray",
+                    fontWeight: "500",
+                    fontSize: "12px",
+                  }}
+                >
+                  Yeni Grup:
+                </label>
                 <input
                   type="text"
                   value={newGroup}
