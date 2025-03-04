@@ -21,11 +21,11 @@ function ConfirmBasvuru({ setShowTable }) {
   const formatDate = (date) => {
     if (!date) return "";
     const d = new Date(date);
-    // Tarihi gg/aa/yyyy formatında döndürmek için / ile ayırıyoruz
+
     const day = String(d.getDate()).padStart(2, "0");
-    const month = String(d.getMonth() + 1).padStart(2, "0"); // Ay 0'dan başlar, 1 ekliyoruz
+    const month = String(d.getMonth() + 1).padStart(2, "0");
     const year = d.getFullYear();
-    return `${day}/${month}/${year}`; // Slash ile ayırıyoruz
+    return `${day}/${month}/${year}`;
   };
   useEffect(() => {
     fetchAnnouncements();
