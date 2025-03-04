@@ -212,7 +212,7 @@ function RightBar({ isOpen, onClose, givenGroup, givenId, from, refresh }) {
             <h3>Özel Durum Güncelle</h3>
             <label>Özel Durum Seç:</label>
             <select value={selectedConditionId} onChange={handleSelectChange}>
-              <option value="">Seçiniz</option>
+              <option value="">Özel Durum Yoktur</option>
               {conditions.map((condition) => (
                 <option key={condition.id} value={condition.id}>
                   {condition.title}
