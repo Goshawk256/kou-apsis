@@ -88,7 +88,6 @@ function Yayinlar() {
         { headers: { Authorization: `Bearer ${accessToken}` } }
       );
       if (response.data.success) {
-        console.log(response.data.data);
         setTableData(
           response.data.data.sort(
             (a, b) => new Date(b.publishDate) - new Date(a.publishDate)
@@ -161,7 +160,7 @@ function Yayinlar() {
     page * itemsPerPage
   );
   const getPreferredGroupDisplay = (item) => {
-    const { auto, appeal, manuel, jury } = item.groupScoreInfo.groups;
+    const { auto, appeal, manual, jury } = item.groupScoreInfo.groups;
 
     if (jury) {
       return (
@@ -169,16 +168,16 @@ function Yayinlar() {
           <s>{auto}</s> / <span className="showed">{jury}</span>
         </div>
       );
-    } else if (appeal && auto && !manuel) {
+    } else if (appeal && auto && !manual) {
       return (
         <div className="preferred-group">
           <s>{auto}</s> / <span className="showed">{appeal}</span>
         </div>
       );
-    } else if (auto && appeal && manuel) {
+    } else if (auto && appeal && manual) {
       return (
         <div className="preferred-group">
-          <s>{auto}</s> / <span className="showed">{manuel}</span>
+          <s>{auto}</s> / <span className="showed">{manual}</span>
         </div>
       );
     } else {
@@ -191,7 +190,7 @@ function Yayinlar() {
   };
 
   const getPreferredScoreDisplay = (item) => {
-    const { auto, appeal, manuel, jury } = item.groupScoreInfo.scores;
+    const { auto, appeal, manual, jury } = item.groupScoreInfo.scores;
 
     if (jury) {
       return (
@@ -199,16 +198,16 @@ function Yayinlar() {
           <s>{auto}</s> / <span>{jury}</span>
         </div>
       );
-    } else if (appeal && auto && !manuel) {
+    } else if (appeal && auto && !manual) {
       return (
         <div className="preferred-group">
           <s>{auto}</s> / <span>{appeal}</span>
         </div>
       );
-    } else if (auto && appeal && manuel) {
+    } else if (auto && appeal && manual) {
       return (
         <div className="preferred-group">
-          <s>{auto}</s> / <span>{manuel}</span>
+          <s>{auto}</s> / <span>{manual}</span>
         </div>
       );
     } else {

@@ -105,7 +105,7 @@ function Citations() {
     setTimeout(() => setPopupMessage(null), 1500);
   };
   const getPreferredGroupDisplay = (item) => {
-    const { auto, appeal, manuel, jury } = item.groupScoreInfo.groups;
+    const { auto, appeal, manual, jury } = item.groupScoreInfo.groups;
 
     if (jury) {
       return (
@@ -113,16 +113,16 @@ function Citations() {
           <s>{auto}</s> / <span>{jury}</span>
         </div>
       );
-    } else if (appeal && auto && !manuel) {
+    } else if (appeal && auto && !manual) {
       return (
         <div className="preferred-group">
           <s>{auto}</s> / <span>{appeal}</span>
         </div>
       );
-    } else if (auto && appeal && manuel) {
+    } else if (auto && appeal && manual) {
       return (
         <div className="preferred-group">
-          <s>{auto}</s> / <span>{manuel}</span>
+          <s>{auto}</s> / <span>{manual}</span>
         </div>
       );
     } else {
@@ -135,7 +135,7 @@ function Citations() {
   };
 
   const getPreferredScoreDisplay = (item) => {
-    const { auto, appeal, manuel, jury } = item.groupScoreInfo.scores;
+    const { auto, appeal, manual, jury } = item.groupScoreInfo.scores;
 
     if (jury) {
       return (
@@ -143,16 +143,16 @@ function Citations() {
           <s>{auto}</s> / <span>{jury}</span>
         </div>
       );
-    } else if (appeal && auto && !manuel) {
+    } else if (appeal && auto && !manual) {
       return (
         <div className="preferred-group">
           <s>{auto}</s> / <span>{appeal}</span>
         </div>
       );
-    } else if (auto && appeal && manuel) {
+    } else if (auto && appeal && manual) {
       return (
         <div className="preferred-group">
-          <s>{auto}</s> / <span>{manuel}</span>
+          <s>{auto}</s> / <span>{manual}</span>
         </div>
       );
     } else {
