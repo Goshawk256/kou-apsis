@@ -88,6 +88,7 @@ function Yayinlar() {
         { headers: { Authorization: `Bearer ${accessToken}` } }
       );
       if (response.data.success) {
+        console.log(response.data.data);
         setTableData(
           response.data.data.sort(
             (a, b) => new Date(b.publishDate) - new Date(a.publishDate)
@@ -165,25 +166,25 @@ function Yayinlar() {
     if (jury) {
       return (
         <div className="preferred-group">
-          <s>{auto}</s> / <span>{jury}</span>
+          <s>{auto}</s> / <span className="showed">{jury}</span>
         </div>
       );
     } else if (appeal && auto && !manuel) {
       return (
         <div className="preferred-group">
-          <s>{auto}</s> / <span>{appeal}</span>
+          <s>{auto}</s> / <span className="showed">{appeal}</span>
         </div>
       );
     } else if (auto && appeal && manuel) {
       return (
         <div className="preferred-group">
-          <s>{auto}</s> / <span>{manuel}</span>
+          <s>{auto}</s> / <span className="showed">{manuel}</span>
         </div>
       );
     } else {
       return (
         <div className="preferred-group">
-          <span>{auto}</span>
+          <span className="showed">{auto}</span>
         </div>
       );
     }
