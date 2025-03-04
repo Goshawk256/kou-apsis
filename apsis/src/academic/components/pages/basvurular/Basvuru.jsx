@@ -6,6 +6,7 @@ import "./Basvuru.css";
 
 function Basvuru({ onSelect }) {
   const [groupedData, setGroupedData] = useState({});
+  const [groupScores, setGroupScores] = useState({});
   const [currentGroupIndex, setCurrentGroupIndex] = useState(0);
   const [groupKeys, setGroupKeys] = useState([]);
   const [totalScore, setTotalScore] = useState(0);
@@ -45,13 +46,19 @@ function Basvuru({ onSelect }) {
       authors: item.authors || [],
     }));
 
-    const grouped = formattedData.reduce((acc, item) => {
+    const grouped = {};
+    const groupScores = {};
+
+    formattedData.forEach((item) => {
       const match = item.group.match(/^([A-Z]+)(\d+)$/);
       const groupKey = match ? match[1] : "Z";
-      if (!acc[groupKey]) acc[groupKey] = [];
-      acc[groupKey].push(item);
-      return acc;
-    }, {});
+      if (!grouped[groupKey]) {
+        grouped[groupKey] = [];
+        groupScores[groupKey] = 0;
+      }
+      grouped[groupKey].push(item);
+      groupScores[groupKey] += item.score;
+    });
 
     Object.keys(grouped).forEach((key) => {
       grouped[key].sort((a, b) => {
@@ -65,6 +72,7 @@ function Basvuru({ onSelect }) {
       a.localeCompare(b)
     );
     setGroupedData(grouped);
+    setGroupScores(groupScores);
     setGroupKeys(sortedGroupKeys);
 
     const total = formattedData.reduce(
@@ -110,10 +118,19 @@ function Basvuru({ onSelect }) {
                   <tr key={item.id}>
                     <td>{item.title}</td>
                     <td>{item.group}</td>
-
                     <td>{item.score?.toFixed(2)}</td>
                   </tr>
                 ))}
+              <tr className="group-total">
+                <td colSpan="2">
+                  <strong>Grup Toplam Puanı</strong>
+                </td>
+                <td>
+                  <strong>
+                    {groupScores[groupKeys[currentGroupIndex]]?.toFixed(2)}
+                  </strong>
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>
