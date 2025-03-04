@@ -24,10 +24,9 @@ function Projeler() {
   const [isEditMode] = useState(false);
   const [givenGroup, setgivenGroup] = useState("");
   const [givenId, setgivenId] = useState("");
-  const [previousCondition, setPreviousCondition] = useState();
+  const [previousCondition, setPreviousCondition] = useState(null);
 
   const handleEditClick = (givenId, givenGroup, lastSelectedCondition) => {
-    console.log(lastSelectedCondition);
     setgivenId(givenId);
     setgivenGroup(givenGroup);
     setPreviousCondition(lastSelectedCondition);
@@ -182,7 +181,6 @@ function Projeler() {
         </div>
       )}
 
-      {/* Sağ panel */}
       <RightBar
         isOpen={rightBarOpen}
         onClose={closeRightBar}

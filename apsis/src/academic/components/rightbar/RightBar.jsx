@@ -21,7 +21,7 @@ function RightBar({
   const [projectTypes, setProjectTypes] = useState([]);
   const [projectRoleTypes, setProjectRoleTypes] = useState([]);
   const [selectedRoleId, setSelectedRoleId] = useState("");
-  const [selectedConditionId, setSelectedConditionId] = useState(null);
+
   const conditions = [
     {
       id: 1,
@@ -93,7 +93,8 @@ function RightBar({
   };
   useEffect(() => {
     console.log(previousCondition);
-    //console.log(conditions[previousCondition]);
+  }, [previousCondition]);
+  useEffect(() => {
     switch (from) {
       case "projects":
         setRequestUrl(
@@ -206,7 +207,14 @@ function RightBar({
               value={selectedRoleId}
               onChange={(e) => setSelectedRoleId(e.target.value)}
             >
-              <option value="">Seçiniz</option>
+              {previousCondition ? (
+                <option value={conditions[previousCondition]}>
+                  {" "}
+                  {conditions[previousCondition].title}{" "}
+                </option>
+              ) : (
+                <option value="">Tür Seçilmemiştir</option>
+              )}
               {Object.entries(projectTypes).map(([id, roleName]) => (
                 <option key={id} value={id}>
                   {roleName}
