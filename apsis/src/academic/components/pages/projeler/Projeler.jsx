@@ -21,10 +21,7 @@ function Projeler() {
   const [rightBarOpen, setRightBarOpen] = useState(false); // Sağ panelin açık/kapalı durumu
   const [loading, setLoading] = useState(false);
   const [popupMessage, setPopupMessage] = useState(null); // Pop-up mesajı
-  const [editingIndex, setEditingIndex] = useState(null);
-  const [tempGroups, setTempGroups] = useState({}); // Sadece eklenen kısmı tutan nesne
   const [isEditMode] = useState(false);
-  const [currentGroup, setCurrentGroup] = useState(null);
   const [givenGroup, setgivenGroup] = useState("");
   const [givenId, setgivenId] = useState("");
 
