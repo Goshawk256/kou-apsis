@@ -60,46 +60,60 @@ function Oduller() {
     }
   };
   const getPreferredGroupDisplay = (item) => {
-    if (item.groupJuryEdited !== "-") {
+    const { auto, appeal, manual, jury } = item.groupScoreInfo.groups;
+
+    if (jury) {
       return (
-        <div className="preffered-group">
-          <s>{item.groupAuto}</s> / <s>{item.groupEdited}</s> /{" "}
-          <span>{item.groupJuryEdited}</span>
+        <div className="preferred-group">
+          <s>{auto}</s> / <span>{jury}</span>
         </div>
       );
-    } else if (item.groupEdited !== "-") {
+    } else if (appeal && auto && !manual) {
       return (
-        <div className="preffered-group">
-          <s>{item.groupAuto}</s> / <span>{item.groupEdited}</span>
+        <div className="preferred-group">
+          <s>{auto}</s> / <span>{appeal}</span>
+        </div>
+      );
+    } else if (auto && appeal && manual) {
+      return (
+        <div className="preferred-group">
+          <s>{auto}</s> / <span>{manual}</span>
         </div>
       );
     } else {
       return (
-        <div className="preffered-group">
-          <span>{item.groupAuto}</span>
+        <div className="preferred-group">
+          <span>{auto}</span>
         </div>
       );
     }
   };
 
-  const getPrerredScoreDisplay = (item) => {
-    if (item.groupJuryEdited !== "-") {
+  const getPreferredScoreDisplay = (item) => {
+    const { auto, appeal, manual, jury } = item.groupScoreInfo.scores;
+
+    if (jury) {
       return (
-        <div className="preffered-group">
-          <s>{item.scoreAuto}</s> / <s>{item.scoreEdited}</s> /{" "}
-          <span>{item.scoreJuryEdited}</span>
+        <div className="preferred-group">
+          <s>{auto}</s> / <span className="showed">{jury}</span>
         </div>
       );
-    } else if (item.groupEdited !== "-") {
+    } else if (appeal && auto && !manual) {
       return (
-        <div className="preffered-group">
-          <s>{item.scoreAuto}</s> / <span>{item.scoreEdited}</span>
+        <div className="preferred-group">
+          <s>{auto}</s> / <span className="showed">{appeal}</span>
+        </div>
+      );
+    } else if (auto && appeal && manual) {
+      return (
+        <div className="preferred-group">
+          <s>{auto}</s> / <span className="showed">{manual}</span>
         </div>
       );
     } else {
       return (
-        <div className="preffered-group">
-          <span>{item.scoreAuto}</span>
+        <div className="preferred-group">
+          <span className="showed">{auto}</span>
         </div>
       );
     }
@@ -261,7 +275,7 @@ function Oduller() {
                     </td>
                     <td>
                       <div className="group-show">
-                        {getPrerredScoreDisplay(item)}
+                        {getPreferredScoreDisplay(item)}
                       </div>
                     </td>
                     <td>
@@ -274,7 +288,10 @@ function Oduller() {
                           <button
                             className="yayinlar-btn"
                             onClick={() =>
-                              handleEditClick(item.id, item.groupAuto)
+                              handleEditClick(
+                                item.id,
+                                item.groupScoreInfo.groups.auto
+                              )
                             }
                           >
                             <FaPencilAlt />

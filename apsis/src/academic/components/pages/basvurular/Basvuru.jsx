@@ -6,6 +6,7 @@ import "./Basvuru.css";
 
 function Basvuru({ onSelect }) {
   const [groupedData, setGroupedData] = useState({});
+  const [groupScores, setGroupScores] = useState({});
   const [currentGroupIndex, setCurrentGroupIndex] = useState(0);
   const [groupKeys, setGroupKeys] = useState([]);
   const [totalScore, setTotalScore] = useState(0);
@@ -40,18 +41,24 @@ function Basvuru({ onSelect }) {
     ].map((item) => ({
       id: item.id,
       title: item.title || item.projectName || item.course_name,
-      group: item.group || item.groupAuto || "-",
-      score: item.score || item.scoreAuto || item?.citations?.score || 0,
+      group: item.groupScoreInfo?.groups?.auto || item.groupAuto || "-",
+      score: item.groupScoreInfo?.scores?.auto || item?.citations?.score || 0,
       authors: item.authors || [],
     }));
 
-    const grouped = formattedData.reduce((acc, item) => {
+    const grouped = {};
+    const groupScores = {};
+
+    formattedData.forEach((item) => {
       const match = item.group.match(/^([A-Z]+)(\d+)$/);
       const groupKey = match ? match[1] : "Z";
-      if (!acc[groupKey]) acc[groupKey] = [];
-      acc[groupKey].push(item);
-      return acc;
-    }, {});
+      if (!grouped[groupKey]) {
+        grouped[groupKey] = [];
+        groupScores[groupKey] = 0;
+      }
+      grouped[groupKey].push(item);
+      groupScores[groupKey] += item.score;
+    });
 
     Object.keys(grouped).forEach((key) => {
       grouped[key].sort((a, b) => {
@@ -65,6 +72,7 @@ function Basvuru({ onSelect }) {
       a.localeCompare(b)
     );
     setGroupedData(grouped);
+    setGroupScores(groupScores);
     setGroupKeys(sortedGroupKeys);
 
     const total = formattedData.reduce(
@@ -92,30 +100,48 @@ function Basvuru({ onSelect }) {
       <div className="basvuru-content">
         <div className="table-toggle">
           <span className="total-score">
-            Toplam Puan: {totalScore?.toFixed(2)}
+            Genel Toplam Puan: {totalScore?.toFixed(2)}
           </span>
         </div>
         <div className="basvuru-table-content">
-          <table className="basvuru-table">
-            <thead className="basvuru-table-head">
-              <tr className="basvuru-table-header">
-                <th>Başlık</th>
-                <th>Grup</th>
-                <th>Puan</th>
-              </tr>
-            </thead>
-            <tbody className="basvuru-table-body">
-              {groupKeys.length > 0 &&
-                groupedData[groupKeys[currentGroupIndex]].map((item) => (
-                  <tr key={item.id}>
-                    <td>{item.title}</td>
-                    <td>{item.group}</td>
-
-                    <td>{item.score?.toFixed(2)}</td>
-                  </tr>
-                ))}
-            </tbody>
-          </table>
+          <div style={{ maxHeight: "370px", overflowY: "auto", width: "100%" }}>
+            <table className="basvuru-table">
+              <thead className="basvuru-table-head">
+                <tr className="basvuru-table-header">
+                  <th>Başlık</th>
+                  <th>Grup</th>
+                  <th>Puan</th>
+                </tr>
+              </thead>
+              <tbody className="basvuru-table-body">
+                <tr className="group-total">
+                  <td colSpan="1">
+                    <strong style={{ color: "#1fa54e" }}>
+                      {groupKeys[currentGroupIndex]} grubu Toplam Puanı
+                    </strong>
+                  </td>
+                  <td>
+                    <strong style={{ color: "#1fa54e" }}>
+                      {groupKeys[currentGroupIndex]}
+                    </strong>
+                  </td>
+                  <td>
+                    <strong style={{ color: "#1fa54e" }}>
+                      {groupScores[groupKeys[currentGroupIndex]]?.toFixed(2)}
+                    </strong>
+                  </td>
+                </tr>
+                {groupKeys.length > 0 &&
+                  groupedData[groupKeys[currentGroupIndex]].map((item) => (
+                    <tr key={item.id}>
+                      <td>{item.title}</td>
+                      <td>{item.group}</td>
+                      <td>{item.score?.toFixed(2)}</td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          </div>
         </div>
         <div className="basvuru-navigation">
           <button

@@ -39,23 +39,9 @@
   font-size: 14px;
   border-radius: 10px;
 }
-
-.dark .sidebar-button {
-  background-color: #212121;
-  border: 1px solid #212121;
-}
-
-.dark .sidebar-button:hover {
-  background-color: #252525;
-}
-
-.light .sidebar-button:hover {
-  background-color: #eff9ef;
-  color: rgb(150, 211, 143);
-}
-
-.light .sidebar-button:hover .icon {
-  color: rgb(150, 211, 143);
+.sidebar-button.showing {
+  background-color: #e0f4dd;
+  border: 1px solid #b7ddb1;
 }
 
 .icon img {

@@ -21,16 +21,15 @@ function Projeler() {
   const [rightBarOpen, setRightBarOpen] = useState(false); // Sağ panelin açık/kapalı durumu
   const [loading, setLoading] = useState(false);
   const [popupMessage, setPopupMessage] = useState(null); // Pop-up mesajı
-  const [editingIndex, setEditingIndex] = useState(null);
-  const [tempGroups, setTempGroups] = useState({}); // Sadece eklenen kısmı tutan nesne
   const [isEditMode] = useState(false);
-  const [currentGroup, setCurrentGroup] = useState(null);
   const [givenGroup, setgivenGroup] = useState("");
   const [givenId, setgivenId] = useState("");
+  const [previousCondition, setPreviousCondition] = useState(-1);
 
-  const handleEditClick = (givenId, givenGroup) => {
+  const handleEditClick = (givenId, givenGroup, lastSelectedCondition) => {
     setgivenId(givenId);
     setgivenGroup(givenGroup);
+    setPreviousCondition(lastSelectedCondition);
     openRightBar();
   };
 
@@ -48,6 +47,7 @@ function Projeler() {
           },
         }
       );
+      console.log(response.data.data);
       setTableData(response.data.data || []);
       setFilteredData(response.data.data || []);
     } catch (error) {
@@ -103,45 +103,60 @@ function Projeler() {
     setTimeout(() => setPopupMessage(null), 1500);
   };
   const getPreferredGroupDisplay = (item) => {
-    if (item.groupJuryEdited !== "-") {
+    const { auto, appeal, manual, jury } = item.groupScoreInfo.groups;
+
+    if (jury) {
       return (
-        <div className="preffered-group">
-          <s>{item.groupAuto}</s> / <s>{item.groupEdited}</s> /{" "}
-          <span>{item.groupJuryEdited}</span>
+        <div className="preferred-group">
+          <s>{auto}</s> / <span className="showed">{jury}</span>
         </div>
       );
-    } else if (item.groupEdited !== "-") {
+    } else if (appeal && auto && !manual) {
       return (
-        <div className="preffered-group">
-          <s>{item.groupAuto}</s> / <span>{item.groupEdited}</span>
+        <div className="preferred-group">
+          <s>{auto}</s> / <span className="showed">{appeal}</span>
+        </div>
+      );
+    } else if (auto && appeal && manual) {
+      return (
+        <div className="preferred-group">
+          <s>{auto}</s> / <span className="showed">{manual}</span>
         </div>
       );
     } else {
       return (
-        <div className="preffered-group">
-          <span>{item.groupAuto}</span>
+        <div className="preferred-group">
+          <span className="showed">{auto}</span>
         </div>
       );
     }
   };
-  const getPrerredScoreDisplay = (item) => {
-    if (item.groupJuryEdited !== "-") {
+
+  const getPreferredScoreDisplay = (item) => {
+    const { auto, appeal, manual, jury } = item.groupScoreInfo.scores;
+
+    if (jury) {
       return (
-        <div className="preffered-group">
-          <s>{item.scoreAuto}</s> / <s>{item.scoreEdited}</s> /{" "}
-          <span>{item.scoreJuryEdited}</span>
+        <div className="preferred-group">
+          <s>{auto}</s> / <span className="showed">{jury}</span>
         </div>
       );
-    } else if (item.groupEdited !== "-") {
+    } else if (appeal && auto && !manual) {
       return (
-        <div className="preffered-group">
-          <s>{item.scoreAuto}</s> / <span>{item.scoreEdited}</span>
+        <div className="preferred-group">
+          <s>{auto}</s> / <span className="showed">{appeal}</span>
+        </div>
+      );
+    } else if (auto && appeal && manual) {
+      return (
+        <div className="preferred-group">
+          <s>{auto}</s> / <span className="showed">{manual}</span>
         </div>
       );
     } else {
       return (
-        <div className="preffered-group">
-          <span>{item.scoreAuto}</span>
+        <div className="preferred-group">
+          <span className="showed">{auto}</span>
         </div>
       );
     }
@@ -174,6 +189,7 @@ function Projeler() {
         givenId={givenId}
         from="projects"
         refresh={fetchProjects}
+        previousCondition={previousCondition}
       />
 
       {/* Row 2 - Arama, Filtreleme, Yenileme */}
@@ -251,6 +267,18 @@ function Projeler() {
                       {item.projectName.length > 50
                         ? `${item.projectName.slice(0, 60)}...`
                         : item.projectName}
+                      <br />
+                      <p style={{ color: "#5d8c6a", fontSize: "10px" }}>
+                        {" "}
+                        {item.corporateName}
+                      </p>
+                      <p style={{ color: "#5d8c6a", fontSize: "10px" }}>
+                        {new Date(item.begin).toLocaleDateString("tr-TR", {
+                          day: "numeric",
+                          month: "long",
+                          year: "numeric",
+                        })}
+                      </p>
                     </td>
 
                     <td className="item-group">
@@ -264,7 +292,7 @@ function Projeler() {
                     ) : (
                       <td>
                         <div className="group-show">
-                          {getPrerredScoreDisplay(item)}
+                          {getPreferredScoreDisplay(item)}
                         </div>
                       </td>
                     )}
@@ -279,7 +307,11 @@ function Projeler() {
                           <button
                             className="yayinlar-btn"
                             onClick={() =>
-                              handleEditClick(item.id, item.groupAuto)
+                              handleEditClick(
+                                item.id,
+                                item.groupScoreInfo.groups.auto,
+                                item.userEdits?.lastSelectedProjectId
+                              )
                             }
                           >
                             <FaPencilAlt />

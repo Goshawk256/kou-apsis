@@ -20,7 +20,7 @@ function YonetilenTezler() {
   const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [rightBarOpen, setRightBarOpen] = useState(false);
-  const [popupMessage, setPopupMessage] = useState(null); // Pop-up mesajı
+  const [popupMessage, setPopupMessage] = useState(null);
   const [isEditMode] = useState(false);
   const [givenGroup, setgivenGroup] = useState("");
   const [givenId, setgivenId] = useState("");
@@ -47,6 +47,7 @@ function YonetilenTezler() {
           },
         }
       );
+
       setTableData(response.data.data);
       setFilteredData(response.data.data);
     } catch (error) {
@@ -110,45 +111,60 @@ function YonetilenTezler() {
   const openRightBar = () => setRightBarOpen(true);
   const closeRightBar = () => setRightBarOpen(false);
   const getPreferredGroupDisplay = (item) => {
-    if (item.groupJuryEdited !== "-") {
+    const { auto, appeal, manual, jury } = item.groupScoreInfo.groups;
+
+    if (jury) {
       return (
-        <div className="preffered-group">
-          <s>{item.groupAuto}</s> / <s>{item.groupEdited}</s> /{" "}
-          <span>{item.groupJuryEdited}</span>
+        <div className="preferred-group">
+          <s>{auto}</s> / <span className="showed">{jury}</span>
         </div>
       );
-    } else if (item.groupEdited !== "-") {
+    } else if (appeal && auto && !manual) {
       return (
-        <div className="preffered-group">
-          <s>{item.groupAuto}</s> / <span>{item.groupEdited}</span>
+        <div className="preferred-group">
+          <s>{auto}</s> / <span className="showed">{appeal}</span>
+        </div>
+      );
+    } else if (auto && appeal && manual) {
+      return (
+        <div className="preferred-group">
+          <s>{auto}</s> / <span className="showed">{manual}</span>
         </div>
       );
     } else {
       return (
-        <div className="preffered-group">
-          <span>{item.groupAuto}</span>
+        <div className="preferred-group">
+          <span className="showed">{auto}</span>
         </div>
       );
     }
   };
-  const getPrerredScoreDisplay = (item) => {
-    if (item.groupJuryEdited !== "-") {
+
+  const getPreferredScoreDisplay = (item) => {
+    const { auto, appeal, manual, jury } = item.groupScoreInfo.scores;
+
+    if (jury) {
       return (
-        <div className="preffered-group">
-          <s>{item.scoreAuto}</s> / <s>{item.scoreEdited}</s> /{" "}
-          <span>{item.scoreJuryEdited}</span>
+        <div className="preferred-group">
+          <s>{auto}</s> / <span className="showed">{jury}</span>
         </div>
       );
-    } else if (item.groupEdited !== "-") {
+    } else if (appeal && auto && !manual) {
       return (
-        <div className="preffered-group">
-          <s>{item.scoreAuto}</s> / <span>{item.scoreEdited}</span>
+        <div className="preferred-group">
+          <s>{auto}</s> / <span className="showed">{appeal}</span>
+        </div>
+      );
+    } else if (auto && appeal && manual) {
+      return (
+        <div className="preferred-group">
+          <s>{auto}</s> / <span className="showed">{manual}</span>
         </div>
       );
     } else {
       return (
-        <div className="preffered-group">
-          <span>{item.scoreAuto}</span>
+        <div className="preferred-group">
+          <span className="showed">{auto}</span>
         </div>
       );
     }
@@ -240,7 +256,26 @@ function YonetilenTezler() {
                     key={item.id}
                     className={isEditMode ? "edit-mode-row" : ""}
                   >
-                    <td>{item.title}</td>
+                    <td>
+                      {item.title.length > 50
+                        ? `${item.title.slice(0, 60)}...`
+                        : item.title}
+                      <br />
+                      <p style={{ color: "#5d8c6a", fontSize: "10px" }}>
+                        {" "}
+                        {item.studentName}
+                      </p>
+                      <p style={{ color: "#5d8c6a", fontSize: "10px" }}>
+                        {new Date(item.approvalDate).toLocaleDateString(
+                          "tr-TR",
+                          {
+                            day: "numeric",
+                            month: "long",
+                            year: "numeric",
+                          }
+                        )}
+                      </p>
+                    </td>
 
                     <td className="item-group">
                       <div className="group-show">
@@ -250,7 +285,7 @@ function YonetilenTezler() {
 
                     <td>
                       <div className="group-show">
-                        {getPrerredScoreDisplay(item)}
+                        {getPreferredScoreDisplay(item)}
                       </div>
                     </td>
                     <td>
@@ -263,7 +298,10 @@ function YonetilenTezler() {
                           <button
                             className="yayinlar-btn"
                             onClick={() =>
-                              handleEditClick(item.id, item.groupAuto)
+                              handleEditClick(
+                                item.id,
+                                item.groupScoreInfo.groups.auto
+                              )
                             }
                           >
                             <FaPencilAlt />

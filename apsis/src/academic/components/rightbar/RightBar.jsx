@@ -2,7 +2,15 @@ import "./RightBar.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { GrUpdate } from "react-icons/gr";
-function RightBar({ isOpen, onClose, givenGroup, givenId, from, refresh }) {
+function RightBar({
+  isOpen,
+  onClose,
+  givenGroup,
+  givenId,
+  from,
+  refresh,
+  previousCondition,
+}) {
   const [requestUrl, setRequestUrl] = useState("");
   const [uploadFileUrl, setUploadFileUrl] = useState(null);
   const [newGroup, setNewGroup] = useState("");
@@ -196,7 +204,9 @@ function RightBar({ isOpen, onClose, givenGroup, givenId, from, refresh }) {
               value={selectedRoleId}
               onChange={(e) => setSelectedRoleId(e.target.value)}
             >
-              <option value="">Seçiniz</option>
+              <option value={conditions[previousCondition]}>
+                {conditions[previousCondition].title}
+              </option>
               {Object.entries(projectTypes).map(([id, roleName]) => (
                 <option key={id} value={id}>
                   {roleName}
@@ -209,10 +219,18 @@ function RightBar({ isOpen, onClose, givenGroup, givenId, from, refresh }) {
       case "publications":
         return (
           <div className="right-bar-content">
-            <h3>Özel Durum Güncelle</h3>
-            <label>Özel Durum Seç:</label>
+            <h3 style={{ color: "gray", fontWeight: "500", fontSize: "14px" }}>
+              Özel Durum Güncelleme
+            </h3>
+            <label
+              style={{ color: "gray", fontWeight: "500", fontSize: "12px" }}
+            >
+              Özel Durum Seç:
+            </label>
             <select value={selectedConditionId} onChange={handleSelectChange}>
-              <option value="">Özel Durum Yoktur</option>
+              <option value={conditions[previousCondition]}>
+                {conditions[previousCondition].title}
+              </option>
               {conditions.map((condition) => (
                 <option key={condition.id} value={condition.id}>
                   {condition.title}
@@ -350,7 +368,6 @@ function RightBar({ isOpen, onClose, givenGroup, givenId, from, refresh }) {
       console.error("Rank update error:", error);
     } finally {
       refresh();
-      onClose();
     }
   };
 
@@ -370,11 +387,23 @@ function RightBar({ isOpen, onClose, givenGroup, givenId, from, refresh }) {
         <div className="right-bar-content">
           <div className="content-r-1">
             <div className="right-bar-content-header">
-              <span>Sistemin Atadığı Grup: {givenGroup}</span>
+              <span
+                style={{ color: "gray", fontWeight: "500", fontSize: "14px" }}
+              >
+                Sistemin Atadığı Grup: {givenGroup}
+              </span>
             </div>
             <div className="right-bar-content-body">
               <div>
-                <label>Yeni Grup:</label>
+                <label
+                  style={{
+                    color: "gray",
+                    fontWeight: "500",
+                    fontSize: "12px",
+                  }}
+                >
+                  Yeni Grup:
+                </label>
                 <input
                   type="text"
                   value={newGroup}
@@ -388,7 +417,9 @@ function RightBar({ isOpen, onClose, givenGroup, givenId, from, refresh }) {
             </div>
           </div>
           <div className="content-r-2">
-            <h3>Dosya Yükle</h3>
+            <h3 style={{ fontWeight: "500", color: "gray", fontSize: "12px" }}>
+              Dosya Yükle:
+            </h3>
             <div className="upload-content-div">
               <input
                 type="text"
