@@ -40,8 +40,8 @@ function Basvuru({ onSelect }) {
     ].map((item) => ({
       id: item.id,
       title: item.title || item.projectName || item.course_name,
-      group: item.groupScoreInfo.group.auto || item.groupAuto || "-",
-      score: item.groupScoreInfo.score.auto || item?.citations?.score || 0,
+      group: item.groupScoreInfo.groups.auto || item.groupAuto || "-",
+      score: item.groupScoreInfo.scores.auto || item?.citations?.score || 0,
       authors: item.authors || [],
     }));
 

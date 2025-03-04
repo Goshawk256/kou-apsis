@@ -160,7 +160,7 @@ function Yayinlar() {
     page * itemsPerPage
   );
   const getPreferredGroupDisplay = (item) => {
-    const { auto, appeal, manuel, jury } = item.groupScoreInfo.group;
+    const { auto, appeal, manuel, jury } = item.groupScoreInfo.groups;
 
     if (jury) {
       return (
@@ -190,7 +190,7 @@ function Yayinlar() {
   };
 
   const getPreferredScoreDisplay = (item) => {
-    const { auto, appeal, manuel, jury } = item.groupScoreInfo.score;
+    const { auto, appeal, manuel, jury } = item.groupScoreInfo.scores;
 
     if (jury) {
       return (
@@ -386,7 +386,7 @@ function Yayinlar() {
                                 onClick={() =>
                                   handleEditClick(
                                     item.id,
-                                    item.groupAuto,
+                                    item.groupScoreInfo.groups.auto,
                                     publicationTypeId
                                   )
                                 }

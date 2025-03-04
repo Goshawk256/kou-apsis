@@ -105,7 +105,7 @@ function Citations() {
     setTimeout(() => setPopupMessage(null), 1500);
   };
   const getPreferredGroupDisplay = (item) => {
-    const { auto, appeal, manuel, jury } = item.groupScoreInfo.group;
+    const { auto, appeal, manuel, jury } = item.groupScoreInfo.groups;
 
     if (jury) {
       return (
@@ -135,7 +135,7 @@ function Citations() {
   };
 
   const getPreferredScoreDisplay = (item) => {
-    const { auto, appeal, manuel, jury } = item.groupScoreInfo.score;
+    const { auto, appeal, manuel, jury } = item.groupScoreInfo.scores;
 
     if (jury) {
       return (

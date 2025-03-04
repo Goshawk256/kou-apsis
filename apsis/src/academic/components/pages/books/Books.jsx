@@ -67,7 +67,7 @@ function Books() {
   };
 
   const getPreferredGroupDisplay = (item) => {
-    const { auto, appeal, manuel, jury } = item.groupScoreInfo.group;
+    const { auto, appeal, manuel, jury } = item.groupScoreInfo.groups;
 
     if (jury) {
       return (
@@ -97,7 +97,7 @@ function Books() {
   };
 
   const getPreferredScoreDisplay = (item) => {
-    const { auto, appeal, manuel, jury } = item.groupScoreInfo.score;
+    const { auto, appeal, manuel, jury } = item.groupScoreInfo.scores;
 
     if (jury) {
       return (
@@ -310,7 +310,10 @@ function Books() {
                           <button
                             className="yayinlar-btn"
                             onClick={() =>
-                              handleEditClick(item.id, item.groupAuto)
+                              handleEditClick(
+                                item.id,
+                                item.groupScoreInfo.groups.auto
+                              )
                             }
                           >
                             <FaPencilAlt />

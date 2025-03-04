@@ -119,7 +119,7 @@ function Dersler() {
     fetchData();
   }, []);
   const getPreferredGroupDisplay = (item) => {
-    const { auto, appeal, manuel, jury } = item.groupScoreInfo.group;
+    const { auto, appeal, manuel, jury } = item.groupScoreInfo.groups;
 
     if (jury) {
       return (
@@ -149,7 +149,7 @@ function Dersler() {
   };
 
   const getPreferredScoreDisplay = (item) => {
-    const { auto, appeal, manuel, jury } = item.groupScoreInfo.score;
+    const { auto, appeal, manuel, jury } = item.groupScoreInfo.scores;
 
     if (jury) {
       return (
@@ -329,13 +329,13 @@ function Dersler() {
                     <td className="item-group">
                       <div className="group-show">
                         {/* {getPreferredGroupDisplay(item)} */}
-                        <span>{item.groupScoreInfo.group.auto}</span>
+                        <span>{item.groupScoreInfo.groups.auto}</span>
                       </div>
                     </td>
                     <td>
                       <div className="group-show">
                         {/* {getPreferredScoreDisplay(item)} */}
-                        <span>{item.groupScoreInfo.score.auto}</span>
+                        <span>{item.groupScoreInfo.scores.auto}</span>
                       </div>
                     </td>
                     <td>
