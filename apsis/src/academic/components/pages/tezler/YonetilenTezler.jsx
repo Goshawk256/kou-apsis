@@ -20,7 +20,7 @@ function YonetilenTezler() {
   const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [rightBarOpen, setRightBarOpen] = useState(false);
-  const [popupMessage, setPopupMessage] = useState(null); // Pop-up mesajı
+  const [popupMessage, setPopupMessage] = useState(null);
   const [isEditMode] = useState(false);
   const [givenGroup, setgivenGroup] = useState("");
   const [givenId, setgivenId] = useState("");
