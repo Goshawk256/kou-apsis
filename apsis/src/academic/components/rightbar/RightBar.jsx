@@ -92,6 +92,8 @@ function RightBar({
     }
   };
   useEffect(() => {
+    console.log(previousCondition);
+    //console.log(conditions[previousCondition]);
     switch (from) {
       case "projects":
         setRequestUrl(

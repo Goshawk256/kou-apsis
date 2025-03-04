@@ -73,11 +73,8 @@ function Login() {
         }
       );
 
-      console.log("Gelen roller:", response.data);
-
       if (response.data.success) {
         setRoles(response.data.data);
-        console.log("Gelen roller listesi:", response.data.data);
 
         if (
           response.data.data.length === 1 &&
@@ -97,8 +94,6 @@ function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     const finalRole = selectedRole || "Academic";
-
-    console.log("Gönderilen veriler:", { username, password, role: finalRole });
 
     try {
       const response = await axios.post(
@@ -193,7 +188,6 @@ function Login() {
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              required
             />
           </div>
           <button className="submit-button-login" type="submit">

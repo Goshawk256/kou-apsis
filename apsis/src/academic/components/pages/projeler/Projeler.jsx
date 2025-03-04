@@ -24,9 +24,10 @@ function Projeler() {
   const [isEditMode] = useState(false);
   const [givenGroup, setgivenGroup] = useState("");
   const [givenId, setgivenId] = useState("");
-  const [previousCondition, setPreviousCondition] = useState(-1);
+  const [previousCondition, setPreviousCondition] = useState();
 
   const handleEditClick = (givenId, givenGroup, lastSelectedCondition) => {
+    console.log(lastSelectedCondition);
     setgivenId(givenId);
     setgivenGroup(givenGroup);
     setPreviousCondition(lastSelectedCondition);
