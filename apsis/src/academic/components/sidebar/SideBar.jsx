@@ -1,6 +1,6 @@
 import "./SideBar.css";
 import PropTypes from "prop-types";
-
+import { useState } from "react";
 import sanatIcon from "../../../assets/artistikFaaliyetler.svg";
 import basvuruIcon from "../../../assets/basvuru.svg";
 import dersIcon from "../../../assets/dersler.svg";
@@ -13,6 +13,7 @@ import atifIcon from "../../../assets/quote.png";
 import bookIcon from "../../../assets/books.png";
 
 function SideBar({ onSelect }) {
+  const [selectedItem, setSelectedItem] = useState("Ana Sayfa");
   const items = [
     { name: "Ana Sayfa", icon: <img src={homeIcon} alt="Home" /> },
     { name: "Yayınlarım(A-B)", icon: <img src={yayinIcon} alt="Yayınlar" /> },
@@ -55,8 +56,13 @@ function SideBar({ onSelect }) {
       {items.map((item, index) => (
         <button
           key={index}
-          className="sidebar-button"
-          onClick={() => onSelect(item.name)}
+          className={`sidebar-button ${
+            selectedItem === item.name ? "showing" : ""
+          }`}
+          onClick={() => {
+            onSelect(item.name);
+            setSelectedItem(item.name);
+          }}
         >
           {item.name == "Çıkış Yap" ? (
             <span style={{ color: "#f47040" }} className="icon">

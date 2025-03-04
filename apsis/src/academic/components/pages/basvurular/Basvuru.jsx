@@ -41,8 +41,8 @@ function Basvuru({ onSelect }) {
     ].map((item) => ({
       id: item.id,
       title: item.title || item.projectName || item.course_name,
-      group: item.groupScoreInfo.groups.auto || item.groupAuto || "-",
-      score: item.groupScoreInfo.scores.auto || item?.citations?.score || 0,
+      group: item.groupScoreInfo?.groups?.auto || item.groupAuto || "-",
+      score: item.groupScoreInfo?.scores?.auto || item?.citations?.score || 0,
       authors: item.authors || [],
     }));
 
@@ -100,39 +100,46 @@ function Basvuru({ onSelect }) {
       <div className="basvuru-content">
         <div className="table-toggle">
           <span className="total-score">
-            Toplam Puan: {totalScore?.toFixed(2)}
+            Genel Toplam Puan: {totalScore?.toFixed(2)}
           </span>
         </div>
         <div className="basvuru-table-content">
-          <table className="basvuru-table">
-            <thead className="basvuru-table-head">
-              <tr className="basvuru-table-header">
-                <th>Başlık</th>
-                <th>Grup</th>
-                <th>Puan</th>
-              </tr>
-            </thead>
-            <tbody className="basvuru-table-body">
-              {groupKeys.length > 0 &&
-                groupedData[groupKeys[currentGroupIndex]].map((item) => (
-                  <tr key={item.id}>
-                    <td>{item.title}</td>
-                    <td>{item.group}</td>
-                    <td>{item.score?.toFixed(2)}</td>
-                  </tr>
-                ))}
-              <tr className="group-total">
-                <td colSpan="2">
-                  <strong>Grup Toplam Puanı</strong>
-                </td>
-                <td>
-                  <strong>
-                    {groupScores[groupKeys[currentGroupIndex]]?.toFixed(2)}
-                  </strong>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <div style={{ maxHeight: "370px", overflowY: "auto", width: "100%" }}>
+            <table className="basvuru-table">
+              <thead className="basvuru-table-head">
+                <tr className="basvuru-table-header">
+                  <th>Başlık</th>
+                  <th>Grup</th>
+                  <th>Puan</th>
+                </tr>
+              </thead>
+              <tbody className="basvuru-table-body">
+                <tr className="group-total">
+                  <td colSpan="1">
+                    <strong>
+                      {groupKeys[currentGroupIndex]} grubu Toplam Puanı
+                    </strong>
+                  </td>
+                  <td>
+                    <strong>{groupKeys[currentGroupIndex]}</strong>
+                  </td>
+                  <td>
+                    <strong>
+                      {groupScores[groupKeys[currentGroupIndex]]?.toFixed(2)}
+                    </strong>
+                  </td>
+                </tr>
+                {groupKeys.length > 0 &&
+                  groupedData[groupKeys[currentGroupIndex]].map((item) => (
+                    <tr key={item.id}>
+                      <td>{item.title}</td>
+                      <td>{item.group}</td>
+                      <td>{item.score?.toFixed(2)}</td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          </div>
         </div>
         <div className="basvuru-navigation">
           <button
