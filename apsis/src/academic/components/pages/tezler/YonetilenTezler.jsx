@@ -21,11 +21,7 @@ function YonetilenTezler() {
   const [loading, setLoading] = useState(false);
   const [rightBarOpen, setRightBarOpen] = useState(false);
   const [popupMessage, setPopupMessage] = useState(null); // Pop-up mesajı
-
-  const [editingIndex, setEditingIndex] = useState(null);
-  const [tempGroups, setTempGroups] = useState({}); // Yalnızca eklenen kısmı saklayan nesne
   const [isEditMode] = useState(false);
-  const [currentGroup, setCurrentGroup] = useState(null);
   const [givenGroup, setgivenGroup] = useState("");
   const [givenId, setgivenId] = useState("");
 
@@ -34,13 +30,6 @@ function YonetilenTezler() {
     setgivenGroup(givenGroup);
     openRightBar();
     console.log(givenId, givenGroup);
-  };
-
-  const handleGroupChange = (id, newValue) => {
-    setTempGroups((prev) => ({
-      ...prev,
-      [id]: newValue,
-    }));
   };
 
   const fetchData = async () => {
