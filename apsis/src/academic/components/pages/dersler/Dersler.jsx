@@ -329,13 +329,13 @@ function Dersler() {
                     <td className="item-group">
                       <div className="group-show">
                         {/* {getPreferredGroupDisplay(item)} */}
-                        <span>{item.groupAuto}</span>
+                        <span>{item.groupScoreInfo.group.auto}</span>
                       </div>
                     </td>
                     <td>
                       <div className="group-show">
                         {/* {getPreferredScoreDisplay(item)} */}
-                        <span>{item.scoreAuto}</span>
+                        <span>{item.groupScoreInfo.score.auto}</span>
                       </div>
                     </td>
                     <td>
