@@ -204,9 +204,7 @@ function RightBar({
               value={selectedRoleId}
               onChange={(e) => setSelectedRoleId(e.target.value)}
             >
-              <option value={conditions[previousCondition]}>
-                {conditions[previousCondition].title}
-              </option>
+              <option value="">Seçiniz</option>
               {Object.entries(projectTypes).map(([id, roleName]) => (
                 <option key={id} value={id}>
                   {roleName}
@@ -228,9 +226,7 @@ function RightBar({
               Özel Durum Seç:
             </label>
             <select value={selectedConditionId} onChange={handleSelectChange}>
-              <option value={conditions[previousCondition]}>
-                {conditions[previousCondition].title}
-              </option>
+              <option value="">Özel Durum Yoktur</option>
               {conditions.map((condition) => (
                 <option key={condition.id} value={condition.id}>
                   {condition.title}
