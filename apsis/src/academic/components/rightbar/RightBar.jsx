@@ -21,6 +21,7 @@ function RightBar({
   from,
   refresh,
   previousCondition,
+  projectRole,
 }) {
   const [requestUrl, setRequestUrl] = useState("");
   const [uploadFileUrl, setUploadFileUrl] = useState(null);
@@ -250,6 +251,14 @@ function RightBar({
             <h3 style={{ color: "gray", fontSize: "14px", fontWeight: "bold" }}>
               Proje Güncelle
             </h3>
+            <span style={{ color: "gray", fontSize: "14px" }}>
+              <span
+                style={{ color: "gray", fontSize: "12px", fontWeight: "bold" }}
+              >
+                Bu Projedeki Rolünüz:
+              </span>{" "}
+              {projectRole ? projectRole : "Belirtilmedi"}
+            </span>
             <label style={{ color: "gray", fontSize: "12px" }}>
               <span
                 style={{ color: "gray", fontSize: "12px", fontWeight: "bold" }}

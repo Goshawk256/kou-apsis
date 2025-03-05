@@ -53,7 +53,7 @@ function Basvuru({ onSelect }) {
 
     formattedData.forEach((item) => {
       const match = item.group.match(/^([A-Z]+)(\d+)$/);
-      const groupKey = match ? match[1] : "Z";
+      const groupKey = match ? match[1] : "-";
       if (!grouped[groupKey]) {
         grouped[groupKey] = [];
         groupScores[groupKey] = 0;
@@ -116,19 +116,22 @@ function Basvuru({ onSelect }) {
                 </tr>
               </thead>
               <tbody className="basvuru-table-body">
-                <tr className="group-total">
+                <tr
+                  style={{ backgroundColor: "#d1913d" }}
+                  className="group-total"
+                >
                   <td colSpan="1">
-                    <strong style={{ color: "#1fa54e" }}>
+                    <strong style={{ color: "#1c1c1c" }}>
                       {groupKeys[currentGroupIndex]} grubu Toplam Puanı
                     </strong>
                   </td>
                   <td>
-                    <strong style={{ color: "#1fa54e" }}>
+                    <strong style={{ color: "#1c1c1c" }}>
                       {groupKeys[currentGroupIndex]}
                     </strong>
                   </td>
                   <td>
-                    <strong style={{ color: "#1fa54e" }}>
+                    <strong style={{ color: "#1c1c1c" }}>
                       {groupScores[groupKeys[currentGroupIndex]]?.toFixed(2)}
                     </strong>
                   </td>

@@ -257,10 +257,7 @@ function Dersler() {
           placeholder="Dinamik arama yapın..."
           className="yayinlar-search-input"
         />
-        <button
-          className="yayinlar-refresh-btn"
-          onClick={() => window.location.reload()}
-        >
+        <button className="yayinlar-refresh-btn" onClick={() => fetchData()}>
           <FaSync />
         </button>
 
