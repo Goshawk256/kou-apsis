@@ -36,18 +36,25 @@ function RightBar({
   const [validGroups, setValidGroups] = useState([]);
 
   const handleInputChange = (e) => {
-    const value = e.target.value;
+    const value = e.target.value.toUpperCase();
 
-    // validGroups güncellenmiş mi kontrol edelim
-    if (validGroups.length > 0) {
-      if (validGroups.includes(value)) {
-        setNewGroup(value);
-      } else {
-        alert("Geçersiz grup! Lütfen geçerli bir grup girin.");
+    if (value.length === 1) {
+      const validLetters = [...new Set(validGroups.map((group) => group[0]))];
+      if (!validLetters.includes(value)) {
+        return;
       }
     } else {
-      console.log("Valid Groups yüklenmedi!");
+      const matchingGroups = validGroups.filter((group) =>
+        group.startsWith(value[0])
+      );
+      const validNumbers = matchingGroups.map((group) => group.slice(1));
+
+      if (!validNumbers.some((num) => num.startsWith(value.slice(1)))) {
+        return;
+      }
     }
+
+    setNewGroup(value);
   };
 
   const conditions = [
