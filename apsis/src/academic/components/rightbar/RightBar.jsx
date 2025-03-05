@@ -235,7 +235,7 @@ function RightBar({
         return (
           <div className="right-bar-content">
             <h3 style={{ color: "gray", fontWeight: "500", fontSize: "14px" }}>
-              Aktif Durum Güncelleme
+              Özel Durum Güncelleme
             </h3>
             <label
               style={{
