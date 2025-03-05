@@ -204,7 +204,7 @@ function Citations() {
         />
         <button
           className="yayinlar-refresh-btn"
-          onClick={() => window.location.reload()}
+          onClick={() => fetchCitations()}
         >
           <FaSync />
         </button>
