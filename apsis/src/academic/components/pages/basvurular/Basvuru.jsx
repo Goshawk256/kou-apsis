@@ -94,7 +94,13 @@ function Basvuru({ onSelect }) {
   };
 
   const handleFinish = () => {
-    onSelect("Finish");
+    const confirmFinish = window.confirm(
+      "Bu aşamadan geri dönüş yapılamaz. Geri dönmek isterseniz, başvuru sayfasına yeniden gitmeniz gerekecektir. Devam etmek istediğinizden emin misiniz?"
+    );
+
+    if (confirmFinish) {
+      onSelect("Finish");
+    }
   };
 
   return showTable ? (
