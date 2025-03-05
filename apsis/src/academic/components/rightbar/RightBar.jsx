@@ -2,6 +2,17 @@ import "./RightBar.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { GrUpdate } from "react-icons/gr";
+import {
+  projectGroups,
+  publicationGroups,
+  thesisGroups,
+  awardGroups,
+  artGroups,
+  bookGroups,
+  citationGroups,
+  declarationGroups,
+  lessonGroups,
+} from "../../../middlewares/groupSchemeMiddleware.js";
 function RightBar({
   isOpen,
   onClose,
@@ -22,6 +33,22 @@ function RightBar({
   const [projectRoleTypes, setProjectRoleTypes] = useState([]);
   const [selectedRoleId, setSelectedRoleId] = useState("");
   const [selectedConditionId, setSelectedConditionId] = useState(null);
+  const [validGroups, setValidGroups] = useState([]);
+
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+
+    // validGroups güncellenmiş mi kontrol edelim
+    if (validGroups.length > 0) {
+      if (validGroups.includes(value)) {
+        setNewGroup(value);
+      } else {
+        alert("Geçersiz grup! Lütfen geçerli bir grup girin.");
+      }
+    } else {
+      console.log("Valid Groups yüklenmedi!");
+    }
+  };
 
   const conditions = [
     {
@@ -97,6 +124,7 @@ function RightBar({
     console.log(previousCondition);
   }, [previousCondition]);
   useEffect(() => {
+    let groups = [];
     switch (from) {
       case "projects":
         setRequestUrl(
@@ -107,6 +135,7 @@ function RightBar({
         );
         setIdName("projectId");
         setName("Proje Düzenleme");
+        groups = projectGroups();
         break;
       case "publications":
         setRequestUrl(
@@ -117,6 +146,7 @@ function RightBar({
         );
         setIdName("publicationId");
         setName("Yayın Düzenleme");
+        groups = publicationGroups();
         break;
       case "books":
         setRequestUrl(
@@ -127,6 +157,7 @@ function RightBar({
         );
         setIdName("publicationId");
         setName("Kitap Düzenleme");
+        groups = bookGroups();
         break;
       case "lessons":
         setRequestUrl(
@@ -137,6 +168,7 @@ function RightBar({
         );
         setIdName("lessonId");
         setName("Ders Düzenleme");
+        groups = lessonGroups();
         break;
       case "awards":
         setRequestUrl(
@@ -147,6 +179,7 @@ function RightBar({
         );
         setIdName("awardId");
         setName("Ödül Düzenleme");
+        groups = awardGroups();
         break;
       case "thesis":
         setRequestUrl(
@@ -157,11 +190,14 @@ function RightBar({
         );
         setIdName("advisingThesisId");
         setName("Tez Düzenleme");
+        groups = thesisGroups();
         break;
       default:
         setRequestUrl("#");
         setIdName("unknownId");
     }
+    setValidGroups(groups);
+    console.log("Valid Groups:", groups); // Güncellenmiş array'i logla
   }, [from]);
 
   const updateProjectRole = async () => {
@@ -252,7 +288,7 @@ function RightBar({
                 : "Belirtilmedi"}
             </label>
             <select value={selectedConditionId} onChange={handleSelectChange}>
-              <option value="">Seçiniz</option>
+              <option value="">Özel Durum Yok</option>
               {conditions.map((condition) => (
                 <option key={condition.id} value={condition.id}>
                   {condition.title}
@@ -318,7 +354,6 @@ function RightBar({
   };
 
   useEffect(() => {
-    console.log("useEffect Çalıştı! from:", from);
     if (from === "projects") {
       getProjectInfo();
     }
@@ -429,7 +464,7 @@ function RightBar({
                 <input
                   type="text"
                   value={newGroup}
-                  onChange={(e) => setNewGroup(e.target.value)}
+                  onChange={handleInputChange}
                   placeholder="Grup"
                 />
               </div>
