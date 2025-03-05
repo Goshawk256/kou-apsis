@@ -2,6 +2,17 @@ import "./RightBar.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { GrUpdate } from "react-icons/gr";
+import {
+  projectGroups,
+  publicationGroups,
+  thesisGroups,
+  awardGroups,
+  artGroups,
+  bookGroups,
+  citationGroups,
+  declarationGroups,
+  lessonGroups,
+} from "../../../middlewares/groupSchemeMiddleware.js";
 function RightBar({
   isOpen,
   onClose,
@@ -22,6 +33,30 @@ function RightBar({
   const [projectRoleTypes, setProjectRoleTypes] = useState([]);
   const [selectedRoleId, setSelectedRoleId] = useState("");
   const [selectedConditionId, setSelectedConditionId] = useState(null);
+  const [validGroups, setValidGroups] = useState([]);
+
+  const handleInputChange = (e) => {
+    const value = e.target.value.toUpperCase();
+
+    if (value.length === 1) {
+      const validLetters = [...new Set(validGroups.map((group) => group[0]))];
+      if (!validLetters.includes(value)) {
+        return;
+      }
+    } else {
+      const matchingGroups = validGroups.filter((group) =>
+        group.startsWith(value[0])
+      );
+      const validNumbers = matchingGroups.map((group) => group.slice(1));
+
+      if (!validNumbers.some((num) => num.startsWith(value.slice(1)))) {
+        return;
+      }
+    }
+
+    setNewGroup(value);
+  };
+
   const conditions = [
     {
       id: 1,
@@ -88,10 +123,15 @@ function RightBar({
       } finally {
         refresh();
         onClose();
+        setSelectedConditionId(null);
       }
     }
   };
   useEffect(() => {
+    console.log(previousCondition);
+  }, [previousCondition]);
+  useEffect(() => {
+    let groups = [];
     switch (from) {
       case "projects":
         setRequestUrl(
@@ -102,6 +142,7 @@ function RightBar({
         );
         setIdName("projectId");
         setName("Proje Düzenleme");
+        groups = projectGroups();
         break;
       case "publications":
         setRequestUrl(
@@ -112,6 +153,7 @@ function RightBar({
         );
         setIdName("publicationId");
         setName("Yayın Düzenleme");
+        groups = publicationGroups();
         break;
       case "books":
         setRequestUrl(
@@ -122,6 +164,7 @@ function RightBar({
         );
         setIdName("publicationId");
         setName("Kitap Düzenleme");
+        groups = bookGroups();
         break;
       case "lessons":
         setRequestUrl(
@@ -132,6 +175,7 @@ function RightBar({
         );
         setIdName("lessonId");
         setName("Ders Düzenleme");
+        groups = lessonGroups();
         break;
       case "awards":
         setRequestUrl(
@@ -142,6 +186,7 @@ function RightBar({
         );
         setIdName("awardId");
         setName("Ödül Düzenleme");
+        groups = awardGroups();
         break;
       case "thesis":
         setRequestUrl(
@@ -152,11 +197,14 @@ function RightBar({
         );
         setIdName("advisingThesisId");
         setName("Tez Düzenleme");
+        groups = thesisGroups();
         break;
       default:
         setRequestUrl("#");
         setIdName("unknownId");
     }
+    setValidGroups(groups);
+    console.log("Valid Groups:", groups); // Güncellenmiş array'i logla
   }, [from]);
 
   const updateProjectRole = async () => {
@@ -191,6 +239,7 @@ function RightBar({
     } finally {
       refresh();
       onClose();
+      setSelectedRoleId("");
     }
   };
   const RenderedComponent = ({ from }) => {
@@ -198,8 +247,19 @@ function RightBar({
       case "projects":
         return (
           <div className="right-bar-content">
-            <h3>Proje Güncelle</h3>
-            <label>Proje Türü Seç:</label>
+            <h3 style={{ color: "gray", fontSize: "14px", fontWeight: "bold" }}>
+              Proje Güncelle
+            </h3>
+            <label style={{ color: "gray", fontSize: "12px" }}>
+              <span
+                style={{ color: "gray", fontSize: "12px", fontWeight: "bold" }}
+              >
+                {" "}
+                Aktif Proje Türü:
+              </span>
+              {Object.entries(projectTypes)[previousCondition - 1]?.[1] ||
+                "Belirtilmedi"}
+            </label>
             <select
               value={selectedRoleId}
               onChange={(e) => setSelectedRoleId(e.target.value)}
@@ -221,12 +281,21 @@ function RightBar({
               Özel Durum Güncelleme
             </h3>
             <label
-              style={{ color: "gray", fontWeight: "500", fontSize: "12px" }}
+              style={{
+                color: "gray",
+                fontWeight: "500",
+                fontSize: "12px",
+                textAlign: "left",
+              }}
             >
-              Özel Durum Seç:
+              <span style={{ fontWeight: "bold" }}> Aktif Özel Durum:</span>{" "}
+              <br />
+              {previousCondition
+                ? conditions[previousCondition - 1]?.title
+                : "Belirtilmedi"}
             </label>
             <select value={selectedConditionId} onChange={handleSelectChange}>
-              <option value="">Özel Durum Yoktur</option>
+              <option value="">Özel Durum Yok</option>
               {conditions.map((condition) => (
                 <option key={condition.id} value={condition.id}>
                   {condition.title}
@@ -292,7 +361,6 @@ function RightBar({
   };
 
   useEffect(() => {
-    console.log("useEffect Çalıştı! from:", from);
     if (from === "projects") {
       getProjectInfo();
     }
@@ -403,7 +471,7 @@ function RightBar({
                 <input
                   type="text"
                   value={newGroup}
-                  onChange={(e) => setNewGroup(e.target.value)}
+                  onChange={handleInputChange}
                   placeholder="Grup"
                 />
               </div>

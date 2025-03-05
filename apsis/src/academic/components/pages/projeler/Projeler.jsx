@@ -24,7 +24,7 @@ function Projeler() {
   const [isEditMode] = useState(false);
   const [givenGroup, setgivenGroup] = useState("");
   const [givenId, setgivenId] = useState("");
-  const [previousCondition, setPreviousCondition] = useState(-1);
+  const [previousCondition, setPreviousCondition] = useState(null);
 
   const handleEditClick = (givenId, givenGroup, lastSelectedCondition) => {
     setgivenId(givenId);
@@ -47,7 +47,7 @@ function Projeler() {
           },
         }
       );
-      console.log(response.data.data);
+
       setTableData(response.data.data || []);
       setFilteredData(response.data.data || []);
     } catch (error) {
@@ -181,7 +181,6 @@ function Projeler() {
         </div>
       )}
 
-      {/* Sağ panel */}
       <RightBar
         isOpen={rightBarOpen}
         onClose={closeRightBar}
@@ -203,7 +202,7 @@ function Projeler() {
         />
         <button
           className="yayinlar-refresh-btn"
-          onClick={() => window.location.reload()}
+          onClick={() => fetchProjects()}
         >
           <FaSync />
         </button>
