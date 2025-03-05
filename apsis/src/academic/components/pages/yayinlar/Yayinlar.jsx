@@ -28,7 +28,7 @@ function Yayinlar() {
   const [allPublications, setAllPublications] = useState({});
   const [givenGroup, setgivenGroup] = useState("");
   const [givenId, setgivenId] = useState("");
-  const [previousCondition, setPreviousCondition] = useState(-1);
+  const [previousCondition, setPreviousCondition] = useState(null);
   const [givenPublicationTypeId, setgivenPublicationTypeId] = useState("");
   useEffect(() => {
     updateAllPublications();
@@ -47,8 +47,14 @@ function Yayinlar() {
     setAllPublications(combinedPublications);
   };
 
-  const handleEditClick = (id, grup, publicationTypeId) => {
+  const handleEditClick = (
+    id,
+    grup,
+    lastSelectedConditionId,
+    publicationTypeId
+  ) => {
     openRightBar();
+    setPreviousCondition(lastSelectedConditionId);
     setgivenGroup(grup);
     setgivenId(id);
     setgivenPublicationTypeId(publicationTypeId);
@@ -89,6 +95,7 @@ function Yayinlar() {
         { headers: { Authorization: `Bearer ${accessToken}` } }
       );
       if (response.data.success) {
+        console.log(response.data.data);
         setTableData(
           response.data.data.sort(
             (a, b) => new Date(b.publishDate) - new Date(a.publishDate)
@@ -232,6 +239,7 @@ function Yayinlar() {
         givenPublicationTypeId={givenPublicationTypeId}
         from="publications"
         refresh={fetchPublications}
+        previousCondition={previousCondition}
       />
 
       {popupMessage && (
@@ -388,6 +396,7 @@ function Yayinlar() {
                                   handleEditClick(
                                     item.id,
                                     item.groupScoreInfo.groups.auto,
+                                    item.userEdits?.lastSelectedSpecialCase,
                                     publicationTypeId
                                   )
                                 }

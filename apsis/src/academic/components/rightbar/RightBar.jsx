@@ -21,6 +21,7 @@ function RightBar({
   const [projectTypes, setProjectTypes] = useState([]);
   const [projectRoleTypes, setProjectRoleTypes] = useState([]);
   const [selectedRoleId, setSelectedRoleId] = useState("");
+  const [selectedConditionId, setSelectedConditionId] = useState(null);
 
   const conditions = [
     {
@@ -88,6 +89,7 @@ function RightBar({
       } finally {
         refresh();
         onClose();
+        setSelectedConditionId(null);
       }
     }
   };
@@ -194,6 +196,7 @@ function RightBar({
     } finally {
       refresh();
       onClose();
+      setSelectedRoleId("");
     }
   };
   const RenderedComponent = ({ from }) => {
@@ -201,20 +204,24 @@ function RightBar({
       case "projects":
         return (
           <div className="right-bar-content">
-            <h3>Proje Güncelle</h3>
-            <label>Proje Türü Seç:</label>
+            <h3 style={{ color: "gray", fontSize: "14px", fontWeight: "bold" }}>
+              Proje Güncelle
+            </h3>
+            <label style={{ color: "gray", fontSize: "12px" }}>
+              <span
+                style={{ color: "gray", fontSize: "12px", fontWeight: "bold" }}
+              >
+                {" "}
+                Aktif Proje Türü:
+              </span>
+              {Object.entries(projectTypes)[previousCondition - 1]?.[1] ||
+                "Belirtilmedi"}
+            </label>
             <select
               value={selectedRoleId}
               onChange={(e) => setSelectedRoleId(e.target.value)}
             >
-              {previousCondition ? (
-                <option value={conditions[previousCondition]}>
-                  {" "}
-                  {conditions[previousCondition].title}{" "}
-                </option>
-              ) : (
-                <option value="">Tür Seçilmemiştir</option>
-              )}
+              <option value="">Seçiniz</option>
               {Object.entries(projectTypes).map(([id, roleName]) => (
                 <option key={id} value={id}>
                   {roleName}
@@ -228,15 +235,24 @@ function RightBar({
         return (
           <div className="right-bar-content">
             <h3 style={{ color: "gray", fontWeight: "500", fontSize: "14px" }}>
-              Özel Durum Güncelleme
+              Aktif Durum Güncelleme
             </h3>
             <label
-              style={{ color: "gray", fontWeight: "500", fontSize: "12px" }}
+              style={{
+                color: "gray",
+                fontWeight: "500",
+                fontSize: "12px",
+                textAlign: "left",
+              }}
             >
-              Özel Durum Seç:
+              <span style={{ fontWeight: "bold" }}> Aktif Özel Durum:</span>{" "}
+              <br />
+              {previousCondition
+                ? conditions[previousCondition - 1]?.title
+                : "Belirtilmedi"}
             </label>
             <select value={selectedConditionId} onChange={handleSelectChange}>
-              <option value="">Özel Durum Yoktur</option>
+              <option value="">Seçiniz</option>
               {conditions.map((condition) => (
                 <option key={condition.id} value={condition.id}>
                   {condition.title}

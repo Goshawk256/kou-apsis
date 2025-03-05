@@ -47,7 +47,7 @@ function Projeler() {
           },
         }
       );
-      console.log(response.data.data);
+
       setTableData(response.data.data || []);
       setFilteredData(response.data.data || []);
     } catch (error) {
@@ -202,7 +202,7 @@ function Projeler() {
         />
         <button
           className="yayinlar-refresh-btn"
-          onClick={() => window.location.reload()}
+          onClick={() => fetchProjects()}
         >
           <FaSync />
         </button>
