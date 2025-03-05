@@ -53,7 +53,7 @@ function Basvuru({ onSelect }) {
 
     formattedData.forEach((item) => {
       const match = item.group.match(/^([A-Z]+)(\d+)$/);
-      const groupKey = match ? match[1] : "Z";
+      const groupKey = match ? match[1] : "-";
       if (!grouped[groupKey]) {
         grouped[groupKey] = [];
         groupScores[groupKey] = 0;
