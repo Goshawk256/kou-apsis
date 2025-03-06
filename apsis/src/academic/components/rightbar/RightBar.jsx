@@ -184,7 +184,7 @@ function RightBar({
 
     try {
       const response = await axios.put(
-        "https://apsis.kocaeli.edu.tr/api/academic/update-project-rank-by-type",
+        "https://apsis.kocaeli.edu.tr/api/academic/update-project-rank",
         {
           projectId: givenId,
           projectTypeId: selectedRoleId,
@@ -474,28 +474,32 @@ function RightBar({
                 Sistemin Atadığı Grup: {givenGroup}
               </span>
             </div>
-            <div className="right-bar-content-body">
-              <div>
-                <label
-                  style={{
-                    color: "gray",
-                    fontWeight: "500",
-                    fontSize: "12px",
-                  }}
-                >
-                  Yeni Grup:
-                </label>
-                <input
-                  type="text"
-                  value={newGroup}
-                  onChange={handleInputChange}
-                  placeholder="Grup"
-                />
+            {from === "projects" ? (
+              ""
+            ) : (
+              <div className="right-bar-content-body">
+                <div>
+                  <label
+                    style={{
+                      color: "gray",
+                      fontWeight: "500",
+                      fontSize: "12px",
+                    }}
+                  >
+                    Yeni Grup:
+                  </label>
+                  <input
+                    type="text"
+                    value={newGroup}
+                    onChange={handleInputChange}
+                    placeholder="Grup"
+                  />
+                </div>
+                <button className="update-btn" onClick={updateRank}>
+                  <GrUpdate />
+                </button>
               </div>
-              <button className="update-btn" onClick={updateRank}>
-                <GrUpdate />
-              </button>
-            </div>
+            )}
           </div>
           <div className="content-r-3">
             <RenderedComponent from={from} />

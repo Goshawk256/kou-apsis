@@ -303,14 +303,18 @@ function Projeler() {
                         <div>
                           <button
                             className="yayinlar-btn"
-                            onClick={() =>
-                              handleEditClick(
-                                item.id,
-                                item.groupScoreInfo.groups.auto,
-                                item.userEdits?.lastSelectedProjectId,
-                                item.role
-                              )
-                            }
+                            onClick={() => {
+                              item.status === "Tamamlandı"
+                                ? handleEditClick(
+                                    item.id,
+                                    item.groupScoreInfo.groups.auto,
+                                    item.userEdits?.lastSelectedProjectId,
+                                    item.role
+                                  )
+                                : alert(
+                                    "Devam eden projeler başvuruda kullanılamaz."
+                                  );
+                            }}
                           >
                             <FaPencilAlt />
                           </button>
