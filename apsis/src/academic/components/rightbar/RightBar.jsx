@@ -95,6 +95,10 @@ function RightBar({
   };
 
   useEffect(() => {
+    setNewGroup("");
+  }, [onClose]);
+
+  useEffect(() => {
     console.log(previousCondition);
     console.log(givenManualGroup);
     console.log(givenPublicationTypeId);
@@ -466,7 +470,7 @@ function RightBar({
     }
   };
   const updateRank = async () => {
-    if (!requestUrl || !idName || !newGroup) {
+    if (!requestUrl || !idName) {
       console.error("Eksik bilgi! API çağrısı yapılamaz.");
       return;
     }
@@ -474,37 +478,34 @@ function RightBar({
       const selected = conditions.find(
         (cond) => cond.id === Number(selectedConditionId)
       );
-      if (!selected) {
-        alert("Lütfen Condition Seçiniz");
-        console.log("Seçilen Condition Bulunamadi");
-      } else {
-        const condition = {
-          number: Number(selectedConditionId),
-          value: 1,
-        };
-        try {
-          const response = axios.put(
-            "https://apsis.kocaeli.edu.tr/api/academic/update-publication-rank",
-            {
-              [idName]: givenId,
-              group: newGroup,
-              condition: condition,
+
+      const condition = {
+        number: Number(selectedConditionId),
+        value: 1,
+      };
+      try {
+        const response = axios.put(
+          "https://apsis.kocaeli.edu.tr/api/academic/update-publication-rank",
+          {
+            [idName]: givenId,
+            group: newGroup || givenManualGroup || givenGroup,
+            condition: condition,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
             },
-            {
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-              },
-            }
-          );
-          console.log("Başarıyla güncellendi:", response.data);
-        } catch (error) {
-          console.error("Condition update error:", error);
-        } finally {
-          refresh();
-          onClose();
-          setSelectedConditionId(null);
-        }
+          }
+        );
+        console.log("Başarıyla güncellendi:", response.data);
+      } catch (error) {
+        console.error("Condition update error:", error);
+      } finally {
+        setNewGroup("");
+        refresh();
+        onClose();
+        setSelectedConditionId(null);
       }
     } else {
       try {
@@ -573,9 +574,13 @@ function RightBar({
                     placeholder="Grup"
                   />
                 </div>
-                <button className="update-btn" onClick={updateRank}>
-                  <GrUpdate />
-                </button>
+                {from === "publications" && givenPublicationTypeId === 1 ? (
+                  ""
+                ) : (
+                  <button className="update-btn" onClick={updateRank}>
+                    <GrUpdate />
+                  </button>
+                )}
               </div>
             )}
           </div>
