@@ -110,15 +110,6 @@ function Citations() {
       return (
         <>
           <td>
-            {item.citations.manual.d1Cnt > 0 &&
-              `${item.citations.manual.d1Cnt}xD1 /`}{" "}
-            {item.citations.manual.d2Cnt > 0 &&
-              `${item.citations.manual.d2Cnt}xD2 /`}{" "}
-            {item.citations.manual.d3Cnt > 0 &&
-              `${item.citations.manual.d3Cnt}xD3 /`}{" "}
-            {item.citations.manual.d4Cnt > 0 &&
-              `${item.citations.manual.d4Cnt}xD4 `}{" "}
-            <br />
             <s>
               {item.citations.auto.d1Cnt > 0 &&
                 `${item.citations.auto.d1Cnt}xD1 /`}{" "}
@@ -129,52 +120,43 @@ function Citations() {
               {item.citations.auto.d4Cnt > 0 &&
                 `${item.citations.auto.d4Cnt}xD4 `}
             </s>
+            <br />
+            {item.citations.manual.d1Cnt > 0 &&
+              `${item.citations.manual.d1Cnt}xD1 /`}{" "}
+            {item.citations.manual.d2Cnt > 0 &&
+              `${item.citations.manual.d2Cnt}xD2 /`}{" "}
+            {item.citations.manual.d3Cnt > 0 &&
+              `${item.citations.manual.d3Cnt}xD3 /`}{" "}
+            {item.citations.manual.d4Cnt > 0 &&
+              `${item.citations.manual.d4Cnt}xD4 `}{" "}
           </td>
           <td>
-            {item.citations.manual.score} <br />
             <s>{item.citations.auto.score}</s>
+            <br />
+            {item.citations.manual.score}
           </td>
         </>
       );
-    } else if (!item.citations.manual) {
-      <>
-        <td>
-          {item.citations.auto.d1Cnt > 0 && `${item.citations.auto.d1Cnt}xD1 /`}{" "}
-          {item.citations.auto.d2Cnt > 0 && `${item.citations.auto.d2Cnt}xD2 /`}{" "}
-          {item.citations.auto.d3Cnt > 0 && `${item.citations.auto.d3Cnt}xD3 /`}{" "}
-          {item.citations.auto.d4Cnt > 0 && `${item.citations.auto.d4Cnt}xD4 `}
-        </td>
-        <td>{item.citations.auto.score}</td>
-      </>;
-    }
-  };
-
-  const getPreferredScoreDisplay = (item) => {
-    const groups = item.groupScoreInfo?.scores || {};
-    const { auto, manual, jury } = groups;
-
-    if (jury) {
+    } else {
       return (
-        <div className="preferred-group">
-          <s>{auto}</s> / <span className="showed">{jury}</span>
-        </div>
-      );
-    } else if (manual) {
-      return (
-        <div className="preferred-group">
-          <s>{auto}</s> / <span className="showed">{manual}</span>
-        </div>
-      );
-    } else if (auto && !manual && !jury) {
-      return (
-        <div className="preferred-group">
-          <span className="showed">{auto}</span>
-        </div>
+        <>
+          <td>
+            {item.citations.auto.d1Cnt > 0 &&
+              `${item.citations.auto.d1Cnt}xD1 /`}{" "}
+            {item.citations.auto.d2Cnt > 0 &&
+              `${item.citations.auto.d2Cnt}xD2 /`}{" "}
+            {item.citations.auto.d3Cnt > 0 &&
+              `${item.citations.auto.d3Cnt}xD3 /`}{" "}
+            {item.citations.auto.d4Cnt > 0 &&
+              `${item.citations.auto.d4Cnt}xD4 `}
+          </td>
+          <td>{item.citations.auto.score}</td>
+        </>
       );
     }
   };
 
-  const itemsPerPage = 4; // Sayfa başına gösterilecek proje sayısı
+  const itemsPerPage = 4;
   const paginatedData = filteredData.slice(
     (page - 1) * itemsPerPage,
     page * itemsPerPage
@@ -295,7 +277,6 @@ function Citations() {
                     </td>
                     <td> {item.publicationType} </td>
                     {getPreferredGroupDisplay(item)}
-
                     <td>
                       {isEditMode ? (
                         <div className="choose-publication">
