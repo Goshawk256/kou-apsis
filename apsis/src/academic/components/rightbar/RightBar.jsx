@@ -17,6 +17,7 @@ function RightBar({
   isOpen,
   onClose,
   givenGroup,
+  givenManualGroup,
   givenId,
   from,
   refresh,
@@ -92,44 +93,9 @@ function RightBar({
     setSelectedConditionId(e.target.value);
   };
 
-  const handleUpdateCondition = async () => {
-    const selected = conditions.find(
-      (cond) => cond.id === Number(selectedConditionId)
-    );
-    if (!selected) {
-      alert("Lütfen Condition Seçiniz");
-      console.log("Seçilen Condition Bulunamadi");
-    } else {
-      const condition = {
-        number: Number(selectedConditionId),
-        value: 1,
-      };
-      try {
-        const response = axios.put(
-          "https://apsis.kocaeli.edu.tr/api/academic/update-publication-special-case",
-          {
-            publicationId: givenId,
-            condition: condition,
-          },
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-            },
-          }
-        );
-        console.log("Başarıyla güncellendi:", response.data);
-      } catch (error) {
-        console.error("Condition update error:", error);
-      } finally {
-        refresh();
-        onClose();
-        setSelectedConditionId(null);
-      }
-    }
-  };
   useEffect(() => {
     console.log(previousCondition);
+    console.log(givenManualGroup);
   }, [previousCondition]);
   useEffect(() => {
     let groups = [];
@@ -312,7 +278,7 @@ function RightBar({
               ))}
             </select>
 
-            <button onClick={handleUpdateCondition}>Güncelle</button>
+            <button onClick={updateRank}>Güncelle</button>
           </div>
         );
       case "books":
@@ -422,25 +388,63 @@ function RightBar({
       console.error("Eksik bilgi! API çağrısı yapılamaz.");
       return;
     }
-    try {
-      const response = await axios.put(
-        requestUrl,
-        {
-          [idName]: givenId,
-          group: newGroup,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-          },
-        }
+    if (from === "publications") {
+      const selected = conditions.find(
+        (cond) => cond.id === Number(selectedConditionId)
       );
-      console.log("Başarıyla güncellendi:", response.data);
-    } catch (error) {
-      console.error("Rank update error:", error);
-    } finally {
-      refresh();
+      if (!selected) {
+        alert("Lütfen Condition Seçiniz");
+        console.log("Seçilen Condition Bulunamadi");
+      } else {
+        const condition = {
+          number: Number(selectedConditionId),
+          value: 1,
+        };
+        try {
+          const response = axios.put(
+            "https://apsis.kocaeli.edu.tr/api/academic/update-publication-rank",
+            {
+              [idName]: givenId,
+              group: newGroup,
+              condition: condition,
+            },
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+              },
+            }
+          );
+          console.log("Başarıyla güncellendi:", response.data);
+        } catch (error) {
+          console.error("Condition update error:", error);
+        } finally {
+          refresh();
+          onClose();
+          setSelectedConditionId(null);
+        }
+      }
+    } else {
+      try {
+        const response = await axios.put(
+          requestUrl,
+          {
+            [idName]: givenId,
+            group: newGroup,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+          }
+        );
+        console.log("Başarıyla güncellendi:", response.data);
+      } catch (error) {
+        console.error("Rank update error:", error);
+      } finally {
+        refresh();
+      }
     }
   };
 
@@ -489,6 +493,9 @@ function RightBar({
               </button>
             </div>
           </div>
+          <div className="content-r-3">
+            <RenderedComponent from={from} />
+          </div>
           <div className="content-r-2">
             <h3 style={{ fontWeight: "500", color: "gray", fontSize: "12px" }}>
               Dosya Yükle:
@@ -505,9 +512,6 @@ function RightBar({
                 Yükle
               </button>
             </div>
-          </div>
-          <div className="content-r-3">
-            <RenderedComponent from={from} />
           </div>
         </div>
       </div>

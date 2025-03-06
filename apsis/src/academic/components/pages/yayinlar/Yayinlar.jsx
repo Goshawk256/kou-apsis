@@ -27,6 +27,7 @@ function Yayinlar() {
   const [storageKey, setStorageKey] = useState("savedPublications");
   const [allPublications, setAllPublications] = useState({});
   const [givenGroup, setgivenGroup] = useState("");
+  const [givenManualGroup, setgivenManualGroup] = useState("");
   const [givenId, setgivenId] = useState("");
   const [previousCondition, setPreviousCondition] = useState(null);
   const [givenPublicationTypeId, setgivenPublicationTypeId] = useState("");
@@ -50,12 +51,14 @@ function Yayinlar() {
   const handleEditClick = (
     id,
     grup,
+    manual,
     lastSelectedConditionId,
     publicationTypeId
   ) => {
     openRightBar();
     setPreviousCondition(lastSelectedConditionId);
     setgivenGroup(grup);
+    setgivenManualGroup(manual);
     setgivenId(id);
     setgivenPublicationTypeId(publicationTypeId);
   };
@@ -169,7 +172,7 @@ function Yayinlar() {
   );
   const getPreferredGroupDisplay = (item) => {
     const groups = item.groupScoreInfo?.groups || {};
-    const { auto, appeal, manual, jury } = groups;
+    const { auto, manual, jury } = groups;
 
     if (jury) {
       return (
@@ -177,19 +180,13 @@ function Yayinlar() {
           <s>{auto}</s> / <span className="showed">{jury}</span>
         </div>
       );
-    } else if (appeal && auto && !manual) {
-      return (
-        <div className="preferred-group">
-          <s>{auto}</s> / <span className="showed">{appeal}</span>
-        </div>
-      );
-    } else if (auto && appeal && manual) {
+    } else if (manual) {
       return (
         <div className="preferred-group">
           <s>{auto}</s> / <span className="showed">{manual}</span>
         </div>
       );
-    } else {
+    } else if (auto && !manual && !jury) {
       return (
         <div className="preferred-group">
           <span className="showed">{auto}</span>
@@ -199,7 +196,8 @@ function Yayinlar() {
   };
 
   const getPreferredScoreDisplay = (item) => {
-    const { auto, appeal, manual, jury } = item.groupScoreInfo?.scores || {};
+    const groups = item.groupScoreInfo?.scores || {};
+    const { auto, manual, jury } = groups;
 
     if (jury) {
       return (
@@ -207,19 +205,13 @@ function Yayinlar() {
           <s>{auto}</s> / <span className="showed">{jury}</span>
         </div>
       );
-    } else if (appeal && auto && !manual) {
-      return (
-        <div className="preferred-group">
-          <s>{auto}</s> / <span className="showed">{appeal}</span>
-        </div>
-      );
-    } else if (auto && appeal && manual) {
+    } else if (manual) {
       return (
         <div className="preferred-group">
           <s>{auto}</s> / <span className="showed">{manual}</span>
         </div>
       );
-    } else {
+    } else if (auto && !manual && !jury) {
       return (
         <div className="preferred-group">
           <span className="showed">{auto}</span>
@@ -236,6 +228,7 @@ function Yayinlar() {
         isOpen={rightBarOpen}
         onClose={closeRightBar}
         givenGroup={givenGroup}
+        givenManualGroup={givenManualGroup}
         givenId={givenId}
         givenPublicationTypeId={givenPublicationTypeId}
         from="publications"
@@ -397,6 +390,7 @@ function Yayinlar() {
                                   handleEditClick(
                                     item.id,
                                     item.groupScoreInfo?.groups?.auto,
+                                    item.groupScoreInfo?.groups?.manual,
                                     item.userEdits?.lastSelectedSpecialCase,
                                     publicationTypeId
                                   )
