@@ -265,16 +265,7 @@ function RightBar({
               </span>{" "}
               {projectRole ? projectRole : "Belirtilmedi"}
             </span>
-            <label style={{ color: "gray", fontSize: "12px" }}>
-              <span
-                style={{ color: "gray", fontSize: "12px", fontWeight: "bold" }}
-              >
-                {" "}
-                Aktif Proje Türü:
-              </span>
-              {Object.entries(projectTypes)[previousCondition - 1]?.[1] ||
-                "Belirtilmedi"}
-            </label>
+
             <select
               value={selectedRoleId}
               onChange={(e) => setSelectedRoleId(e.target.value)}
@@ -295,20 +286,7 @@ function RightBar({
             <h3 style={{ color: "gray", fontWeight: "500", fontSize: "14px" }}>
               Özel Durum Güncelleme
             </h3>
-            <label
-              style={{
-                color: "gray",
-                fontWeight: "500",
-                fontSize: "12px",
-                textAlign: "left",
-              }}
-            >
-              <span style={{ fontWeight: "bold" }}> Aktif Özel Durum:</span>{" "}
-              <br />
-              {previousCondition
-                ? conditions[previousCondition - 1]?.title
-                : "Özel Durum Yok"}
-            </label>
+
             <select value={selectedConditionId} onChange={handleSelectChange}>
               <option value="">Özel Durum Yok</option>
               {conditions.map((condition) => (
