@@ -21,16 +21,14 @@ function Oduller() {
   const [loading, setLoading] = useState(false);
   const [rightBarOpen, setRightBarOpen] = useState(false); // Sağ panelin açık/kapalı durumu
   const [popupMessage, setPopupMessage] = useState(null); // Pop-up mesajı
-  const [editingIndex, setEditingIndex] = useState(null);
-
   const [isEditMode] = useState(false);
-  const [currentGroup, setCurrentGroup] = useState(null);
   const [givenGroup, setgivenGroup] = useState("");
   const [givenId, setgivenId] = useState("");
-
-  const handleEditClick = (givenId, givenGroup) => {
+  const [previousCondition, setPreviousCondition] = useState(null);
+  const handleEditClick = (givenId, givenGroup, lastSelectedAwardId) => {
     setgivenId(givenId);
     setgivenGroup(givenGroup);
+    setPreviousCondition(lastSelectedAwardId);
     openRightBar();
     console.log(givenId, givenGroup);
   };
@@ -50,6 +48,7 @@ function Oduller() {
           },
         }
       );
+      console.log("Ödüller:", response.data.data);
       setTableData(response.data.data);
 
       setFilteredData(response.data.data);
@@ -183,6 +182,7 @@ function Oduller() {
         givenId={givenId}
         from="awards"
         refresh={fetchData}
+        previousCondition={previousCondition}
       />
 
       {/* Row 2 - Arama, Filtreleme, Yenileme */}
@@ -280,7 +280,8 @@ function Oduller() {
                             onClick={() =>
                               handleEditClick(
                                 item.id,
-                                item.groupScoreInfo.groups.auto
+                                item.groupScoreInfo.groups.auto,
+                                item.userEdits?.lastSelectedAwardId
                               )
                             }
                           >
