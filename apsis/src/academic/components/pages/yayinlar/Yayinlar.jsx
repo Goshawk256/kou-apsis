@@ -168,7 +168,7 @@ function Yayinlar() {
     page * itemsPerPage
   );
   const getPreferredGroupDisplay = (item) => {
-    const groups = item.groupScoreInfo?.groups || {}; // groups undefined ise boş nesne kullan
+    const groups = item.groupScoreInfo?.groups || {};
     const { auto, appeal, manual, jury } = groups;
 
     if (jury) {
