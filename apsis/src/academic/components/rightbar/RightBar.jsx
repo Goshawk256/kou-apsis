@@ -19,6 +19,7 @@ function RightBar({
   givenGroup,
   givenManualGroup,
   givenId,
+  givenPublicationTypeId,
   from,
   refresh,
   previousCondition,
@@ -96,6 +97,7 @@ function RightBar({
   useEffect(() => {
     console.log(previousCondition);
     console.log(givenManualGroup);
+    console.log(givenPublicationTypeId);
   }, [previousCondition]);
   useEffect(() => {
     let groups = [];
@@ -250,7 +252,7 @@ function RightBar({
           </div>
         );
       case "publications":
-        return (
+        return givenPublicationTypeId === 1 ? (
           <div className="right-bar-content">
             <h3 style={{ color: "gray", fontWeight: "500", fontSize: "14px" }}>
               Özel Durum Güncelleme
@@ -280,6 +282,8 @@ function RightBar({
 
             <button onClick={updateRank}>Güncelle</button>
           </div>
+        ) : (
+          ""
         );
       case "books":
         return <div className="right-bar-content"></div>;
@@ -388,7 +392,7 @@ function RightBar({
       console.error("Eksik bilgi! API çağrısı yapılamaz.");
       return;
     }
-    if (from === "publications") {
+    if (from === "publications" && givenPublicationTypeId === 1) {
       const selected = conditions.find(
         (cond) => cond.id === Number(selectedConditionId)
       );

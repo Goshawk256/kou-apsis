@@ -48,6 +48,7 @@ function Citations() {
           },
         }
       );
+      console.log(response.data.data);
       setTableData(response.data.data || []);
       setFilteredData(response.data.data || []);
     } catch (error) {
@@ -275,17 +276,17 @@ function Citations() {
                     </td>
                     <td> {item.publicationType} </td>
                     <td>
-                      {item.citations.d1Cnt > 0 &&
-                        `${item.citations.d1Cnt}xD1 /`}{" "}
-                      {item.citations.d2Cnt > 0 &&
-                        `${item.citations.d2Cnt}xD2 /`}{" "}
-                      {item.citations.d3Cnt > 0 &&
-                        `${item.citations.d3Cnt}xD3 /`}{" "}
-                      {item.citations.d4Cnt > 0 &&
-                        `${item.citations.d4Cnt}xD4 `}
+                      {item.citations.auto.d1Cnt > 0 &&
+                        `${item.citations.auto.d1Cnt}xD1 /`}{" "}
+                      {item.citations.auto.d2Cnt > 0 &&
+                        `${item.citations.auto.d2Cnt}xD2 /`}{" "}
+                      {item.citations.auto.d3Cnt > 0 &&
+                        `${item.citations.auto.d3Cnt}xD3 /`}{" "}
+                      {item.citations.auto.d4Cnt > 0 &&
+                        `${item.citations.auto.d4Cnt}xD4 `}
                     </td>
 
-                    <td>{item.citations.score}</td>
+                    <td>{item.citations.auto.score}</td>
 
                     <td>
                       {isEditMode ? (
