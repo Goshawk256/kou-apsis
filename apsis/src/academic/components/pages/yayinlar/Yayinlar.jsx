@@ -168,7 +168,8 @@ function Yayinlar() {
     page * itemsPerPage
   );
   const getPreferredGroupDisplay = (item) => {
-    const { auto, appeal, manual, jury } = item.groupScoreInfo.groups;
+    const groups = item.groupScoreInfo?.groups || {}; // groups undefined ise boş nesne kullan
+    const { auto, appeal, manual, jury } = groups;
 
     if (jury) {
       return (
@@ -198,7 +199,7 @@ function Yayinlar() {
   };
 
   const getPreferredScoreDisplay = (item) => {
-    const { auto, appeal, manual, jury } = item.groupScoreInfo.scores;
+    const { auto, appeal, manual, jury } = item.groupScoreInfo?.scores || {};
 
     if (jury) {
       return (
@@ -395,7 +396,7 @@ function Yayinlar() {
                                 onClick={() =>
                                   handleEditClick(
                                     item.id,
-                                    item.groupScoreInfo.groups.auto,
+                                    item.groupScoreInfo?.groups?.auto,
                                     item.userEdits?.lastSelectedSpecialCase,
                                     publicationTypeId
                                   )
