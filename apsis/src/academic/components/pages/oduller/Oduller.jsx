@@ -167,14 +167,12 @@ function Oduller() {
 
   return (
     <div className="yayinlar-main">
-      {/* Pop-up mesaj */}
       {popupMessage && (
         <div className={`already-popup ${popupMessage.type}`}>
           {popupMessage.message}
         </div>
       )}
 
-      {/* Sağ panel */}
       <RightBar
         isOpen={rightBarOpen}
         onClose={closeRightBar}
@@ -185,7 +183,6 @@ function Oduller() {
         previousCondition={previousCondition}
       />
 
-      {/* Row 2 - Arama, Filtreleme, Yenileme */}
       <div className="yayinlar-main-row-2">
         <input
           type="text"
@@ -218,7 +215,6 @@ function Oduller() {
         </div>
       </div>
 
-      {/* Row 3 - Tablo */}
       <div className="yayinlar-main-row-3">
         {loading ? (
           <div className="hourglassBackground">
@@ -250,7 +246,7 @@ function Oduller() {
                   JSON.parse(localStorage.getItem("savedAwards")) || [];
                 const isSaved = savedAwards.some(
                   (award) => award.id === item.id
-                ); // Kaydedildi mi kontrolü
+                );
 
                 return (
                   <tr

@@ -97,12 +97,11 @@ function RightBar({
   useEffect(() => {
     setNewGroup("");
   }, [onClose]);
-
   useEffect(() => {
-    console.log(previousCondition);
-    console.log(givenManualGroup);
-    console.log(givenPublicationTypeId);
-  }, [previousCondition]);
+    setSelectedConditionId(previousCondition);
+    setSelectedRoleId(previousCondition);
+  }, [isOpen]);
+
   useEffect(() => {
     let groups = [];
     switch (from) {
@@ -308,7 +307,7 @@ function RightBar({
               <br />
               {previousCondition
                 ? conditions[previousCondition - 1]?.title
-                : "Belirtilmedi"}
+                : "Özel Durum Yok"}
             </label>
             <select value={selectedConditionId} onChange={handleSelectChange}>
               <option value="">Özel Durum Yok</option>
