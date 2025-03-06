@@ -33,7 +33,7 @@ function RightBar({
   const [pdfName, setPdfName] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
   const [projectTypes, setProjectTypes] = useState([]);
-  const [projectRoleTypes, setProjectRoleTypes] = useState([]);
+  const [awardTypes, setAwardTypes] = useState([]);
   const [selectedRoleId, setSelectedRoleId] = useState("");
   const [selectedConditionId, setSelectedConditionId] = useState(null);
   const [validGroups, setValidGroups] = useState([]);
@@ -176,6 +176,41 @@ function RightBar({
     console.log("Valid Groups:", groups); // Güncellenmiş array'i logla
   }, [from]);
 
+  const updateAwardRole = async () => {
+    if (!givenId || !selectedRoleId) {
+      alert("Lütfen bir proje seçin ve rol belirleyin!");
+      return;
+    }
+
+    try {
+      const response = await axios.put(
+        "https://apsis.kocaeli.edu.tr/api/academic/update-award-rank",
+        {
+          awardId: givenId,
+          awardTypeId: selectedRoleId,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }
+      );
+
+      alert("Ödül rolü başarıyla güncellendi!");
+      console.log("Başarıyla güncellendi:", response.data);
+    } catch (error) {
+      console.error("Ödül rol güncelleme hatası:", error);
+      alert(
+        "Güncelleme başarısız: " +
+          (error.response?.data?.message || "Tekrar deneyin.")
+      );
+    } finally {
+      refresh();
+      onClose();
+      setSelectedRoleId("");
+    }
+  };
   const updateProjectRole = async () => {
     if (!givenId || !selectedRoleId) {
       alert("Lütfen bir proje seçin ve rol belirleyin!");
@@ -290,7 +325,44 @@ function RightBar({
       case "lessons":
         return <div className="right-bar-content"></div>;
       case "awards":
-        return <div className="right-bar-content"></div>;
+        return (
+          <div className="right-bar-content">
+            <div className="right-bar-content">
+              <h3
+                style={{ color: "gray", fontSize: "14px", fontWeight: "bold" }}
+              >
+                Ödül Güncelle
+              </h3>
+
+              <label style={{ color: "gray", fontSize: "12px" }}>
+                <span
+                  style={{
+                    color: "gray",
+                    fontSize: "12px",
+                    fontWeight: "bold",
+                  }}
+                >
+                  {" "}
+                  Aktif Ödül Türü:
+                </span>
+                {Object.entries(awardTypes)[previousCondition - 1]?.[1] ||
+                  "Belirtilmedi"}
+              </label>
+              <select
+                value={selectedRoleId}
+                onChange={(e) => setSelectedRoleId(e.target.value)}
+              >
+                <option value="">Seçiniz</option>
+                {Object.entries(awardTypes).map(([id, roleName]) => (
+                  <option key={id} value={id}>
+                    {roleName}
+                  </option>
+                ))}
+              </select>
+              <button onClick={() => updateAwardRole()}>Güncelle</button>
+            </div>
+          </div>
+        );
       case "thesis":
         return <div className="right-bar-content"></div>;
       default:
@@ -306,8 +378,6 @@ function RightBar({
     }
 
     try {
-      console.log("API isteği başlatılıyor...");
-
       const responseProjectTypes = await axios.get(
         "https://apsis.kocaeli.edu.tr/api/lookUp/get-project-types", // Fazladan '/' vardı, düzelttim.
         {
@@ -317,8 +387,21 @@ function RightBar({
         }
       );
 
-      const responseProjectRoleTypes = await axios.get(
-        "https://apsis.kocaeli.edu.tr/api/lookUp/get-project-role-types",
+      setProjectTypes(responseProjectTypes.data.data || []);
+    } catch (error) {
+      console.error("API Hatası:", error);
+    }
+  };
+  const getAwardInfo = async () => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (!accessToken) {
+      alert("Giriş yapmalısınız!");
+      return;
+    }
+
+    try {
+      const responseAwardTypes = await axios.get(
+        "https://apsis.kocaeli.edu.tr/api/lookUp/get-award-types",
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
@@ -326,14 +409,7 @@ function RightBar({
         }
       );
 
-      console.log("API Yanıtı - Proje Türleri:", responseProjectTypes.data);
-      console.log(
-        "API Yanıtı - Proje Rol Türleri:",
-        responseProjectRoleTypes.data
-      );
-
-      setProjectTypes(responseProjectTypes.data.data || []);
-      setProjectRoleTypes(responseProjectRoleTypes.data.data || []);
+      setAwardTypes(responseAwardTypes.data.data || []);
     } catch (error) {
       console.error("API Hatası:", error);
     }
@@ -342,6 +418,8 @@ function RightBar({
   useEffect(() => {
     if (from === "projects") {
       getProjectInfo();
+    } else if (from === "awards") {
+      getAwardInfo();
     }
   }, [from]);
 
@@ -474,7 +552,7 @@ function RightBar({
                 Sistemin Atadığı Grup: {givenGroup}
               </span>
             </div>
-            {from === "projects" ? (
+            {from === "projects" || from === "awards" ? (
               ""
             ) : (
               <div className="right-bar-content-body">
