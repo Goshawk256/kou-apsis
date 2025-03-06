@@ -48,6 +48,7 @@ function Citations() {
           },
         }
       );
+      console.log(response.data.data);
       setTableData(response.data.data || []);
       setFilteredData(response.data.data || []);
     } catch (error) {
@@ -105,7 +106,8 @@ function Citations() {
     setTimeout(() => setPopupMessage(null), 1500);
   };
   const getPreferredGroupDisplay = (item) => {
-    const { auto, appeal, manual, jury } = item.groupScoreInfo.groups;
+    const groups = item.groupScoreInfo?.groups || {};
+    const { auto, manual, jury } = groups;
 
     if (jury) {
       return (
@@ -113,19 +115,13 @@ function Citations() {
           <s>{auto}</s> / <span className="showed">{jury}</span>
         </div>
       );
-    } else if (appeal && auto && !manual) {
-      return (
-        <div className="preferred-group">
-          <s>{auto}</s> / <span className="showed">{appeal}</span>
-        </div>
-      );
-    } else if (auto && appeal && manual) {
+    } else if (manual) {
       return (
         <div className="preferred-group">
           <s>{auto}</s> / <span className="showed">{manual}</span>
         </div>
       );
-    } else {
+    } else if (auto && !manual && !jury) {
       return (
         <div className="preferred-group">
           <span className="showed">{auto}</span>
@@ -135,7 +131,8 @@ function Citations() {
   };
 
   const getPreferredScoreDisplay = (item) => {
-    const { auto, appeal, manual, jury } = item.groupScoreInfo.scores;
+    const groups = item.groupScoreInfo?.scores || {};
+    const { auto, manual, jury } = groups;
 
     if (jury) {
       return (
@@ -143,19 +140,13 @@ function Citations() {
           <s>{auto}</s> / <span className="showed">{jury}</span>
         </div>
       );
-    } else if (appeal && auto && !manual) {
-      return (
-        <div className="preferred-group">
-          <s>{auto}</s> / <span className="showed">{appeal}</span>
-        </div>
-      );
-    } else if (auto && appeal && manual) {
+    } else if (manual) {
       return (
         <div className="preferred-group">
           <s>{auto}</s> / <span className="showed">{manual}</span>
         </div>
       );
-    } else {
+    } else if (auto && !manual && !jury) {
       return (
         <div className="preferred-group">
           <span className="showed">{auto}</span>
@@ -285,17 +276,17 @@ function Citations() {
                     </td>
                     <td> {item.publicationType} </td>
                     <td>
-                      {item.citations.d1Cnt > 0 &&
-                        `${item.citations.d1Cnt}xD1 /`}{" "}
-                      {item.citations.d2Cnt > 0 &&
-                        `${item.citations.d2Cnt}xD2 /`}{" "}
-                      {item.citations.d3Cnt > 0 &&
-                        `${item.citations.d3Cnt}xD3 /`}{" "}
-                      {item.citations.d4Cnt > 0 &&
-                        `${item.citations.d4Cnt}xD4 `}
+                      {item.citations.auto.d1Cnt > 0 &&
+                        `${item.citations.auto.d1Cnt}xD1 /`}{" "}
+                      {item.citations.auto.d2Cnt > 0 &&
+                        `${item.citations.auto.d2Cnt}xD2 /`}{" "}
+                      {item.citations.auto.d3Cnt > 0 &&
+                        `${item.citations.auto.d3Cnt}xD3 /`}{" "}
+                      {item.citations.auto.d4Cnt > 0 &&
+                        `${item.citations.auto.d4Cnt}xD4 `}
                     </td>
 
-                    <td>{item.citations.score}</td>
+                    <td>{item.citations.auto.score}</td>
 
                     <td>
                       {isEditMode ? (

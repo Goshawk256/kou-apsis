@@ -60,37 +60,8 @@ function Oduller() {
     }
   };
   const getPreferredGroupDisplay = (item) => {
-    const { auto, appeal, manual, jury } = item.groupScoreInfo.groups;
-
-    if (jury) {
-      return (
-        <div className="preferred-group">
-          <s>{auto}</s> / <span>{jury}</span>
-        </div>
-      );
-    } else if (appeal && auto && !manual) {
-      return (
-        <div className="preferred-group">
-          <s>{auto}</s> / <span>{appeal}</span>
-        </div>
-      );
-    } else if (auto && appeal && manual) {
-      return (
-        <div className="preferred-group">
-          <s>{auto}</s> / <span>{manual}</span>
-        </div>
-      );
-    } else {
-      return (
-        <div className="preferred-group">
-          <span>{auto}</span>
-        </div>
-      );
-    }
-  };
-
-  const getPreferredScoreDisplay = (item) => {
-    const { auto, appeal, manual, jury } = item.groupScoreInfo.scores;
+    const groups = item.groupScoreInfo?.groups || {};
+    const { auto, manual, jury } = groups;
 
     if (jury) {
       return (
@@ -98,19 +69,38 @@ function Oduller() {
           <s>{auto}</s> / <span className="showed">{jury}</span>
         </div>
       );
-    } else if (appeal && auto && !manual) {
-      return (
-        <div className="preferred-group">
-          <s>{auto}</s> / <span className="showed">{appeal}</span>
-        </div>
-      );
-    } else if (auto && appeal && manual) {
+    } else if (manual) {
       return (
         <div className="preferred-group">
           <s>{auto}</s> / <span className="showed">{manual}</span>
         </div>
       );
-    } else {
+    } else if (auto && !manual && !jury) {
+      return (
+        <div className="preferred-group">
+          <span className="showed">{auto}</span>
+        </div>
+      );
+    }
+  };
+
+  const getPreferredScoreDisplay = (item) => {
+    const groups = item.groupScoreInfo?.scores || {};
+    const { auto, manual, jury } = groups;
+
+    if (jury) {
+      return (
+        <div className="preferred-group">
+          <s>{auto}</s> / <span className="showed">{jury}</span>
+        </div>
+      );
+    } else if (manual) {
+      return (
+        <div className="preferred-group">
+          <s>{auto}</s> / <span className="showed">{manual}</span>
+        </div>
+      );
+    } else if (auto && !manual && !jury) {
       return (
         <div className="preferred-group">
           <span className="showed">{auto}</span>

@@ -110,8 +110,10 @@ function YonetilenTezler() {
   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
   const openRightBar = () => setRightBarOpen(true);
   const closeRightBar = () => setRightBarOpen(false);
+
   const getPreferredGroupDisplay = (item) => {
-    const { auto, appeal, manual, jury } = item.groupScoreInfo.groups;
+    const groups = item.groupScoreInfo?.groups || {};
+    const { auto, manual, jury } = groups;
 
     if (jury) {
       return (
@@ -119,19 +121,13 @@ function YonetilenTezler() {
           <s>{auto}</s> / <span className="showed">{jury}</span>
         </div>
       );
-    } else if (appeal && auto && !manual) {
-      return (
-        <div className="preferred-group">
-          <s>{auto}</s> / <span className="showed">{appeal}</span>
-        </div>
-      );
-    } else if (auto && appeal && manual) {
+    } else if (manual) {
       return (
         <div className="preferred-group">
           <s>{auto}</s> / <span className="showed">{manual}</span>
         </div>
       );
-    } else {
+    } else if (auto && !manual && !jury) {
       return (
         <div className="preferred-group">
           <span className="showed">{auto}</span>
@@ -141,7 +137,8 @@ function YonetilenTezler() {
   };
 
   const getPreferredScoreDisplay = (item) => {
-    const { auto, appeal, manual, jury } = item.groupScoreInfo.scores;
+    const groups = item.groupScoreInfo?.scores || {};
+    const { auto, manual, jury } = groups;
 
     if (jury) {
       return (
@@ -149,19 +146,13 @@ function YonetilenTezler() {
           <s>{auto}</s> / <span className="showed">{jury}</span>
         </div>
       );
-    } else if (appeal && auto && !manual) {
-      return (
-        <div className="preferred-group">
-          <s>{auto}</s> / <span className="showed">{appeal}</span>
-        </div>
-      );
-    } else if (auto && appeal && manual) {
+    } else if (manual) {
       return (
         <div className="preferred-group">
           <s>{auto}</s> / <span className="showed">{manual}</span>
         </div>
       );
-    } else {
+    } else if (auto && !manual && !jury) {
       return (
         <div className="preferred-group">
           <span className="showed">{auto}</span>

@@ -44,7 +44,8 @@ function Basvuru({ onSelect }) {
       id: item.id,
       title: item.title || item.projectName || item.course_name,
       group: item.groupScoreInfo?.groups?.auto || item.groupAuto || "-",
-      score: item.groupScoreInfo?.scores?.auto || item?.citations?.score || 0,
+      score:
+        item.groupScoreInfo?.scores?.auto || item?.citations?.auto?.score || 0,
       authors: item.authors || [],
     }));
 
