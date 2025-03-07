@@ -105,7 +105,6 @@ function RightBar({
   useEffect(() => {
     setSelectedConditionId(previousCondition);
     setSelectedRoleId(previousCondition);
-    console.log(d1Cnt, d2Cnt, d3Cnt, d4Cnt);
   }, [isOpen]);
 
   useEffect(() => {
