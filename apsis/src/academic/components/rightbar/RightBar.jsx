@@ -192,7 +192,6 @@ function RightBar({
         setIdName("unknownId");
     }
     setValidGroups(groups);
-    console.log("Valid Groups:", groups); // Güncellenmiş array'i logla
   }, [from]);
 
   const updateAwardRole = async () => {
