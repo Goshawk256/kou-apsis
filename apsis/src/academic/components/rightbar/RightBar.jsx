@@ -452,7 +452,7 @@ function RightBar({
                 onClick={handleUpdateCitationRank}
                 className="submit-button"
               >
-                Send to API
+                Güncelle
               </button>
             </div>
           </div>
