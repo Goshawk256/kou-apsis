@@ -24,13 +24,12 @@ function Citations() {
 
   const [isEditMode] = useState(false);
 
-  const [givenGroup, setgivenGroup] = useState("");
+  const [givenGroup, setgivenGroup] = useState({});
   const [givenId, setgivenId] = useState("");
 
   const handleEditClick = (givenId, givenGroup) => {
     setgivenId(givenId);
     setgivenGroup(givenGroup);
-    console.log(givenId, givenGroup);
     openRightBar();
   };
 
@@ -179,7 +178,23 @@ function Citations() {
       <RightBar
         isOpen={rightBarOpen}
         onClose={closeRightBar}
-        givenGroup={givenGroup}
+        givenGroup={`
+  ${givenGroup.d1Cnt ? `${givenGroup.d1Cnt}xD1` : ""}${
+          givenGroup.d1Cnt &&
+          (givenGroup.d2Cnt || givenGroup.d3Cnt || givenGroup.d4Cnt)
+            ? " / "
+            : ""
+        }
+  ${givenGroup.d2Cnt ? `${givenGroup.d2Cnt}xD2` : ""}${
+          givenGroup.d2Cnt && (givenGroup.d3Cnt || givenGroup.d4Cnt)
+            ? " / "
+            : ""
+        }
+  ${givenGroup.d3Cnt ? `${givenGroup.d3Cnt}xD3` : ""}${
+          givenGroup.d3Cnt && givenGroup.d4Cnt ? " / " : ""
+        }
+  ${givenGroup.d4Cnt ? `${givenGroup.d4Cnt}xD4` : ""}
+`.trim()}
         givenId={givenId}
         from="citations"
         refresh={fetchCitations}
@@ -287,7 +302,10 @@ function Citations() {
                           <button
                             className="yayinlar-btn"
                             onClick={() =>
-                              handleEditClick(item.id, item.groupAuto)
+                              handleEditClick(
+                                item.id,
+                                item.citations.manual || item.citations.auto
+                              )
                             }
                           >
                             <FaPencilAlt />

@@ -160,6 +160,16 @@ function RightBar({
         setName("Ödül Düzenleme");
         groups = awardGroups();
         break;
+      case "citations":
+        setRequestUrl(
+          "https://apsis.kocaeli.edu.tr/api/academic/update-citation-rank"
+        );
+        setUploadFileUrl(
+          "https://apsis.kocaeli.edu.tr/api/academic/add-citation-file"
+        );
+        setIdName("citationId");
+        setName("Atıf Düzenleme");
+        break;
       case "thesis":
         setRequestUrl(
           "https://apsis.kocaeli.edu.tr/api/academic/update-advising-thesis-rank"
@@ -171,6 +181,7 @@ function RightBar({
         setName("Tez Düzenleme");
         groups = thesisGroups();
         break;
+
       default:
         setRequestUrl("#");
         setIdName("unknownId");
