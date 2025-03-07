@@ -178,23 +178,11 @@ function Citations() {
       <RightBar
         isOpen={rightBarOpen}
         onClose={closeRightBar}
-        givenGroup={`
-  ${givenGroup.d1Cnt ? `${givenGroup.d1Cnt}xD1` : ""}${
-          givenGroup.d1Cnt &&
-          (givenGroup.d2Cnt || givenGroup.d3Cnt || givenGroup.d4Cnt)
-            ? " / "
-            : ""
-        }
-  ${givenGroup.d2Cnt ? `${givenGroup.d2Cnt}xD2` : ""}${
-          givenGroup.d2Cnt && (givenGroup.d3Cnt || givenGroup.d4Cnt)
-            ? " / "
-            : ""
-        }
-  ${givenGroup.d3Cnt ? `${givenGroup.d3Cnt}xD3` : ""}${
-          givenGroup.d3Cnt && givenGroup.d4Cnt ? " / " : ""
-        }
-  ${givenGroup.d4Cnt ? `${givenGroup.d4Cnt}xD4` : ""}
-`.trim()}
+        d1Cnt={givenGroup.d1Cnt}
+        d2Cnt={givenGroup.d2Cnt}
+        d3Cnt={givenGroup.d3Cnt}
+        d4Cnt={givenGroup.d4Cnt}
+        citationScore={givenGroup.score}
         givenId={givenId}
         from="citations"
         refresh={fetchCitations}

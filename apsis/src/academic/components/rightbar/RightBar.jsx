@@ -24,6 +24,11 @@ function RightBar({
   refresh,
   previousCondition,
   projectRole,
+  d1Cnt,
+  d2Cnt,
+  d3Cnt,
+  d4Cnt,
+  citationScore,
 }) {
   const [requestUrl, setRequestUrl] = useState("");
   const [uploadFileUrl, setUploadFileUrl] = useState(null);
@@ -100,6 +105,7 @@ function RightBar({
   useEffect(() => {
     setSelectedConditionId(previousCondition);
     setSelectedRoleId(previousCondition);
+    console.log(d1Cnt, d2Cnt, d3Cnt, d4Cnt);
   }, [isOpen]);
 
   useEffect(() => {
@@ -357,6 +363,8 @@ function RightBar({
         );
       case "thesis":
         return <div className="right-bar-content"></div>;
+      case "citations":
+        return <div className="right-bar-content"></div>;
       default:
         return null;
     }
@@ -534,14 +542,26 @@ function RightBar({
         <p>Kategori: {name}</p>
         <div className="right-bar-content">
           <div className="content-r-1">
-            <div className="right-bar-content-header">
-              <span
-                style={{ color: "gray", fontWeight: "500", fontSize: "14px" }}
-              >
-                Sistemin Atadığı Grup: {givenGroup}
-              </span>
-            </div>
-            {from === "projects" || from === "awards" ? (
+            {from === "citations" ? (
+              <div className="right-bar-content-header">
+                <span
+                  style={{ color: "gray", fontWeight: "500", fontSize: "14px" }}
+                >
+                  Sistemin Atadığı Puan: {citationScore}
+                </span>
+              </div>
+            ) : (
+              <div className="right-bar-content-header">
+                <span
+                  style={{ color: "gray", fontWeight: "500", fontSize: "14px" }}
+                >
+                  Sistemin Atadığı Grup: {givenGroup}
+                </span>
+              </div>
+            )}
+            {from === "projects" ||
+            from === "awards" ||
+            from === "citations" ? (
               ""
             ) : (
               <div className="right-bar-content-body">
