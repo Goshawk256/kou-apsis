@@ -412,9 +412,33 @@ function RightBar({
           <div className="right-bar-content">
             <div className="input-container">
               {Object.keys(citationValues).map((key) => (
-                <div key={key} className="input-group">
-                  <label htmlFor={key}>{key.toUpperCase()}:</label>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                  }}
+                  key={key}
+                  className="input-group"
+                >
+                  <label
+                    style={{
+                      color: "gray",
+                      fontSize: "12px",
+                      fontWeight: "bold",
+                    }}
+                    htmlFor={key}
+                  >
+                    {key.toUpperCase()}:
+                  </label>
                   <input
+                    style={{
+                      width: "50px",
+                      outline: "none",
+                      border: "1px solid #ccc",
+                      borderRadius: "5px",
+                    }}
                     type="number"
                     id={key}
                     name={key}
@@ -424,6 +448,7 @@ function RightBar({
                 </div>
               ))}
               <button
+                style={{ marginTop: "10px" }}
                 onClick={handleUpdateCitationRank}
                 className="submit-button"
               >
