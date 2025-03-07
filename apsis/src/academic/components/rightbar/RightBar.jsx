@@ -42,6 +42,7 @@ function RightBar({
   const [selectedRoleId, setSelectedRoleId] = useState("");
   const [selectedConditionId, setSelectedConditionId] = useState(null);
   const [validGroups, setValidGroups] = useState([]);
+  const [citationValues, setCitationValues] = useState({});
 
   const handleInputChange = (e) => {
     const value = e.target.value.toUpperCase();
@@ -64,7 +65,45 @@ function RightBar({
 
     setNewGroup(value);
   };
+  const handleCitationValueChange = (e) => {
+    const { name, value } = e.target;
+    setCitationValues((prev) => ({ ...prev, [name]: Number(value) }));
+  };
 
+  const handleUpdateCitationRank = () => {
+    axios
+      .put(
+        "https://apsis.kocaeli.edu.tr/api/academic/update-citation-rank",
+        {
+          publicationId: givenId,
+          d1: citationValues.d1,
+          d2: citationValues.d2,
+          d3: citationValues.d3,
+          d4: citationValues.d4,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }
+      )
+      .then((response) => {
+        console.log("Başarıyla güncellendi:", response.data);
+        alert("Atıf puanları başarıyla güncellendi!");
+      })
+      .catch((error) => {
+        console.error("Atıf puanları güncelleme hatası:", error);
+        alert(
+          "Atıf puanları güncelleme başarısız: " +
+            (error.response?.data?.message || "Tekrar deneyin.")
+        );
+      })
+      .finally(() => {
+        refresh();
+        onClose();
+      });
+  };
   const conditions = [
     {
       id: 1,
@@ -101,10 +140,17 @@ function RightBar({
 
   useEffect(() => {
     setNewGroup("");
+    setCitationValues({});
   }, [onClose]);
   useEffect(() => {
     setSelectedConditionId(previousCondition);
     setSelectedRoleId(previousCondition);
+    setCitationValues({
+      d1: d1Cnt,
+      d2: d2Cnt,
+      d3: d3Cnt,
+      d4: d4Cnt,
+    });
   }, [isOpen]);
 
   useEffect(() => {
@@ -362,7 +408,30 @@ function RightBar({
       case "thesis":
         return <div className="right-bar-content"></div>;
       case "citations":
-        return <div className="right-bar-content"></div>;
+        return (
+          <div className="right-bar-content">
+            <div className="input-container">
+              {Object.keys(citationValues).map((key) => (
+                <div key={key} className="input-group">
+                  <label htmlFor={key}>{key.toUpperCase()}:</label>
+                  <input
+                    type="number"
+                    id={key}
+                    name={key}
+                    value={citationValues[key]}
+                    onChange={handleCitationValueChange}
+                  />
+                </div>
+              ))}
+              <button
+                onClick={handleUpdateCitationRank}
+                className="submit-button"
+              >
+                Send to API
+              </button>
+            </div>
+          </div>
+        );
       default:
         return null;
     }
@@ -377,7 +446,7 @@ function RightBar({
 
     try {
       const responseProjectTypes = await axios.get(
-        "https://apsis.kocaeli.edu.tr/api/lookUp/get-project-types", // Fazladan '/' vardı, düzelttim.
+        "https://apsis.kocaeli.edu.tr/api/lookUp/get-project-types",
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
