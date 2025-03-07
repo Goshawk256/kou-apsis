@@ -120,19 +120,21 @@ function Citations() {
                 `${item.citations.auto.d4Cnt}xD4 `}
             </s>
             <br />
-            {item.citations.manual.d1Cnt > 0 &&
-              `${item.citations.manual.d1Cnt}xD1 /`}{" "}
-            {item.citations.manual.d2Cnt > 0 &&
-              `${item.citations.manual.d2Cnt}xD2 /`}{" "}
-            {item.citations.manual.d3Cnt > 0 &&
-              `${item.citations.manual.d3Cnt}xD3 /`}{" "}
-            {item.citations.manual.d4Cnt > 0 &&
-              `${item.citations.manual.d4Cnt}xD4 `}{" "}
+            <span className="showed">
+              {item.citations.manual.d1Cnt > 0 &&
+                `${item.citations.manual.d1Cnt}xD1 /`}{" "}
+              {item.citations.manual.d2Cnt > 0 &&
+                `${item.citations.manual.d2Cnt}xD2 /`}{" "}
+              {item.citations.manual.d3Cnt > 0 &&
+                `${item.citations.manual.d3Cnt}xD3 /`}{" "}
+              {item.citations.manual.d4Cnt > 0 &&
+                `${item.citations.manual.d4Cnt}xD4 `}{" "}
+            </span>
           </td>
           <td>
             <s>{item.citations.auto.score}</s>
             <br />
-            {item.citations.manual.score}
+            <span className="showed">{item.citations.manual.score}</span>
           </td>
         </>
       );
@@ -140,16 +142,20 @@ function Citations() {
       return (
         <>
           <td>
-            {item.citations.auto.d1Cnt > 0 &&
-              `${item.citations.auto.d1Cnt}xD1 /`}{" "}
-            {item.citations.auto.d2Cnt > 0 &&
-              `${item.citations.auto.d2Cnt}xD2 /`}{" "}
-            {item.citations.auto.d3Cnt > 0 &&
-              `${item.citations.auto.d3Cnt}xD3 /`}{" "}
-            {item.citations.auto.d4Cnt > 0 &&
-              `${item.citations.auto.d4Cnt}xD4 `}
+            <span className="showed">
+              {item.citations.auto.d1Cnt > 0 &&
+                `${item.citations.auto.d1Cnt}xD1 /`}{" "}
+              {item.citations.auto.d2Cnt > 0 &&
+                `${item.citations.auto.d2Cnt}xD2 /`}{" "}
+              {item.citations.auto.d3Cnt > 0 &&
+                `${item.citations.auto.d3Cnt}xD3 /`}{" "}
+              {item.citations.auto.d4Cnt > 0 &&
+                `${item.citations.auto.d4Cnt}xD4 `}
+            </span>
           </td>
-          <td>{item.citations.auto.score}</td>
+          <td>
+            <span className="showed">{item.citations.auto.score}</span>
+          </td>
         </>
       );
     }
