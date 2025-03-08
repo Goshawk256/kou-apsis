@@ -1,7 +1,7 @@
 import React from "react";
 
 function Patents() {
-  return <div>Patents</div>;
+  return <div>Bu sayfa yapım aşamasındadır.</div>;
 }
 
 export default Patents;

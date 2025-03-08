@@ -11,6 +11,7 @@ import yayinIcon from "../../../assets/yayinlar.svg";
 import tezIcon from "../../../assets/yonetilenTezler.svg";
 import atifIcon from "../../../assets/quote.png";
 import bookIcon from "../../../assets/books.png";
+import patentIcon from "../../../assets/certificate.png";
 
 function SideBar({ onSelect }) {
   const [selectedItem, setSelectedItem] = useState("Ana Sayfa");
@@ -27,7 +28,10 @@ function SideBar({ onSelect }) {
       name: "Yönetilen Tezler(F)",
       icon: <img src={tezIcon} alt="Yönetilen Tezler" />,
     },
-
+    {
+      name: "Patentlerim(G)",
+      icon: <img src={patentIcon} alt="Yönetilen Tezler" />,
+    },
     {
       name: "Proje Görevlerim(H)",
       icon: <img src={gorevIcon} alt="Görevler" />,

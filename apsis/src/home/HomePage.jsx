@@ -21,6 +21,7 @@ import RectorHomePage from "../rector/components/RectorHomePage";
 import ExternalHome from "../externalacademic/components/ExternalHome";
 import Citations from "../academic/components/pages/citations/Citations";
 import Books from "../academic/components/pages/books/Books";
+import Patents from "../academic/components/pages/patents/Patents";
 
 function HomePage() {
   const [selectedPage, setSelectedPage] = useState("Ana Sayfa");
@@ -96,6 +97,8 @@ function HomePage() {
         return <Dersler />;
       case "Yönetilen Tezler(F)":
         return <YonetilenTezler />;
+      case "Patentlerim(G)":
+        return <Patents />;
       case "Proje Görevlerim(H)":
         return <Projeler />;
       case "Ödüller(J)":
